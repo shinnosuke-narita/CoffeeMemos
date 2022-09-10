@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/naris/AndroidStudioProjects/CoffeeMemos/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.1205" />
+        <entry key="..\:/Users/naris/AndroidStudioProjects/CoffeeMemos/app/src/main/res/layout/activity_main.xml" value="0.33179487179487177" />
+        <entry key="..\:/Users/naris/AndroidStudioProjects/CoffeeMemos/app/src/main/res/layout/fragment_.xml" value="0.3229166666666667" />
+        <entry key="..\:/Users/naris/AndroidStudioProjects/CoffeeMemos/app/src/main/res/layout/fragment_beans.xml" value="0.29814814814814816" />
+        <entry key="..\:/Users/naris/AndroidStudioProjects/CoffeeMemos/app/src/main/res/layout/fragment_bottom_nav.xml" value="0.1" />
+        <entry key="..\:/Users/naris/AndroidStudioProjects/CoffeeMemos/app/src/main/res/layout/fragment_favorite.xml" value="0.33697916666666666" />
+        <entry key="..\:/Users/naris/AndroidStudioProjects/CoffeeMemos/app/src/main/res/layout/fragment_home.xml" value="0.33697916666666666" />
+        <entry key="..\:/Users/naris/AndroidStudioProjects/CoffeeMemos/app/src/main/res/layout/fragment_nav_host.xml" value="0.33697916666666666" />
+        <entry key="..\:/Users/naris/AndroidStudioProjects/CoffeeMemos/app/src/main/res/layout/fragment_timer.xml" value="0.33697916666666666" />
+        <entry key="..\:/Users/naris/AndroidStudioProjects/CoffeeMemos/app/src/main/res/menu/bottom_nav_menu.xml" value="0.28055555555555556" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
