@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/homeFragment"
+        android:title="@string/bottom_nav_home"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
+    <item
+        android:id="@+id/favoriteFragment"
+        android:title="@string/bottom_nav_favorite"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_baseline_favorite_24"/>
+
+    <item
+        android:id="@+id/beansFragment"
+        android:title="@string/bottom_nav_beans"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/coffee_bean_icon"/>
+
+    <item
+        android:id="@+id/timerFragment"
+        android:title="@string/bottom_nav_timer"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_baseline_timer_24"/>
+</menu>
