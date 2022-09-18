@@ -11,29 +11,21 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment2_to_favoriteFragment4"
-            app:destination="@id/favoriteFragment" />
+            android:id="@+id/action_homeFragment_to_newRecipeFragment"
+            app:destination="@id/newRecipeFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.coffeememos.fragment.FavoriteFragment"
         android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" >
-        <action
-            android:id="@+id/action_favoriteFragment4_to_beansFragment"
-            app:destination="@id/beansFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_favorite" />
 
     <fragment
         android:id="@+id/beansFragment"
         android:name="com.example.coffeememos.fragment.BeansFragment"
         android:label="fragment_beans"
-        tools:layout="@layout/fragment_beans" >
-        <action
-            android:id="@+id/action_beansFragment_to_timerFragment2"
-            app:destination="@id/timerFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_beans" />
 
     <fragment
         android:id="@+id/timerFragment"
@@ -41,7 +33,16 @@
         android:label="fragment_timer"
         tools:layout="@layout/fragment_timer" >
         <action
-            android:id="@+id/action_timerFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_timerFragment_to_newRecipeFragment"
+            app:destination="@id/newRecipeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newRecipeFragment"
+        android:name="com.example.coffeememos.fragment.NewRecipeFragment"
+        android:label="fragment_new_recipe"
+        tools:layout="@layout/fragment_new_recipe" >
+        <action
+            android:id="@+id/action_newRecipeFragment_to_timerFragment"
+            app:destination="@id/timerFragment" />
     </fragment>
 </navigation>

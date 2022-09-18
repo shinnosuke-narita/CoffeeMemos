@@ -4,6 +4,28 @@
     <string name="bottom_nav_favorite">Favorite</string>
     <string name="bottom_nav_beans">Beans</string>
     <string name="bottom_nav_timer">Timer</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+    <!-- 後で消す    -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- レシピ関連  -->
+    <string name="tool">抽出器具</string>
+    <string name="extraction_time">抽出時間(秒)</string>
+    <string name="pre_infusion_time">蒸らし時間(秒)</string>
+    <string name="grind_size">豆の粒度</string>
+    <string name="amount_beans">コーヒーの粉量(g)</string>
+    <string name="amount_extraction">抽出量(cc)</string>
+    <string name="comment">コメント</string>
+    <string name="temperature">湯温(℃)</string>
+
+    <!-- テイスト  -->
+    <string name="sour">酸味</string>
+    <string name="bitter">苦味</string>
+    <string name="sweet">甘味</string>
+    <string name="rich">コク</string>
+    <string name="flavor">香り</string>
+
+
+
+    <string name="prompt">選択してください</string>
 </resources>
