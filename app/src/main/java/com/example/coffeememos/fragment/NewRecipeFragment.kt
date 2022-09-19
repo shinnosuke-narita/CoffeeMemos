@@ -1,5 +1,6 @@
 package com.example.coffeememos.fragment
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,8 +12,10 @@ import android.widget.SeekBar
 import androidx.navigation.Navigation
 import com.example.coffeememos.*
 import com.example.coffeememos.databinding.FragmentNewRecipeBinding
+import com.example.coffeememos.state.NewRecipeMenuState
 import com.example.coffeememos.viewModel.NewRecipeViewModel
 import com.example.coffeememos.viewModel.NewRecipeViewModelFactory
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class NewRecipeFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
     // viewBinding
@@ -70,11 +73,42 @@ class NewRecipeFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         viewModel.rich.observe(viewLifecycleOwner) { binding.richValues.text = it.toString() }
         viewModel.flavor.observe(viewLifecycleOwner) { binding.flavorValues.text = it.toString() }
 
+        /**
+         * fab 監視処理
+         */
+        viewModel.isMenuOpened.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                NewRecipeMenuState.MENU_OPENED -> {
+                    binding.wholeShadow.visibility = View.VISIBLE
+                    binding.toTimerFragmentBtn.setImageResource(R.drawable.ic_baseline_close_24)
+                    fadeInAnimation(binding.timeBtn)
+                    fadeInAnimation(binding.saveBtn)
+                }
+                NewRecipeMenuState.MENU_CLOSED -> {
+                    binding.wholeShadow.visibility = View.GONE
+                    binding.toTimerFragmentBtn.setImageResource(R.drawable.ic_baseline_menu_24)
+                    fadeOutAnimation(binding.timeBtn)
+                    fadeOutAnimation(binding.saveBtn)
+                }
+            }
+        }
 
+
+        binding.toTimerFragmentBtn.setOnClickListener { v ->
+            when(viewModel.isMenuOpened.value) {
+                NewRecipeMenuState.MENU_OPENED -> viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
+                NewRecipeMenuState.MENU_CLOSED -> viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_OPENED)
+                else -> viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
+            }
+        }
 
         // 計測画面に遷移
-        binding.toTimerFragmentBtn.setOnClickListener { v ->
+        binding.timeBtn.setOnClickListener { v ->
             Navigation.findNavController(v).navigate(R.id.timerFragment)
+        }
+
+        binding.saveBtn.setOnClickListener {
+            // TODO: 保存処理
         }
 
         // スピナーのセットアップ
@@ -114,4 +148,20 @@ class NewRecipeFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
     }
     override fun onStartTrackingTouch(p0: SeekBar?) {}
     override fun onStopTrackingTouch(p0: SeekBar?) {}
+
+
+    /**
+     * アニメーション関連
+     */
+    fun fadeInAnimation(view: View) {
+        ObjectAnimator.ofFloat(view, "alpha", 0.0f, 1.0f).apply {
+            duration = 500
+        }.start()
+    }
+
+    fun fadeOutAnimation(view: View) {
+        ObjectAnimator.ofFloat(view, "alpha",  0.0f).apply {
+            duration = 500
+        }.start()
+    }
 }

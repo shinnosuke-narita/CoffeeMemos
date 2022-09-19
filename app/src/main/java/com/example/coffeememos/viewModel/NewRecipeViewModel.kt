@@ -11,6 +11,7 @@ import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.dao.TasteDao
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
+import com.example.coffeememos.state.NewRecipeMenuState
 
 class NewRecipeViewModel(
     val recipeDao: RecipeDao,
@@ -36,6 +37,12 @@ class NewRecipeViewModel(
     private var _flavor: MutableLiveData<Int> = MutableLiveData(3)
     val flavor: LiveData<Int> = _flavor
 
+    /**
+     * viewの状態管理フラグ
+     */
+    private var _isMenuOpened: MutableLiveData<NewRecipeMenuState> = MutableLiveData(NewRecipeMenuState.MENU_CLOSED)
+    val isMenuOpened: LiveData<NewRecipeMenuState> = _isMenuOpened
+
 
 
     fun changeTasteValue(tasteKind: TasteKind, progress: Int) {
@@ -51,6 +58,13 @@ class NewRecipeViewModel(
         }
     }
 
+    fun changeViewState(isMenuOpened: Boolean) {
+
+    }
+
+    fun setMenuOpenedFlag(isMenuOpened: NewRecipeMenuState) {
+        _isMenuOpened.value = isMenuOpened
+    }
 }
 
 

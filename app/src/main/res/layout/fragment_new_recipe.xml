@@ -6,9 +6,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.NewRecipeFragment">
 
+    <View
+        android:id="@+id/wholeShadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="1dp"
+        android:background="#4F090606"
+        android:visibility="invisible"
+        />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -413,11 +423,48 @@
         android:id="@+id/toTimerFragmentBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_timer_24"
+        android:src="@drawable/ic_baseline_menu_24"
         app:tint="#FBFBFB"
+        android:elevation="99dp"
         app:backgroundTint="@color/teal_200"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/timeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_timer_24"
+        app:tint="#FBFBFB"
+        android:elevation="99dp"
+        android:alpha="0"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        app:backgroundTint="#3D5BF1"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/toTimerFragmentBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:alpha="1"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/saveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_check_24"
+        app:tint="#FBFBFB"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:elevation="99dp"
+        app:backgroundTint="#E8497F"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:alpha="0"
+        app:layout_constraintBottom_toTopOf="@+id/timeBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:alpha="1"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
