@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.coffeememos.fragment.HomeFragment"
-        android:label="fragment_home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_newRecipeFragment"
@@ -18,19 +18,19 @@
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.coffeememos.fragment.FavoriteFragment"
-        android:label="fragment_favorite"
+        android:label="Favorite"
         tools:layout="@layout/fragment_favorite" />
 
     <fragment
         android:id="@+id/beansFragment"
         android:name="com.example.coffeememos.fragment.BeansFragment"
-        android:label="fragment_beans"
+        android:label="Beans"
         tools:layout="@layout/fragment_beans" />
 
     <fragment
         android:id="@+id/timerFragment"
         android:name="com.example.coffeememos.fragment.TimerFragment"
-        android:label="fragment_timer"
+        android:label="Timer"
         tools:layout="@layout/fragment_timer" >
         <action
             android:id="@+id/action_timerFragment_to_newRecipeFragment"
@@ -39,7 +39,7 @@
     <fragment
         android:id="@+id/newRecipeFragment"
         android:name="com.example.coffeememos.fragment.NewRecipeFragment"
-        android:label="fragment_new_recipe"
+        android:label="New Recipe"
         tools:layout="@layout/fragment_new_recipe" >
         <action
             android:id="@+id/action_newRecipeFragment_to_timerFragment"

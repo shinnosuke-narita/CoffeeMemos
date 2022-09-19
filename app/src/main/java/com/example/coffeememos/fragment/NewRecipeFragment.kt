@@ -100,12 +100,6 @@ class NewRecipeFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         mContext = null
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) = NewRecipeFragment()
-    }
-
-
     /**
      * seekBarリスナー
      */

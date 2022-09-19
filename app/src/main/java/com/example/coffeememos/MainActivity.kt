@@ -2,8 +2,11 @@ package com.example.coffeememos
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
+import android.view.View
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.example.coffeememos.databinding.ActivityMainBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -12,6 +15,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private  lateinit var binding: ActivityMainBinding
 
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +28,15 @@ class MainActivity : AppCompatActivity() {
         val tasteDao = database.tasteDao()
 
 
-        // bottomTabとnavigationの関連付け
-        val hostNav = findNavController(R.id.nav_host)
-        NavigationUI.setupWithNavController(binding.bottomNavBar, hostNav)
 
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        navController = navHostFragment.navController
+
+        // bottomNavigationとNavControllerの関連付け
+        binding.bottomNavBar.setupWithNavController(navController)
+
+        // toolbarとNavControllerの関連付け
+        binding.toolbar.setupWithNavController(navController, AppBarConfiguration(navController.graph))
 
         GlobalScope.launch {
             launch {
