@@ -30,11 +30,12 @@ class Constants {
             6,
             90,
             30,
+            0,
             90,
             8,
             40,
             "おいしい！",
-            "2022/09/09"
+            20220909
         )
 
         val sampleRecipe2 = Recipe(
@@ -44,11 +45,12 @@ class Constants {
             6,
             90,
             30,
+            0,
             90,
             8,
             40,
             "おいしい！おいしい！",
-            "2022/09/09"
+            20220909
         )
 
         val sampleTaste = Taste(

@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import com.example.coffeememos.entity.Bean
+import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.RecipeWithBeans
 
 @Dao
@@ -14,6 +15,9 @@ interface BeanDao {
 
     @Query("DELETE FROM bean")
     suspend fun clearTable()
+
+    @Query("SELECT * FROM bean ORDER BY bean_id DESC LIMIT 1")
+    suspend fun getNewestBean(): Bean
 
     @Transaction
     @Query("SELECT * FROM bean")

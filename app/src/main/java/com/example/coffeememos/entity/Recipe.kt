@@ -29,9 +29,10 @@ data class Recipe(
     val roast: Int,
     val extractionTime: Int,
     val preInfusionTime: Int,
+    val amountExtraction: Int,
     val temperature: Int,
     val grindSize: Int,
     val amountOfBeans: Int,
     val comment: String,
-    val createdAt: String
+    val createdAt: Long
 )
