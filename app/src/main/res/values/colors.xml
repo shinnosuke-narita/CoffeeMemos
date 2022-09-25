@@ -11,5 +11,6 @@
     <color name="bottom_nav_state_off">#B6B6B6</color>
     <color name="snackBar_background">#2D474545</color>
     <color name="snackBar_text">#FA5D8F</color>
-    <color name="taste_section_text_color">#FFFFFFFF</color>
+    <color name="taste_section_text_color">#552A05</color>
+    <color name="seek_bar_progress">#7E7974</color>
 </resources>

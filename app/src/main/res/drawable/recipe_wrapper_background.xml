@@ -2,8 +2,11 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <!-- Viewの背景色を設定 -->
-            <solid android:color="#2D7AFF" />
+
+            <!-- Viewの枠線を設定 -->
+            <stroke
+                android:width="2dp"
+                android:color="#552A05"/>
             <!-- Viewの角丸を設定 -->
             <corners android:radius="16dp" />
         </shape>
