@@ -37,18 +37,22 @@ class NewRecipeViewModel(
     val flavor: LiveData<Int> = _flavor
 
     /**
-     * viewの状態管理フラグ
+     * menuの状態管理フラグ
      */
     private var _isMenuOpened: MutableLiveData<NewRecipeMenuState> = MutableLiveData(NewRecipeMenuState.MENU_CLOSED)
     val isMenuOpened: LiveData<NewRecipeMenuState> = _isMenuOpened
 
+    /**
+     * view リセットフラグ
+     */
     private var _shouldResetView: MutableLiveData<Boolean> = MutableLiveData(false)
     val shouldResetView: LiveData<Boolean> = _shouldResetView
 
     /**
-     * spinner
+     * spinner 現在のインデックス
      */
     private var _roastIndex: Int = 0
+
 
     private var _grindSizeIndex: Int = 0
 
@@ -130,9 +134,6 @@ class NewRecipeViewModel(
                     flavor.value ?: 3
                 )
             )
-
-            // viewのリセット
-            _shouldResetView.value = true
         }
     }
 

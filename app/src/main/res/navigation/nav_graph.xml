@@ -25,7 +25,11 @@
         android:id="@+id/beansFragment"
         android:name="com.example.coffeememos.fragment.BeansFragment"
         android:label="Beans"
-        tools:layout="@layout/fragment_beans" />
+        tools:layout="@layout/fragment_beans" >
+        <action
+            android:id="@+id/action_beansFragment_to_newBeanFragment"
+            app:destination="@id/newBeanFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/timerFragment"
@@ -45,4 +49,9 @@
             android:id="@+id/action_newRecipeFragment_to_timerFragment"
             app:destination="@id/timerFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/newBeanFragment"
+        android:name="com.example.coffeememos.fragment.NewBeanFragment"
+        android:label="fragment_new_bean"
+        tools:layout="@layout/fragment_new_bean" />
 </navigation>

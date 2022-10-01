@@ -25,6 +25,16 @@
     <string name="rich">コク</string>
     <string name="flavor">香り</string>
 
+    <!-- 新豆作成画面  -->
+    <string name="country">原産地</string>
+    <string name="farm">農園</string>
+    <string name="district">地区</string>
+    <string name="species">品種</string>
+    <string name="elevation">標高(m)</string>
+    <string name="process">精製法</string>
+    <string name="store">購入店舗</string>
+    <string name="review">評価</string>
+
 
 
     <string name="prompt">選択してください</string>

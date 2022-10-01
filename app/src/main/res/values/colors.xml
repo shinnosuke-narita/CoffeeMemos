@@ -13,4 +13,7 @@
     <color name="snackBar_text">#FA5D8F</color>
     <color name="taste_section_text_color">#552A05</color>
     <color name="seek_bar_progress">#7E7974</color>
+    <color name="normal_rating_progress">#7E7974</color>
+    <color name="active_rating_progress">#E4FA21</color>
+
 </resources>

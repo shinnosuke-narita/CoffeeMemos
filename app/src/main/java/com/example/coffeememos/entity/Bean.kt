@@ -13,12 +13,12 @@ data class Bean(
     val farm: String,
     val district: String,
     val species: String,
-    val elevationFrom: String,
-    val elevationTo: String,
-    val process: String,
+    val elevationFrom: Int,
+    val elevationTo: Int,
+    val process: Int,
     val store: String,
     val comment: String,
     val review: Int,
     val image: Int,
-    val createdAt: String
+    val createdAt: Long
 )

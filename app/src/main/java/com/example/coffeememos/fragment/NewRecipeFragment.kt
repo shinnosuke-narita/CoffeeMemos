@@ -121,6 +121,7 @@ class NewRecipeFragment :
          */
         viewModel.shouldResetView.observe(viewLifecycleOwner) { shouldReset ->
             if (!shouldReset)  return@observe
+
             resetView()
             Snackbar.make(binding.snackBarPlace, "新しいレシピを保存しました", Snackbar.LENGTH_SHORT).apply {
                 mContext?.let {
@@ -128,6 +129,9 @@ class NewRecipeFragment :
                     getView().setBackgroundColor(ContextCompat.getColor(it, R.color.snackBar_background))
                 }
             }.show()
+
+            // リセットフラグの初期化
+            viewModel.setResetFlag(false)
         }
 
 
@@ -155,6 +159,8 @@ class NewRecipeFragment :
                 binding.amountExtraction.text.toString(),
                 binding.comment.text.toString()
             )
+
+            viewModel.setResetFlag(true)
         }
 
         /**
@@ -250,8 +256,5 @@ class NewRecipeFragment :
 
         // メニューを閉じる
         viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
-
-        // リセットフラグの初期化
-        viewModel.setResetFlag(false)
     }
 }
