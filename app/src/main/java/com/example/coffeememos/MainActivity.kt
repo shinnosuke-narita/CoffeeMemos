@@ -46,7 +46,9 @@ class MainActivity : AppCompatActivity() {
             }.join()
 
             launch {
-                beanDao.insert(Constants.sampleBean)
+                for (i in 1..5) {
+                    beanDao.insert(Constants.sampleBean)
+                }
             }.join()
 
             launch {

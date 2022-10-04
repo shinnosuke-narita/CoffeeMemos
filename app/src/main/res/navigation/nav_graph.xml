@@ -48,10 +48,18 @@
         <action
             android:id="@+id/action_newRecipeFragment_to_timerFragment"
             app:destination="@id/timerFragment" />
+        <action
+            android:id="@+id/action_newRecipeFragment_to_selectedBeanFragment2"
+            app:destination="@id/selectBeanFragment" />
     </fragment>
     <fragment
         android:id="@+id/newBeanFragment"
         android:name="com.example.coffeememos.fragment.NewBeanFragment"
         android:label="fragment_new_bean"
         tools:layout="@layout/fragment_new_bean" />
+    <fragment
+        android:id="@+id/selectBeanFragment"
+        android:name="com.example.coffeememos.fragment.SelectBeanFragment"
+        android:label="コーヒー豆を選択してください"
+        tools:layout="@layout/fragment_select_bean" />
 </navigation>

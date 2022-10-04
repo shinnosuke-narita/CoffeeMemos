@@ -1,5 +1,7 @@
 package com.example.coffeememos.dao
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -7,6 +9,7 @@ import androidx.room.Transaction
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.RecipeWithBeans
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BeanDao {
@@ -25,4 +28,8 @@ interface BeanDao {
 
     @Query("SELECT * FROM bean")
     suspend fun getAll(): List<Bean>
+
+    @Query("SELECT * FROM bean")
+    fun getAllLive(): LiveData<List<Bean>>
+
 }

@@ -12,6 +12,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
 import com.example.coffeememos.*
 import com.example.coffeememos.databinding.FragmentNewRecipeBinding
@@ -133,6 +135,18 @@ class NewRecipeFragment :
             // リセットフラグの初期化
             viewModel.setResetFlag(false)
         }
+
+        binding.selectBeanBtn.setOnClickListener { v ->
+
+            Navigation.findNavController(v).navigate(R.id.selectBeanFragment)
+
+            setFragmentResultListener("requestKey") { key, bundle ->
+                val result = bundle.getString(key)
+                // ...
+            }
+        }
+
+
 
 
         binding.menuBtn.setOnClickListener { v ->
