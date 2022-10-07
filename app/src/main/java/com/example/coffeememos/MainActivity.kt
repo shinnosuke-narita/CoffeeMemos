@@ -38,44 +38,51 @@ class MainActivity : AppCompatActivity() {
         // toolbarとNavControllerの関連付け
         binding.toolbar.setupWithNavController(navController, AppBarConfiguration(navController.graph))
 
+        navController.addOnDestinationChangedListener {_, destination, _ ->
+            when(destination.id) {
+                R.id.homeFragment       -> showBottomNav()
+                R.id.favoriteFragment   -> showBottomNav()
+                R.id.beansFragment      -> showBottomNav()
+                R.id.timerFragment      -> showBottomNav()
+                R.id.selectBeanFragment -> hideBottomNav()
+                R.id.newRecipeFragment  -> hideBottomNav()
+            }
+        }
+
         GlobalScope.launch {
-            launch {
-                recipeDao.clearTable()
-                beanDao.clearTable()
-                tasteDao.clearTable()
-            }.join()
 
-            launch {
-                for (i in 1..5) {
-                    beanDao.insert(Constants.sampleBean)
-                }
-            }.join()
+            recipeDao.clearTable()
+            beanDao.clearTable()
+            tasteDao.clearTable()
 
-            launch {
-                val beans = beanDao.getAll()
+            for (i in 1..5) {
+                beanDao.insert(Constants.sampleBean)
+            }
 
-                Constants.sampleRecipe1.beanId = beans[0].id
-                Constants.sampleRecipe2.beanId = beans[0].id
 
-                recipeDao.insert(Constants.sampleRecipe1)
-                recipeDao.insert(Constants.sampleRecipe2)
-            }.join()
+            val beans = beanDao.getAll()
 
-            launch {
-                val recipes = recipeDao.getAll()
+            Constants.sampleRecipe1.beanId = beans[0].id
+            Constants.sampleRecipe2.beanId = beans[0].id
 
-                Constants.sampleTaste.recipeId = recipes[0].id
-                tasteDao.insert(Constants.sampleTaste)
+            recipeDao.insert(Constants.sampleRecipe1)
+            recipeDao.insert(Constants.sampleRecipe2)
 
-                Constants.sampleTaste.recipeId = recipes[1].id
-                tasteDao.insert(Constants.sampleTaste)
-            }.join()
+
+            val recipes = recipeDao.getAll()
+
+            Constants.sampleTaste.recipeId = recipes[0].id
+            tasteDao.insert(Constants.sampleTaste)
+
+            Constants.sampleTaste.recipeId = recipes[1].id
+            tasteDao.insert(Constants.sampleTaste)
+
 
 
             val result = beanDao.getBeanWithRecipe()
             val recipeAndBean = result[0]
             val bean = recipeAndBean.bean
-            val recipes = recipeAndBean.recipes
+
 
             val result2 = recipeDao.getRecipeWithTaste()
             val recipeWithTaste = result2[0]
@@ -86,5 +93,13 @@ class MainActivity : AppCompatActivity() {
             System.out.println("hello")
         }
         System.out.println("hello")
+    }
+
+    private fun showBottomNav() {
+        binding.bottomNavBar.visibility = View.VISIBLE
+    }
+
+    private fun hideBottomNav() {
+        binding.bottomNavBar.visibility = View.GONE
     }
 }

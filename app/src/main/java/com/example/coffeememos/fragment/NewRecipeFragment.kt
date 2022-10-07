@@ -3,6 +3,8 @@ package com.example.coffeememos.fragment
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
+import android.os.Build.VERSION.SDK
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,12 +13,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
 import com.example.coffeememos.*
 import com.example.coffeememos.databinding.FragmentNewRecipeBinding
+import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.state.NewRecipeMenuState
 import com.example.coffeememos.viewModel.NewRecipeViewModel
 import com.example.coffeememos.viewModel.NewRecipeViewModelFactory
@@ -63,6 +68,7 @@ class NewRecipeFragment :
         viewModel = NewRecipeViewModelFactory(
                 db.recipeDao(), db.beanDao(), db.tasteDao()
             ).create(NewRecipeViewModel::class.java)
+
 
         /**
          * seekBar リスナーセット
@@ -140,9 +146,17 @@ class NewRecipeFragment :
 
             Navigation.findNavController(v).navigate(R.id.selectBeanFragment)
 
-            setFragmentResultListener("requestKey") { key, bundle ->
-                val result = bundle.getString(key)
-                // ...
+            setFragmentResultListener("selectedBean") { key, result ->
+                viewModel.setBeanId(result.getLong("beanId"))
+
+                binding.beanContainer.rvCountry.text = result.getString("country")
+                binding.beanContainer.rvFarm.text = result.getString("farm")
+                binding.beanContainer.rvDistrict.text = result.getString("district")
+                binding.beanContainer.rvElevationFrom.text = getString(R.string.elevation_width_meters, result.getString("elevationFrom"))
+                binding.beanContainer.rvElevationTo.text = getString(R.string.elevation_width_meters, result.getString("elevationTo"))
+                binding.beanContainer.rvStore.text = result.getString("store")
+                binding.beanContainer.rvProcess.text = result.getString("process")
+                binding.beanContainer.rvRate.text = getString(R.string.rate_decimal, result.getString("rating"))
             }
         }
 

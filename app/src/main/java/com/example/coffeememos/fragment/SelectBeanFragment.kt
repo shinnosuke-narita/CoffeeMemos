@@ -7,14 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.setFragmentResult
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.CoffeeMemosApplication
+import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.adapter.BeanAdapter
 import com.example.coffeememos.entity.Bean
-import com.example.coffeememos.viewModel.NewRecipeViewModel
-import com.example.coffeememos.viewModel.NewRecipeViewModelFactory
 import com.example.coffeememos.viewModel.SelectBeanViewModel
 import com.example.coffeememos.viewModel.SelectBeanViewModelFactory
 
@@ -57,13 +59,25 @@ class SelectBeanFragment : Fragment() {
                 orientation = LinearLayoutManager.VERTICAL
             }
 
-            // TODO adapterSet
             rv.adapter = viewModel.beanList.value?.let {
                 BeanAdapter(
                     it,
                     object : BeanAdapter.OnItemClickListener {
-                        override fun onClick(bean: Bean) {
-                            Toast.makeText(mContext, "hello world", Toast.LENGTH_SHORT).show()
+                        override fun onClick(view: View, bean: Bean) {
+                            val bundle = Bundle().apply {
+                                putLong("beanId", bean.id)
+                                putString("country", bean.country)
+                                putString("district", bean.district)
+                                putString("farm", bean.farm)
+                                putString("elevationFrom", bean.elevationFrom.toString())
+                                putString("elevationTo", bean.elevationTo.toString())
+                                putString("store", bean.store)
+                                putString("process", Constants.processList[bean.process])
+                                putString("rating", bean.review.toString())
+                            }
+                            setFragmentResult("selectedBean", bundle)
+
+                            findNavController().popBackStack()
                         }
                     }
                 )

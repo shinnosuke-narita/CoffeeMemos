@@ -13,11 +13,10 @@ import com.example.coffeememos.state.NewRecipeMenuState
 import kotlinx.coroutines.launch
 
 class NewRecipeViewModel(
-    val recipeDao: RecipeDao,
-    val beanDao: BeanDao,
-    val tasteDao: TasteDao
+    private val recipeDao: RecipeDao,
+    private val beanDao: BeanDao,
+    private val tasteDao: TasteDao
 ) : ViewModel() {
-
     /**
      * taste
      */
@@ -53,8 +52,12 @@ class NewRecipeViewModel(
      */
     private var _roastIndex: Int = 0
 
-
     private var _grindSizeIndex: Int = 0
+
+    /**
+     *  選択されたコーヒー豆
+     */
+    private var _selectedBeanId: Long? = null
 
 
     fun changeTasteValue(tasteKind: TasteKind, progress: Int) {
@@ -82,11 +85,9 @@ class NewRecipeViewModel(
     ) {
         viewModelScope.launch {
             var newestRecipe: Recipe? = null
-            var bean: Bean? = null
 
             val job = launch {
                 newestRecipe = recipeDao.getNewestRecipe()
-                bean = beanDao.getNewestBean()
             }
 
             // 現在時刻（エポックタイム）
@@ -99,13 +100,10 @@ class NewRecipeViewModel(
             val iAmountExtraction = Util.convertStringIntoIntIfPossible(amountExtraction)
             val iExtractionTime = Util.convertStringIntoIntIfPossible(extractionTime)
 
-            // 最新レシピの取得を待つ
-            job.join()
-
             recipeDao.insert(
                 Recipe(
                     0,
-                    bean!!.id,
+                   _selectedBeanId ?: 1,
                     tool,
                     _roastIndex,
                     iExtractionTime,
@@ -122,6 +120,9 @@ class NewRecipeViewModel(
             // レシピIDを紐づける
             val tasteRecipeId: Long =
             if (newestRecipe == null) 1 else newestRecipe!!.id + 1
+
+            // 最新レシピの取得を待つ
+            job.join()
 
             tasteDao.insert(
                 Taste(
@@ -176,6 +177,10 @@ class NewRecipeViewModel(
 
     fun setFlavorValue(value: Int) {
         _flavor.value = value
+    }
+
+    fun setBeanId(id: Long) {
+        _selectedBeanId = id
     }
 }
 

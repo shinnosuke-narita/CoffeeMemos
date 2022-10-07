@@ -61,5 +61,9 @@
         android:id="@+id/selectBeanFragment"
         android:name="com.example.coffeememos.fragment.SelectBeanFragment"
         android:label="コーヒー豆を選択してください"
-        tools:layout="@layout/fragment_select_bean" />
+        tools:layout="@layout/fragment_select_bean" >
+        <action
+            android:id="@+id/action_selectBeanFragment_to_newRecipeFragment"
+            app:destination="@id/newRecipeFragment" />
+    </fragment>
 </navigation>

@@ -37,4 +37,7 @@
 
 
     <string name="prompt">選択してください</string>
+
+    <string name="elevation_width_meters">%1$sm</string>
+    <string name="rate_decimal">%1$s.0</string>
 </resources>

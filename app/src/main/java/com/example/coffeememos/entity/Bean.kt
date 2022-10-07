@@ -22,4 +22,4 @@ data class Bean(
     val review: Int,
     val image: Int,
     val createdAt: Long
-)
+) : Serializable

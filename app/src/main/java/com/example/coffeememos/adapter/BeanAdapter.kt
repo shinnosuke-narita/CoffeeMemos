@@ -25,8 +25,8 @@ class BeanAdapter(private val data: List<Bean>, private val listener: BeanAdapte
         holder.store.text           = data[position].store
         holder.rate.text            = data[position].review.toString()
 
-        holder.itemView.setOnClickListener {
-            listener.onClick(data[position])
+        holder.itemView.setOnClickListener { v ->
+            listener.onClick(v, data[position])
         }
     }
 
@@ -35,7 +35,7 @@ class BeanAdapter(private val data: List<Bean>, private val listener: BeanAdapte
     }
 
     interface OnItemClickListener {
-        fun onClick(bean: Bean)
+        fun onClick(view: View, bean: Bean)
     }
 }
 
