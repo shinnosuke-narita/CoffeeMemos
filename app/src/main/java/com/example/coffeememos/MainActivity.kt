@@ -10,6 +10,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.coffeememos.databinding.ActivityMainBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,10 +23,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
 
+    val databaseResetFlag = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         val database = (application as CoffeeMemosApplication).database
         val recipeDao = database.recipeDao()
@@ -49,50 +59,43 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        GlobalScope.launch {
 
-            recipeDao.clearTable()
-            beanDao.clearTable()
-            tasteDao.clearTable()
+        // データベース初期化
+        if (databaseResetFlag) {
+            GlobalScope.launch {
 
-            for (i in 1..5) {
+
+                recipeDao.clearTable()
+                beanDao.clearTable()
+                tasteDao.clearTable()
+
                 beanDao.insert(Constants.sampleBean)
+                beanDao.insert(Constants.sampleBean2)
+
+
+                val beans = beanDao.getAll()
+
+                for (bean in beans) {
+                    Constants.sampleRecipe1.beanId = bean.id
+                    Constants.sampleRecipe2.beanId = bean.id
+                    recipeDao.insert(Constants.sampleRecipe1)
+                    recipeDao.insert(Constants.sampleRecipe2)
+                }
+
+
+                val recipes = recipeDao.getAll()
+
+                Constants.sampleTaste.recipeId = recipes[0].id
+                tasteDao.insert(Constants.sampleTaste)
+
+                Constants.sampleTaste.recipeId = recipes[1].id
+                tasteDao.insert(Constants.sampleTaste)
+
+                val result = beanDao.getBeanWithRecipe()
+
             }
-
-
-            val beans = beanDao.getAll()
-
-            Constants.sampleRecipe1.beanId = beans[0].id
-            Constants.sampleRecipe2.beanId = beans[0].id
-
-            recipeDao.insert(Constants.sampleRecipe1)
-            recipeDao.insert(Constants.sampleRecipe2)
-
-
-            val recipes = recipeDao.getAll()
-
-            Constants.sampleTaste.recipeId = recipes[0].id
-            tasteDao.insert(Constants.sampleTaste)
-
-            Constants.sampleTaste.recipeId = recipes[1].id
-            tasteDao.insert(Constants.sampleTaste)
-
-
-
-            val result = beanDao.getBeanWithRecipe()
-            val recipeAndBean = result[0]
-            val bean = recipeAndBean.bean
-
-
-            val result2 = recipeDao.getRecipeWithTaste()
-            val recipeWithTaste = result2[0]
-            val recipe = recipeWithTaste.recipe
-            val taste = recipeWithTaste.taste
-
-
-            System.out.println("hello")
         }
-        System.out.println("hello")
+
     }
 
     private fun showBottomNav() {

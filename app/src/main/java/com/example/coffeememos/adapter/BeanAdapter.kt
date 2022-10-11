@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.R
+import com.example.coffeememos.SimpleRecipe
 import com.example.coffeememos.entity.Bean
 
-class BeanAdapter(private val data: List<Bean>, private val listener: BeanAdapter.OnItemClickListener) : RecyclerView.Adapter<BeanViewHolder>()  {
+class BeanAdapter(private val data: List<Bean>) : RecyclerView.Adapter<BeanViewHolder>()  {
+    private lateinit var mListener: OnItemClickListener<Bean>
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeanViewHolder {
         return BeanViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.bean_item, parent, false)
@@ -26,7 +29,7 @@ class BeanAdapter(private val data: List<Bean>, private val listener: BeanAdapte
         holder.rate.text            = data[position].review.toString()
 
         holder.itemView.setOnClickListener { v ->
-            listener.onClick(v, data[position])
+            mListener.onClick(v, data[position])
         }
     }
 
@@ -34,8 +37,8 @@ class BeanAdapter(private val data: List<Bean>, private val listener: BeanAdapte
         return data.size
     }
 
-    interface OnItemClickListener {
-        fun onClick(view: View, bean: Bean)
+    fun setOnItemClickListener(listener: OnItemClickListener<Bean>) {
+        mListener = listener
     }
 }
 

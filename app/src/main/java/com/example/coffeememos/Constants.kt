@@ -22,6 +22,22 @@ class Constants {
             20220908
         )
 
+        val sampleBean2 = Bean(
+            0,
+            "コロンビア",
+            "",
+            "",
+            "",
+            1500,
+            1800,
+            0,
+            "kaldi",
+            "おいしい",
+            3,
+            3,
+            20220908
+        )
+
 
         val sampleRecipe1 = Recipe(
             0,

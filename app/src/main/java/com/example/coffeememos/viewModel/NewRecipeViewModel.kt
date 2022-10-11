@@ -184,7 +184,6 @@ class NewRecipeViewModel(
     }
 }
 
-
 class NewRecipeViewModelFactory(
     private val recipeDao:RecipeDao,
     private val beanDao: BeanDao,

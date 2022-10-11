@@ -29,7 +29,8 @@ interface BeanDao {
     @Query("SELECT * FROM bean")
     suspend fun getAll(): List<Bean>
 
-    @Query("SELECT * FROM bean")
-    fun getAllLive(): LiveData<List<Bean>>
+    @Query("SELECT * FROM bean JOIN recipe ON bean_id = recipe_bean_id")
+    suspend fun getBeanAndRecipe(): Map<Bean, List<Recipe>>
+
 
 }

@@ -16,6 +16,7 @@ import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.adapter.BeanAdapter
+import com.example.coffeememos.adapter.OnItemClickListener
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.viewModel.SelectBeanViewModel
 import com.example.coffeememos.viewModel.SelectBeanViewModelFactory
@@ -51,36 +52,35 @@ class SelectBeanFragment : Fragment() {
         ).create(SelectBeanViewModel::class.java)
 
 
+        // RecyclerView セットアップ
+        val rv = view.findViewById<RecyclerView>(R.id.rv)
+        rv.layoutManager = LinearLayoutManager(mContext).apply {
+            orientation = LinearLayoutManager.VERTICAL
+        }
+
+
         viewModel.beanList.observe(viewLifecycleOwner) { list ->
             if (list.isEmpty()) return@observe
 
-            val rv = view.findViewById<RecyclerView>(R.id.rv)
-            rv.layoutManager = LinearLayoutManager(mContext).apply {
-                orientation = LinearLayoutManager.VERTICAL
-            }
-
-            rv.adapter = viewModel.beanList.value?.let {
-                BeanAdapter(
-                    it,
-                    object : BeanAdapter.OnItemClickListener {
-                        override fun onClick(view: View, bean: Bean) {
-                            val bundle = Bundle().apply {
-                                putLong("beanId", bean.id)
-                                putString("country", bean.country)
-                                putString("district", bean.district)
-                                putString("farm", bean.farm)
-                                putString("elevationFrom", bean.elevationFrom.toString())
-                                putString("elevationTo", bean.elevationTo.toString())
-                                putString("store", bean.store)
-                                putString("process", Constants.processList[bean.process])
-                                putString("rating", bean.review.toString())
-                            }
-                            setFragmentResult("selectedBean", bundle)
-
-                            findNavController().popBackStack()
+            rv.adapter = BeanAdapter(list).apply {
+                setOnItemClickListener (object : OnItemClickListener<Bean> {
+                    override fun onClick(view: View, bean: Bean) {
+                        val bundle = Bundle().apply {
+                            putLong("beanId", bean.id)
+                            putString("country", bean.country)
+                            putString("district", bean.district)
+                            putString("farm", bean.farm)
+                            putString("elevationFrom", bean.elevationFrom.toString())
+                            putString("elevationTo", bean.elevationTo.toString())
+                            putString("store", bean.store)
+                            putString("process", Constants.processList[bean.process])
+                            putString("rating", bean.review.toString())
                         }
+                        setFragmentResult("selectedBean", bundle)
+
+                        findNavController().popBackStack()
                     }
-                )
+                })
             }
         }
     }
