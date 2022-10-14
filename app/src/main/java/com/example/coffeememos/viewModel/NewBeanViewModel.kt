@@ -7,6 +7,10 @@ import com.example.coffeememos.entity.Bean
 import kotlinx.coroutines.launch
 
 class NewBeanViewModel(val beanDao: BeanDao) : ViewModel() {
+    // お気に入り
+    private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isFavorite: LiveData<Boolean> = _isFavorite
+
     // 現在のrate(初期値3)
     private var currentRating: Int = 3
 
@@ -47,6 +51,10 @@ class NewBeanViewModel(val beanDao: BeanDao) : ViewModel() {
         _shouldResetView.value = flag
     }
 
+    fun setFavoriteFlag(flag: Boolean) {
+        _isFavorite.value = flag
+    }
+
     // rateのstate変更メソッド
     fun changeRatingState(selectedRate: Int) {
         currentRating = selectedRate
@@ -80,12 +88,12 @@ class NewBeanViewModel(val beanDao: BeanDao) : ViewModel() {
                     species,
                     iElevationFrom,
                     iElevationTo,
-                    _selectedProcess.value ?: 0,
+                    _selectedProcess.value!!,
                     purchaseStore,
                     comment,
                     currentRating,
                     0,
-                    true,
+                    _isFavorite.value!!,
                     createdAt
                 )
             )

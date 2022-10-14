@@ -43,12 +43,34 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener {_, destination, _ ->
             when(destination.id) {
-                R.id.homeFragment       -> showBottomNav()
-                R.id.favoriteFragment   -> showBottomNav()
-                R.id.beansFragment      -> showBottomNav()
-                R.id.timerFragment      -> showBottomNav()
-                R.id.selectBeanFragment -> hideBottomNav()
-                R.id.newRecipeFragment  -> hideBottomNav()
+                R.id.homeFragment       -> {
+                    showBottomNav()
+                    showToolbar()
+                }
+                R.id.favoriteFragment   -> {
+                    showBottomNav()
+                    showToolbar()
+                }
+                R.id.beansFragment      -> {
+                    showBottomNav()
+                    showToolbar()
+                }
+                R.id.timerFragment      -> {
+                    showBottomNav()
+                    showToolbar()
+                }
+                R.id.selectBeanFragment -> {
+                    hideBottomNav()
+                    showToolbar()
+                }
+                R.id.newRecipeFragment  -> {
+                    hideBottomNav()
+                    showToolbar()
+                }
+                R.id.newBeanFragment    -> {
+                    hideBottomNav()
+                    hideToolbar()
+                }
             }
         }
 
@@ -101,5 +123,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideBottomNav() {
         binding.bottomNavBar.visibility = View.GONE
+    }
+
+    private fun showToolbar() {
+        binding.toolbar.visibility = View.VISIBLE
+    }
+
+    private fun hideToolbar() {
+        binding.toolbar.visibility = View.GONE
     }
 }

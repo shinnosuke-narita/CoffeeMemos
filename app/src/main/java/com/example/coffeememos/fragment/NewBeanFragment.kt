@@ -55,6 +55,18 @@ class NewBeanFragment : Fragment() {
         val db = ((context?.applicationContext) as CoffeeMemosApplication).database
         viewModel = NewBeanViewModelFactory(db.beanDao()).create(NewBeanViewModel::class.java)
 
+        // お気に入り 監視処理
+        viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
+            if (isFavorite) binding.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
+            else binding.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+
+        binding.favoriteBtn.setOnClickListener {
+            if (viewModel.isFavorite.value == true) viewModel.setFavoriteFlag(false)
+            else viewModel.setFavoriteFlag(true)
+        }
+
+
         /**
          * rateの監視処理
          */

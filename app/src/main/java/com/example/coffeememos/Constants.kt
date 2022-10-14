@@ -8,7 +8,7 @@ class Constants {
     companion object {
         private val timeStamp = System.currentTimeMillis()
 
-        const val databaseResetFlag = true
+        const val databaseResetFlag = false
 
         val sampleBean = Bean(
             0,
