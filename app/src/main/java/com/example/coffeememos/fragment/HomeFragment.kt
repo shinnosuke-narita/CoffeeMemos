@@ -56,16 +56,31 @@ class HomeFragment : Fragment() {
         viewModel = HomeViewModelFactory(db.beanDao()).create(HomeViewModel::class.java)
 
         // RecyclerView セットアップ
-        val rv = view.findViewById<RecyclerView>(R.id.recipeList)
-        rv.layoutManager = LinearLayoutManager(mContext).apply {
-            orientation = LinearLayoutManager.VERTICAL
+        mContext?.let {
+            setUpRecyclerView(it, binding.recipeList)
+            setUpRecyclerView(it, binding.favoriteRecipeList)
+            setUpRecyclerView(it, binding.highRatingRecipeList)
         }
 
         // SimpleRecipeList 監視処理
         viewModel.simpleRecipeList.observe(viewLifecycleOwner) { list ->
             if (list.isEmpty()) return@observe
 
-            rv.adapter = RecipeAdapter(list).apply {
+            binding.recipeList.adapter = RecipeAdapter(list).apply {
+                setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
+                    override fun onClick(view: View, recipe: SimpleRecipe) {
+                        Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+            binding.favoriteRecipeList.adapter = RecipeAdapter(list).apply {
+                setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
+                    override fun onClick(view: View, recipe: SimpleRecipe) {
+                        Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+            binding.highRatingRecipeList.adapter = RecipeAdapter(list).apply {
                 setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
                     override fun onClick(view: View, recipe: SimpleRecipe) {
                         Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
@@ -89,6 +104,12 @@ class HomeFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         mContext = null
+    }
+
+    private fun setUpRecyclerView(context: Context, rv: RecyclerView) {
+        rv.layoutManager = LinearLayoutManager(context).apply {
+            orientation = LinearLayoutManager.HORIZONTAL
+        }
     }
 
 

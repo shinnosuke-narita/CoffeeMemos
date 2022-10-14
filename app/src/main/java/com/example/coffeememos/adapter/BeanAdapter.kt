@@ -1,18 +1,14 @@
 package com.example.coffeememos.adapter
 
-import android.app.LauncherActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.R
-import com.example.coffeememos.SimpleRecipe
 import com.example.coffeememos.entity.Bean
 
-class BeanAdapter(private val data: List<Bean>) : RecyclerView.Adapter<BeanViewHolder>()  {
-    private lateinit var mListener: OnItemClickListener<Bean>
-
+class BeanAdapter(data: List<Bean>) : BaseAdapter<Bean, BeanViewHolder>(data) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeanViewHolder {
         return BeanViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.bean_item, parent, false)
@@ -26,19 +22,12 @@ class BeanAdapter(private val data: List<Bean>) : RecyclerView.Adapter<BeanViewH
         holder.elevationFrom.text   = data[position].elevationFrom.toString()
         holder.elevationTo.text     = data[position].elevationTo.toString()
         holder.store.text           = data[position].store
-        holder.rate.text            = data[position].review.toString()
+        holder.rate.text            = data[position].rating.toString()
 
+        // リストアイテムクリック時のコールバック
         holder.itemView.setOnClickListener { v ->
             mListener.onClick(v, data[position])
         }
-    }
-
-    override fun getItemCount(): Int {
-        return data.size
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener<Bean>) {
-        mListener = listener
     }
 }
 

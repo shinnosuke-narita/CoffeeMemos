@@ -85,6 +85,7 @@ class NewBeanViewModel(val beanDao: BeanDao) : ViewModel() {
                     comment,
                     currentRating,
                     0,
+                    true,
                     createdAt
                 )
             )

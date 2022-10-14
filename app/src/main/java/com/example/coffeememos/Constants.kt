@@ -6,6 +6,10 @@ import com.example.coffeememos.entity.Taste
 
 class Constants {
     companion object {
+        private val timeStamp = System.currentTimeMillis()
+
+        const val databaseResetFlag = true
+
         val sampleBean = Bean(
             0,
             "ブラジル",
@@ -19,7 +23,8 @@ class Constants {
             "おいしい",
             3,
             3,
-            20220908
+            true,
+            timeStamp
         )
 
         val sampleBean2 = Bean(
@@ -35,7 +40,59 @@ class Constants {
             "おいしい",
             3,
             3,
-            20220908
+            true,
+            timeStamp + 1000
+        )
+
+        val sampleBean3 = Bean(
+            0,
+            "ケニア",
+            "",
+            "",
+            "",
+            1500,
+            1800,
+            0,
+            "kaldi",
+            "おいしい",
+            3,
+            3,
+            true,
+            timeStamp + 2000
+        )
+
+        val sampleBean4 = Bean(
+            0,
+            "インドネシア",
+            "",
+            "",
+            "",
+            1500,
+            1800,
+            0,
+            "kaldi",
+            "おいしい",
+            3,
+            3,
+            true,
+            timeStamp + 3000
+        )
+
+        val sampleBean5 = Bean(
+            0,
+            "エチオピア",
+            "",
+            "",
+            "",
+            1500,
+            1800,
+            0,
+            "kaldi",
+            "おいしい",
+            3,
+            3,
+            true,
+            timeStamp + 4000
         )
 
 
@@ -51,7 +108,9 @@ class Constants {
             8,
             40,
             "おいしい！",
-            20220909
+            true,
+            3,
+            System.currentTimeMillis()
         )
 
         val sampleRecipe2 = Recipe(
@@ -66,7 +125,9 @@ class Constants {
             8,
             40,
             "おいしい！おいしい！",
-            20220909
+            false,
+            4,
+            System.currentTimeMillis()
         )
 
         val sampleTaste = Taste(

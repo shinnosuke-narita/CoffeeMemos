@@ -113,6 +113,8 @@ class NewRecipeViewModel(
                     _grindSizeIndex,
                     iAmountOfBeans,
                     comment,
+                    true,
+                    3,
                     createdAt
                 )
             )

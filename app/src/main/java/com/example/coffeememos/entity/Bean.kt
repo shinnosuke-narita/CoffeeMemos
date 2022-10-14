@@ -19,7 +19,8 @@ data class Bean(
     val process: Int,
     val store: String,
     val comment: String,
-    val review: Int,
+    val rating: Int,
     val image: Int,
+    val isFavorite: Boolean,
     val createdAt: Long
 ) : Serializable

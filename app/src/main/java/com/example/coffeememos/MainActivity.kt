@@ -7,23 +7,16 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.coffeememos.Constants
 import com.example.coffeememos.databinding.ActivityMainBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var binding: ActivityMainBinding
 
     private lateinit var navController: NavController
-
-    val databaseResetFlag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
 
         // データベース初期化
-        if (databaseResetFlag) {
+        if (Constants.databaseResetFlag) {
             GlobalScope.launch {
 
 
@@ -71,6 +64,10 @@ class MainActivity : AppCompatActivity() {
 
                 beanDao.insert(Constants.sampleBean)
                 beanDao.insert(Constants.sampleBean2)
+                beanDao.insert(Constants.sampleBean3)
+                beanDao.insert(Constants.sampleBean4)
+                beanDao.insert(Constants.sampleBean5)
+
 
 
                 val beans = beanDao.getAll()

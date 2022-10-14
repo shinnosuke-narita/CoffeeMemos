@@ -34,5 +34,7 @@ data class Recipe(
     val grindSize: Int,
     val amountOfBeans: Int,
     val comment: String,
+    val isFavorite: Boolean,
+    val rating: Int,
     val createdAt: Long
 )
