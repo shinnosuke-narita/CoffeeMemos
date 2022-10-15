@@ -105,10 +105,10 @@
                 android:textColor="#D3AA88"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="@+id/rate"/>
+                app:layout_constraintBottom_toBottomOf="@+id/rating"/>
 
             <TextView
-                android:id="@+id/rate"
+                android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"

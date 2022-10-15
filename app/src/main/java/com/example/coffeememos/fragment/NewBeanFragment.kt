@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
@@ -29,7 +30,11 @@ class NewBeanFragment : Fragment() {
     // アクティビティのコンテキストを保持
     private var mContext: Context? = null
 
-    private lateinit var viewModel: NewBeanViewModel
+    private val viewModel: NewBeanViewModel by viewModels {
+        // viewModelの初期化
+        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
+        NewBeanViewModelFactory(db.beanDao())
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -50,10 +55,6 @@ class NewBeanFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // viewModelの初期化
-        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        viewModel = NewBeanViewModelFactory(db.beanDao()).create(NewBeanViewModel::class.java)
 
         // お気に入り 監視処理
         viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
@@ -168,6 +169,7 @@ class NewBeanFragment : Fragment() {
 
         viewModel.changeRatingState(1)
         viewModel.setProcessIndex(0)
+        viewModel.setResetFlag(false)
     }
 
     override fun onDestroyView() {

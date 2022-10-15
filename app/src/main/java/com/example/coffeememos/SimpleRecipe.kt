@@ -5,5 +5,7 @@ data class SimpleRecipe(
     val country: String,
     val createdAt: String,
     val tool: String,
-    val roast: String
+    val roast: String,
+    val rating: String,
+    val isFavorite: Boolean
 )

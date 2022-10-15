@@ -1,9 +1,10 @@
 package com.example.coffeememos.adapter
 
+import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 
 
-abstract class BaseAdapter<T, U : RecyclerView.ViewHolder>(protected val data: List<T>) : RecyclerView.Adapter<U>() {
+abstract class BaseAdapter<T, U : RecyclerView.ViewHolder>(val context: Context, protected val data: List<T>) : RecyclerView.Adapter<U>() {
     protected lateinit var mListener: OnItemClickListener<T>
 
     override fun getItemCount(): Int {

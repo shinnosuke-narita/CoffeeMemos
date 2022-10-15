@@ -1,5 +1,6 @@
 package com.example.coffeememos.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.R
 import com.example.coffeememos.entity.Bean
 
-class BeanAdapter(data: List<Bean>) : BaseAdapter<Bean, BeanViewHolder>(data) {
+class BeanAdapter(context: Context, data: List<Bean>) : BaseAdapter<Bean, BeanViewHolder>(context, data) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeanViewHolder {
         return BeanViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.bean_item, parent, false)
@@ -22,7 +23,7 @@ class BeanAdapter(data: List<Bean>) : BaseAdapter<Bean, BeanViewHolder>(data) {
         holder.elevationFrom.text   = data[position].elevationFrom.toString()
         holder.elevationTo.text     = data[position].elevationTo.toString()
         holder.store.text           = data[position].store
-        holder.rate.text            = data[position].rating.toString()
+        holder.rate.text            = context.getString(R.string.rate_decimal, data[position].rating.toString())
 
         // リストアイテムクリック時のコールバック
         holder.itemView.setOnClickListener { v ->

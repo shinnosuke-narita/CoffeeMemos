@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +29,10 @@ class HomeFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels {
+        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
+        HomeViewModelFactory(db.beanDao())
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -52,9 +56,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        viewModel = HomeViewModelFactory(db.beanDao()).create(HomeViewModel::class.java)
-
         // RecyclerView セットアップ
         mContext?.let {
             setUpRecyclerView(it, binding.recipeList)
@@ -63,29 +64,42 @@ class HomeFragment : Fragment() {
         }
 
         // SimpleRecipeList 監視処理
-        viewModel.simpleRecipeList.observe(viewLifecycleOwner) { list ->
+        viewModel.newRecipeList.observe(viewLifecycleOwner) { list ->
             if (list.isEmpty()) return@observe
 
-            binding.recipeList.adapter = RecipeAdapter(list).apply {
-                setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
-                    override fun onClick(view: View, recipe: SimpleRecipe) {
-                        Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
-                    }
-                })
+            mContext?.let { context ->
+                binding.recipeList.adapter = RecipeAdapter(context, list).apply {
+                    setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
+                        override fun onClick(view: View, recipe: SimpleRecipe) {
+                            Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }
             }
-            binding.favoriteRecipeList.adapter = RecipeAdapter(list).apply {
-                setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
-                    override fun onClick(view: View, recipe: SimpleRecipe) {
-                        Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
-                    }
-                })
+
+        }
+
+        viewModel.favoriteRecipeList.observe(viewLifecycleOwner) { favoriteList ->
+            mContext?.let { context ->
+                binding.favoriteRecipeList.adapter = RecipeAdapter(context, favoriteList).apply {
+                    setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
+                        override fun onClick(view: View, recipe: SimpleRecipe) {
+                            Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }
             }
-            binding.highRatingRecipeList.adapter = RecipeAdapter(list).apply {
-                setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
-                    override fun onClick(view: View, recipe: SimpleRecipe) {
-                        Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
-                    }
-                })
+        }
+
+        viewModel.highRatingRecipeList.observe(viewLifecycleOwner) { highRatingList ->
+            mContext?.let { context ->
+                binding.highRatingRecipeList.adapter = RecipeAdapter(context, highRatingList).apply {
+                    setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
+                        override fun onClick(view: View, recipe: SimpleRecipe) {
+                            Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }
             }
         }
 

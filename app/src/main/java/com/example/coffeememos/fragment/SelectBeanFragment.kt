@@ -60,26 +60,29 @@ class SelectBeanFragment : Fragment() {
         viewModel.beanList.observe(viewLifecycleOwner) { list ->
             if (list.isEmpty()) return@observe
 
-            rv.adapter = BeanAdapter(list).apply {
-                setOnItemClickListener (object : OnItemClickListener<Bean> {
-                    override fun onClick(view: View, bean: Bean) {
-                        val bundle = Bundle().apply {
-                            putLong("beanId", bean.id)
-                            putString("country", bean.country)
-                            putString("district", bean.district)
-                            putString("farm", bean.farm)
-                            putString("elevationFrom", bean.elevationFrom.toString())
-                            putString("elevationTo", bean.elevationTo.toString())
-                            putString("store", bean.store)
-                            putString("process", Constants.processList[bean.process])
-                            putString("rating", bean.rating.toString())
-                        }
-                        setFragmentResult("selectedBean", bundle)
+            mContext?.let { context ->
+                rv.adapter = BeanAdapter(context, list).apply {
+                    setOnItemClickListener (object : OnItemClickListener<Bean> {
+                        override fun onClick(view: View, bean: Bean) {
+                            val bundle = Bundle().apply {
+                                putLong("beanId", bean.id)
+                                putString("country", bean.country)
+                                putString("district", bean.district)
+                                putString("farm", bean.farm)
+                                putString("elevationFrom", bean.elevationFrom.toString())
+                                putString("elevationTo", bean.elevationTo.toString())
+                                putString("store", bean.store)
+                                putString("process", Constants.processList[bean.process])
+                                putString("rating", bean.rating.toString())
+                            }
+                            setFragmentResult("selectedBean", bundle)
 
-                        findNavController().popBackStack()
-                    }
-                })
+                            findNavController().popBackStack()
+                        }
+                    })
+                }
             }
+
         }
     }
 

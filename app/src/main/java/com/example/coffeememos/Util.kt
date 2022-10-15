@@ -1,5 +1,7 @@
 package com.example.coffeememos
 
+import android.content.Context
+import android.content.res.Resources
 import android.text.TextUtils.isEmpty
 import android.util.Log
 import kotlinx.coroutines.delay
@@ -28,7 +30,6 @@ class Util {
             val format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
             return localDateTime.format(format)
         }
-
 
     }
 }

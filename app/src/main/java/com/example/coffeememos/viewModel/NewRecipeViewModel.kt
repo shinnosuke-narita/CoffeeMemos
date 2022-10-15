@@ -17,6 +17,10 @@ class NewRecipeViewModel(
     private val beanDao: BeanDao,
     private val tasteDao: TasteDao
 ) : ViewModel() {
+    // お気に入り
+    private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isFavorite: LiveData<Boolean> = _isFavorite
+
     /**
      * taste
      */
@@ -34,6 +38,30 @@ class NewRecipeViewModel(
 
     private var _flavor: MutableLiveData<Int> = MutableLiveData(3)
     val flavor: LiveData<Int> = _flavor
+
+    // 現在のrate(初期値3)
+    private var currentRating: Int = 3
+
+    /**
+     * rateの状態管理フラグ
+     */
+    private var _starFirst: MutableLiveData<Boolean> = MutableLiveData(true)
+    val starFirst: LiveData<Boolean> = _starFirst
+
+    private var _starSecond: MutableLiveData<Boolean> = MutableLiveData(false)
+    val starSecond: LiveData<Boolean> = _starSecond
+
+    private var _starThird: MutableLiveData<Boolean> = MutableLiveData(false)
+    val starThird: LiveData<Boolean> = _starThird
+
+    private var _starFourth: MutableLiveData<Boolean> = MutableLiveData(false)
+    val starFourth: LiveData<Boolean> = _starFourth
+
+    private var _starFifth: MutableLiveData<Boolean> = MutableLiveData(false)
+    val starFifth: LiveData<Boolean> = _starFifth
+
+    private val starList = listOf(_starFirst, _starSecond, _starThird, _starFourth, _starFifth)
+
 
     /**
      * menuの状態管理フラグ
@@ -60,19 +88,30 @@ class NewRecipeViewModel(
     private var _selectedBeanId: Long? = null
 
 
+    fun setFavoriteFlag(flag: Boolean) {
+        _isFavorite.value = flag
+    }
+
     fun changeTasteValue(tasteKind: TasteKind, progress: Int) {
         // 1 ~ 5 の範囲にするため
         val currentValue = progress + 1
 
         when(tasteKind) {
-            TasteKind.SOUR   -> _sour.value = currentValue
+            TasteKind.SOUR   -> _sour.value   = currentValue
             TasteKind.BITTER -> _bitter.value = currentValue
-            TasteKind.SWEET  -> _sweet.value = currentValue
-            TasteKind.RICH   -> _rich.value = currentValue
+            TasteKind.SWEET  -> _sweet.value  = currentValue
+            TasteKind.RICH   -> _rich.value   = currentValue
             TasteKind.FLAVOR -> _flavor.value = currentValue
         }
     }
 
+    // rateのstate変更メソッド
+    fun changeRatingState(selectedRate: Int) {
+        currentRating = selectedRate
+        for ((index, star) in starList.withIndex()) {
+            star.value = index < selectedRate
+        }
+    }
 
     fun createNewRecipeAndTaste(
         tool: String,
@@ -86,6 +125,7 @@ class NewRecipeViewModel(
         viewModelScope.launch {
             var newestRecipe: Recipe? = null
 
+            // 最新のレシピを取得
             val job = launch {
                 newestRecipe = recipeDao.getNewestRecipe()
             }
@@ -94,47 +134,46 @@ class NewRecipeViewModel(
             val createdAt = System.currentTimeMillis()
 
             // 型変換
-            val iPreInfusionTime = Util.convertStringIntoIntIfPossible(preInfusionTime)
-            val iTemperature = Util.convertStringIntoIntIfPossible(temperature)
-            val iAmountOfBeans = Util.convertStringIntoIntIfPossible(amountOfBeans)
+            val iPreInfusionTime  = Util.convertStringIntoIntIfPossible(preInfusionTime)
+            val iTemperature      = Util.convertStringIntoIntIfPossible(temperature)
+            val iAmountOfBeans    = Util.convertStringIntoIntIfPossible(amountOfBeans)
             val iAmountExtraction = Util.convertStringIntoIntIfPossible(amountExtraction)
-            val iExtractionTime = Util.convertStringIntoIntIfPossible(extractionTime)
+            val iExtractionTime   = Util.convertStringIntoIntIfPossible(extractionTime)
 
             recipeDao.insert(
                 Recipe(
-                    0,
-                   _selectedBeanId ?: 1,
-                    tool,
-                    _roastIndex,
-                    iExtractionTime,
-                    iPreInfusionTime,
-                    iAmountExtraction,
-                    iTemperature,
-                    _grindSizeIndex,
-                    iAmountOfBeans,
-                    comment,
-                    true,
-                    3,
-                    createdAt
+                    id               = 0,
+                    beanId           = _selectedBeanId ?: 1,
+                    tool             = tool,
+                    roast            = _roastIndex,
+                    extractionTime   = iExtractionTime,
+                    preInfusionTime  = iPreInfusionTime,
+                    amountExtraction = iAmountExtraction,
+                    temperature      = iTemperature,
+                    grindSize        = _grindSizeIndex,
+                    amountOfBeans    = iAmountOfBeans,
+                    comment          = comment,
+                    isFavorite       = _isFavorite.value ?: false,
+                    rating           = currentRating,
+                    createdAt        = createdAt
                 )
             )
-
-            // レシピIDを紐づける
-            val tasteRecipeId: Long =
-            if (newestRecipe == null) 1 else newestRecipe!!.id + 1
 
             // 最新レシピの取得を待つ
             job.join()
 
+            // レシピIDを紐づける
+            val tasteRecipeId: Long = if (newestRecipe == null) 1 else newestRecipe!!.id + 1
+
             tasteDao.insert(
                 Taste(
-                    0,
-                    tasteRecipeId,
-                    sour.value ?: 3 ,
-                    bitter.value ?: 3,
-                    sweet.value ?: 3,
-                    rich.value ?: 3,
-                    flavor.value ?: 3
+                    id       = 0,
+                    recipeId = tasteRecipeId,
+                    sour     = sour.value    ?: 3,
+                    bitter   = bitter.value  ?: 3,
+                    sweet    = sweet.value   ?: 3,
+                    rich     = rich.value    ?: 3,
+                    flavor   = flavor.value  ?: 3
                 )
             )
         }

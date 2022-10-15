@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.newRecipeFragment  -> {
                     hideBottomNav()
-                    showToolbar()
+                    hideToolbar()
                 }
                 R.id.newBeanFragment    -> {
                     hideBottomNav()

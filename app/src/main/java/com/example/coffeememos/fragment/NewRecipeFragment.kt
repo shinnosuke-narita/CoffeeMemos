@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
 import com.example.coffeememos.*
@@ -40,7 +41,11 @@ class NewRecipeFragment :
     // アクティビティのコンテキストを保持
     private var mContext: Context? = null
 
-    private lateinit var viewModel: NewRecipeViewModel
+    private val  viewModel: NewRecipeViewModel by viewModels {
+        // viewModelの初期化
+        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
+        NewRecipeViewModelFactory(db.recipeDao(), db.beanDao(), db.tasteDao())
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -63,11 +68,16 @@ class NewRecipeFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // viewModelの初期化
-        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        viewModel = NewRecipeViewModelFactory(
-                db.recipeDao(), db.beanDao(), db.tasteDao()
-            ).create(NewRecipeViewModel::class.java)
+        // お気に入り 監視処理
+        viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
+            if (isFavorite) binding.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
+            else binding.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+
+        binding.favoriteBtn.setOnClickListener {
+            if (viewModel.isFavorite.value == true) viewModel.setFavoriteFlag(false)
+            else viewModel.setFavoriteFlag(true)
+        }
 
 
         /**
@@ -107,6 +117,7 @@ class NewRecipeFragment :
         /**
          * fab 監視処理
          */
+        // TODO 隠れたメニューのvisibility GONE調整
         viewModel.isMenuOpened.observe(viewLifecycleOwner) { state ->
             when(state) {
                 NewRecipeMenuState.MENU_OPENED -> {
@@ -123,6 +134,39 @@ class NewRecipeFragment :
                 }
             }
         }
+
+        /**
+         * rateの監視処理
+         */
+        viewModel.starFirst.observe(viewLifecycleOwner) { shouldSetColor ->
+            if (shouldSetColor) binding.starFirst.setImageResource(R.drawable.ic_baseline_star_yellow)
+            else binding.starFirst.setImageResource(R.drawable.ic_baseline_star_grey)
+        }
+        viewModel.starSecond.observe(viewLifecycleOwner) { shouldSetColor ->
+            if (shouldSetColor) binding.starSecond.setImageResource(R.drawable.ic_baseline_star_yellow)
+            else binding.starSecond.setImageResource(R.drawable.ic_baseline_star_grey)
+        }
+        viewModel.starThird.observe(viewLifecycleOwner) { shouldSetColor ->
+            if (shouldSetColor) binding.starThird.setImageResource(R.drawable.ic_baseline_star_yellow)
+            else binding.starThird.setImageResource(R.drawable.ic_baseline_star_grey)
+        }
+        viewModel.starFourth.observe(viewLifecycleOwner) { shouldSetColor ->
+            if (shouldSetColor) binding.starFourth.setImageResource(R.drawable.ic_baseline_star_yellow)
+            else binding.starFourth.setImageResource(R.drawable.ic_baseline_star_grey)
+        }
+        viewModel.starFifth.observe(viewLifecycleOwner) { shouldSetColor ->
+            if (shouldSetColor) binding.starFifth.setImageResource(R.drawable.ic_baseline_star_yellow)
+            else binding.starFifth.setImageResource(R.drawable.ic_baseline_star_grey)
+        }
+
+        /**
+         * rateのクリックリスナー
+         */
+        binding.starFirst.setOnClickListener { viewModel.changeRatingState(1) }
+        binding.starSecond.setOnClickListener { viewModel.changeRatingState(2) }
+        binding.starThird.setOnClickListener { viewModel.changeRatingState(3) }
+        binding.starFourth.setOnClickListener { viewModel.changeRatingState(4) }
+        binding.starFifth.setOnClickListener { viewModel.changeRatingState(5) }
 
         /**
          * resetView 監視処理
@@ -246,13 +290,13 @@ class NewRecipeFragment :
     /**
      * アニメーション関連
      */
-    fun fadeInAnimation(view: View) {
+    private fun fadeInAnimation(view: View) {
         ObjectAnimator.ofFloat(view, "alpha", 0.0f, 1.0f).apply {
             duration = 500
         }.start()
     }
 
-    fun fadeOutAnimation(view: View) {
+    private fun fadeOutAnimation(view: View) {
         ObjectAnimator.ofFloat(view, "alpha",  0.0f).apply {
             duration = 500
         }.start()
@@ -262,6 +306,9 @@ class NewRecipeFragment :
      * viewのリセット
      */
     private fun resetView() {
+        // お気に入り の初期化
+        viewModel.setFavoriteFlag(false)
+
         // seekbar の初期化
         viewModel.setSourValue(3)
         viewModel.setBitterValue(3)
@@ -281,6 +328,9 @@ class NewRecipeFragment :
         binding.extractionTime.setText("")
         binding.amountExtraction.setText("")
         binding.comment.setText("")
+
+        // rating の初期化
+        viewModel.changeRatingState(1)
 
         // メニューを閉じる
         viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
