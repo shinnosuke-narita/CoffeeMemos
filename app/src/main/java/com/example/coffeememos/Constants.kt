@@ -172,5 +172,7 @@ class Constants {
             "アナエロビックファーメンテーション",
 
         )
+
+        val today: String = Util.formatEpochTimeMills(System.currentTimeMillis(), "yyyy/MM/dd")
     }
 }

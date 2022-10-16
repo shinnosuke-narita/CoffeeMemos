@@ -22,14 +22,13 @@ class Util {
             Log.d("sample", "hello$num")
         }
 
-        fun formatEpochTimeMills(epochTimeMills: Long): String {
+        fun formatEpochTimeMills(epochTimeMills: Long, pattern: String): String {
             val localDateTime = LocalDateTime.ofInstant(
                 Instant.ofEpochMilli(epochTimeMills),
                 ZoneId.systemDefault()
             )
-            val format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
+            val format = DateTimeFormatter.ofPattern(pattern)
             return localDateTime.format(format)
         }
-
     }
 }

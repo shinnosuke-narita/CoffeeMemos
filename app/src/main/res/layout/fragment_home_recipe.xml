@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.HomeFragment">
+    tools:context=".fragment.HomeRecipeFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                     <TextView
-                        android:id="@+id/allRecipeAmount"
+                        android:id="@+id/recipeTotalNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="25sp"
@@ -69,13 +69,13 @@
                         android:text="30"/>
 
                     <TextView
-                        android:id="@+id/allRecipeText"
+                        android:id="@+id/recipeTotalNumText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        app:layout_constraintTop_toBottomOf="@id/allRecipeAmount"
-                        app:layout_constraintStart_toStartOf="@id/allRecipeAmount"
-                        app:layout_constraintEnd_toEndOf="@+id/allRecipeAmount"
+                        app:layout_constraintTop_toBottomOf="@id/recipeTotalNum"
+                        app:layout_constraintStart_toStartOf="@id/recipeTotalNum"
+                        app:layout_constraintEnd_toEndOf="@+id/recipeTotalNum"
                         android:text="All"/>
 
                     <View
@@ -84,19 +84,19 @@
                         android:layout_height="18dp"
                         android:background="#939393"
                         android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toEndOf="@+id/allRecipeText"
-                        app:layout_constraintTop_toTopOf="@id/allRecipeAmount"
-                        app:layout_constraintEnd_toStartOf="@+id/favoriteRecipeAmount"
-                        app:layout_constraintBottom_toBottomOf="@+id/allRecipeText"/>
+                        app:layout_constraintStart_toEndOf="@+id/recipeTotalNumText"
+                        app:layout_constraintTop_toTopOf="@id/recipeTotalNum"
+                        app:layout_constraintEnd_toStartOf="@+id/favoriteRecipeNum"
+                        app:layout_constraintBottom_toBottomOf="@+id/recipeTotalNumText"/>
 
                     <TextView
-                        android:id="@+id/favoriteRecipeAmount"
+                        android:id="@+id/favoriteRecipeNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="25sp"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="@+id/allRecipeAmount"
+                        app:layout_constraintTop_toTopOf="@+id/recipeTotalNum"
                         app:layout_constraintStart_toEndOf="@+id/dataBorderFirst"
                         app:layout_constraintEnd_toStartOf="@+id/dataBorderSecond"
                         android:text="30"/>
@@ -106,9 +106,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        app:layout_constraintTop_toBottomOf="@id/favoriteRecipeAmount"
-                        app:layout_constraintStart_toStartOf="@id/favoriteRecipeAmount"
-                        app:layout_constraintEnd_toEndOf="@+id/favoriteRecipeAmount"
+                        app:layout_constraintTop_toBottomOf="@id/favoriteRecipeNum"
+                        app:layout_constraintStart_toStartOf="@id/favoriteRecipeNum"
+                        app:layout_constraintEnd_toEndOf="@+id/favoriteRecipeNum"
                         android:text="favorites"/>
 
                     <View
@@ -117,19 +117,19 @@
                         android:layout_height="18dp"
                         android:background="#939393"
                         android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toEndOf="@+id/favoriteRecipeAmount"
-                        app:layout_constraintEnd_toStartOf="@+id/todayRecipeAmount"
-                        app:layout_constraintTop_toTopOf="@id/allRecipeAmount"
-                        app:layout_constraintBottom_toBottomOf="@+id/allRecipeText"/>
+                        app:layout_constraintStart_toEndOf="@+id/favoriteRecipeNum"
+                        app:layout_constraintEnd_toStartOf="@+id/todayRecipeNum"
+                        app:layout_constraintTop_toTopOf="@id/recipeTotalNum"
+                        app:layout_constraintBottom_toBottomOf="@+id/recipeTotalNumText"/>
 
                     <TextView
-                        android:id="@+id/todayRecipeAmount"
+                        android:id="@+id/todayRecipeNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="25sp"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="@+id/allRecipeAmount"
+                        app:layout_constraintTop_toTopOf="@+id/recipeTotalNum"
                         app:layout_constraintStart_toEndOf="@+id/dataBorderSecond"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:text="30"/>
@@ -139,9 +139,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/todayRecipeAmount"
-                        app:layout_constraintStart_toStartOf="@id/todayRecipeAmount"
-                        app:layout_constraintEnd_toEndOf="@+id/todayRecipeAmount"
+                        app:layout_constraintTop_toBottomOf="@id/todayRecipeNum"
+                        app:layout_constraintStart_toStartOf="@id/todayRecipeNum"
+                        app:layout_constraintEnd_toEndOf="@+id/todayRecipeNum"
                         android:text="today"/>
 
                     <TextView
@@ -158,7 +158,7 @@
                         android:textSize="17sp"
                         android:textColor="#ffffff"
                         android:background="@drawable/home_create_button_background"
-                        app:layout_constraintTop_toBottomOf="@+id/allRecipeText"
+                        app:layout_constraintTop_toBottomOf="@+id/recipeTotalNumText"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>

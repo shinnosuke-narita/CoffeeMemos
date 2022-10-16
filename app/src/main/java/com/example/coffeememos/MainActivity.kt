@@ -43,15 +43,11 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener {_, destination, _ ->
             when(destination.id) {
-                R.id.homeFragment       -> {
+                R.id.homeRecipeFragment       -> {
                     showBottomNav()
                     showToolbar()
                 }
-                R.id.favoriteFragment   -> {
-                    showBottomNav()
-                    showToolbar()
-                }
-                R.id.beansFragment      -> {
+                R.id.homeBeansFragment      -> {
                     showBottomNav()
                     showToolbar()
                 }

@@ -16,13 +16,9 @@ import com.example.coffeememos.R
 import com.example.coffeememos.SimpleRecipe
 import com.example.coffeememos.adapter.OnItemClickListener
 import com.example.coffeememos.adapter.RecipeAdapter
-import com.example.coffeememos.databinding.FragmentHomeBinding
 import com.example.coffeememos.databinding.FragmentHomeRecipeBinding
 import com.example.coffeememos.viewModel.HomeRecipeViewModel
 import com.example.coffeememos.viewModel.HomeRecipeViewModelFactory
-import com.example.coffeememos.viewModel.HomeViewModel
-import com.example.coffeememos.viewModel.HomeViewModelFactory
-
 
 class HomeRecipeFragment : Fragment() {
     private var mContext: Context? = null
@@ -40,11 +36,6 @@ class HomeRecipeFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -66,6 +57,14 @@ class HomeRecipeFragment : Fragment() {
             setUpRecyclerView(it, binding.highRatingRecipeList)
         }
 
+        viewModel.allSimpleRecipeList.observe(viewLifecycleOwner) { list ->
+            binding.recipeTotalNum.text = list.size.toString()
+        }
+
+        viewModel.todayRecipeList.observe(viewLifecycleOwner) { todayRecipeNum ->
+            binding.todayRecipeNum.text = todayRecipeNum.size.toString()
+        }
+
         // SimpleRecipeList 監視処理
         viewModel.newRecipeList.observe(viewLifecycleOwner) { list ->
             if (list.isEmpty()) return@observe
@@ -83,6 +82,8 @@ class HomeRecipeFragment : Fragment() {
         }
 
         viewModel.favoriteRecipeList.observe(viewLifecycleOwner) { favoriteList ->
+            binding.recipeTotalNum.text = favoriteList.size.toString()
+
             mContext?.let { context ->
                 binding.favoriteRecipeList.adapter = RecipeAdapter(context, favoriteList).apply {
                     setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
@@ -109,6 +110,11 @@ class HomeRecipeFragment : Fragment() {
         // レシピ新規作成画面へ遷移
         binding.createRecipeBtn.setOnClickListener { v ->
             Navigation.findNavController(v).navigate(R.id.newRecipeFragment)
+        }
+
+        // 豆ホーム画面へ遷移
+        binding.goToBeanBtn.setOnClickListener { v ->
+            Navigation.findNavController(v).navigate(R.id.homeBeansFragment)
         }
     }
 

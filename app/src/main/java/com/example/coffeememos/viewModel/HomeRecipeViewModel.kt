@@ -15,7 +15,7 @@ class HomeRecipeViewModel(private val beanDao: BeanDao) : ViewModel() {
 
     private var beanWithRecipeList: MutableLiveData<Map<Bean, List<Recipe>>> = MutableLiveData(mapOf())
 
-    private val allSimpleRecipeList: LiveData<MutableList<SimpleRecipe>> = Transformations.map(beanWithRecipeList) { fullList ->
+    val allSimpleRecipeList: LiveData<MutableList<SimpleRecipe>> = Transformations.map(beanWithRecipeList) { fullList ->
         val result = mutableListOf<SimpleRecipe>()
 
         for ((bean, recipes) in fullList) {
@@ -24,7 +24,7 @@ class HomeRecipeViewModel(private val beanDao: BeanDao) : ViewModel() {
                 val item = SimpleRecipe(
                     recipe.id,
                     bean.country,
-                    Util.formatEpochTimeMills(recipe.createdAt),
+                    Util.formatEpochTimeMills(recipe.createdAt, "yyyy/MM/dd HH:mm"),
                     recipe.tool,
                     Constants.roastList[recipe.roast],
                     recipe.rating.toString(),
@@ -33,8 +33,13 @@ class HomeRecipeViewModel(private val beanDao: BeanDao) : ViewModel() {
             }
         }
 
+        // 新しい順にソート
         result.sortByDescending { it.recipeId }
         return@map result
+    }
+
+    val todayRecipeList = Transformations.map(allSimpleRecipeList) { allRecipe ->
+        return@map allRecipe.filter { recipe: SimpleRecipe -> recipe.createdAt.contains(Constants.today) }
     }
 
     val newRecipeList: LiveData<List<SimpleRecipe>> = Transformations.map(allSimpleRecipeList) { allRecipe ->
