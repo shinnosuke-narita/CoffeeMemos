@@ -6,79 +6,88 @@
     android:layout_height="match_parent"
     tools:context=".fragment.HomeFragment">
 
-    <ScrollView
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="match_parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="80dp">
 
-            <TextView
-                android:id="@+id/newRecipeHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/new_recipe_Header"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recipeList"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/newRecipeHeader"
-                app:layout_constraintTop_toBottomOf="@+id/newRecipeHeader"/>
 
-            <TextView
-                android:id="@+id/favoriteRecipeHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/favorite_recipe_header"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_marginTop="30dp"
-                app:layout_constraintTop_toBottomOf="@+id/recipeList"
-                app:layout_constraintStart_toStartOf="@+id/newRecipeHeader"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/favoriteRecipeList"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/newRecipeHeader"
-                app:layout_constraintTop_toBottomOf="@+id/favoriteRecipeHeader"/>
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent">-->
 
-            <TextView
-                android:id="@+id/highRatingRecipeHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/high_rating_header"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_marginTop="30dp"
-                app:layout_constraintTop_toBottomOf="@+id/favoriteRecipeList"
-                app:layout_constraintStart_toStartOf="@+id/newRecipeHeader"/>
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingBottom="80dp">-->
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/highRatingRecipeList"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/newRecipeHeader"
-                app:layout_constraintTop_toBottomOf="@+id/highRatingRecipeHeader"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+<!--            <TextView-->
+<!--                android:id="@+id/newRecipeHeader"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/new_recipe_Header"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="20sp"-->
+<!--                android:layout_marginStart="15dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"/>-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/recipeList"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/newRecipeHeader"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/newRecipeHeader"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/favoriteRecipeHeader"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/favorite_recipe_header"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="20sp"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/recipeList"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/newRecipeHeader"/>-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/favoriteRecipeList"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/newRecipeHeader"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/favoriteRecipeHeader"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/highRatingRecipeHeader"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/high_rating_header"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="20sp"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/favoriteRecipeList"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/newRecipeHeader"/>-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/highRatingRecipeList"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/newRecipeHeader"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/highRatingRecipeHeader"/>-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--    </ScrollView>-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newRecipeBtn"
         android:layout_width="wrap_content"

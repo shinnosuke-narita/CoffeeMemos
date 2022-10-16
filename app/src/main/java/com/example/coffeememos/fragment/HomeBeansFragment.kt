@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.example.coffeememos.R
-import com.example.coffeememos.databinding.FragmentBeansBinding
+import com.example.coffeememos.databinding.FragmentHomeBeansBinding
 import com.example.coffeememos.databinding.FragmentNewBeanBinding
 
 
-class BeansFragment : Fragment() {
+class HomeBeansFragment : Fragment() {
     // viewBinding
-    private var _binding: FragmentBeansBinding? = null
+    private var _binding: FragmentHomeBeansBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,7 @@ class BeansFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentBeansBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBeansBinding.inflate(inflater, container, false)
         return binding.root
     }
 

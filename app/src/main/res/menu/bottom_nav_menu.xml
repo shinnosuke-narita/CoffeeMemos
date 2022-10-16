@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/homeFragment"
+        android:id="@+id/homeRecipeFragment"
         android:title="@string/bottom_nav_home"
         android:enabled="true"
         app:showAsAction="ifRoom"
@@ -16,11 +16,11 @@
         android:icon="@drawable/ic_baseline_favorite_24"/>
 
     <item
-        android:id="@+id/beansFragment"
-        android:title="@string/bottom_nav_beans"
+        android:id="@+id/searchFragment"
+        android:title="@string/bottom_nav_search"
         android:enabled="true"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/coffee_bean_icon"/>
+        android:icon="@drawable/ic_baseline_search_24"/>
 
     <item
         android:id="@+id/timerFragment"

@@ -3,33 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@+id/homeFragment">
-
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.coffeememos.fragment.HomeFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_newRecipeFragment"
-            app:destination="@id/newRecipeFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/favoriteFragment"
-        android:name="com.example.coffeememos.fragment.FavoriteFragment"
-        android:label="Favorite"
-        tools:layout="@layout/fragment_favorite" />
-
-    <fragment
-        android:id="@+id/beansFragment"
-        android:name="com.example.coffeememos.fragment.BeansFragment"
-        android:label="Beans"
-        tools:layout="@layout/fragment_beans" >
-        <action
-            android:id="@+id/action_beansFragment_to_newBeanFragment"
-            app:destination="@id/newBeanFragment" />
-    </fragment>
+    app:startDestination="@id/homeRecipeFragment">
 
     <fragment
         android:id="@+id/timerFragment"
@@ -66,4 +40,25 @@
             android:id="@+id/action_selectBeanFragment_to_newRecipeFragment"
             app:destination="@id/newRecipeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.coffeememos.fragment.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/homeRecipeFragment"
+        android:name="com.example.coffeememos.fragment.HomeRecipeFragment"
+        android:label="Home" >
+        <action
+            android:id="@+id/action_homeRecipeFragment_to_newRecipeFragment"
+            app:destination="@id/newRecipeFragment" />
+        <action
+            android:id="@+id/action_homeRecipeFragment_to_homeBeansFragment"
+            app:destination="@id/homeBeansFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeBeansFragment"
+        android:name="com.example.coffeememos.fragment.HomeBeansFragment"
+        android:label="fragment_home_beans"
+        tools:layout="@layout/fragment_home_beans" />
 </navigation>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape
+            android:shape="oval">
+            <stroke
+                android:width="6dp"
+                android:color="#9B757E"/>
+        </shape>
+    </item>
+    <item
+        android:top="35dp"
+        android:left="35dp"
+        android:bottom="35dp"
+        android:right="35dp"
+        android:drawable="@drawable/memo_icon"
+        >
+    </item>
+</layer-list>
