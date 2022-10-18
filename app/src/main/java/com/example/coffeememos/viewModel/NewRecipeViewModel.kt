@@ -2,11 +2,10 @@ package com.example.coffeememos.viewModel
 
 import androidx.lifecycle.*
 import com.example.coffeememos.TasteKind
-import com.example.coffeememos.Util
+import com.example.coffeememos.util.Util
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.dao.TasteDao
-import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
 import com.example.coffeememos.state.NewRecipeMenuState

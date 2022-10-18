@@ -14,4 +14,13 @@ abstract class BaseAdapter<T, U : RecyclerView.ViewHolder>(val context: Context,
     fun setOnItemClickListener(listener: OnItemClickListener<T>) {
         mListener = listener
     }
+
+    private var _listener: OnFavoriteClickListener? = null
+    interface OnFavoriteClickListener {
+        fun onClick()
+    }
+
+    fun setFavoriteListener(listener: OnFavoriteClickListener) {
+        _listener = listener
+    }
 }

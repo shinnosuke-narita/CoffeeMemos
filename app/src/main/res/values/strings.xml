@@ -41,7 +41,7 @@
     <string name="elevation_width_meters">%1$sm</string>
     <string name="rate_decimal">%1$s.0</string>
 
-    <string name="new_recipe_Header">New Recipes</string>
-    <string name="favorite_recipe_header">Favorite Recipes</string>
+    <string name="new_recipe_Header">New</string>
+    <string name="favorite_recipe_header">Favorites</string>
     <string name="high_rating_header">High Rating</string>
 </resources>

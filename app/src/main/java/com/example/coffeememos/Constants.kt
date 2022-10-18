@@ -3,12 +3,16 @@ package com.example.coffeememos
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
+import com.example.coffeememos.util.DateUtil
+import com.example.coffeememos.util.Util
 
 class Constants {
     companion object {
         private val timeStamp = System.currentTimeMillis()
 
         const val databaseResetFlag = false
+
+        val attributeAuthorUrl = "<a href=\"https://www.flaticon.com/free-icons/coffee\" title=\"coffee icons\">Coffee icons created by srip - Flaticon</a>"
 
         val sampleBean = Bean(
             0,
@@ -172,7 +176,5 @@ class Constants {
             "アナエロビックファーメンテーション",
 
         )
-
-        val today: String = Util.formatEpochTimeMills(System.currentTimeMillis(), "yyyy/MM/dd")
     }
 }

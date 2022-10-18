@@ -3,10 +3,11 @@ package com.example.coffeememos.viewModel
 import androidx.lifecycle.*
 import com.example.coffeememos.Constants
 import com.example.coffeememos.SimpleRecipe
-import com.example.coffeememos.Util
+import com.example.coffeememos.util.Util
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
+import com.example.coffeememos.util.DateUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -24,7 +25,7 @@ class HomeRecipeViewModel(private val beanDao: BeanDao) : ViewModel() {
                 val item = SimpleRecipe(
                     recipe.id,
                     bean.country,
-                    Util.formatEpochTimeMills(recipe.createdAt, "yyyy/MM/dd HH:mm"),
+                    DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern),
                     recipe.tool,
                     Constants.roastList[recipe.roast],
                     recipe.rating.toString(),
@@ -39,7 +40,9 @@ class HomeRecipeViewModel(private val beanDao: BeanDao) : ViewModel() {
     }
 
     val todayRecipeList = Transformations.map(allSimpleRecipeList) { allRecipe ->
-        return@map allRecipe.filter { recipe: SimpleRecipe -> recipe.createdAt.contains(Constants.today) }
+        return@map allRecipe
+            .filter { recipe: SimpleRecipe -> recipe.createdAt.contains(DateUtil.today) }
+            .take(maxDisplayItemAmount)
     }
 
     val newRecipeList: LiveData<List<SimpleRecipe>> = Transformations.map(allSimpleRecipeList) { allRecipe ->

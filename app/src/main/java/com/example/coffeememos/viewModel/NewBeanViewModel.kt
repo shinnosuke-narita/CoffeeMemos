@@ -1,7 +1,7 @@
 package com.example.coffeememos.viewModel
 
 import androidx.lifecycle.*
-import com.example.coffeememos.Util
+import com.example.coffeememos.util.Util
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
 import kotlinx.coroutines.launch

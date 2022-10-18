@@ -1,26 +1,17 @@
-package com.example.coffeememos
+package com.example.coffeememos.util
 
-import android.content.Context
-import android.content.res.Resources
-import android.text.TextUtils.isEmpty
-import android.util.Log
-import kotlinx.coroutines.delay
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-class Util {
+class DateUtil {
     companion object {
-        fun convertStringIntoIntIfPossible(value: String): Int =
-            if (value.isEmpty()) 0 else value.toInt()
+        const val pattern: String = "yyyy/MM/dd HH:mm"
+        const val simplePattern: String = "yyyy/MM/dd"
 
+        val today: String = formatEpochTimeMills(System.currentTimeMillis(), simplePattern)
 
-        // 動作確認用
-        suspend fun printHello(num: Int) {
-            delay(1000L)
-            Log.d("sample", "hello$num")
-        }
 
         fun formatEpochTimeMills(epochTimeMills: Long, pattern: String): String {
             val localDateTime = LocalDateTime.ofInstant(

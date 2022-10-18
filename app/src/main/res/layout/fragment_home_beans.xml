@@ -6,22 +6,234 @@
     android:layout_height="match_parent"
     tools:context=".fragment.HomeBeansFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="beansFragment" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="75dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/homeData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="15dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/beanDataTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textSize="12sp"
+                        android:text="Bean's data"
+                        android:textColor="#9B757E"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/homeBeanIcon"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/home_bean_icon"
+                        app:layout_constraintTop_toBottomOf="@+id/beanDataTitle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/beanTotalNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintTop_toBottomOf="@+id/homeBeanIcon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/dataBorderFirst"
+                        android:text="30"/>
+
+                    <TextView
+                        android:id="@+id/beanTotalNumText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@id/beanTotalNum"
+                        app:layout_constraintStart_toStartOf="@id/beanTotalNum"
+                        app:layout_constraintEnd_toEndOf="@+id/beanTotalNum"
+                        android:text="All"/>
+
+                    <View
+                        android:id="@+id/dataBorderFirst"
+                        android:layout_width="1.5dp"
+                        android:layout_height="18dp"
+                        android:background="#939393"
+                        app:layout_constraintStart_toEndOf="@+id/beanTotalNumText"
+                        app:layout_constraintTop_toTopOf="@id/beanTotalNum"
+                        app:layout_constraintEnd_toStartOf="@+id/favoriteBeanNum"
+                        app:layout_constraintBottom_toBottomOf="@+id/beanTotalNumText"/>
+
+                    <TextView
+                        android:id="@+id/favoriteBeanNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="@+id/beanTotalNum"
+                        app:layout_constraintStart_toEndOf="@+id/dataBorderFirst"
+                        app:layout_constraintEnd_toStartOf="@+id/dataBorderSecond"
+                        android:text="30"/>
+
+                    <TextView
+                        android:id="@+id/favoriteBeanText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@id/favoriteBeanNum"
+                        app:layout_constraintStart_toStartOf="@id/favoriteBeanNum"
+                        app:layout_constraintEnd_toEndOf="@+id/favoriteBeanNum"
+                        android:text="favorites"/>
+
+                    <View
+                        android:id="@+id/dataBorderSecond"
+                        android:layout_width="1.5dp"
+                        android:layout_height="18dp"
+                        android:background="#939393"
+                        app:layout_constraintStart_toEndOf="@+id/favoriteBeanNum"
+                        app:layout_constraintEnd_toStartOf="@+id/todayBeanNum"
+                        app:layout_constraintTop_toTopOf="@id/beanTotalNum"
+                        app:layout_constraintBottom_toBottomOf="@+id/beanTotalNumText"/>
+
+                    <TextView
+                        android:id="@+id/todayBeanNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="@+id/beanTotalNum"
+                        app:layout_constraintStart_toEndOf="@+id/dataBorderSecond"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="30"/>
+
+                    <TextView
+                        android:id="@+id/todayBeanText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        app:layout_constraintTop_toBottomOf="@id/todayBeanNum"
+                        app:layout_constraintStart_toStartOf="@id/todayBeanNum"
+                        app:layout_constraintEnd_toEndOf="@+id/todayBeanNum"
+                        android:text="today"/>
+
+                    <TextView
+                        android:id="@+id/createBeanBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingEnd="60dp"
+                        android:paddingStart="60dp"
+                        android:text="CREATE  NEW  BEAN"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
+                        android:textColor="#ffffff"
+                        android:background="@drawable/home_create_button_background"
+                        app:layout_constraintTop_toBottomOf="@+id/beanTotalNumText"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/newBeanHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_recipe_Header"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/homeData"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/newBeanList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/newBeanHeader"
+                app:layout_constraintTop_toBottomOf="@+id/newBeanHeader"/>
+
+            <TextView
+                android:id="@+id/favoriteBeanHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/favorite_recipe_header"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/newBeanList"
+                app:layout_constraintStart_toStartOf="@+id/newBeanHeader"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/favoriteBeanList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/newBeanHeader"
+                app:layout_constraintTop_toBottomOf="@+id/favoriteBeanHeader"/>
+
+            <TextView
+                android:id="@+id/highRatingBeanHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/high_rating_header"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/favoriteBeanList"
+                app:layout_constraintStart_toStartOf="@+id/newBeanHeader"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/highRatingBeanList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/newBeanHeader"
+                app:layout_constraintTop_toBottomOf="@+id/highRatingBeanHeader"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/newBtn"
+        android:id="@+id/goToRecipeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_add_24"
-        app:tint="#FBFBFB"
-        android:elevation="99dp"
-        app:backgroundTint="@color/teal_200"
-        android:layout_marginEnd="15dp"
+        android:src="@drawable/memo_icon"
         android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
+        android:focusable="true"
+        app:tint="@color/white"
+        app:backgroundTint="#9B757E"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="レシピ新規作成" />
 </androidx.constraintlayout.widget.ConstraintLayout>

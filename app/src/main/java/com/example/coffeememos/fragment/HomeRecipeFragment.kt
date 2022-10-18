@@ -52,7 +52,7 @@ class HomeRecipeFragment : Fragment() {
 
         // RecyclerView セットアップ
         mContext?.let {
-            setUpRecyclerView(it, binding.recipeList)
+            setUpRecyclerView(it, binding.newRecipeList)
             setUpRecyclerView(it, binding.favoriteRecipeList)
             setUpRecyclerView(it, binding.highRatingRecipeList)
         }
@@ -70,7 +70,7 @@ class HomeRecipeFragment : Fragment() {
             if (list.isEmpty()) return@observe
 
             mContext?.let { context ->
-                binding.recipeList.adapter = RecipeAdapter(context, list).apply {
+                binding.newRecipeList.adapter = RecipeAdapter(context, list).apply {
                     setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
                         override fun onClick(view: View, recipe: SimpleRecipe) {
                             Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
@@ -82,7 +82,7 @@ class HomeRecipeFragment : Fragment() {
         }
 
         viewModel.favoriteRecipeList.observe(viewLifecycleOwner) { favoriteList ->
-            binding.recipeTotalNum.text = favoriteList.size.toString()
+            binding.favoriteRecipeNum.text = favoriteList.size.toString()
 
             mContext?.let { context ->
                 binding.favoriteRecipeList.adapter = RecipeAdapter(context, favoriteList).apply {

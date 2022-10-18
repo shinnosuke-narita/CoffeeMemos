@@ -46,7 +46,7 @@
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                     <ImageView
-                        android:id="@+id/recipeIcon"
+                        android:id="@+id/homeRecipeIcon"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         android:layout_marginTop="5dp"
@@ -63,7 +63,7 @@
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:layout_marginTop="15dp"
-                        app:layout_constraintTop_toBottomOf="@+id/recipeIcon"
+                        app:layout_constraintTop_toBottomOf="@+id/homeRecipeIcon"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/dataBorderFirst"
                         android:text="30"/>
@@ -83,7 +83,6 @@
                         android:layout_width="1.5dp"
                         android:layout_height="18dp"
                         android:background="#939393"
-                        android:layout_marginStart="10dp"
                         app:layout_constraintStart_toEndOf="@+id/recipeTotalNumText"
                         app:layout_constraintTop_toTopOf="@id/recipeTotalNum"
                         app:layout_constraintEnd_toStartOf="@+id/favoriteRecipeNum"
@@ -116,7 +115,6 @@
                         android:layout_width="1.5dp"
                         android:layout_height="18dp"
                         android:background="#939393"
-                        android:layout_marginStart="10dp"
                         app:layout_constraintStart_toEndOf="@+id/favoriteRecipeNum"
                         app:layout_constraintEnd_toStartOf="@+id/todayRecipeNum"
                         app:layout_constraintTop_toTopOf="@id/recipeTotalNum"
@@ -177,7 +175,7 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recipeList"
+                android:id="@+id/newRecipeList"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -193,7 +191,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:layout_marginTop="30dp"
-                app:layout_constraintTop_toBottomOf="@+id/recipeList"
+                app:layout_constraintTop_toBottomOf="@+id/newRecipeList"
                 app:layout_constraintStart_toStartOf="@+id/newRecipeHeader"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -230,7 +228,7 @@
         android:id="@+id/goToBeanBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/coffee_bean_icon"
+        android:src="@drawable/coffee_bag_icon"
         android:layout_marginBottom="15dp"
         android:layout_marginEnd="15dp"
         android:focusable="true"
