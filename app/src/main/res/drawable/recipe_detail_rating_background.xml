@@ -2,10 +2,13 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <solid android:color="@color/pink_dark"/>
 
+            <!-- Viewの枠線を設定 -->
+            <solid
+                android:color="@color/brown_dark"/>
             <!-- Viewの角丸を設定 -->
-            <corners android:radius="100dp" />
+            <corners android:radius="16dp" />
         </shape>
     </item>
+
 </selector>

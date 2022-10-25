@@ -40,7 +40,7 @@
                         android:layout_marginTop="10dp"
                         android:textSize="12sp"
                         android:text="Recipe's data"
-                        android:textColor="#9B757E"
+                        android:textColor="@color/pink_dark"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
@@ -233,7 +233,7 @@
         android:layout_marginEnd="15dp"
         android:focusable="true"
         app:tint="@color/white"
-        app:backgroundTint="#9B757E"
+        app:backgroundTint="@color/pink_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="レシピ新規作成" />

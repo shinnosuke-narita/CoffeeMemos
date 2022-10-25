@@ -16,4 +16,11 @@
     <color name="normal_rating_progress">#7E7974</color>
     <color name="active_rating_progress">#E4FA21</color>
 
+    <color name="beige_light">#F9ECDE</color>
+    <color name="brown_dark">#C1AB97</color>
+    <color name="brown_light">#D3AA88</color>
+    <color name="pink_dark">#9B757E</color>
+    <color name="pink_light_dark">#D3BDB4</color>
+    <color name="grey">#D8D3CE</color>
+
 </resources>

@@ -17,6 +17,8 @@
     <string name="amount_extraction">抽出量(cc)</string>
     <string name="comment">コメント</string>
     <string name="temperature">湯温(℃)</string>
+    <string name="roast">焙煎度</string>
+    <string name="created_date">作成日</string>
 
     <!-- テイスト  -->
     <string name="sour">酸味</string>

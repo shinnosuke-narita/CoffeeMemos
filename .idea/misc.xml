@@ -15,6 +15,7 @@
         <entry key="..\:/Users/naris/AndroidStudioProjects/CoffeeMemos/app/src/main/res/menu/bottom_nav_menu.xml" value="0.28055555555555556" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.219" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable/bottom_nav_color.xml" value="0.1" />
+        <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable/comment_text_background.xml" value="0.156" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable/ellipse_shape.xml" value="0.2335" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable/header_shadow.xml" value="0.1" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable/home_bean_icon.xml" value="0.1" />
@@ -25,6 +26,7 @@
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable/new_bean_header_background.xml" value="0.1775" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable/new_recipe_header_background.xml" value="0.185" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable/rating_background.xml" value="0.2185" />
+        <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable/recipe_detail_rating_background.xml" value="0.207" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable/recipe_wrapper_background.xml" value="0.2335" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable/select_button_background.xml" value="0.186" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/drawable/shadow_background.xml" value="0.2135" />
@@ -41,7 +43,7 @@
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/layout/fragment_home_recipe.xml" value="0.4" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/layout/fragment_new_bean.xml" value="0.38425925925925924" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/layout/fragment_new_recipe.xml" value="0.28027681660899656" />
-        <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/layout/fragment_recipe_detail.xml" value="0.33697916666666666" />
+        <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/layout/fragment_recipe_detail.xml" value="0.4" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/layout/fragment_selected_bean.xml" value="0.2375" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/layout/fragment_timer.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/naris/Documents/00_Project/03_Android/CoffeeMemos/app/src/main/res/layout/recipe_item.xml" value="0.1895910780669145" />

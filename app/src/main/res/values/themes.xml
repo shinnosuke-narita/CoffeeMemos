@@ -28,6 +28,13 @@
         <item name="android:elevation">4dp</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/normal_rating_progress</item>
+        <item name="colorControlActivated">@color/active_rating_progress</item>
+    </style>
+
+    <!-- レシピ新規作成画面  -->
+
     <style name="NewRecipeInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">#6D6D6D</item>
         <item name="boxBackgroundColor">#ffffff</item>
@@ -40,13 +47,32 @@
         <item name="android:paddingStart">10dp</item>
     </style>
 
-    <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/normal_rating_progress</item>
-        <item name="colorControlActivated">@color/active_rating_progress</item>
-    </style>
-
     <style name="starStyle">
         <item name="android:layout_width">35dp</item>
         <item name="android:layout_height">35dp</item>
+    </style>
+
+   <!-- レシピ詳細画面   -->
+
+    <style name="recipeDetailRecipeItemTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="recipeDetailRecipeItemValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="recipeDetailStar">
+        <item name="android:layout_width">27dp</item>
+        <item name="android:layout_height">27dp</item>
+        <item name="android:layout_marginStart">13dp</item>
     </style>
 </resources>

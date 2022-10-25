@@ -73,7 +73,7 @@ class HomeRecipeFragment : Fragment() {
                 binding.newRecipeList.adapter = RecipeAdapter(context, list).apply {
                     setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
                         override fun onClick(view: View, recipe: SimpleRecipe) {
-                            Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
+                            Navigation.findNavController(view).navigate(R.id.recipeDetailFragment)
                         }
                     })
                 }
