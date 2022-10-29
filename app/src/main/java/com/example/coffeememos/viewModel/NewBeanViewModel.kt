@@ -57,6 +57,7 @@ class NewBeanViewModel(val beanDao: BeanDao) : ViewModel() {
 
     // rateのstate変更メソッド
     fun changeRatingState(selectedRate: Int) {
+
         currentRating = selectedRate
         for ((index, star) in starList.withIndex()) {
             star.value = index < selectedRate

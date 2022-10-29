@@ -24,6 +24,7 @@ class HomeRecipeViewModel(private val beanDao: BeanDao) : ViewModel() {
 
                 val item = SimpleRecipe(
                     recipe.id,
+                    recipe.beanId,
                     bean.country,
                     DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern),
                     recipe.tool,

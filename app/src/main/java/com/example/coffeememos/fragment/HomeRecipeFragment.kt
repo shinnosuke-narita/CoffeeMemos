@@ -20,7 +20,7 @@ import com.example.coffeememos.databinding.FragmentHomeRecipeBinding
 import com.example.coffeememos.viewModel.HomeRecipeViewModel
 import com.example.coffeememos.viewModel.HomeRecipeViewModelFactory
 
-class HomeRecipeFragment : Fragment() {
+class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe> {
     private var mContext: Context? = null
 
     // viewBinding
@@ -71,14 +71,9 @@ class HomeRecipeFragment : Fragment() {
 
             mContext?.let { context ->
                 binding.newRecipeList.adapter = RecipeAdapter(context, list).apply {
-                    setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
-                        override fun onClick(view: View, recipe: SimpleRecipe) {
-                            Navigation.findNavController(view).navigate(R.id.recipeDetailFragment)
-                        }
-                    })
+                    setOnItemClickListener(this@HomeRecipeFragment)
                 }
             }
-
         }
 
         viewModel.favoriteRecipeList.observe(viewLifecycleOwner) { favoriteList ->
@@ -86,11 +81,7 @@ class HomeRecipeFragment : Fragment() {
 
             mContext?.let { context ->
                 binding.favoriteRecipeList.adapter = RecipeAdapter(context, favoriteList).apply {
-                    setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
-                        override fun onClick(view: View, recipe: SimpleRecipe) {
-                            Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
-                        }
-                    })
+                    setOnItemClickListener(this@HomeRecipeFragment)
                 }
             }
         }
@@ -98,11 +89,7 @@ class HomeRecipeFragment : Fragment() {
         viewModel.highRatingRecipeList.observe(viewLifecycleOwner) { highRatingList ->
             mContext?.let { context ->
                 binding.highRatingRecipeList.adapter = RecipeAdapter(context, highRatingList).apply {
-                    setOnItemClickListener(object : OnItemClickListener<SimpleRecipe> {
-                        override fun onClick(view: View, recipe: SimpleRecipe) {
-                            Toast.makeText(mContext, recipe.country, Toast.LENGTH_SHORT).show()
-                        }
-                    })
+                    setOnItemClickListener(this@HomeRecipeFragment)
                 }
             }
         }
@@ -127,6 +114,15 @@ class HomeRecipeFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         mContext = null
+    }
+
+    override fun onClick(view: View, recipe: SimpleRecipe) {
+        val showDetailAction = HomeRecipeFragmentDirections.showRecipeDetailAction().apply {
+            recipeId = recipe.recipeId
+            beanId   = recipe.beanId
+        }
+
+        Navigation.findNavController(view).navigate(showDetailAction)
     }
 
     private fun setUpRecyclerView(context: Context, rv: RecyclerView) {

@@ -56,7 +56,7 @@
             android:id="@+id/action_homeRecipeFragment_to_homeBeansFragment"
             app:destination="@id/homeBeansFragment" />
         <action
-            android:id="@+id/action_homeRecipeFragment_to_recipeDetailFragment"
+            android:id="@+id/show_recipe_detail_action"
             app:destination="@id/recipeDetailFragment" />
     </fragment>
     <fragment
@@ -72,5 +72,14 @@
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.coffeememos.fragment.RecipeDetailFragment"
         android:label="fragment_recipe_detail"
-        tools:layout="@layout/fragment_recipe_detail" />
+        tools:layout="@layout/fragment_recipe_detail" >
+        <argument
+            android:name="recipeId"
+            app:argType="long"
+            android:defaultValue="1L" />
+        <argument
+            android:name="beanId"
+            app:argType="long"
+            android:defaultValue="1L" />
+    </fragment>
 </navigation>

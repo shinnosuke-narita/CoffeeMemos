@@ -12,4 +12,7 @@ interface TasteDao {
 
     @Insert()
     suspend fun insert(taste: Taste)
+
+    @Query("SELECT * FROM taste WHERE taste_recipe_id = :recipeId")
+    suspend fun getTasteByRecipeId(recipeId: Long): Taste
 }
