@@ -9,6 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.coffeememos.Constants
 import com.example.coffeememos.databinding.ActivityMainBinding
+import com.example.coffeememos.entity.Taste
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -43,15 +44,15 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener {_, destination, _ ->
             when(destination.id) {
-                R.id.homeRecipeFragment       -> {
+                R.id.homeRecipeFragment -> {
                     showBottomNav()
                     showToolbar()
                 }
-                R.id.homeBeansFragment      -> {
+                R.id.homeBeansFragment -> {
                     showBottomNav()
                     showToolbar()
                 }
-                R.id.timerFragment      -> {
+                R.id.timerFragment -> {
                     showBottomNav()
                     showToolbar()
                 }
@@ -59,11 +60,11 @@ class MainActivity : AppCompatActivity() {
                     hideBottomNav()
                     showToolbar()
                 }
-                R.id.newRecipeFragment  -> {
+                R.id.newRecipeFragment -> {
                     hideBottomNav()
                     hideToolbar()
                 }
-                R.id.newBeanFragment    -> {
+                R.id.newBeanFragment -> {
                     hideBottomNav()
                     hideToolbar()
                 }
@@ -74,8 +75,6 @@ class MainActivity : AppCompatActivity() {
         // データベース初期化
         if (Constants.databaseResetFlag) {
             GlobalScope.launch {
-
-
                 recipeDao.clearTable()
                 beanDao.clearTable()
                 tasteDao.clearTable()
@@ -86,10 +85,7 @@ class MainActivity : AppCompatActivity() {
                 beanDao.insert(Constants.sampleBean4)
                 beanDao.insert(Constants.sampleBean5)
 
-
-
                 val beans = beanDao.getAll()
-
                 for (bean in beans) {
                     Constants.sampleRecipe1.beanId = bean.id
                     Constants.sampleRecipe2.beanId = bean.id
@@ -97,17 +93,21 @@ class MainActivity : AppCompatActivity() {
                     recipeDao.insert(Constants.sampleRecipe2)
                 }
 
-
                 val recipes = recipeDao.getAll()
-
-                Constants.sampleTaste.recipeId = recipes[0].id
-                tasteDao.insert(Constants.sampleTaste)
-
-                Constants.sampleTaste.recipeId = recipes[1].id
-                tasteDao.insert(Constants.sampleTaste)
-
-                val result = beanDao.getBeanWithRecipe()
-
+                for ((index, recipe) in recipes.withIndex()) {
+                    val value = (index % 5) + 1
+                    tasteDao.insert(
+                        Taste(
+                            0,
+                            recipe.id,
+                            value,
+                            value,
+                            value,
+                            value,
+                            value
+                        )
+                    )
+                }
             }
         }
 

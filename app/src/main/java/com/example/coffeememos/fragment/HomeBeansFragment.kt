@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -15,19 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.R
 import com.example.coffeememos.SimpleBeanInfo
-import com.example.coffeememos.SimpleRecipe
 import com.example.coffeememos.adapter.OnItemClickListener
-import com.example.coffeememos.adapter.RecipeAdapter
 import com.example.coffeememos.adapter.SimpleBeanInfoAdapter
 import com.example.coffeememos.databinding.FragmentHomeBeansBinding
-import com.example.coffeememos.databinding.FragmentNewBeanBinding
 import com.example.coffeememos.viewModel.HomeBeanViewModel
 import com.example.coffeememos.viewModel.HomeBeanViewModelFactory
-import com.example.coffeememos.viewModel.HomeRecipeViewModel
-import com.example.coffeememos.viewModel.HomeRecipeViewModelFactory
 
 
-class HomeBeansFragment : Fragment() {
+class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> {
     private var mContext: Context? = null
 
     // viewBinding
@@ -76,11 +70,7 @@ class HomeBeansFragment : Fragment() {
 
             mContext?.let { context ->
                 binding.newBeanList.adapter = SimpleBeanInfoAdapter(context, list).apply {
-                    setOnItemClickListener(object : OnItemClickListener<SimpleBeanInfo> {
-                        override fun onClick(view: View, bean: SimpleBeanInfo) {
-                            Toast.makeText(mContext, bean.country, Toast.LENGTH_SHORT).show()
-                        }
-                    })
+                    setOnItemClickListener(this@HomeBeansFragment)
                 }
             }
         }
@@ -90,11 +80,7 @@ class HomeBeansFragment : Fragment() {
 
             mContext?.let { context ->
                 binding.favoriteBeanList.adapter = SimpleBeanInfoAdapter(context, favoriteList).apply {
-                    setOnItemClickListener(object : OnItemClickListener<SimpleBeanInfo> {
-                        override fun onClick(view: View, bean: SimpleBeanInfo) {
-                            Toast.makeText(mContext, bean.country, Toast.LENGTH_SHORT).show()
-                        }
-                    })
+                    setOnItemClickListener(this@HomeBeansFragment)
                 }
             }
         }
@@ -102,11 +88,7 @@ class HomeBeansFragment : Fragment() {
         viewModel.highRatingBeanList.observe(viewLifecycleOwner) { highRatingList ->
             mContext?.let { context ->
                 binding.highRatingBeanList.adapter = SimpleBeanInfoAdapter(context, highRatingList).apply {
-                    setOnItemClickListener(object : OnItemClickListener<SimpleBeanInfo> {
-                        override fun onClick(view: View, bean: SimpleBeanInfo) {
-                            Toast.makeText(mContext, bean.country, Toast.LENGTH_SHORT).show()
-                        }
-                    })
+                    setOnItemClickListener(this@HomeBeansFragment)
                 }
             }
         }
@@ -130,6 +112,15 @@ class HomeBeansFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         mContext = null
+    }
+
+    // BeanItem クリックリスナー
+    override fun onClick(view: View, bean: SimpleBeanInfo) {
+        val showDetailAction = HomeBeansFragmentDirections.showBeanDetailAction().apply {
+            beanId = bean.id
+        }
+
+        Navigation.findNavController(view).navigate(showDetailAction)
     }
 
     private fun setUpRecyclerView(context: Context, rv: RecyclerView) {

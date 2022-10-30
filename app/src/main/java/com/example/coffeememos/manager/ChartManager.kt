@@ -1,7 +1,8 @@
-package com.example.coffeememos
+package com.example.coffeememos.manager
 
 import android.content.Context
 import android.graphics.Color
+import com.example.coffeememos.R
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.RadarChart
 import com.github.mikephil.charting.data.RadarData

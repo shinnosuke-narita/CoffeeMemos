@@ -116,6 +116,7 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe> {
         mContext = null
     }
 
+    // RecipeItem クリックリスナ―
     override fun onClick(view: View, recipe: SimpleRecipe) {
         val showDetailAction = HomeRecipeFragmentDirections.showRecipeDetailAction().apply {
             recipeId = recipe.recipeId

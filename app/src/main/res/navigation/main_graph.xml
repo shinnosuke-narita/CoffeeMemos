@@ -67,6 +67,9 @@
         <action
             android:id="@+id/action_homeBeansFragment_to_newBeanFragment"
             app:destination="@id/newBeanFragment" />
+        <action
+            android:id="@+id/show_bean_detail_action"
+            app:destination="@id/beanDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
@@ -77,6 +80,16 @@
             android:name="recipeId"
             app:argType="long"
             android:defaultValue="1L" />
+        <argument
+            android:name="beanId"
+            app:argType="long"
+            android:defaultValue="1L" />
+    </fragment>
+    <fragment
+        android:id="@+id/beanDetailFragment"
+        android:name="com.example.coffeememos.fragment.BeanDetailFragment"
+        android:label="fragment_bean_detail"
+        tools:layout="@layout/fragment_bean_detail" >
         <argument
             android:name="beanId"
             app:argType="long"
