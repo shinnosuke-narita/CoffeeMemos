@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,13 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.R
 import com.example.coffeememos.SimpleRecipe
-import com.example.coffeememos.adapter.OnItemClickListener
+import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.adapter.RecipeAdapter
 import com.example.coffeememos.databinding.FragmentHomeRecipeBinding
+import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.viewModel.HomeRecipeViewModel
 import com.example.coffeememos.viewModel.HomeRecipeViewModelFactory
 
-class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe> {
+class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavoriteIconClickListener {
     private var mContext: Context? = null
 
     // viewBinding
@@ -30,7 +30,7 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe> {
 
     private val viewModel: HomeRecipeViewModel by viewModels {
         val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        HomeRecipeViewModelFactory(db.beanDao())
+        HomeRecipeViewModelFactory(db.beanDao(), db.recipeDao())
     }
 
     override fun onAttach(context: Context) {
@@ -72,6 +72,7 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe> {
             mContext?.let { context ->
                 binding.newRecipeList.adapter = RecipeAdapter(context, list).apply {
                     setOnItemClickListener(this@HomeRecipeFragment)
+                    setFavoriteListener(this@HomeRecipeFragment)
                 }
             }
         }
@@ -82,6 +83,7 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe> {
             mContext?.let { context ->
                 binding.favoriteRecipeList.adapter = RecipeAdapter(context, favoriteList).apply {
                     setOnItemClickListener(this@HomeRecipeFragment)
+                    setFavoriteListener(this@HomeRecipeFragment)
                 }
             }
         }
@@ -90,6 +92,7 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe> {
             mContext?.let { context ->
                 binding.highRatingRecipeList.adapter = RecipeAdapter(context, highRatingList).apply {
                     setOnItemClickListener(this@HomeRecipeFragment)
+                    setFavoriteListener(this@HomeRecipeFragment)
                 }
             }
         }
@@ -110,7 +113,6 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe> {
         _binding = null
     }
 
-
     override fun onDetach() {
         super.onDetach()
         mContext = null
@@ -126,11 +128,16 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe> {
         Navigation.findNavController(view).navigate(showDetailAction)
     }
 
+    // お気に入りアイコン クリックリスナ―
+    override fun onClick(view: View, id: Long) {
+        viewModel.updateFavoriteIcon(view, id)
+    }
+
+
+
     private fun setUpRecyclerView(context: Context, rv: RecyclerView) {
         rv.layoutManager = LinearLayoutManager(context).apply {
             orientation = LinearLayoutManager.HORIZONTAL
         }
     }
-
-
 }

@@ -134,6 +134,10 @@ class Constants {
             System.currentTimeMillis()
         )
 
+        // お気に入りアイコン用タグ名
+        val isFavoriteTagName = "isFavoriteIcon"
+        val notFavoriteTagName = "notFavoriteIcon"
+
 
         // 焙煎度リスト
         val roastList: List<String> = listOf(

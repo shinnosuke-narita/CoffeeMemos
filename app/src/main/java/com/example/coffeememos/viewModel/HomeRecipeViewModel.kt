@@ -1,17 +1,23 @@
 package com.example.coffeememos.viewModel
 
+import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.*
 import com.example.coffeememos.Constants
+import com.example.coffeememos.Constants.Companion.isFavoriteTagName
+import com.example.coffeememos.R
 import com.example.coffeememos.SimpleRecipe
 import com.example.coffeememos.util.Util
 import com.example.coffeememos.dao.BeanDao
+import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.util.DateUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class HomeRecipeViewModel(private val beanDao: BeanDao) : ViewModel() {
+class HomeRecipeViewModel(private val beanDao: BeanDao, private val recipeDao: RecipeDao) : ViewModel() {
     private val maxDisplayItemAmount = 10
 
     private var beanWithRecipeList: MutableLiveData<Map<Bean, List<Recipe>>> = MutableLiveData(mapOf())
@@ -67,15 +73,34 @@ class HomeRecipeViewModel(private val beanDao: BeanDao) : ViewModel() {
             beanWithRecipeList.postValue(result)
         }
     }
+
+    fun updateFavoriteIcon(clickedFavoriteIcon: View, recipeId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (clickedFavoriteIcon.tag.equals(isFavoriteTagName)) {
+                // isFavorite 更新
+                recipeDao.updateFavoriteByRecipeId(recipeId, false)
+
+                // リスト更新
+                beanWithRecipeList.postValue(beanDao.getBeanAndRecipe())
+            } else {
+                // isFavorite 更新
+                recipeDao.updateFavoriteByRecipeId(recipeId, true)
+
+                // リスト更新
+                beanWithRecipeList.postValue(beanDao.getBeanAndRecipe())
+            }
+        }
+    }
 }
 
 
 class HomeRecipeViewModelFactory(
-    private val beanDao: BeanDao
+    private val beanDao: BeanDao,
+    private val recipeDao: RecipeDao
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeRecipeViewModel::class.java)) {
-            return HomeRecipeViewModel(beanDao) as T
+            return HomeRecipeViewModel(beanDao, recipeDao) as T
         }
         throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
     }

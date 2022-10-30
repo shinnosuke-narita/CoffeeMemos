@@ -36,7 +36,7 @@ class SimpleBeanInfoAdapter(context: Context, data: List<SimpleBeanInfo>) : Base
 
         // アイテムタップ時のコールバックセット
         holder.itemView.setOnClickListener { view ->
-            mListener.onClick(view, data[position])
+            mItemClickListener.onClick(view, data[position])
         }
 
         holder.favorite.setOnClickListener {

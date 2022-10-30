@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.R
 import com.example.coffeememos.SimpleBeanInfo
-import com.example.coffeememos.adapter.OnItemClickListener
+import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.adapter.SimpleBeanInfoAdapter
 import com.example.coffeememos.databinding.FragmentHomeBeansBinding
 import com.example.coffeememos.viewModel.HomeBeanViewModel

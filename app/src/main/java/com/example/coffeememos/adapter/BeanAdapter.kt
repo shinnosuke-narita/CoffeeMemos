@@ -27,7 +27,7 @@ class BeanAdapter(context: Context, data: List<Bean>) : BaseAdapter<Bean, BeanVi
 
         // リストアイテムクリック時のコールバック
         holder.itemView.setOnClickListener { v ->
-            mListener.onClick(v, data[position])
+            mItemClickListener.onClick(v, data[position])
         }
     }
 }

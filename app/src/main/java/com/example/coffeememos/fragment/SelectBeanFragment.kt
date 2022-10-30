@@ -14,7 +14,7 @@ import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.adapter.BeanAdapter
-import com.example.coffeememos.adapter.OnItemClickListener
+import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.viewModel.SelectBeanViewModel
 import com.example.coffeememos.viewModel.SelectBeanViewModelFactory

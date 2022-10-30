@@ -7,15 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.coffeememos.Constants
+import com.example.coffeememos.Constants.Companion.isFavoriteTagName
+import com.example.coffeememos.Constants.Companion.notFavoriteTagName
 import com.example.coffeememos.R
 import com.example.coffeememos.SimpleRecipe
-import com.example.coffeememos.entity.Bean
-
-import com.example.coffeememos.entity.RecipeWithBeans
 
 class RecipeAdapter(context: Context, data: List<SimpleRecipe>) : BaseAdapter<SimpleRecipe, RecipeViewHolder>(context, data) {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         return RecipeViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_horizontal, parent, false)
@@ -32,15 +29,26 @@ class RecipeAdapter(context: Context, data: List<SimpleRecipe>) : BaseAdapter<Si
         // お気に入りアイコンのセット
         setFavoriteIcon(holder.favorite, data[position].isFavorite)
 
+        // お気に入りアイコン コールバックセット
+        holder.favorite.setOnClickListener { clickedFavoriteIcon ->
+            mFavoriteListener.onClick(clickedFavoriteIcon, data[position].recipeId)
+        }
+
         // アイテムタップ時のコールバックセット
         holder.itemView.setOnClickListener { view ->
-            mListener.onClick(view, data[position])
+            mItemClickListener.onClick(view, data[position])
         }
     }
 
     private fun setFavoriteIcon(favoriteIcon: ImageView, isFavorite: Boolean) {
-        if (isFavorite) favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
-        else favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        if (isFavorite) {
+            favoriteIcon.tag = isFavoriteTagName
+            favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
+        }
+        else {
+            favoriteIcon.tag = notFavoriteTagName
+            favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
     }
 }
 
