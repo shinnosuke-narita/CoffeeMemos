@@ -17,11 +17,12 @@ import com.example.coffeememos.SimpleBeanInfo
 import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.adapter.SimpleBeanInfoAdapter
 import com.example.coffeememos.databinding.FragmentHomeBeansBinding
+import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.viewModel.HomeBeanViewModel
 import com.example.coffeememos.viewModel.HomeBeanViewModelFactory
 
 
-class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> {
+class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> , OnFavoriteIconClickListener {
     private var mContext: Context? = null
 
     // viewBinding
@@ -71,6 +72,7 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> {
             mContext?.let { context ->
                 binding.newBeanList.adapter = SimpleBeanInfoAdapter(context, list).apply {
                     setOnItemClickListener(this@HomeBeansFragment)
+                    setFavoriteListener(this@HomeBeansFragment)
                 }
             }
         }
@@ -81,6 +83,7 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> {
             mContext?.let { context ->
                 binding.favoriteBeanList.adapter = SimpleBeanInfoAdapter(context, favoriteList).apply {
                     setOnItemClickListener(this@HomeBeansFragment)
+                    setFavoriteListener(this@HomeBeansFragment)
                 }
             }
         }
@@ -89,6 +92,7 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> {
             mContext?.let { context ->
                 binding.highRatingBeanList.adapter = SimpleBeanInfoAdapter(context, highRatingList).apply {
                     setOnItemClickListener(this@HomeBeansFragment)
+                    setFavoriteListener(this@HomeBeansFragment)
                 }
             }
         }
@@ -121,6 +125,11 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> {
         }
 
         Navigation.findNavController(view).navigate(showDetailAction)
+    }
+
+    // お気に入りアイコン クリックリスナ―
+    override fun onClick(view: View, id: Long) {
+        viewModel.updateFavoriteIcon(view, id)
     }
 
     private fun setUpRecyclerView(context: Context, rv: RecyclerView) {

@@ -1,6 +1,8 @@
 package com.example.coffeememos.viewModel
 
+import android.view.View
 import androidx.lifecycle.*
+import com.example.coffeememos.Constants
 import com.example.coffeememos.SimpleBeanInfo
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
@@ -62,6 +64,24 @@ class HomeBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
             allBean.postValue(result)
         }
 
+    }
+
+    fun updateFavoriteIcon(clickedFavoriteIcon: View, beanId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (clickedFavoriteIcon.tag.equals(Constants.isFavoriteTagName)) {
+                // isFavorite 更新
+                beanDao.updateFavoriteByBeanId(beanId, false)
+
+                // リスト更新
+                allBean.postValue(beanDao.getAll())
+            } else {
+                // isFavorite 更新
+                beanDao.updateFavoriteByBeanId(beanId, true)
+
+                // リスト更新
+                allBean.postValue(beanDao.getAll())
+            }
+        }
     }
 }
 

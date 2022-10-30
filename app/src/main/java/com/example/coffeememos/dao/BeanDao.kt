@@ -16,6 +16,9 @@ interface BeanDao {
     @Insert
     suspend fun insert(bean: Bean)
 
+    @Query("UPDATE bean SET isFavorite = :favoriteFlag WHERE bean_id = :id")
+    suspend fun updateFavoriteByBeanId(id: Long, favoriteFlag: Boolean)
+
     @Query("DELETE FROM bean")
     suspend fun clearTable()
 

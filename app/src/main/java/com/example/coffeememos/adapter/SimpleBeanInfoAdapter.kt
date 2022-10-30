@@ -34,19 +34,26 @@ class SimpleBeanInfoAdapter(context: Context, data: List<SimpleBeanInfo>) : Base
         // お気に入りアイコンのセット
         setFavoriteIcon(holder.favorite, data[position].isFavorite)
 
+        // お気に入りアイコン コールバックセット
+        holder.favorite.setOnClickListener { view ->
+            mFavoriteListener.onClick(view, data[position].id)
+        }
+
         // アイテムタップ時のコールバックセット
         holder.itemView.setOnClickListener { view ->
             mItemClickListener.onClick(view, data[position])
         }
-
-        holder.favorite.setOnClickListener {
-            Toast.makeText(context, "favorite clicked!!", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun setFavoriteIcon(favoriteIcon: ImageView, isFavorite: Boolean) {
-        if (isFavorite) favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
-        else favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        if (isFavorite) {
+            favoriteIcon.tag = Constants.isFavoriteTagName
+            favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
+        }
+        else {
+            favoriteIcon.tag = Constants.notFavoriteTagName
+            favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
     }
 }
 
