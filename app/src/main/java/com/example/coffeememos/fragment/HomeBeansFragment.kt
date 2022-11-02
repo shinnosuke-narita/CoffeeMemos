@@ -42,7 +42,7 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> , OnFa
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBeansBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -57,15 +57,17 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> , OnFa
             setUpRecyclerView(it, binding.highRatingBeanList)
         }
 
+        // 総レシピ数 監視処理
         viewModel.simpleBeanInfoList.observe(viewLifecycleOwner) { list ->
             binding.beanTotalNum.text = list.size.toString()
         }
 
+        // 今日作成したレシピ数 監視処理
         viewModel.todayBeanList.observe(viewLifecycleOwner) { todayRecipeNum ->
             binding.todayBeanNum.text = todayRecipeNum.size.toString()
         }
 
-        // SimpleRecipeList 監視処理
+        // 新しい順レシピ 監視処理
         viewModel.newBeanList.observe(viewLifecycleOwner) { list ->
             if (list.isEmpty()) return@observe
 
@@ -77,6 +79,7 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> , OnFa
             }
         }
 
+        // お気に入りレシピ 監視処理
         viewModel.favoriteBeanList.observe(viewLifecycleOwner) { favoriteList ->
             binding.favoriteBeanNum.text = favoriteList.size.toString()
 
@@ -88,6 +91,7 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> , OnFa
             }
         }
 
+        // レイティング順レシピ 監視処理
         viewModel.highRatingBeanList.observe(viewLifecycleOwner) { highRatingList ->
             mContext?.let { context ->
                 binding.highRatingBeanList.adapter = SimpleBeanInfoAdapter(context, highRatingList).apply {

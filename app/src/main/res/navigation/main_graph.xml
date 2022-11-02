@@ -84,6 +84,9 @@
             android:name="beanId"
             app:argType="long"
             android:defaultValue="1L" />
+        <action
+            android:id="@+id/action_recipeDetailFragment_to_editTasteFragment"
+            app:destination="@id/editTasteFragment" />
     </fragment>
     <fragment
         android:id="@+id/beanDetailFragment"
@@ -95,4 +98,8 @@
             app:argType="long"
             android:defaultValue="1L" />
     </fragment>
+    <fragment
+        android:id="@+id/editTasteFragment"
+        android:name="com.example.coffeememos.fragment.EditTasteFragment"
+        android:label="EditTasteFragment" />
 </navigation>

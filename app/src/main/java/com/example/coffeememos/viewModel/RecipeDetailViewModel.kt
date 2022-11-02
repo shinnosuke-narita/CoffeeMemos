@@ -10,6 +10,7 @@ import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.manager.RatingManager.*
+import kotlinx.coroutines.launch
 
 class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao: RecipeDao, private val tasteDao: TasteDao) : ViewModel() {
     private lateinit var _recipeRatingManager: RatingManager
@@ -17,7 +18,9 @@ class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao:
 
     private val _recipeId: MutableLiveData<Long> = MutableLiveData()
 
-    private val _beanId: MutableLiveData<Long> = MutableLiveData(0)
+    private val _beanId: MutableLiveData<Long> = MutableLiveData()
+
+    private val _tasteId: MutableLiveData<Long> = MutableLiveData()
 
     val selectedRecipe: LiveData<Recipe> = _recipeId.switchMap { recipeId ->
         liveData {
@@ -66,6 +69,24 @@ class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao:
         _beanId.value         = beanId
         _recipeRatingManager  = recipeRatingManager
         _beanRatingManager    = beanRatingManager
+    }
+
+    fun updateTaste(sour: Int, bitter: Int, sweet: Int, flavor: Int, rich: Int) {
+        val newTaste = Taste(
+            selectedTaste.value!!.id,
+            _recipeId.value!!,
+            sour,
+            bitter,
+            sweet,
+            flavor,
+            rich
+        )
+
+
+        viewModelScope.launch {
+            tasteDao.updateTaste(newTaste)
+        }
+
     }
 }
 

@@ -30,7 +30,7 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavo
 
     private val viewModel: HomeRecipeViewModel by viewModels {
         val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        HomeRecipeViewModelFactory(db.beanDao(), db.recipeDao())
+        HomeRecipeViewModelFactory(db.beanDao(), db.recipeDao(), db.tasteDao())
     }
 
     override fun onAttach(context: Context) {

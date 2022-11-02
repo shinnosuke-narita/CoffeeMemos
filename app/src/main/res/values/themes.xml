@@ -75,4 +75,23 @@
         <item name="android:layout_height">27dp</item>
         <item name="android:layout_marginStart">13dp</item>
     </style>
+
+    <!-- テイスト編集画面   -->
+    <style name="tasteItemTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">35dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="tasteValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/beige_dark</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
+
 </resources>
