@@ -139,5 +139,4 @@ class EditTasteDialogFragment : DialogFragment(),  SeekBar.OnSeekBarChangeListen
 
     // seekbarは0~4で値を表す
     private fun getProgress(tasteValue: Int): Int = tasteValue - 1
-
 }
