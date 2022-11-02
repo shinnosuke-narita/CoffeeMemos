@@ -11,8 +11,8 @@ import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet
 
-class ChartManager(private val radarChart: RadarChart) {
-    fun createRadarChart() {
+class ChartManager() {
+    fun createRadarChart(radarChart: RadarChart) {
         // チャートのタイトルの非表示
         radarChart.description.isEnabled = false
 
@@ -58,7 +58,8 @@ class ChartManager(private val radarChart: RadarChart) {
     }
 
 
-    fun setData(context: Context,
+    fun setData(context   : Context,
+                radarChart: RadarChart,
                 sour      : Float,
                 bitter    : Float,
                 sweet     : Float,

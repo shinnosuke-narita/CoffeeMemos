@@ -99,16 +99,17 @@ class RecipeDetailFragment : Fragment() {
         )
 
         // ChartManager 初期化
-        chartManager = ChartManager(binding.radarChart)
+        chartManager = ChartManager()
 
         // レーダーチャート作成(データのセットはしない)
-        chartManager.createRadarChart()
+        chartManager.createRadarChart(binding.radarChart)
 
         viewModel.selectedTaste.observe(viewLifecycleOwner) { taste ->
             // レーダーチャートデータセット
             mContext?.let { context ->
                 chartManager.setData(
                     context,
+                    binding.radarChart,
                     taste.sour.toFloat(),
                     taste.bitter.toFloat(),
                     taste.sweet.toFloat(),
