@@ -25,4 +25,7 @@ interface TasteDao {
 
     @Query("SELECT id FROM taste WHERE taste_recipe_id = :recipeId ")
     suspend fun getTasteIdByRecipeId(recipeId: Long): Long
+
+    @Query("SELECT * FROM taste WHERE id = :id")
+    suspend fun getTasteById(id: Long): Taste
 }

@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.View
 import android.widget.SeekBar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
@@ -18,36 +17,75 @@ class EditTasteDialogFragment : DialogFragment(),  SeekBar.OnSeekBarChangeListen
     private var rich  : Int = 0
 
     private var _binding: DialogFragmentEditTasteBinding? = null
-    val binding
+    private val binding
         get() = _binding!!
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    companion object {
+        fun create(sour: Int, bitter: Int, sweet: Int, flavor: Int, rich: Int): EditTasteDialogFragment =
+             EditTasteDialogFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("sour", sour)
+                    putInt("bitter", bitter)
+                    putInt("sweet", sweet)
+                    putInt("flavor", flavor)
+                    putInt("rich", rich)
+                }
+            }
     }
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogFragmentEditTasteBinding.inflate(requireActivity().layoutInflater)
         val dialog = Dialog(requireContext())
 
+        // 背景を透過させる(dialogにセットした背景を見えるようにするため)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        // TODO シークバーの初期化処理処理
+        // tasteプロパティの初期化処理処理
+        arguments?.let { taste ->
+            sour = taste.getInt("sour", 3)
+            bitter = taste.getInt("bitter", 3)
+            sweet = taste.getInt("sweet", 3)
+            flavor = taste.getInt("flavor", 3)
+            rich = taste.getInt("rich", 3)
+        }
 
+        // SeekBar セッティング
+        binding.sourSeekBar.apply {
+            progress = getProgress(sour)
+            setOnSeekBarChangeListener(this@EditTasteDialogFragment)
+        }
+        binding.bitterSeekBar.apply {
+            progress = getProgress(bitter)
+            setOnSeekBarChangeListener(this@EditTasteDialogFragment)
+        }
+        binding.sweetSeekBar.apply {
+            progress = getProgress(sweet)
+            setOnSeekBarChangeListener(this@EditTasteDialogFragment)
+        }
+        binding.flavorSeekBar.apply {
+            progress = getProgress(flavor)
+            setOnSeekBarChangeListener(this@EditTasteDialogFragment)
+        }
+        binding.richSeekBar.apply {
+            progress = getProgress(rich)
+            setOnSeekBarChangeListener(this@EditTasteDialogFragment)
+        }
 
-        // seekbar リスナーセット
-        binding.sourSeekBar.setOnSeekBarChangeListener(this@EditTasteDialogFragment)
-        binding.bitterSeekBar.setOnSeekBarChangeListener(this@EditTasteDialogFragment)
-        binding.sweetSeekBar.setOnSeekBarChangeListener(this@EditTasteDialogFragment)
-        binding.flavorSeekBar.setOnSeekBarChangeListener(this@EditTasteDialogFragment)
-        binding.richSeekBar.setOnSeekBarChangeListener(this@EditTasteDialogFragment)
+        // tasteの数値セッティング
+        binding.sourValues.text   = sour.toString()
+        binding.bitterValues.text = bitter.toString()
+        binding.sweetValues.text  = sweet.toString()
+        binding.flavorValues.text = flavor.toString()
+        binding.richValues.text   = rich.toString()
 
-        // TODO キャンセルボタンのリスナー処理
+        // キャンセルボタンのリスナー処理
         binding.cancelBtn.setOnClickListener {
+            // dialog を閉じる処理だがDialogFragmentの内部的にdismiss()が呼ばれるとFragmentを削除するようにリスナーがセットされている
             dismiss()
         }
 
-        // TODO 更新ボタンのリスナー処理
+        // 更新ボタンのリスナー処理
         binding.updateBtn.setOnClickListener {
             setFragmentResult(
                 "newTaste",
@@ -58,9 +96,9 @@ class EditTasteDialogFragment : DialogFragment(),  SeekBar.OnSeekBarChangeListen
                     putInt("flavor", flavor)
                     putInt("rich", rich)
             })
+
+            dismiss()
         }
-
-
 
         dialog.setContentView(binding.root)
         return dialog
@@ -71,23 +109,23 @@ class EditTasteDialogFragment : DialogFragment(),  SeekBar.OnSeekBarChangeListen
 
         when(seekBar?.id) {
             binding.sourSeekBar.id   ->  {
-                sour = convertProgressValue(progress)
+                sour = setRealTasteValue(progress)
                 binding.sourValues.text = sour.toString()
             }
             binding.bitterSeekBar.id ->  {
-                bitter = convertProgressValue(progress)
+                bitter = setRealTasteValue(progress)
                 binding.bitterValues.text = bitter.toString()
             }
             binding.sweetSeekBar.id  -> {
-                sweet = convertProgressValue(progress)
+                sweet = setRealTasteValue(progress)
                 binding.sweetValues.text = sweet.toString()
             }
-            binding.richSeekBar.id   ->  {
-                flavor = convertProgressValue(progress)
+            binding.flavorSeekBar.id   ->  {
+                flavor = setRealTasteValue(progress)
                 binding.flavorValues.text = flavor.toString()
             }
-            binding.flavorSeekBar.id ->  {
-                rich = convertProgressValue(progress)
+            binding.richSeekBar.id ->  {
+                rich = setRealTasteValue(progress)
                 binding.richValues.text = rich.toString()
             }
         }
@@ -97,6 +135,9 @@ class EditTasteDialogFragment : DialogFragment(),  SeekBar.OnSeekBarChangeListen
     override fun onStopTrackingTouch(p0: SeekBar?) {}
 
     // 1~5の値にするため
-    private fun convertProgressValue(progress: Int): Int = progress + 1
+    private fun setRealTasteValue(progress: Int): Int = progress + 1
+
+    // seekbarは0~4で値を表す
+    private fun getProgress(tasteValue: Int): Int = tasteValue - 1
 
 }

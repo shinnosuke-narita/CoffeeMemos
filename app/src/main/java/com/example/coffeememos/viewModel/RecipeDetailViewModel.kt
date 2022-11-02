@@ -16,29 +16,14 @@ class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao:
     private lateinit var _recipeRatingManager: RatingManager
     private lateinit var _beanRatingManager: RatingManager
 
-    private val _recipeId: MutableLiveData<Long> = MutableLiveData()
+    private var _selectedRecipe: MutableLiveData<Recipe> = MutableLiveData()
+    val selectedRecipe: LiveData<Recipe> = _selectedRecipe
 
-    private val _beanId: MutableLiveData<Long> = MutableLiveData()
+    private var _selectedBean: MutableLiveData<Bean> = MutableLiveData()
+    val selectedBean: LiveData<Bean> = _selectedBean
 
-    private val _tasteId: MutableLiveData<Long> = MutableLiveData()
-
-    val selectedRecipe: LiveData<Recipe> = _recipeId.switchMap { recipeId ->
-        liveData {
-            emit(recipeDao.getRecipeByID(recipeId))
-        }
-    }
-
-    val selectedTaste: LiveData<Taste> = _recipeId.switchMap { recipeId ->
-        liveData {
-            emit(tasteDao.getTasteByRecipeId(recipeId))
-        }
-    }
-
-    val selectedBean: LiveData<Bean> = _beanId.switchMap { beanId ->
-        liveData{
-            emit(beanDao.getBeanById(beanId))
-        }
-    }
+    private var _selectedTaste: MutableLiveData<Taste> = MutableLiveData()
+    val selectedTaste: LiveData<Taste> = _selectedTaste
 
     val recipeStarList: LiveData<List<Star>> = selectedRecipe.switchMap { recipe ->
         val result = MutableLiveData<List<Star>>()
@@ -64,17 +49,23 @@ class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao:
     private var _beanCurrentRating: MutableLiveData<Int> = MutableLiveData(1)
     val beanCurrentRating: LiveData<Int> = _beanCurrentRating
 
-    fun initialize(recipeId: Long, beanId: Long, recipeRatingManager: RatingManager, beanRatingManager: RatingManager) {
-        _recipeId.value       = recipeId
-        _beanId.value         = beanId
-        _recipeRatingManager  = recipeRatingManager
-        _beanRatingManager    = beanRatingManager
+    fun initialize(recipeId: Long, beanId: Long, tasteId: Long, recipeRatingManager: RatingManager, beanRatingManager: RatingManager) {
+        viewModelScope.launch {
+            // RatingManagerを先に初期化する！（アプリ落ちる）
+            _recipeRatingManager  = recipeRatingManager
+            _beanRatingManager    = beanRatingManager
+
+            _selectedRecipe.postValue(recipeDao.getRecipeByID(recipeId))
+            _selectedBean.postValue(beanDao.getBeanById(beanId))
+            _selectedTaste.postValue(tasteDao.getTasteById(tasteId))
+        }
+
     }
 
     fun updateTaste(sour: Int, bitter: Int, sweet: Int, flavor: Int, rich: Int) {
         val newTaste = Taste(
-            selectedTaste.value!!.id,
-            _recipeId.value!!,
+            _selectedTaste.value!!.id,
+            _selectedRecipe.value!!.id,
             sour,
             bitter,
             sweet,
@@ -82,11 +73,10 @@ class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao:
             rich
         )
 
-
         viewModelScope.launch {
             tasteDao.updateTaste(newTaste)
+            _selectedTaste.postValue(tasteDao.getTasteById(selectedTaste.value!!.id))
         }
-
     }
 }
 

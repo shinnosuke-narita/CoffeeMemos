@@ -123,6 +123,7 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavo
         val showDetailAction = HomeRecipeFragmentDirections.showRecipeDetailAction().apply {
             recipeId = recipe.recipeId
             beanId   = recipe.beanId
+            tasteId  = recipe.tasteId
         }
 
         Navigation.findNavController(view).navigate(showDetailAction)

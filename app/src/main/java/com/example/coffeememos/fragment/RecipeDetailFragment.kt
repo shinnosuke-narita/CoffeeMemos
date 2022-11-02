@@ -1,5 +1,6 @@
 package com.example.coffeememos.fragment
 
+import android.app.ProgressDialog.show
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -47,9 +48,11 @@ class RecipeDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // viewModel初期化処理
         viewModel.initialize(
             safeArgs.recipeId,
             safeArgs.beanId,
+            safeArgs.tasteId,
             RatingManager(
                 Star(StarState.LIGHT),
                 Star(StarState.DARK),
@@ -156,13 +159,13 @@ class RecipeDetailFragment : Fragment() {
         }
 
         viewModel.selectedBean.observe(viewLifecycleOwner) { bean ->
-            binding.beanCardView.countryText.text = bean.country
-            binding.beanCardView.farmText.text = bean.farm
-            binding.beanCardView.districtText.text = bean.district
-            binding.beanCardView.speciesText.text = bean.species
-            binding.beanCardView.processText.text = Constants.processList[bean.process]
-            binding.beanCardView.elevationText.text = getString(R.string.elevation_from_to, bean.elevationFrom.toString(), bean.elevationTo.toString())
-            binding.beanCardView.storeText.text = bean.store
+            binding.beanCardView.countryText.text     = bean.country
+            binding.beanCardView.farmText.text        = bean.farm
+            binding.beanCardView.districtText.text    = bean.district
+            binding.beanCardView.speciesText.text     = bean.species
+            binding.beanCardView.elevationText.text   = getString(R.string.elevation_from_to, bean.elevationFrom.toString(), bean.elevationTo.toString())
+            binding.beanCardView.storeText.text       = bean.store
+            binding.beanCardView.processText.text     = Constants.processList[bean.process]
             binding.beanCardView.beanCommentText.text = bean.comment
 
             if (bean.isFavorite) binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
@@ -170,14 +173,19 @@ class RecipeDetailFragment : Fragment() {
         }
 
         binding.tasteEditIcon.setOnClickListener { view ->
-            EditTasteDialogFragment().show(childFragmentManager, EditTasteDialogFragment::class.simpleName)
-
-
-            //Navigation.findNavController(view).navigate(R.id.editTasteFragment)
+            val taste = viewModel.selectedTaste.value!!
+            EditTasteDialogFragment
+                .create(taste.sour, taste.bitter, taste.sweet, taste.flavor, taste.rich)
+                .show(childFragmentManager, EditTasteDialogFragment::class.simpleName)
         }
 
-        setFragmentResultListener("newTaste") { key, newTaste ->
-
+        childFragmentManager.setFragmentResultListener("newTaste", viewLifecycleOwner) { _, newTaste ->
+            viewModel.updateTaste(
+                newTaste.getInt("sour"),
+                newTaste.getInt("bitter"),
+                newTaste.getInt("sweet"),
+                newTaste.getInt("flavor"),
+                newTaste.getInt("rich"))
         }
     }
 

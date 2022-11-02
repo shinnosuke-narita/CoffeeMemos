@@ -74,7 +74,7 @@
     <fragment
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.coffeememos.fragment.RecipeDetailFragment"
-        android:label="fragment_recipe_detail"
+        android:label="Recipe Detail"
         tools:layout="@layout/fragment_recipe_detail" >
         <argument
             android:name="recipeId"
@@ -84,6 +84,11 @@
             android:name="beanId"
             app:argType="long"
             android:defaultValue="1L" />
+
+        <argument
+            android:name="tasteId"
+            app:argType="long"
+            android:defaultValue="1L" />
         <action
             android:id="@+id/action_recipeDetailFragment_to_editTasteFragment"
             app:destination="@id/editTasteFragment" />
@@ -91,7 +96,7 @@
     <fragment
         android:id="@+id/beanDetailFragment"
         android:name="com.example.coffeememos.fragment.BeanDetailFragment"
-        android:label="fragment_bean_detail"
+        android:label="Bean Detail"
         tools:layout="@layout/fragment_bean_detail" >
         <argument
             android:name="beanId"
