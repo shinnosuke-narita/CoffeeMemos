@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.coffeememos.manager.ChartManager
 import com.example.coffeememos.CoffeeMemosApplication
@@ -70,6 +71,12 @@ class BeanDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // header セッティング
+        binding.header.headerTitle.text = getString(R.string.bean_detail)
+        binding.header.backBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         val beanStarViewList: List<ImageView> = listOf(
             binding.beanCardView.beanStarFirst,

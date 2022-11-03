@@ -39,34 +39,25 @@ class MainActivity : AppCompatActivity() {
         // bottomNavigationとNavControllerの関連付け
         binding.bottomNavBar.setupWithNavController(navController)
 
-        // toolbarとNavControllerの関連付け
-        binding.toolbar.setupWithNavController(navController, AppBarConfiguration(navController.graph))
-
         navController.addOnDestinationChangedListener {_, destination, _ ->
             when(destination.id) {
                 R.id.homeRecipeFragment -> {
                     showBottomNav()
-                    showToolbar()
                 }
                 R.id.homeBeansFragment -> {
                     showBottomNav()
-                    showToolbar()
                 }
                 R.id.timerFragment -> {
                     showBottomNav()
-                    showToolbar()
                 }
                 R.id.selectBeanFragment -> {
                     hideBottomNav()
-                    showToolbar()
                 }
                 R.id.newRecipeFragment -> {
                     hideBottomNav()
-                    hideToolbar()
                 }
                 R.id.newBeanFragment -> {
                     hideBottomNav()
-                    hideToolbar()
                 }
             }
         }
@@ -119,13 +110,5 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideBottomNav() {
         binding.bottomNavBar.visibility = View.GONE
-    }
-
-    private fun showToolbar() {
-        binding.toolbar.visibility = View.VISIBLE
-    }
-
-    private fun hideToolbar() {
-        binding.toolbar.visibility = View.GONE
     }
 }

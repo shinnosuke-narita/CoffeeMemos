@@ -14,6 +14,7 @@ import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.adapter.BeanAdapter
+import com.example.coffeememos.databinding.FragmentSelectBeanBinding
 import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.viewModel.SelectBeanViewModel
@@ -23,6 +24,10 @@ class SelectBeanFragment : Fragment() {
     private var mContext: Context? = null
 
     private lateinit var viewModel: SelectBeanViewModel
+
+    private var _binding: FragmentSelectBeanBinding? = null
+    private val binding
+        get() = _binding!!
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -36,13 +41,21 @@ class SelectBeanFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_select_bean, container, false)
+        _binding = FragmentSelectBeanBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // header セッティング
+        binding.header.headerTitle.text = getString(R.string.select_bean)
+        binding.header.backBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
 
         // viewModelの初期化
         val db = ((context?.applicationContext) as CoffeeMemosApplication).database
@@ -84,6 +97,11 @@ class SelectBeanFragment : Fragment() {
             }
 
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onDetach() {

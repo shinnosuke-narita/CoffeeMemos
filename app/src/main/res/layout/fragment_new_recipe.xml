@@ -6,63 +6,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.NewRecipeFragment">
 
-    <androidx.cardview.widget.CardView
+    <include
+        layout="@layout/favorite_header"
         android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="20dp"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="8dp"
-            android:elevation="10dp"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/backArrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_arrow_back_24"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <TextView
-                android:id="@+id/headerTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Recipe"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_marginStart="10dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/backArrow" />
-
-            <ImageView
-                android:id="@+id/favoriteBtn"
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:src="@drawable/ic_baseline_favorite_border_24"
-                android:layout_marginEnd="15sp"
-                app:tint="@color/pink_light_dark"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </androidx.cardview.widget.CardView>
-
-    <View
-        android:id="@+id/wholeShadow"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="1dp"
-        android:background="#4F090606"
-        android:visibility="invisible" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/snackBarPlace"
@@ -767,6 +714,13 @@
         app:layout_constraintBottom_toTopOf="@+id/menuBtn"
         app:layout_constraintEnd_toEndOf="parent"
         tools:alpha="1"/>
+
+    <View
+        android:id="@+id/whole_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#A12C2C2C"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveBtn"

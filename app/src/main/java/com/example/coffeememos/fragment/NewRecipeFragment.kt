@@ -21,6 +21,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.coffeememos.*
 import com.example.coffeememos.databinding.FragmentNewRecipeBinding
 import com.example.coffeememos.entity.Bean
@@ -69,13 +70,19 @@ class NewRecipeFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // お気に入り 監視処理
-        viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
-            if (isFavorite) binding.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
-            else binding.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        // header セッティング
+        binding.header.headerTitle.text = getString(R.string.new_recipe)
+        binding.header.backBtn.setOnClickListener {
+            findNavController().popBackStack()
         }
 
-        binding.favoriteBtn.setOnClickListener {
+        // お気に入り 監視処理
+        viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
+            if (isFavorite) binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
+            else binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+
+        binding.header.favoriteBtn.setOnClickListener {
             if (viewModel.isFavorite.value == true) viewModel.setFavoriteFlag(false)
             else viewModel.setFavoriteFlag(true)
         }

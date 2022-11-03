@@ -76,6 +76,12 @@
         <item name="android:layout_marginStart">13dp</item>
     </style>
 
+    <style name="ratingStarLarge">
+        <item name="android:layout_width">35dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_marginStart">20dp</item>
+    </style>
+
     <!-- テイスト編集画面   -->
     <style name="tasteItemTitle">
         <item name="android:layout_width">wrap_content</item>
@@ -92,6 +98,17 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginStart">10dp</item>
+    </style>
+
+    <style name="mEditTextStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:textColorHint">@color/grey_dark</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textCursorDrawable">@color/black</item>
+        <item name="android:background">@drawable/spinner_background_shape</item>
     </style>
 
 </resources>

@@ -7,20 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.coffeememos.R
-import com.example.coffeememos.databinding.FragmentTimerBinding
+import com.example.coffeememos.databinding.FragmentEditBeanBinding
 
-class TimerFragment : Fragment() {
-    private var _binding: FragmentTimerBinding? = null
+
+class EditBeanFragment : Fragment() {
+    private var _binding: FragmentEditBeanBinding? = null
     private val binding
         get() = _binding!!
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentTimerBinding.inflate(inflater, container, false)
+        // Inflate the layout for this fragment
+        _binding = FragmentEditBeanBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -28,9 +28,10 @@ class TimerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // header セッティング
-        binding.header.headerTitle.text = getString(R.string.timer)
+        binding.header.headerTitle.text = getString(R.string.edit_bean)
         binding.header.backBtn.setOnClickListener {
             findNavController().popBackStack()
         }
+
     }
 }

@@ -90,8 +90,8 @@
             app:argType="long"
             android:defaultValue="1L" />
         <action
-            android:id="@+id/action_recipeDetailFragment_to_editTasteFragment"
-            app:destination="@id/editTasteFragment" />
+            android:id="@+id/action_recipeDetailFragment_to_editBeanFragment"
+            app:destination="@id/editBeanFragment" />
     </fragment>
     <fragment
         android:id="@+id/beanDetailFragment"
@@ -104,7 +104,7 @@
             android:defaultValue="1L" />
     </fragment>
     <fragment
-        android:id="@+id/editTasteFragment"
-        android:name="com.example.coffeememos.fragment.EditTasteFragment"
-        android:label="EditTasteFragment" />
+        android:id="@+id/editBeanFragment"
+        android:name="com.example.coffeememos.fragment.EditBeanFragment"
+        android:label="EditBeanFragment" />
 </navigation>

@@ -50,6 +50,12 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> , OnFa
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // header セッティング
+        binding.header.headerTitle.text = getString(R.string.home_bean)
+        binding.header.backBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         // RecyclerView セットアップ
         mContext?.let {
             setUpRecyclerView(it, binding.newBeanList)

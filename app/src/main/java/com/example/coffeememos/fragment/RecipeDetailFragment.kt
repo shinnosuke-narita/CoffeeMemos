@@ -10,6 +10,8 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.coffeememos.manager.ChartManager
 import com.example.coffeememos.CoffeeMemosApplication
@@ -47,7 +49,6 @@ class RecipeDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // viewModel初期化処理
         viewModel.initialize(
             safeArgs.recipeId,
@@ -103,6 +104,12 @@ class RecipeDetailFragment : Fragment() {
 
         // レーダーチャート作成(データのセットはしない)
         chartManager.createRadarChart(binding.radarChart)
+
+        // header セッティング
+        binding.header.headerTitle.text = getString(R.string.recipe_detail)
+        binding.header.backBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         viewModel.selectedTaste.observe(viewLifecycleOwner) { taste ->
             // レーダーチャートデータセット
@@ -171,6 +178,10 @@ class RecipeDetailFragment : Fragment() {
 
             if (bean.isFavorite) binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
             else binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+
+        binding.beanCardView.beanEditIcon.setOnClickListener { view ->
+            Navigation.findNavController(view).navigate(R.id.editBeanFragment)
         }
 
         binding.tasteEditIcon.setOnClickListener { view ->
