@@ -50,11 +50,11 @@ class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao:
     val beanCurrentRating: LiveData<Int> = _beanCurrentRating
 
     fun initialize(recipeId: Long, beanId: Long, tasteId: Long, recipeRatingManager: RatingManager, beanRatingManager: RatingManager) {
-        viewModelScope.launch {
-            // RatingManagerを先に初期化する！（アプリ落ちる）
-            _recipeRatingManager  = recipeRatingManager
-            _beanRatingManager    = beanRatingManager
+        // RatingManagerを先に初期化する！（アプリ落ちる）
+        _recipeRatingManager  = recipeRatingManager
+        _beanRatingManager    = beanRatingManager
 
+        viewModelScope.launch {
             _selectedRecipe.postValue(recipeDao.getRecipeByID(recipeId))
             _selectedBean.postValue(beanDao.getBeanById(beanId))
             _selectedTaste.postValue(tasteDao.getTasteById(tasteId))

@@ -1,4 +1,4 @@
-package com.example.coffeememos.fragment
+package com.example.coffeememos.dialog
 
 import android.app.Dialog
 import android.graphics.Color

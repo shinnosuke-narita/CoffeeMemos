@@ -24,133 +24,272 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/snackBarPlace">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/snackBarPlace"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="80dp">
 
             <TextView
-                android:id="@+id/beanTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/processTitle"
+                style="@style/edit_bean_title"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="15dp"
-                android:text="Bean"
-                android:textSize="25sp"
-                android:textColor="@color/black"
+                android:text="@string/process"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <Spinner
-                android:id="@+id/processSpinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:minHeight="50dp"
-                android:prompt="@string/prompt"
-                android:spinnerMode="dialog"
-                android:background="@drawable/spinner_background_shape"
-                android:textColor="@color/white"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
+            <TextView
+                android:id="@+id/processEditText"
+                style="@style/mEditTextStyle"
+                android:hint="@string/process"
+                android:gravity="center|left"
+                app:layout_constraintEnd_toStartOf="@+id/selectProcessBtn"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/beanTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/processTitle" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_arrow_drop_down_24"
-                app:tint="#7E7878"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintTop_toTopOf="@+id/processSpinner"
-                app:layout_constraintBottom_toBottomOf="@+id/processSpinner"
-                app:layout_constraintEnd_toEndOf="@+id/processSpinner"/>
+                android:id="@+id/selectProcessBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_playlist_add_24"
+                app:tint="@color/pink_light_dark"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toEndOf="@+id/processEditText"
+                app:layout_constraintTop_toTopOf="@+id/processEditText"
+                app:layout_constraintBottom_toBottomOf="@+id/processEditText"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/countryTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/country"
+                app:layout_constraintTop_toBottomOf="@+id/processEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <EditText
-                android:id="@+id/countryInputLayout"
+                android:id="@+id/countryEditText"
                 style="@style/mEditTextStyle"
                 android:hint="@string/hint_country"
                 android:elevation="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/processSpinner">
+                app:layout_constraintTop_toBottomOf="@+id/countryTitle">
             </EditText>
 
+            <TextView
+                android:id="@+id/farmTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/farm"
+                app:layout_constraintTop_toBottomOf="@+id/countryEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
 
+            <EditText
+                android:id="@+id/farmEditText"
+                style="@style/mEditTextStyle"
+                android:hint="@string/farm"
+                android:elevation="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/farmTitle"/>
 
-<!--            <TextView-->
-<!--                android:id="@+id/recipeReviewTitle"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textSize="16sp"-->
-<!--                android:layout_marginStart="10dp"-->
-<!--                android:paddingTop="10dp"-->
-<!--                android:paddingBottom="10dp"-->
-<!--                android:paddingStart="15dp"-->
-<!--                android:paddingEnd="15dp"-->
-<!--                android:background="@drawable/recipe_detail_rating_background"-->
-<!--                android:layout_marginTop="30dp"-->
-<!--                android:text="@string/review"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/commentInputLayout"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/commentInputLayout"/>-->
+            <TextView
+                android:id="@+id/districtTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/district"
+                app:layout_constraintTop_toBottomOf="@+id/farmEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-<!--            <ImageView-->
-<!--                android:id="@+id/starFirst"-->
-<!--                style="@style/ratingStarLarge"-->
-<!--                android:layout_marginTop="25dp"-->
-<!--                android:layout_marginStart="0dp"-->
-<!--                android:src="@drawable/ic_baseline_star_grey"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/recipeReviewTitle"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/recipeReviewTitle" />-->
+            <EditText
+                android:id="@+id/districtEditText"
+                style="@style/mEditTextStyle"
+                android:hint="@string/district"
+                android:elevation="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/districtTitle"/>
 
-<!--            <ImageView-->
-<!--                android:id="@+id/starSecond"-->
-<!--                style="@style/ratingStarLarge"-->
-<!--                android:src="@drawable/ic_baseline_star_grey"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/starFirst"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/starFirst" />-->
+            <TextView
+                android:id="@+id/speciesTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/species"
+                app:layout_constraintTop_toBottomOf="@+id/districtEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-<!--            <ImageView-->
-<!--                android:id="@+id/starThird"-->
-<!--                style="@style/ratingStarLarge"-->
-<!--                android:src="@drawable/ic_baseline_star_grey"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/starFirst"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/starSecond" />-->
+            <EditText
+                android:id="@+id/speciesEditText"
+                style="@style/mEditTextStyle"
+                android:hint="@string/species"
+                android:elevation="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/speciesTitle"/>
 
-<!--            <ImageView-->
-<!--                android:id="@+id/starFourth"-->
-<!--                style="@style/ratingStarLarge"-->
-<!--                android:src="@drawable/ic_baseline_star_grey"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/starFirst"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/starThird" />-->
+            <TextView
+                android:id="@+id/elevationTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/elevation"
+                app:layout_constraintTop_toBottomOf="@+id/speciesEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-<!--            <ImageView-->
-<!--                android:id="@+id/starFifth"-->
-<!--                style="@style/ratingStarLarge"-->
-<!--                android:src="@drawable/ic_baseline_star_grey"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/starFirst"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/starFourth" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/recipeRating"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="35dp"-->
-<!--                android:textSize="27sp"-->
-<!--                android:textColor="@color/brown_light"-->
-<!--                android:text="3.0"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/starFifth"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/starFirst" />-->
-
-            <View
-                android:id="@+id/bottomMarginView"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/elevationWrapper"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                app:layout_constraintTop_toBottomOf="parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/elevationTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <EditText
+                    style="@style/mEditTextStyle"
+                    android:id="@+id/elevationFromEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_margin="0dp"
+                    android:hint="@string/elevation"
+                    android:elevation="20dp"
+                    android:inputType="number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/waveLine"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+                <TextView
+                    android:id="@+id/waveLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="~"
+                    android:textSize="30sp"
+                    android:padding="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/elevationFromEditText"
+                    app:layout_constraintEnd_toStartOf="@+id/elevationToEditText"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <EditText
+                    style="@style/mEditTextStyle"
+                    android:id="@+id/elevationToEditText"
+                    android:layout_width="0dp"
+                    android:layout_margin="0dp"
+                    android:hint="@string/elevation"
+                    android:elevation="20dp"
+                    android:inputType="number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/waveLine"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/storeTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/store"
+                app:layout_constraintTop_toBottomOf="@+id/elevationWrapper"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <EditText
+                android:id="@+id/storeEditText"
+                style="@style/mEditTextStyle"
+                android:hint="@string/store"
+                android:elevation="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/storeTitle"/>
+
+            <TextView
+                android:id="@+id/commentTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/comment"
+                app:layout_constraintTop_toBottomOf="@+id/storeEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <EditText
+                android:id="@+id/commentEditText"
+                style="@style/mEditTextStyle"
+                android:layout_height="100dp"
+                android:elevation="20dp"
+                android:gravity="top"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/commentTitle"/>
+
+            <TextView
+                android:id="@+id/beanReviewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="@string/review"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:background="@drawable/recipe_detail_rating_background"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/commentEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <ImageView
+                android:id="@+id/beanStarFirst"
+                style="@style/ratingStarLarge"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="0dp"
+                android:src="@drawable/ic_baseline_star_grey"
+                app:layout_constraintTop_toBottomOf="@+id/beanReviewTitle"
+                app:layout_constraintStart_toStartOf="@+id/beanReviewTitle" />
+
+            <ImageView
+                android:id="@+id/beanStarSecond"
+                style="@style/ratingStarLarge"
+                android:src="@drawable/ic_baseline_star_grey"
+                app:layout_constraintTop_toTopOf="@+id/beanStarFirst"
+                app:layout_constraintStart_toEndOf="@+id/beanStarFirst" />
+
+            <ImageView
+                android:id="@+id/beanStarThird"
+                style="@style/ratingStarLarge"
+                android:src="@drawable/ic_baseline_star_grey"
+                app:layout_constraintTop_toTopOf="@+id/beanStarFirst"
+                app:layout_constraintStart_toEndOf="@+id/beanStarSecond" />
+
+            <ImageView
+                android:id="@+id/beanStarFourth"
+                style="@style/ratingStarLarge"
+                android:src="@drawable/ic_baseline_star_grey"
+                app:layout_constraintTop_toTopOf="@+id/beanStarFirst"
+                app:layout_constraintStart_toEndOf="@+id/beanStarThird" />
+
+            <ImageView
+                android:id="@+id/beanStarFifth"
+                style="@style/ratingStarLarge"
+                android:src="@drawable/ic_baseline_star_grey"
+                app:layout_constraintTop_toTopOf="@+id/beanStarFirst"
+                app:layout_constraintStart_toEndOf="@+id/beanStarFourth" />
+
+            <TextView
+                android:id="@+id/beanRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:text="3.0"
+                android:textSize="26sp"
+                android:textColor="@color/brown_light"
+                app:layout_constraintStart_toEndOf="@+id/beanStarFifth"
+                app:layout_constraintBottom_toBottomOf="@+id/beanStarFirst"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

@@ -90,7 +90,7 @@
             app:argType="long"
             android:defaultValue="1L" />
         <action
-            android:id="@+id/action_recipeDetailFragment_to_editBeanFragment"
+            android:id="@+id/showEditBeanAction"
             app:destination="@id/editBeanFragment" />
     </fragment>
     <fragment
@@ -106,5 +106,10 @@
     <fragment
         android:id="@+id/editBeanFragment"
         android:name="com.example.coffeememos.fragment.EditBeanFragment"
-        android:label="EditBeanFragment" />
+        android:label="EditBeanFragment">
+        <argument
+            android:name="beanId"
+            app:argType="long"
+            android:defaultValue="1L" />
+    </fragment>
 </navigation>

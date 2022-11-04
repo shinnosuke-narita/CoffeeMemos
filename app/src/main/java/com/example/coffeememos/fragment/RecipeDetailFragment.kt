@@ -1,6 +1,5 @@
 package com.example.coffeememos.fragment
 
-import android.app.ProgressDialog.show
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,18 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.coffeememos.manager.ChartManager
 import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentRecipeDetailBinding
+import com.example.coffeememos.dialog.EditTasteDialogFragment
+import com.example.coffeememos.manager.ChartManager
 import com.example.coffeememos.manager.RatingManager
-import com.example.coffeememos.manager.RatingManager.*
+import com.example.coffeememos.manager.RatingManager.Star
+import com.example.coffeememos.manager.RatingManager.StarState
 import com.example.coffeememos.util.DateUtil
 import com.example.coffeememos.viewModel.RecipeDetailViewModel
 import com.example.coffeememos.viewModel.RecipeDetailViewModelFactory
@@ -74,7 +74,7 @@ class RecipeDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentRecipeDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -142,6 +142,21 @@ class RecipeDetailFragment : Fragment() {
             else binding.recipeFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
 
+        viewModel.selectedBean.observe(viewLifecycleOwner) { bean ->
+            binding.beanCardView.countryText.text     = bean.country
+            binding.beanCardView.farmText.text        = bean.farm
+            binding.beanCardView.districtText.text    = bean.district
+            binding.beanCardView.speciesText.text     = bean.species
+            binding.beanCardView.elevationText.text   = getString(R.string.elevation_from_to, bean.elevationFrom.toString(), bean.elevationTo.toString())
+            binding.beanCardView.storeText.text       = bean.store
+            binding.beanCardView.processText.text     = Constants.processList[bean.process]
+            binding.beanCardView.beanCommentText.text = bean.comment
+
+            if (bean.isFavorite) binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
+            else binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+
+
         // Ratingの★画像状態 監視処理
         viewModel.recipeStarList.observe(viewLifecycleOwner) { starList ->
             for ((index, star) in starList.withIndex()) {
@@ -166,22 +181,12 @@ class RecipeDetailFragment : Fragment() {
             binding.beanCardView.beanRating.text = getString(R.string.rate_decimal, currentRating.toString())
         }
 
-        viewModel.selectedBean.observe(viewLifecycleOwner) { bean ->
-            binding.beanCardView.countryText.text     = bean.country
-            binding.beanCardView.farmText.text        = bean.farm
-            binding.beanCardView.districtText.text    = bean.district
-            binding.beanCardView.speciesText.text     = bean.species
-            binding.beanCardView.elevationText.text   = getString(R.string.elevation_from_to, bean.elevationFrom.toString(), bean.elevationTo.toString())
-            binding.beanCardView.storeText.text       = bean.store
-            binding.beanCardView.processText.text     = Constants.processList[bean.process]
-            binding.beanCardView.beanCommentText.text = bean.comment
-
-            if (bean.isFavorite) binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
-            else binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-        }
-
         binding.beanCardView.beanEditIcon.setOnClickListener { view ->
-            Navigation.findNavController(view).navigate(R.id.editBeanFragment)
+            val showEditBeanAction = RecipeDetailFragmentDirections.showEditBeanAction().apply {
+                beanId = viewModel.selectedBean.value!!.id
+            }
+
+            Navigation.findNavController(view).navigate(showEditBeanAction)
         }
 
         binding.tasteEditIcon.setOnClickListener { view ->

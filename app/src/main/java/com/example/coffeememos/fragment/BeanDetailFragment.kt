@@ -63,7 +63,7 @@ class BeanDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBeanDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -100,13 +100,13 @@ class BeanDetailFragment : Fragment() {
         }
 
         viewModel.selectedBean.observe(viewLifecycleOwner) { bean ->
-            binding.beanCardView.countryText.text = bean.country
-            binding.beanCardView.farmText.text = bean.farm
-            binding.beanCardView.districtText.text = bean.district
-            binding.beanCardView.speciesText.text = bean.species
-            binding.beanCardView.processText.text = Constants.processList[bean.process]
-            binding.beanCardView.elevationText.text = getString(R.string.elevation_from_to, bean.elevationFrom.toString(), bean.elevationTo.toString())
-            binding.beanCardView.storeText.text = bean.store
+            binding.beanCardView.countryText.text     = bean.country
+            binding.beanCardView.farmText.text        = bean.farm
+            binding.beanCardView.districtText.text    = bean.district
+            binding.beanCardView.speciesText.text     = bean.species
+            binding.beanCardView.processText.text     = Constants.processList[bean.process]
+            binding.beanCardView.elevationText.text   = getString(R.string.elevation_from_to, bean.elevationFrom.toString(), bean.elevationTo.toString())
+            binding.beanCardView.storeText.text       = bean.store
             binding.beanCardView.beanCommentText.text = bean.comment
 
             if (bean.isFavorite) binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
