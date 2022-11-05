@@ -12,6 +12,7 @@ class Constants {
 
         const val databaseResetFlag = false
 
+        // コーヒーアイコンのライセンスURL
         val attributeAuthorUrl = "<a href=\"https://www.flaticon.com/free-icons/coffee\" title=\"coffee icons\">Coffee icons created by srip - Flaticon</a>"
 
         val sampleBean = Bean(
@@ -25,7 +26,6 @@ class Constants {
             0,
             "kaldi",
             "おいしい",
-            3,
             3,
             true,
             timeStamp
@@ -43,7 +43,6 @@ class Constants {
             "kaldi",
             "おいしい",
             3,
-            3,
             true,
             timeStamp + 1000
         )
@@ -59,7 +58,6 @@ class Constants {
             0,
             "kaldi",
             "おいしい",
-            3,
             3,
             true,
             timeStamp + 2000
@@ -77,7 +75,6 @@ class Constants {
             "kaldi",
             "おいしい",
             3,
-            3,
             true,
             timeStamp + 3000
         )
@@ -94,7 +91,6 @@ class Constants {
             "kaldi",
             "おいしい",
             3,
-            3,
             true,
             timeStamp + 4000
         )
@@ -105,7 +101,8 @@ class Constants {
             0,
             "hario",
             6,
-            90,
+            1,
+            30,
             30,
             0,
             90,
@@ -122,7 +119,8 @@ class Constants {
             0,
             "karita",
             6,
-            90,
+            1,
+            30,
             30,
             0,
             90,

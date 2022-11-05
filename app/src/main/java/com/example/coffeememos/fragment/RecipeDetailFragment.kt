@@ -137,7 +137,7 @@ class RecipeDetailFragment : Fragment() {
             binding.amountBeanText.text       = recipe.amountOfBeans.toString()
             binding.temperatureText.text      = recipe.temperature.toString()
             binding.preInfusionTimeText.text  = recipe.preInfusionTime.toString()
-            binding.extractionTimeText.text   = recipe.extractionTime.toString()
+            binding.extractionTimeText.text   = recipe.extractionTimeMinutes.toString()
             binding.amountExtractionText.text = recipe.amountExtraction.toString()
             binding.createdDateText.text      = DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern)
             binding.recipeCommentText.text    = recipe.comment
@@ -168,7 +168,6 @@ class RecipeDetailFragment : Fragment() {
                 else recipeStarViewList[index].setImageResource(R.drawable.ic_baseline_star_grey)
             }
         }
-
         viewModel.beanStarList.observe(viewLifecycleOwner) { starList ->
             for ((index, star) in starList.withIndex()) {
                 if (star.state == StarState.LIGHT) beanStarViewList[index].setImageResource(R.drawable.ic_baseline_star_beige_light_24)
@@ -180,26 +179,33 @@ class RecipeDetailFragment : Fragment() {
         viewModel.recipeCurrentRating.observe(viewLifecycleOwner) { currentRating ->
             binding.recipeRating.text = getString(R.string.rate_decimal, currentRating.toString())
         }
-
         viewModel.beanCurrentRating.observe(viewLifecycleOwner) { currentRating ->
             binding.beanCardView.beanRating.text = getString(R.string.rate_decimal, currentRating.toString())
         }
 
-        binding.beanCardView.beanEditIcon.setOnClickListener { view ->
+
+        // レシピ編集画面へ遷移
+        binding.recipeEditIcon.setOnClickListener { v ->
+            val showEditRecipeAction = RecipeDetailFragmentDirections.showEditRecipeAction().apply {
+                recipeId = viewModel.selectedRecipe.value!!.id
+            }
+            Navigation.findNavController(v).navigate(showEditRecipeAction)
+        }
+        // コーヒー豆編集画面へ遷移
+        binding.beanCardView.beanEditIcon.setOnClickListener { v ->
             val showEditBeanAction = RecipeDetailFragmentDirections.showEditBeanAction().apply {
                 beanId = viewModel.selectedBean.value!!.id
             }
-
-            Navigation.findNavController(view).navigate(showEditBeanAction)
+            Navigation.findNavController(v).navigate(showEditBeanAction)
         }
-
-        binding.tasteEditIcon.setOnClickListener { view ->
+        // テイスト編集ダイアログ表示
+        binding.tasteEditIcon.setOnClickListener {
             val taste = viewModel.selectedTaste.value!!
             EditTasteDialogFragment
                 .create(taste.sour, taste.bitter, taste.sweet, taste.flavor, taste.rich)
                 .show(childFragmentManager, EditTasteDialogFragment::class.simpleName)
         }
-
+        // テイスト編集ダイアログ結果受信
         childFragmentManager.setFragmentResultListener("newTaste", viewLifecycleOwner) { _, newTaste ->
             viewModel.updateTaste(
                 newTaste.getInt("sour"),

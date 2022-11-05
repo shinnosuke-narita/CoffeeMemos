@@ -130,7 +130,6 @@
                     app:layout_constraintEnd_toEndOf="@+id/roastSpinner"/>
 
 
-
                 <Spinner
                     android:id="@+id/grindSizeSpinner"
                     android:layout_width="0dp"
@@ -237,7 +236,7 @@
                         android:id="@+id/extractionTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/extraction_time"
+                        android:hint="@string/extraction_time_title"
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 

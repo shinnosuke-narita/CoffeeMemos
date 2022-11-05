@@ -55,7 +55,6 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentEditBeanBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -80,7 +79,6 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
             binding.elevationToEditText.setText(bean.elevationTo.toString())
             binding.storeEditText.setText(bean.store)
             binding.commentEditText.setText(bean.comment)
-            binding.processEditText.text = Constants.processList[bean.process]
         }
 
 
@@ -154,6 +152,8 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
         })
 
 
+
+        // Favorite 関連処理
         viewModel.currentFavorite.observe(viewLifecycleOwner) { isFavorite ->
             if (isFavorite) binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
             else binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
@@ -164,10 +164,14 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
         }
 
 
+        // Process 関連処理
+        viewModel.process.observe(viewLifecycleOwner) { process ->
+            binding.processEditText.text = Constants.processList[process]
+        }
         // processDialog 表示
         binding.selectProcessBtn.setOnClickListener {
             BeanProcessDialogFragment
-                .create(viewModel.selectedBean.value!!.process)
+                .create(viewModel.process.value!!)
                 .show(childFragmentManager, BeanProcessDialogFragment::class.simpleName)
         }
         // processDialogからの結果を受信

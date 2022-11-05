@@ -55,7 +55,7 @@ class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao:
         _beanRatingManager    = beanRatingManager
 
         viewModelScope.launch {
-            _selectedRecipe.postValue(recipeDao.getRecipeByID(recipeId))
+            _selectedRecipe.postValue(recipeDao.getRecipeById(recipeId))
             _selectedBean.postValue(beanDao.getBeanById(beanId))
             _selectedTaste.postValue(tasteDao.getTasteById(tasteId))
         }

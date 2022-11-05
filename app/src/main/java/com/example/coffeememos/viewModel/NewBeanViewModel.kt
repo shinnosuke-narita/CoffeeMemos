@@ -93,7 +93,6 @@ class NewBeanViewModel(val beanDao: BeanDao) : ViewModel() {
                     purchaseStore,
                     comment,
                     currentRating,
-                    0,
                     _isFavorite.value!!,
                     createdAt
                 )

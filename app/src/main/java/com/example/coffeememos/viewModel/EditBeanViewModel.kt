@@ -7,8 +7,10 @@ import com.example.coffeememos.manager.RatingManager
 import kotlinx.coroutines.launch
 
 class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
+    // 選択された豆
     private val _selectedBean: MutableLiveData<Bean> = MutableLiveData()
     val selectedBean: LiveData<Bean> = _selectedBean
+
 
     // Rating 関連
     private lateinit var _ratingManager: RatingManager
@@ -19,6 +21,15 @@ class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
     private val _beanStarList: MutableLiveData<List<RatingManager.Star>> = MutableLiveData(listOf())
     val beanStarList: LiveData<List<RatingManager.Star>> = _beanStarList
 
+    fun updateRatingState(selectedRate: Int) {
+        _ratingManager.changeRatingState(selectedRate)
+
+        _beanCurrentRating.value = _ratingManager.currentRating
+        _beanStarList.value      = _ratingManager.starList
+    }
+
+
+    // Favorite
     private val _currentFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
     val currentFavorite: LiveData<Boolean> = _currentFavorite
 
@@ -26,8 +37,17 @@ class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
         _currentFavorite.value = isFavorite
     }
 
+
+    // 精製法
+    private val _process: MutableLiveData<Int> = MutableLiveData(0)
+    val process: LiveData<Int> = _process
+
+    fun setProcess(process: Int) {
+        _process.value = process
+    }
+
+
     // 更新されたデータを保持
-    private var _process      : Int = 0
     private var _elevationFrom: Int = 0
     private var _elevationTo  : Int = 0
     private var _country      : String = ""
@@ -37,7 +57,6 @@ class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
     private var _store        : String = ""
     private var _comment      : String = ""
 
-    fun setProcess(process: Int)                { _process = process}
     fun setElevationFrom(elevationFrom: Int)    { _elevationFrom = elevationFrom }
     fun setElevationTo(elevationTo: Int)        { _elevationTo = elevationTo }
     fun setCountry(country: String)             { _country = country }
@@ -47,6 +66,8 @@ class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
     fun setStore(store: String)                 { _store = store }
     fun setComment(comment: String)             { _comment = comment }
 
+
+    // 初期化処理
     fun initialize(id: Long, ratingManager: RatingManager) {
         // RatingManagerを先に初期化する！（アプリ落ちる）
         _ratingManager = ratingManager
@@ -54,55 +75,32 @@ class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
         viewModelScope.launch {
             val selectedBean = beanDao.getBeanById(id)
 
-            _selectedBean.value = selectedBean
-
             updateRatingState(selectedBean.rating)
-
+            _selectedBean.value    = selectedBean
             _currentFavorite.value = selectedBean.isFavorite
+            _process.value         = selectedBean.process
         }
     }
 
-    fun updateRatingState(selectedRate: Int) {
-        _ratingManager.changeRatingState(selectedRate)
 
-        _beanCurrentRating.value = _ratingManager.currentRating
-        _beanStarList.value      = _ratingManager.starList
-    }
-
+    // コーヒー豆更新処理
     fun updateBean() {
-        // TODO ImageId処理
         viewModelScope.launch {
-            val id: Long            = _selectedBean.value!!.id
-            val process: Int        = if (_process == 0) _selectedBean.value!!.process else _process
-            val elevationFrom: Int  = _elevationFrom
-            val elevationTo: Int    = _elevationTo
-            val country: String     = _country
-            val farm: String        = _farm
-            val district: String    = _district
-            val species: String     = _species
-            val store: String       = _store
-            val comment: String     = _comment
-            val rating: Int         = _ratingManager.currentRating
-            val image: Int          = 0
-            val isFavorite: Boolean = _currentFavorite.value!!
-            val createdAt: Long     = _selectedBean.value!!.createdAt
-
             beanDao.update(
                 Bean(
-                    id,
-                    country,
-                    farm,
-                    district,
-                    species,
-                    elevationFrom,
-                    elevationTo,
-                    process,
-                    store,
-                    comment,
-                    rating,
-                    image,
-                    isFavorite,
-                    createdAt
+                    id            = _selectedBean.value!!.id,
+                    country       = _country,
+                    farm          = _farm,
+                    district      = _district,
+                    species       = _species,
+                    elevationFrom = _elevationFrom,
+                    elevationTo   = _elevationTo,
+                    process       = _process.value!!,
+                    store         = _store,
+                    comment       = _comment,
+                    rating        = _ratingManager.currentRating,
+                    isFavorite    = _currentFavorite.value!!,
+                    createdAt     = _selectedBean.value!!.createdAt
                 )
             )
         }

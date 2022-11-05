@@ -48,10 +48,9 @@ class BeanProcessDialogFragment : DialogFragment() {
         // ListView セッティング
         binding.processListView.adapter = BeanProcessAdapter(requireContext(), processList)
         binding.processListView.setOnItemClickListener { _, _, selectedPosition, _ ->
-            processListManager.setCurrentProcess(selectedPosition)
-            val list = processListManager.createProcessList()
+            processListManager.updateProcessList(selectedPosition)
 
-            binding.processListView.adapter = BeanProcessAdapter(requireContext(), list)
+            binding.processListView.adapter = BeanProcessAdapter(requireContext(), processListManager.processList)
         }
 
         binding.updateBtn.setOnClickListener {

@@ -20,7 +20,6 @@ data class Bean(
     val store: String,
     val comment: String,
     val rating: Int,
-    val image: Int,
     val isFavorite: Boolean,
     val createdAt: Long
 ) : Serializable

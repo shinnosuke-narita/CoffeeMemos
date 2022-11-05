@@ -1,12 +1,16 @@
 package com.example.coffeememos.manager
 
 import com.example.coffeememos.Constants
-import java.io.Serializable
 
 class ProcessListManager(private var _currentProcess: Int) {
     val currentProcess: Int
         get() = _currentProcess
 
+    val processList: List<Process>
+
+    init {
+        processList = createProcessList()
+    }
 
     fun createProcessList(): List<Process> {
         val result = mutableListOf<Process>()
@@ -20,8 +24,12 @@ class ProcessListManager(private var _currentProcess: Int) {
         return result
     }
 
-    fun setCurrentProcess(process: Int) {
-        _currentProcess = process
+    fun updateProcessList(processIndex: Int) {
+        _currentProcess = processIndex
+
+        for ((index, process) in processList.withIndex()) {
+            process.isSelected = index == _currentProcess
+        }
     }
 
     data class Process(val name: String, var isSelected: Boolean)

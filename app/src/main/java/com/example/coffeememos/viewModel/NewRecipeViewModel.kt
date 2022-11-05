@@ -141,20 +141,21 @@ class NewRecipeViewModel(
 
             recipeDao.insert(
                 Recipe(
-                    id               = 0,
-                    beanId           = _selectedBeanId ?: 1,
-                    tool             = tool,
-                    roast            = _roastIndex,
-                    extractionTime   = iExtractionTime,
-                    preInfusionTime  = iPreInfusionTime,
-                    amountExtraction = iAmountExtraction,
-                    temperature      = iTemperature,
-                    grindSize        = _grindSizeIndex,
-                    amountOfBeans    = iAmountOfBeans,
-                    comment          = comment,
-                    isFavorite       = _isFavorite.value ?: false,
-                    rating           = currentRating,
-                    createdAt        = createdAt
+                    id                      = 0,
+                    beanId                  = _selectedBeanId ?: 1,
+                    tool                    = tool,
+                    roast                   = _roastIndex,
+                    extractionTimeMinutes   = iExtractionTime,
+                    extractionTimeSeconds   = iExtractionTime,
+                    preInfusionTime         = iPreInfusionTime,
+                    amountExtraction        = iAmountExtraction,
+                    temperature             = iTemperature,
+                    grindSize               = _grindSizeIndex,
+                    amountOfBeans           = iAmountOfBeans,
+                    comment                 = comment,
+                    isFavorite              = _isFavorite.value ?: false,
+                    rating                  = currentRating,
+                    createdAt               = createdAt
                 )
             )
 

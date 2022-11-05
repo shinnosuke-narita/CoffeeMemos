@@ -92,6 +92,9 @@
         <action
             android:id="@+id/showEditBeanAction"
             app:destination="@id/editBeanFragment" />
+        <action
+            android:id="@+id/showEditRecipeAction"
+            app:destination="@id/editRecipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/beanDetailFragment"
@@ -111,5 +114,16 @@
             android:name="beanId"
             app:argType="long"
             android:defaultValue="1L" />
+    </fragment>
+    <fragment
+        android:id="@+id/editRecipeFragment"
+        android:name="com.example.coffeememos.fragment.EditRecipeFragment"
+        android:label="fragment_edit_recipe"
+        tools:layout="@layout/fragment_edit_recipe" >
+        <argument
+            android:name="recipeId"
+            app:argType="long"
+            android:defaultValue="1L" />
+
     </fragment>
 </navigation>

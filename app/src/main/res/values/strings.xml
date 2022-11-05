@@ -26,7 +26,11 @@
 
     <!-- レシピ関連  -->
     <string name="tool">抽出器具</string>
-    <string name="extraction_time">抽出時間(秒)</string>
+    <string name="extraction_time_title">抽出時間</string>
+    <string name="extraction_time_seconds">抽出時間(秒)</string>
+    <string name="extraction_time_minutes">抽出時間(分)</string>
+    <string name="minutes">分</string>
+    <string name="seconds">秒</string>
     <string name="pre_infusion_time">蒸らし時間(秒)</string>
     <string name="grind_size">豆の粒度</string>
     <string name="amount_beans">コーヒーの粉量(g)</string>
