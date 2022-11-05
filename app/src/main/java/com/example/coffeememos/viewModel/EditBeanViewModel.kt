@@ -1,6 +1,5 @@
 package com.example.coffeememos.viewModel
 
-import android.text.TextUtils
 import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
@@ -31,12 +30,12 @@ class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
     private var _process      : Int = 0
     private var _elevationFrom: Int = 0
     private var _elevationTo  : Int = 0
-    private var _country      : String? = null
-    private var _farm         : String? = null
-    private var _district     : String? = null
-    private var _species      : String? = null
-    private var _store        : String? = null
-    private var _comment      : String? = null
+    private var _country      : String = ""
+    private var _farm         : String = ""
+    private var _district     : String = ""
+    private var _species      : String = ""
+    private var _store        : String = ""
+    private var _comment      : String = ""
 
     fun setProcess(process: Int)                { _process = process}
     fun setElevationFrom(elevationFrom: Int)    { _elevationFrom = elevationFrom }
@@ -71,17 +70,18 @@ class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
     }
 
     fun updateBean() {
+        // TODO ImageId処理
         viewModelScope.launch {
             val id: Long            = _selectedBean.value!!.id
-            val process: Int        =  if (_process == 0)       _selectedBean.value!!.process else _process
-            val elevationFrom: Int  =  if (_elevationFrom == 0) _selectedBean.value!!.elevationFrom else _elevationFrom
-            val elevationTo: Int    =  if (_elevationTo == 0)   _selectedBean.value!!.elevationTo   else _elevationTo
-            val country: String     = _country  ?: _selectedBean.value!!.country
-            val farm: String        = _country  ?: _selectedBean.value!!.country
-            val district: String    = _district ?: _selectedBean.value!!.district
-            val species: String     = _species  ?: _selectedBean.value!!.species
-            val store: String       = _store    ?:  _selectedBean.value!!.store
-            val comment: String     = _comment  ?:  _selectedBean.value!!.comment
+            val process: Int        = if (_process == 0) _selectedBean.value!!.process else _process
+            val elevationFrom: Int  = _elevationFrom
+            val elevationTo: Int    = _elevationTo
+            val country: String     = _country
+            val farm: String        = _farm
+            val district: String    = _district
+            val species: String     = _species
+            val store: String       = _store
+            val comment: String     = _comment
             val rating: Int         = _ratingManager.currentRating
             val image: Int          = 0
             val isFavorite: Boolean = _currentFavorite.value!!

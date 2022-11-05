@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -188,6 +189,9 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
         //更新ダイアログの結果受信
         childFragmentManager.setFragmentResultListener("isUpdate", viewLifecycleOwner) { _, bundle ->
             viewModel.updateBean()
+
+            setFragmentResult("beanUpdate", Bundle().apply { putLong("beanId", viewModel.selectedBean.value!!.id) })
+            findNavController().popBackStack()
         }
     }
 

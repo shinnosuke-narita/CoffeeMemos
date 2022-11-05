@@ -1,12 +1,15 @@
 package com.example.coffeememos.fragment
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -23,6 +26,7 @@ import com.example.coffeememos.manager.RatingManager.StarState
 import com.example.coffeememos.util.DateUtil
 import com.example.coffeememos.viewModel.RecipeDetailViewModel
 import com.example.coffeememos.viewModel.RecipeDetailViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 class RecipeDetailFragment : Fragment() {
     private var mContext: Context? = null
@@ -203,6 +207,20 @@ class RecipeDetailFragment : Fragment() {
                 newTaste.getInt("sweet"),
                 newTaste.getInt("flavor"),
                 newTaste.getInt("rich"))
+        }
+
+        setFragmentResultListener("beanUpdate") { _, bundle ->
+            viewModel.updateBean(bundle.getLong("beanId"))
+
+            Snackbar.make(binding.snackBarPlace, "コーヒー豆を更新しました", Snackbar.LENGTH_SHORT).apply {
+                mContext?.let {
+                    setTextColor(ContextCompat.getColor(it, R.color.snackBar_text))
+                    getView().setBackgroundColor(
+                        ContextCompat.getColor(it,
+                        R.color.white
+                    ))
+                }
+            }.show()
         }
     }
 
