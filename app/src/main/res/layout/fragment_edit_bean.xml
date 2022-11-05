@@ -46,6 +46,7 @@
                 android:id="@+id/processEditText"
                 style="@style/mEditTextStyle"
                 android:hint="@string/process"
+                android:textColor="@color/black"
                 android:gravity="center|left"
                 app:layout_constraintEnd_toStartOf="@+id/selectProcessBtn"
                 app:layout_constraintStart_toStartOf="parent"
@@ -220,6 +221,7 @@
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical"
                 android:inputType="textMultiLine"
+                android:maxLines="10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/commentTitle"/>

@@ -5,6 +5,7 @@ import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.manager.RatingManager
 import kotlinx.coroutines.launch
+import org.w3c.dom.Comment
 
 class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
     private val _selectedBean: MutableLiveData<Bean> = MutableLiveData()

@@ -1,12 +1,17 @@
 package com.example.coffeememos.fragment
 
+import android.app.AlertDialog
 import android.app.ProgressDialog.show
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,8 +20,10 @@ import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentEditBeanBinding
+import com.example.coffeememos.dialog.BasicDialogFragment
 import com.example.coffeememos.dialog.BeanProcessDialogFragment
 import com.example.coffeememos.dialog.EditTasteDialogFragment
+import com.example.coffeememos.listener.SimpleTextWatcher
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.util.Util
 import com.example.coffeememos.viewModel.EditBeanViewModel
@@ -25,7 +32,7 @@ import com.example.coffeememos.viewModel.RecipeDetailViewModel
 import com.example.coffeememos.viewModel.RecipeDetailViewModelFactory
 
 
-class EditBeanFragment : Fragment(), View.OnClickListener {
+class EditBeanFragment : Fragment(), View.OnClickListener, TextWatcher {
     private var _binding: FragmentEditBeanBinding? = null
     private val binding
         get() = _binding!!
@@ -94,6 +101,7 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
             else binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
 
+
         // rating ★Viewの状態監視処理
         viewModel.beanStarList.observe(viewLifecycleOwner) { starList ->
             for ((index, star) in starList.withIndex()) {
@@ -114,17 +122,33 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
         binding.beanStarFourth.setOnClickListener(this)
         binding.beanStarFifth.setOnClickListener(this)
 
-        // プロセス編集アイコンクリックリスナ―処理
+        // processDialog 表示
         binding.selectProcessBtn.setOnClickListener {
             BeanProcessDialogFragment
                 .create(viewModel.selectedBean.value!!.process)
                 .show(childFragmentManager, BeanProcessDialogFragment::class.simpleName)
         }
 
-        // processDialogからのリザルトを受け取る
+        // processDialogからの結果を受信
         childFragmentManager.setFragmentResultListener("selectProcess", viewLifecycleOwner) {_, bundle ->
             binding.processEditText.text = Constants.processList[bundle.getInt("process")]
         }
+
+        // 更新ダイアログ表示
+        binding.saveBtn.setOnClickListener {
+            BasicDialogFragment
+                .create(
+                    getString(R.string.update_message),
+                    getString(R.string.update),
+                    getString(R.string.cancel))
+                .show(childFragmentManager, BasicDialogFragment::class.simpleName)
+        }
+
+        //更新ダイアログの結果受信
+        childFragmentManager.setFragmentResultListener("isUpdate", viewLifecycleOwner) { _, bundle ->
+
+        }
+
 
     }
 
@@ -143,5 +167,13 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
             R.id.beanStarFourth -> viewModel.updateRatingState(4)
             R.id.beanStarFifth  -> viewModel.updateRatingState(5)
         }
+    }
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+    override fun afterTextChanged(result: Editable?) {
+
     }
 }

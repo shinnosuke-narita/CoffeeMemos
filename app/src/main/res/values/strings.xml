@@ -58,6 +58,7 @@
     <string name="prompt">選択してください</string>
     <string name="cancel">キャンセル</string>
     <string name="update">更新</string>
+    <string name="update_message">更新をしてもよろしいですか</string>
 
     <string name="elevation_width_meters">%1$sm</string>
     <string name="elevation_from_to">%1$sm ~ %2$sm</string>
