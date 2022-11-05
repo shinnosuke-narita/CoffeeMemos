@@ -2,10 +2,7 @@ package com.example.coffeememos.dao
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.RecipeWithBeans
@@ -15,6 +12,9 @@ import kotlinx.coroutines.flow.Flow
 interface BeanDao {
     @Insert
     suspend fun insert(bean: Bean)
+
+    @Update
+    suspend fun update(bean: Bean)
 
     @Query("UPDATE bean SET isFavorite = :favoriteFlag WHERE bean_id = :id")
     suspend fun updateFavoriteByBeanId(id: Long, favoriteFlag: Boolean)

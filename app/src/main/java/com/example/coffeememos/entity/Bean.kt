@@ -10,7 +10,7 @@ import java.io.Serializable
 data class Bean(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "bean_id") val id: Long,
-    var country: String,
+    val country: String,
     val farm: String,
     val district: String,
     val species: String,
