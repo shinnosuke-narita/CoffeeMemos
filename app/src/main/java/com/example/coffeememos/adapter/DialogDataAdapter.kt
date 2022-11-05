@@ -8,9 +8,9 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.coffeememos.R
-import com.example.coffeememos.manager.ProcessListManager
+import com.example.coffeememos.manager.DialogDataHolder
 
-class BeanProcessAdapter(val context: Context, val data: List<ProcessListManager.Process>): BaseAdapter() {
+class DialogDataAdapter(val context: Context, val data: List<DialogDataHolder.DialogData>): BaseAdapter() {
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getCount(): Int {

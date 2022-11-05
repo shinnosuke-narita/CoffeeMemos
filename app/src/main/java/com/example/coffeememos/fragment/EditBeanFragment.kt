@@ -16,7 +16,7 @@ import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentEditBeanBinding
 import com.example.coffeememos.dialog.BasicDialogFragment
-import com.example.coffeememos.dialog.BeanProcessDialogFragment
+import com.example.coffeememos.dialog.ListDialogFragment
 import com.example.coffeememos.listener.SimpleTextWatcher
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.viewModel.EditBeanViewModel
@@ -170,14 +170,14 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
         }
         // processDialog 表示
         binding.selectProcessBtn.setOnClickListener {
-            BeanProcessDialogFragment
-                .create(viewModel.process.value!!)
-                .show(childFragmentManager, BeanProcessDialogFragment::class.simpleName)
+            ListDialogFragment
+                .create(viewModel.process.value!!, getString(R.string.edit_bean), "updateProcess", Constants.processList.toTypedArray())
+                .show(childFragmentManager, ListDialogFragment::class.simpleName)
         }
         // processDialogからの結果を受信
-        childFragmentManager.setFragmentResultListener("selectProcess", viewLifecycleOwner) {_, bundle ->
-            binding.processEditText.text = Constants.processList[bundle.getInt("process")]
-            viewModel.setProcess(bundle.getInt("process"))
+        childFragmentManager.setFragmentResultListener("updateProcess", viewLifecycleOwner) {_, bundle ->
+            binding.processEditText.text = Constants.processList[bundle.getInt("newIndex")]
+            viewModel.setProcess(bundle.getInt("newIndex"))
         }
 
 
