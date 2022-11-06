@@ -200,6 +200,7 @@ class RecipeDetailFragment : Fragment() {
         childFragmentManager.setFragmentResultListener("deleteRecipe", viewLifecycleOwner) { _, _ ->
             viewModel.deleteRecipe()
 
+            setFragmentResult("deleteRecipe", Bundle())
             findNavController().popBackStack()
         }
 

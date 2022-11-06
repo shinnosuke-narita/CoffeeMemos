@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +21,7 @@ import com.example.coffeememos.databinding.FragmentHomeRecipeBinding
 import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.viewModel.HomeRecipeViewModel
 import com.example.coffeememos.viewModel.HomeRecipeViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavoriteIconClickListener {
     private var mContext: Context? = null
@@ -105,6 +108,18 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavo
         // 豆ホーム画面へ遷移
         binding.goToBeanBtn.setOnClickListener { v ->
             Navigation.findNavController(v).navigate(R.id.homeBeansFragment)
+        }
+
+        setFragmentResultListener("deleteRecipe") { _, _ ->
+            Snackbar.make(binding.snackBarPlace, getString(R.string.recipe_finish_delete_message), Snackbar.LENGTH_SHORT).apply {
+                mContext?.let {
+                    setTextColor(ContextCompat.getColor(it, R.color.delete_color))
+                    getView().setBackgroundColor(
+                        ContextCompat.getColor(it,
+                            R.color.white
+                        ))
+                }
+            }.show()
         }
     }
 

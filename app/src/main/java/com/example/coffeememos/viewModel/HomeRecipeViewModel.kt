@@ -25,11 +25,9 @@ class HomeRecipeViewModel(private val beanDao: BeanDao, private val recipeDao: R
     // beanWithRecipeListとtasteListを監視
     val allSimpleRecipeList = MediatorLiveData<List<SimpleRecipe>>().apply {
         addSource(beanWithRecipeList) {
-            if (it.isEmpty()) return@addSource
             value = makeSimpleRecipe()
         }
         addSource(tasteList) {
-            if (it.isEmpty()) return@addSource
             value = makeSimpleRecipe()
         }
     }
@@ -59,7 +57,7 @@ class HomeRecipeViewModel(private val beanDao: BeanDao, private val recipeDao: R
 
     // 簡易レシピリスト作成メソッド
     private fun makeSimpleRecipe(): List<SimpleRecipe> {
-        //if (beanWithRecipeListOrTasteListIsEmpty()) return listOf()
+        if (beanWithRecipeListOrTasteListIsEmpty()) return listOf()
 
         val result = mutableListOf<SimpleRecipe>()
         for ((bean, recipes) in beanWithRecipeList.value!!) {
@@ -85,6 +83,10 @@ class HomeRecipeViewModel(private val beanDao: BeanDao, private val recipeDao: R
         // 新しい順にソート
         result.sortByDescending { it.recipeId }
         return result
+    }
+
+    private fun beanWithRecipeListOrTasteListIsEmpty(): Boolean {
+        return beanWithRecipeList.value.isNullOrEmpty() || tasteList.value.isNullOrEmpty()
     }
 
     fun updateFavoriteIcon(clickedFavoriteIcon: View, recipeId: Long) {
