@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class HomeBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
     private val maxDisplayItemAmount = 10
 
-    private var allBean: MutableLiveData<List<Bean>> = MutableLiveData(listOf())
+    private var allBean: LiveData<List<Bean>> = beanDao.getAllBean().asLiveData()
 
     val simpleBeanInfoList: LiveData<MutableList<SimpleBeanInfo>> = Transformations.map(allBean) { allBean ->
         val result = mutableListOf<SimpleBeanInfo>()
@@ -58,14 +58,6 @@ class HomeBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
         return@map simpleInfoList
     }
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = beanDao.getAll()
-            allBean.postValue(result)
-        }
-
-    }
-
     fun updateFavoriteIcon(clickedFavoriteIcon: View, beanId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             if (clickedFavoriteIcon.tag.equals(Constants.isFavoriteTagName)) {
@@ -73,13 +65,13 @@ class HomeBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
                 beanDao.updateFavoriteByBeanId(beanId, false)
 
                 // リスト更新
-                allBean.postValue(beanDao.getAll())
+               // allBean.postValue(beanDao.getAll())
             } else {
                 // isFavorite 更新
                 beanDao.updateFavoriteByBeanId(beanId, true)
 
                 // リスト更新
-                allBean.postValue(beanDao.getAll())
+                //allBean.postValue(beanDao.getAll())
             }
         }
     }

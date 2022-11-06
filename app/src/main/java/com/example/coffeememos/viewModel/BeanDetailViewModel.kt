@@ -1,21 +1,18 @@
 package com.example.coffeememos.viewModel
 
+import android.widget.MultiAutoCompleteTextView
 import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.manager.RatingManager.*
+import kotlinx.coroutines.launch
 
 class BeanDetailViewModel(private val beanDao: BeanDao) : ViewModel() {
     private lateinit var _beanRatingManager: RatingManager
 
-    private val _beanId: MutableLiveData<Long> = MutableLiveData(0)
-
-    val selectedBean: LiveData<Bean> = _beanId.switchMap { beanId ->
-        liveData{
-            emit(beanDao.getBeanById(beanId))
-        }
-    }
+    private val _selectedBean: MutableLiveData<Bean> = MutableLiveData()
+    val selectedBean: LiveData<Bean> = _selectedBean
 
     val beanStarList: LiveData<List<Star>> = selectedBean.switchMap { bean ->
         val result = MutableLiveData<List<Star>>()
@@ -26,16 +23,27 @@ class BeanDetailViewModel(private val beanDao: BeanDao) : ViewModel() {
         result
     }
 
-    private var _recipeCurrentRating: MutableLiveData<Int> = MutableLiveData(1)
-    val recipeCurrentRating: LiveData<Int> = _recipeCurrentRating
-
     private var _beanCurrentRating: MutableLiveData<Int> = MutableLiveData(1)
     val beanCurrentRating: LiveData<Int> = _beanCurrentRating
 
     fun initialize(beanId: Long, beanRatingManager: RatingManager) {
-        _beanId.value         = beanId
-        _beanRatingManager    = beanRatingManager
+        _beanRatingManager  = beanRatingManager
+
+        updateBean(beanId)
     }
+
+    fun updateBean(id: Long) {
+        viewModelScope.launch {
+            _selectedBean.postValue(beanDao.getBeanById(id))
+        }
+    }
+
+    fun deleteRecipe() {
+        viewModelScope.launch {
+            beanDao.deleteBeanById(_selectedBean.value!!.id)
+        }
+    }
+
 }
 
 

@@ -105,6 +105,9 @@
             android:name="beanId"
             app:argType="long"
             android:defaultValue="1L" />
+        <action
+            android:id="@+id/showEditBeanAction"
+            app:destination="@id/editBeanFragment" />
     </fragment>
     <fragment
         android:id="@+id/editBeanFragment"

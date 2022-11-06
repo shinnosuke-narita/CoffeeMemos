@@ -6,8 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.coffeememos.manager.ChartManager
@@ -16,6 +20,7 @@ import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentBeanDetailBinding
 import com.example.coffeememos.databinding.FragmentRecipeDetailBinding
+import com.example.coffeememos.dialog.BasicDialogFragment
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.manager.RatingManager.*
 import com.example.coffeememos.util.DateUtil
@@ -23,6 +28,7 @@ import com.example.coffeememos.viewModel.BeanDetailViewModel
 import com.example.coffeememos.viewModel.BeanDetailViewModelFactory
 import com.example.coffeememos.viewModel.RecipeDetailViewModel
 import com.example.coffeememos.viewModel.RecipeDetailViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 class BeanDetailFragment : Fragment() {
     private var mContext: Context? = null
@@ -111,6 +117,48 @@ class BeanDetailFragment : Fragment() {
 
             if (bean.isFavorite) binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
             else binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+
+
+        // コーヒー豆編集画面 遷移
+        binding.beanCardView.beanEditIcon.setOnClickListener { v ->
+            val showEditBeanAction = BeanDetailFragmentDirections.showEditBeanAction().apply {
+                beanId = viewModel.selectedBean.value!!.id
+            }
+            Navigation.findNavController(v).navigate(showEditBeanAction)
+        }
+        // コーヒー豆編集結果受信
+        setFragmentResultListener("beanUpdate") { _, bundle ->
+            viewModel.updateBean(bundle.getLong("beanId"))
+
+            Snackbar.make(binding.snackBarPlace, getString(R.string.bean_finish_update_message), Snackbar.LENGTH_SHORT).apply {
+                mContext?.let {
+                    setTextColor(ContextCompat.getColor(it, R.color.snackBar_text))
+                    getView().setBackgroundColor(
+                        ContextCompat.getColor(it,
+                            R.color.white
+                        ))
+                }
+            }.show()
+        }
+
+
+        // 削除処理
+        binding.deleteBtn.setOnClickListener { view ->
+            BasicDialogFragment
+                .create(
+                    getString(R.string.delete_recipe_message),
+                    getString(R.string.delete),
+                    getString(R.string.cancel),
+                    "deleteBean")
+                .show(childFragmentManager, BasicDialogFragment::class.simpleName)
+        }
+        //削除ダイアログの結果受信
+        childFragmentManager.setFragmentResultListener("deleteBean", viewLifecycleOwner) { _, _ ->
+            viewModel.deleteRecipe()
+
+            setFragmentResult("deleteBean", Bundle())
+            findNavController().popBackStack()
         }
     }
 

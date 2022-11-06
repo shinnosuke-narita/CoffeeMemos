@@ -16,6 +16,9 @@ interface BeanDao {
     @Update
     suspend fun update(bean: Bean)
 
+    @Query("DELETE FROM bean WHERE bean_id = :id")
+    suspend fun deleteBeanById(id: Long)
+
     @Query("UPDATE bean SET isFavorite = :favoriteFlag WHERE bean_id = :id")
     suspend fun updateFavoriteByBeanId(id: Long, favoriteFlag: Boolean)
 
@@ -30,6 +33,9 @@ interface BeanDao {
     suspend fun getBeanWithRecipe(): List<RecipeWithBeans>
 
     @Query("SELECT * FROM bean")
+    fun getAllBean(): Flow<List<Bean>>
+
+    @Query("SELECT * FROM bean")
     suspend fun getAll(): List<Bean>
 
     @Query("SELECT * FROM bean WHERE bean_id = :beanId")
@@ -37,6 +43,4 @@ interface BeanDao {
 
     @Query("SELECT * FROM bean JOIN recipe ON bean_id = recipe_bean_id")
     fun getBeanAndRecipe(): Flow<Map<Bean, List<Recipe>>>
-
-
 }

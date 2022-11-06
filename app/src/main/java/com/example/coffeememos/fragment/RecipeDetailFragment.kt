@@ -196,7 +196,7 @@ class RecipeDetailFragment : Fragment() {
                 "deleteRecipe")
                 .show(childFragmentManager, BasicDialogFragment::class.simpleName)
         }
-        //更新ダイアログの結果受信
+        //削除ダイアログの結果受信
         childFragmentManager.setFragmentResultListener("deleteRecipe", viewLifecycleOwner) { _, _ ->
             viewModel.deleteRecipe()
 
@@ -205,20 +205,6 @@ class RecipeDetailFragment : Fragment() {
         }
 
 
-        // レシピ編集画面へ遷移
-        binding.recipeEditIcon.setOnClickListener { v ->
-            val showEditRecipeAction = RecipeDetailFragmentDirections.showEditRecipeAction().apply {
-                recipeId = viewModel.selectedRecipe.value!!.id
-            }
-            Navigation.findNavController(v).navigate(showEditRecipeAction)
-        }
-        // コーヒー豆編集画面へ遷移
-        binding.beanCardView.beanEditIcon.setOnClickListener { v ->
-            val showEditBeanAction = RecipeDetailFragmentDirections.showEditBeanAction().apply {
-                beanId = viewModel.selectedBean.value!!.id
-            }
-            Navigation.findNavController(v).navigate(showEditBeanAction)
-        }
         // テイスト編集ダイアログ表示
         binding.tasteEditIcon.setOnClickListener {
             val taste = viewModel.selectedTaste.value!!
@@ -237,6 +223,13 @@ class RecipeDetailFragment : Fragment() {
         }
 
 
+        // コーヒー豆編集画面へ遷移
+        binding.beanCardView.beanEditIcon.setOnClickListener { v ->
+            val showEditBeanAction = RecipeDetailFragmentDirections.showEditBeanAction().apply {
+                beanId = viewModel.selectedBean.value!!.id
+            }
+            Navigation.findNavController(v).navigate(showEditBeanAction)
+        }
         // コーヒー豆編集結果受信
         setFragmentResultListener("beanUpdate") { _, bundle ->
             viewModel.updateBean(bundle.getLong("beanId"))
@@ -250,6 +243,15 @@ class RecipeDetailFragment : Fragment() {
                     ))
                 }
             }.show()
+        }
+
+
+        // レシピ編集画面へ遷移
+        binding.recipeEditIcon.setOnClickListener { v ->
+            val showEditRecipeAction = RecipeDetailFragmentDirections.showEditRecipeAction().apply {
+                recipeId = viewModel.selectedRecipe.value!!.id
+            }
+            Navigation.findNavController(v).navigate(showEditRecipeAction)
         }
         // レシピ編集結果受信
         setFragmentResultListener("recipeUpdate") { _, bundle ->
