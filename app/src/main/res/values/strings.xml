@@ -14,6 +14,8 @@
     <string name="recipe_detail">Recipe Detail</string>
     <string name="edit_recipe">Edit Recipe</string>
     <string name="edit_bean">Edit Bean</string>
+    <string name="edit_roast">Edit Roast</string>
+    <string name="edit_grind">Edit Grind</string>
     <string name="edit_taste">Edit Taste</string>
     <string name="edit_process">Edit Process</string>
     <string name="bean_detail">Bean Detail</string>
@@ -64,6 +66,7 @@
     <string name="update">更新</string>
     <string name="update_message">更新をしてもよろしいですか</string>
     <string name="bean_finish_update_message">コーヒー豆を更新しました</string>
+    <string name="recipe_finish_update_message">レシピを更新しました</string>
 
     <string name="elevation_width_meters">%1$sm</string>
     <string name="elevation_from_to">%1$sm ~ %2$sm</string>

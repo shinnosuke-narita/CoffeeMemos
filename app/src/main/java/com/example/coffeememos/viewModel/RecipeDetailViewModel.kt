@@ -84,6 +84,12 @@ class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao:
             _selectedBean.postValue(beanDao.getBeanById(id))
         }
     }
+
+    fun updateRecipe(id: Long) {
+        viewModelScope.launch {
+            _selectedRecipe.postValue(recipeDao.getRecipeById(id))
+        }
+    }
 }
 
 

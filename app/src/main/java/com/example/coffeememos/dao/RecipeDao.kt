@@ -1,9 +1,6 @@
 package com.example.coffeememos.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.RecipeWithTaste
@@ -12,6 +9,9 @@ import com.example.coffeememos.entity.RecipeWithTaste
 interface RecipeDao {
     @Insert
     suspend fun insert(recipe: Recipe)
+
+    @Update
+    suspend fun update(recipe: Recipe)
 
     @Query("DELETE FROM recipe")
     suspend fun clearTable()

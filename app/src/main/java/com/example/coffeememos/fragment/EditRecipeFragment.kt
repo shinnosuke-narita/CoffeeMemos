@@ -1,5 +1,6 @@
 package com.example.coffeememos.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,6 +17,8 @@ import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentEditBeanBinding
 import com.example.coffeememos.databinding.FragmentEditRecipeBinding
+import com.example.coffeememos.dialog.BasicDialogFragment
+import com.example.coffeememos.dialog.ListDialogFragment
 import com.example.coffeememos.listener.SimpleTextWatcher
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.viewModel.EditRecipeViewModel
@@ -72,8 +76,6 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
 
         // 選択されたレシピの監視処理
         viewModel.selectedRecipe.observe(viewLifecycleOwner) { recipe ->
-            binding.grindTextView.text = Constants.grindSizeList[recipe.grindSize]
-            binding.roastTextView.text = Constants.roastList[recipe.roast]
             binding.toolEditText.setText(recipe.tool)
             binding.amountBeanEditText.setText(recipe.amountOfBeans.toString())
             binding.temperatureEditText.setText(recipe.temperature.toString())
@@ -85,7 +87,7 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
         }
 
 
-        // Favorite 関連
+        // Favorite
         viewModel.currentFavorite.observe(viewLifecycleOwner) { isFavorite ->
             if (isFavorite) binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
             else binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
@@ -97,7 +99,7 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
 
 
 
-        // ★画像のリスト
+        // Rating
         val recipeStarViewList: List<ImageView> = listOf(
             binding.beanStarFirst,
             binding.beanStarSecond,
@@ -132,32 +134,32 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
         })
         binding.amountBeanEditText.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setAmountBeans(editable.toString().toInt())
+                viewModel.setAmountBeans(editable.toString())
             }
         })
         binding.temperatureEditText.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setTemperature(editable.toString().toInt())
+                viewModel.setTemperature(editable.toString())
             }
         })
         binding.preInfusionTimeEditText.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setTemperature(editable.toString().toInt())
+                viewModel.setPreInfusionTime(editable.toString())
             }
         })
         binding.extractionTimeMinuteEditText.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setExtractionTimeMinutes(editable.toString().toInt())
+                viewModel.setExtractionTimeMinutes(editable.toString())
             }
         })
         binding.extractionTimeSecondsEditText.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setExtractionTimeSeconds(editable.toString().toInt())
+                viewModel.setExtractionTimeSeconds(editable.toString())
             }
         })
         binding.amountExtractionEditText.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setAmountExtraction(editable.toString().toInt())
+                viewModel.setAmountExtraction(editable.toString())
             }
         })
         binding.commentEditText.addTextChangedListener(object : SimpleTextWatcher() {
@@ -167,17 +169,54 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
         })
 
 
-        // TODO ロースト処理
+        // 編集ダイアログ
+        // Roast
+        viewModel.currentRoast.observe(viewLifecycleOwner) { roast ->
+            binding.roastTextView.text = Constants.roastList[roast]
+        }
+        // 編集アイコンクリックリスナ―
         binding.selectRoastBtn.setOnClickListener {
-
+            ListDialogFragment
+                .create(viewModel.currentRoast.value!!, getString(R.string.edit_roast), "updateRoast", Constants.roastList.toTypedArray())
+                .show(childFragmentManager, ListDialogFragment::class.simpleName)
+        }
+        // RoastDialogからの結果を受信
+        childFragmentManager.setFragmentResultListener("updateRoast", viewLifecycleOwner) {_, bundle ->
+            viewModel.setRoast(bundle.getInt("newIndex"))
         }
 
-
-        // TODO グラインド処理
+        // Grind Size
+        viewModel.currentGrind.observe(viewLifecycleOwner) { grind ->
+            binding.grindTextView.text = Constants.grindSizeList[grind]
+        }
+        // 編集アイコンクリックリスナ―
         binding.selectGrindBtn.setOnClickListener {
-
+            ListDialogFragment
+                .create(viewModel.currentGrind.value!!, getString(R.string.edit_grind), "updateGrind", Constants.grindSizeList.toTypedArray())
+                .show(childFragmentManager, ListDialogFragment::class.simpleName)
+        }
+        // GrindDialogからの結果を受信
+        childFragmentManager.setFragmentResultListener("updateGrind", viewLifecycleOwner) {_, bundle ->
+            viewModel.setGrind(bundle.getInt("newIndex"))
         }
 
+
+        // 保存処理
+        binding.saveBtn.setOnClickListener {
+            BasicDialogFragment
+                .create(
+                    getString(R.string.update_message),
+                    getString(R.string.update),
+                    getString(R.string.cancel))
+                .show(childFragmentManager, BasicDialogFragment::class.simpleName)
+        }
+        //更新ダイアログの結果受信
+        childFragmentManager.setFragmentResultListener("isUpdate", viewLifecycleOwner) { _, bundle ->
+            viewModel.updateRecipe()
+
+            setFragmentResult("recipeUpdate", Bundle().apply { putLong("recipeId", viewModel.selectedRecipe.value!!.id) })
+            findNavController().popBackStack()
+        }
     }
 
     override fun onDestroyView() {

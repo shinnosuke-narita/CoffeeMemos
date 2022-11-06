@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.manager.RatingManager
+import com.example.coffeememos.util.Util
 import kotlinx.coroutines.launch
 
 class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
@@ -13,7 +14,9 @@ class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
 
 
     // Rating 関連
-    private lateinit var _ratingManager: RatingManager
+    private var _ratingManager: RatingManager? = null
+    private val ratingManager: RatingManager
+        get() = _ratingManager!!
 
     private var _beanCurrentRating: MutableLiveData<Int> = MutableLiveData(1)
     val beanCurrentRating: LiveData<Int> = _beanCurrentRating
@@ -22,10 +25,10 @@ class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
     val beanStarList: LiveData<List<RatingManager.Star>> = _beanStarList
 
     fun updateRatingState(selectedRate: Int) {
-        _ratingManager.changeRatingState(selectedRate)
+        ratingManager.changeRatingState(selectedRate)
 
-        _beanCurrentRating.value = _ratingManager.currentRating
-        _beanStarList.value      = _ratingManager.starList
+        _beanCurrentRating.value = ratingManager.currentRating
+        _beanStarList.value      = ratingManager.starList
     }
 
 
@@ -57,14 +60,14 @@ class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
     private var _store        : String = ""
     private var _comment      : String = ""
 
-    fun setElevationFrom(elevationFrom: Int)    { _elevationFrom = elevationFrom }
-    fun setElevationTo(elevationTo: Int)        { _elevationTo = elevationTo }
-    fun setCountry(country: String)             { _country = country }
-    fun setFarm(farm: String)                   { _farm = farm }
-    fun setDistrict(district: String)           { _district = district }
-    fun setSpecies(species: String)             { _species = species }
-    fun setStore(store: String)                 { _store = store }
-    fun setComment(comment: String)             { _comment = comment }
+    fun setElevationFrom(elevationFrom: String)    { _elevationFrom = Util.convertStringIntoIntIfPossible(elevationFrom) }
+    fun setElevationTo(elevationTo: String)        { _elevationTo = Util.convertStringIntoIntIfPossible(elevationTo) }
+    fun setCountry(country: String)                { _country = country }
+    fun setFarm(farm: String)                      { _farm = farm }
+    fun setDistrict(district: String)              { _district = district }
+    fun setSpecies(species: String)                { _species = species }
+    fun setStore(store: String)                    { _store = store }
+    fun setComment(comment: String)                { _comment = comment }
 
 
     // 初期化処理
@@ -98,7 +101,7 @@ class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
                     process       = _process.value!!,
                     store         = _store,
                     comment       = _comment,
-                    rating        = _ratingManager.currentRating,
+                    rating        = ratingManager.currentRating,
                     isFavorite    = _currentFavorite.value!!,
                     createdAt     = _selectedBean.value!!.createdAt
                 )

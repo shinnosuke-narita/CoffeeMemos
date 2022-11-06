@@ -132,12 +132,12 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
         })
         binding.elevationFromEditText.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setElevationFrom(editable.toString().toInt())
+                viewModel.setElevationFrom(editable.toString())
             }
         })
         binding.elevationToEditText.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setElevationTo(editable.toString().toInt())
+                viewModel.setElevationTo(editable.toString())
             }
         })
         binding.storeEditText.addTextChangedListener(object : SimpleTextWatcher() {
@@ -176,7 +176,6 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
         }
         // processDialogからの結果を受信
         childFragmentManager.setFragmentResultListener("updateProcess", viewLifecycleOwner) {_, bundle ->
-            binding.processEditText.text = Constants.processList[bundle.getInt("newIndex")]
             viewModel.setProcess(bundle.getInt("newIndex"))
         }
 

@@ -215,16 +215,32 @@ class RecipeDetailFragment : Fragment() {
                 newTaste.getInt("rich"))
         }
 
+
+        // コーヒー豆編集結果受信
         setFragmentResultListener("beanUpdate") { _, bundle ->
             viewModel.updateBean(bundle.getLong("beanId"))
 
-            Snackbar.make(binding.snackBarPlace, "コーヒー豆を更新しました", Snackbar.LENGTH_SHORT).apply {
+            Snackbar.make(binding.snackBarPlace, getString(R.string.bean_finish_update_message), Snackbar.LENGTH_SHORT).apply {
                 mContext?.let {
                     setTextColor(ContextCompat.getColor(it, R.color.snackBar_text))
                     getView().setBackgroundColor(
                         ContextCompat.getColor(it,
                         R.color.white
                     ))
+                }
+            }.show()
+        }
+        // レシピ編集結果受信
+        setFragmentResultListener("recipeUpdate") { _, bundle ->
+            viewModel.updateRecipe(bundle.getLong("recipeId"))
+
+            Snackbar.make(binding.snackBarPlace, getString(R.string.recipe_finish_update_message), Snackbar.LENGTH_SHORT).apply {
+                mContext?.let {
+                    setTextColor(ContextCompat.getColor(it, R.color.snackBar_text))
+                    getView().setBackgroundColor(
+                        ContextCompat.getColor(it,
+                            R.color.white
+                        ))
                 }
             }.show()
         }
