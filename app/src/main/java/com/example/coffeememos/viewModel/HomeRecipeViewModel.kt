@@ -18,16 +18,18 @@ import kotlinx.coroutines.launch
 class HomeRecipeViewModel(private val beanDao: BeanDao, private val recipeDao: RecipeDao, private val tasteDao: TasteDao) : ViewModel() {
     private val maxDisplayItemAmount = 10
 
-    private var beanWithRecipeList: MutableLiveData<Map<Bean, List<Recipe>>> = MutableLiveData(mapOf())
+    private val beanWithRecipeList: LiveData<Map<Bean, List<Recipe>>> = beanDao.getBeanAndRecipe().asLiveData()
 
-    private var tasteList: MutableLiveData<List<Taste>> = MutableLiveData(listOf())
+    private val tasteList: LiveData<List<Taste>> = tasteDao.getAll().asLiveData()
 
     // beanWithRecipeListとtasteListを監視
     val allSimpleRecipeList = MediatorLiveData<List<SimpleRecipe>>().apply {
         addSource(beanWithRecipeList) {
+            if (it.isEmpty()) return@addSource
             value = makeSimpleRecipe()
         }
         addSource(tasteList) {
+            if (it.isEmpty()) return@addSource
             value = makeSimpleRecipe()
         }
     }
@@ -49,20 +51,15 @@ class HomeRecipeViewModel(private val beanDao: BeanDao, private val recipeDao: R
     }
 
     val highRatingRecipeList: LiveData<List<SimpleRecipe>> = Transformations.map(allSimpleRecipeList) { allRecipe ->
-        allRecipe.sortedByDescending { recipe: SimpleRecipe -> recipe.rating }
         return@map allRecipe
+            .sortedByDescending { it.rating }
+            .take(maxDisplayItemAmount)
     }
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            beanWithRecipeList.postValue(beanDao.getBeanAndRecipe())
-            tasteList.postValue(tasteDao.getAll())
-        }
-    }
 
     // 簡易レシピリスト作成メソッド
     private fun makeSimpleRecipe(): List<SimpleRecipe> {
-        if (beanWithRecipeListOrTasteListIsEmpty()) return listOf()
+        //if (beanWithRecipeListOrTasteListIsEmpty()) return listOf()
 
         val result = mutableListOf<SimpleRecipe>()
         for ((bean, recipes) in beanWithRecipeList.value!!) {
@@ -90,23 +87,14 @@ class HomeRecipeViewModel(private val beanDao: BeanDao, private val recipeDao: R
         return result
     }
 
-    //
-    private fun beanWithRecipeListOrTasteListIsEmpty(): Boolean = beanWithRecipeList.value!!.isEmpty() || tasteList.value!!.isEmpty()
-
     fun updateFavoriteIcon(clickedFavoriteIcon: View, recipeId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             if (clickedFavoriteIcon.tag.equals(isFavoriteTagName)) {
                 // isFavorite 更新
                 recipeDao.updateFavoriteByRecipeId(recipeId, false)
-
-                // リスト更新
-                beanWithRecipeList.postValue(beanDao.getBeanAndRecipe())
             } else {
                 // isFavorite 更新
                 recipeDao.updateFavoriteByRecipeId(recipeId, true)
-
-                // リスト更新
-                beanWithRecipeList.postValue(beanDao.getBeanAndRecipe())
             }
         }
     }

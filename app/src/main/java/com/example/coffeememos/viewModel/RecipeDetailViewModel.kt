@@ -90,6 +90,12 @@ class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao:
             _selectedRecipe.postValue(recipeDao.getRecipeById(id))
         }
     }
+
+    fun deleteRecipe() {
+        viewModelScope.launch {
+            recipeDao.deleteById(_selectedRecipe.value!!.id)
+        }
+    }
 }
 
 

@@ -64,7 +64,9 @@
     <string name="prompt">選択してください</string>
     <string name="cancel">キャンセル</string>
     <string name="update">更新</string>
-    <string name="update_message">更新をしてもよろしいですか</string>
+    <string name="delete">削除</string>
+    <string name="update_message">更新をしてよろしいですか</string>
+    <string name="delete_recipe_message">レシピを削除しますか</string>
     <string name="bean_finish_update_message">コーヒー豆を更新しました</string>
     <string name="recipe_finish_update_message">レシピを更新しました</string>
 

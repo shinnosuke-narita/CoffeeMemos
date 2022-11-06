@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.coffeememos.entity.Taste
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TasteDao {
@@ -18,7 +19,7 @@ interface TasteDao {
     suspend fun updateTaste(taste: Taste)
 
     @Query("SELECT * FROM taste")
-    suspend fun getAll(): List<Taste>
+    fun getAll(): Flow<List<Taste>>
 
     @Query("SELECT * FROM taste WHERE taste_recipe_id = :recipeId")
     suspend fun getTasteByRecipeId(recipeId: Long): Taste

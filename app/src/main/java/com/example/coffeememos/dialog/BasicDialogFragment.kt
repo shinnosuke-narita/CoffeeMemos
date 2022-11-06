@@ -16,15 +16,17 @@ class BasicDialogFragment : DialogFragment() {
     private var _message: String = ""
     private var _positiveButtonText: String = ""
     private var _negativeButtonText: String = ""
+    private var _requestKey: String = ""
 
 
     companion object {
-        fun create(message: String, positiveButtonText: String, negativeButtonText: String): BasicDialogFragment =
+        fun create(message: String, positiveButtonText: String, negativeButtonText: String, requestKey: String): BasicDialogFragment =
             BasicDialogFragment().apply {
                 arguments = Bundle().apply {
                     putString("message", message)
                     putString("positiveButtonText", positiveButtonText)
                     putString("negativeButtonText", negativeButtonText)
+                    putString("key", requestKey)
                 }
             }
     }
@@ -42,6 +44,7 @@ class BasicDialogFragment : DialogFragment() {
             _message            = bundle.getString("message", "")
             _positiveButtonText = bundle.getString("positiveButtonText", "")
             _negativeButtonText = bundle.getString("negativeButtonText", "")
+            _requestKey         = bundle.getString("key", "")
         }
 
         // view のセッティング
@@ -52,7 +55,7 @@ class BasicDialogFragment : DialogFragment() {
         // ボタンのクリック処理
         binding.positiveBtn.setOnClickListener { view ->
             setFragmentResult(
-                "isUpdate",
+                _requestKey,
                 Bundle().apply { putBoolean("isUpdate", true) }
             )
 

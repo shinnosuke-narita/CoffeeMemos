@@ -186,11 +186,12 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
                 .create(
                     getString(R.string.update_message),
                     getString(R.string.update),
-                    getString(R.string.cancel))
+                    getString(R.string.cancel),
+                "updateBean")
                 .show(childFragmentManager, BasicDialogFragment::class.simpleName)
         }
         //更新ダイアログの結果受信
-        childFragmentManager.setFragmentResultListener("isUpdate", viewLifecycleOwner) { _, bundle ->
+        childFragmentManager.setFragmentResultListener("updateBean", viewLifecycleOwner) { _, _ ->
             viewModel.updateBean()
 
             setFragmentResult("beanUpdate", Bundle().apply { putLong("beanId", viewModel.selectedBean.value!!.id) })

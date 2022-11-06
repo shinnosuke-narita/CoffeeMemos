@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
@@ -18,6 +19,7 @@ import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentRecipeDetailBinding
+import com.example.coffeememos.dialog.BasicDialogFragment
 import com.example.coffeememos.dialog.EditTasteDialogFragment
 import com.example.coffeememos.manager.ChartManager
 import com.example.coffeememos.manager.RatingManager
@@ -181,6 +183,24 @@ class RecipeDetailFragment : Fragment() {
         }
         viewModel.beanCurrentRating.observe(viewLifecycleOwner) { currentRating ->
             binding.beanCardView.beanRating.text = getString(R.string.rate_decimal, currentRating.toString())
+        }
+
+
+        // 削除処理
+        binding.deleteBtn.setOnClickListener { view ->
+            BasicDialogFragment
+                .create(
+                    getString(R.string.delete_recipe_message),
+                    getString(R.string.delete),
+                    getString(R.string.cancel),
+                "deleteRecipe")
+                .show(childFragmentManager, BasicDialogFragment::class.simpleName)
+        }
+        //更新ダイアログの結果受信
+        childFragmentManager.setFragmentResultListener("deleteRecipe", viewLifecycleOwner) { _, _ ->
+            viewModel.deleteRecipe()
+
+            findNavController().popBackStack()
         }
 
 

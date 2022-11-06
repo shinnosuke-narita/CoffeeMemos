@@ -72,14 +72,14 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
     private var _amountExtraction: Int = 0
     private var _comment: String = ""
 
-    fun setTool(tool: String)                                { _tool = tool }
+    fun setTool(tool: String)                                   { _tool = tool }
     fun setAmountBeans(amountBeans: String)                     { _amountBeans = Util.convertStringIntoIntIfPossible(amountBeans) }
     fun setTemperature(temperature: String)                     { _temperature = Util.convertStringIntoIntIfPossible(temperature) }
     fun setPreInfusionTime(preInfusionTime: String)             { _preInfusionTime = Util.convertStringIntoIntIfPossible(preInfusionTime) }
     fun setExtractionTimeMinutes(extractionTimeMinutes: String) {_extractionTimeMinutes = Util.convertStringIntoIntIfPossible(extractionTimeMinutes) }
     fun setExtractionTimeSeconds(extractionTimeSeconds: String) {_extractionTimeSeconds = Util.convertStringIntoIntIfPossible(extractionTimeSeconds) }
     fun setAmountExtraction(amountExtraction: String)           {_amountExtraction = Util.convertStringIntoIntIfPossible(amountExtraction) }
-    fun setComment(comment: String)                          { _comment = comment }
+    fun setComment(comment: String)                             { _comment = comment }
 
 
     fun initialize(id: Long, ratingManager: RatingManager) {

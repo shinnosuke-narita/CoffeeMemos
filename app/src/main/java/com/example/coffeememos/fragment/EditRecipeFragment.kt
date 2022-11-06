@@ -207,11 +207,12 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
                 .create(
                     getString(R.string.update_message),
                     getString(R.string.update),
-                    getString(R.string.cancel))
+                    getString(R.string.cancel),
+                    "updateRecipe")
                 .show(childFragmentManager, BasicDialogFragment::class.simpleName)
         }
         //更新ダイアログの結果受信
-        childFragmentManager.setFragmentResultListener("isUpdate", viewLifecycleOwner) { _, bundle ->
+        childFragmentManager.setFragmentResultListener("updateRecipe", viewLifecycleOwner) { _, _ ->
             viewModel.updateRecipe()
 
             setFragmentResult("recipeUpdate", Bundle().apply { putLong("recipeId", viewModel.selectedRecipe.value!!.id) })

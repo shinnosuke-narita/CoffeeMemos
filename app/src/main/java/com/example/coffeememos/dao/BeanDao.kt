@@ -36,7 +36,7 @@ interface BeanDao {
     suspend fun getBeanById(beanId: Long): Bean
 
     @Query("SELECT * FROM bean JOIN recipe ON bean_id = recipe_bean_id")
-    suspend fun getBeanAndRecipe(): Map<Bean, List<Recipe>>
+    fun getBeanAndRecipe(): Flow<Map<Bean, List<Recipe>>>
 
 
 }

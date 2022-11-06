@@ -72,6 +72,8 @@ class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
 
     // 初期化処理
     fun initialize(id: Long, ratingManager: RatingManager) {
+        if (_ratingManager != null) return
+
         // RatingManagerを先に初期化する！（アプリ落ちる）
         _ratingManager = ratingManager
 
