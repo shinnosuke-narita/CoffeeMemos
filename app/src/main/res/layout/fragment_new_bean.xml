@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".fragment.NewBeanFragment">
 
+
     <include
         layout="@layout/favorite_header"
         android:id="@+id/header"
@@ -19,153 +20,147 @@
         android:background="@color/snackBar_background"
         app:layout_constraintTop_toBottomOf="@+id/header" />
 
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/snackBarPlace">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/snackBarPlace"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="80dp">
 
             <TextView
-                android:id="@+id/beanTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Bean"
-                android:textSize="25sp"
-                android:fontFamily="cursive"
-                android:textStyle="bold"
-                android:textColor="@color/taste_section_text_color"
-                android:padding="15dp"
-                android:background="@drawable/new_recipe_header_background"
+                android:id="@+id/processTitle"
+                style="@style/edit_bean_title"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="15dp"
+                android:text="@string/process"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <Spinner
-                android:id="@+id/processSpinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp"
-                android:prompt="@string/prompt"
-                android:spinnerMode="dialog"
-                android:background="@drawable/spinner_background_shape"
-                android:textColor="@color/white"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
+            <TextView
+                android:id="@+id/processEditText"
+                style="@style/mEditTextStyle"
+                android:hint="@string/process"
+                android:textColor="@color/black"
+                android:gravity="center|left"
+                app:layout_constraintEnd_toStartOf="@+id/selectProcessBtn"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/beanTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/processTitle" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_arrow_drop_down_24"
-                app:tint="#7E7878"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintTop_toTopOf="@+id/processSpinner"
-                app:layout_constraintBottom_toBottomOf="@+id/processSpinner"
-                app:layout_constraintEnd_toEndOf="@+id/processSpinner"/>
+                android:id="@+id/selectProcessBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_playlist_add_24"
+                app:tint="@color/pink_light_dark"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintStart_toEndOf="@+id/processEditText"
+                app:layout_constraintTop_toTopOf="@+id/processEditText"
+                app:layout_constraintBottom_toBottomOf="@+id/processEditText"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/countryInputLayout"
-                style="@style/NewRecipeInputLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/countryTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/country"
+                app:layout_constraintTop_toBottomOf="@+id/processEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <EditText
+                android:id="@+id/countryEditText"
+                style="@style/mEditTextStyle"
+                android:hint="@string/hint_country"
+                android:elevation="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/processSpinner">
+                app:layout_constraintTop_toBottomOf="@+id/countryTitle">
+            </EditText>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/country"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/country"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/farmTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/farm"
+                app:layout_constraintTop_toBottomOf="@+id/countryEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/farmInputLayout"
-                style="@style/NewRecipeInputLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/farmEditText"
+                style="@style/mEditTextStyle"
+                android:hint="@string/farm"
+                android:elevation="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/countryInputLayout">
+                app:layout_constraintTop_toBottomOf="@+id/farmTitle"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/farm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/farm"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/districtTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/district"
+                app:layout_constraintTop_toBottomOf="@+id/farmEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/districtInputLayout"
-                style="@style/NewRecipeInputLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/districtEditText"
+                style="@style/mEditTextStyle"
+                android:hint="@string/district"
+                android:elevation="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/farmInputLayout">
+                app:layout_constraintTop_toBottomOf="@+id/districtTitle"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/district"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/district"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/speciesTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/species"
+                app:layout_constraintTop_toBottomOf="@+id/districtEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/speciesInputLayout"
-                style="@style/NewRecipeInputLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/speciesEditText"
+                style="@style/mEditTextStyle"
+                android:hint="@string/species"
+                android:elevation="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/districtInputLayout">
+                app:layout_constraintTop_toBottomOf="@+id/speciesTitle"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/species"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/species"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
+            <TextView
+                android:id="@+id/elevationTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/elevation"
+                app:layout_constraintTop_toBottomOf="@+id/speciesEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/elevationWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/speciesInputLayout"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/elevationTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/elevationFromInputLayout"
-                    style="@style/NewRecipeInputLayout"
+                <EditText
+                    style="@style/mEditTextStyle"
+                    android:id="@+id/elevationFromEditText"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:padding="0dp"
+                    android:layout_height="55dp"
+                    android:layout_margin="0dp"
+                    android:hint="@string/elevation"
+                    android:elevation="20dp"
+                    android:inputType="number"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/waveLine"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/elevationFrom"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/elevation"
-                        android:inputType="number" />
-                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/waveLine"
@@ -175,153 +170,128 @@
                     android:textSize="30sp"
                     android:padding="10dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/elevationFromInputLayout"
-                    app:layout_constraintEnd_toStartOf="@+id/elevationToInputLayout"
+                    app:layout_constraintStart_toEndOf="@+id/elevationFromEditText"
+                    app:layout_constraintEnd_toStartOf="@+id/elevationToEditText"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/elevationToInputLayout"
-                    style="@style/NewRecipeInputLayout"
+                <EditText
+                    style="@style/mEditTextStyle"
+                    android:id="@+id/elevationToEditText"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:padding="0dp"
+                    android:layout_margin="0dp"
+                    android:hint="@string/elevation"
+                    android:elevation="20dp"
+                    android:inputType="number"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/waveLine"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/elevationTo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/elevation"
-                        android:inputType="number" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    app:layout_constraintTop_toTopOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/purchaseStoreInputLayout"
-                style="@style/NewRecipeInputLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/elevationWrapper">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/purchaseStore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/store"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <View
-                android:id="@+id/reviewBorder"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#7E7974"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/purchaseStoreInputLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
-                android:id="@+id/reviewTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Review"
-                android:textSize="25sp"
-                android:fontFamily="cursive"
-                android:textStyle="bold"
-                android:textColor="@color/taste_section_text_color"
-                android:padding="15dp"
-                android:background="@drawable/new_recipe_header_background"
-                app:layout_constraintTop_toBottomOf="@+id/reviewBorder"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/storeTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/store"
+                app:layout_constraintTop_toBottomOf="@+id/elevationWrapper"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/starWrapper"
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/storeEditText"
+                style="@style/mEditTextStyle"
+                android:hint="@string/store"
+                android:elevation="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/storeTitle"/>
+
+            <TextView
+                android:id="@+id/commentTitle"
+                style="@style/edit_bean_title"
+                android:text="@string/comment"
+                app:layout_constraintTop_toBottomOf="@+id/storeEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <EditText
+                android:id="@+id/commentEditText"
+                style="@style/mEditTextStyle"
+                android:layout_height="100dp"
+                android:elevation="20dp"
+                android:gravity="top"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"
+                android:maxLines="10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/commentTitle"/>
+
+            <TextView
+                android:id="@+id/beanReviewTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="@string/review"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:background="@drawable/recipe_detail_rating_background"
                 android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reviewTitle">
+                app:layout_constraintTop_toBottomOf="@+id/commentEditText"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-                <ImageView
-                    android:id="@+id/starFirst"
-                    style="@style/starStyle"
-
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/starSecond"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <ImageView
-                    android:id="@+id/starSecond"
-                    style="@style/starStyle"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/starThird"
-                    app:layout_constraintStart_toEndOf="@+id/starFirst"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <ImageView
-                    android:id="@+id/starThird"
-                    style="@style/starStyle"
-
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/starFourth"
-                    app:layout_constraintStart_toEndOf="@+id/starSecond"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <ImageView
-                    android:id="@+id/starFourth"
-                    style="@style/starStyle"
-
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/starFifth"
-                    app:layout_constraintStart_toEndOf="@+id/starThird"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <ImageView
-                    android:id="@+id/starFifth"
-                    style="@style/starStyle"
-
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/starFourth"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/commentInputLayout"
-                style="@style/NewRecipeInputLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/beanStarFirst"
+                style="@style/ratingStarLarge"
                 android:layout_marginTop="20dp"
-                android:paddingBottom="65dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/starWrapper">
+                android:layout_marginStart="0dp"
+                android:src="@drawable/ic_baseline_star_grey"
+                app:layout_constraintTop_toBottomOf="@+id/beanReviewTitle"
+                app:layout_constraintStart_toStartOf="@+id/beanReviewTitle" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/comment"
-                    android:inputType="textMultiLine"
-                    android:minLines="3"/>
-            </com.google.android.material.textfield.TextInputLayout>
+            <ImageView
+                android:id="@+id/beanStarSecond"
+                style="@style/ratingStarLarge"
+                android:src="@drawable/ic_baseline_star_grey"
+                app:layout_constraintTop_toTopOf="@+id/beanStarFirst"
+                app:layout_constraintStart_toEndOf="@+id/beanStarFirst" />
+
+            <ImageView
+                android:id="@+id/beanStarThird"
+                style="@style/ratingStarLarge"
+                android:src="@drawable/ic_baseline_star_grey"
+                app:layout_constraintTop_toTopOf="@+id/beanStarFirst"
+                app:layout_constraintStart_toEndOf="@+id/beanStarSecond" />
+
+            <ImageView
+                android:id="@+id/beanStarFourth"
+                style="@style/ratingStarLarge"
+                android:src="@drawable/ic_baseline_star_grey"
+                app:layout_constraintTop_toTopOf="@+id/beanStarFirst"
+                app:layout_constraintStart_toEndOf="@+id/beanStarThird" />
+
+            <ImageView
+                android:id="@+id/beanStarFifth"
+                style="@style/ratingStarLarge"
+                android:src="@drawable/ic_baseline_star_grey"
+                app:layout_constraintTop_toTopOf="@+id/beanStarFirst"
+                app:layout_constraintStart_toEndOf="@+id/beanStarFourth" />
+
+            <TextView
+                android:id="@+id/beanRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:text="3.0"
+                android:textSize="26sp"
+                android:textColor="@color/brown_light"
+                app:layout_constraintStart_toEndOf="@+id/beanStarFifth"
+                app:layout_constraintBottom_toBottomOf="@+id/beanStarFirst"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
@@ -331,11 +301,9 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_check_24"
         app:tint="#FBFBFB"
-        app:backgroundTint="#1AF8F8"
+        app:backgroundTint="@color/pink_dark"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

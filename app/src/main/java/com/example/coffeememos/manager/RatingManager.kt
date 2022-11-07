@@ -1,24 +1,30 @@
 package com.example.coffeememos.manager
 
-class RatingManager(
-    starFirst    : Star,
-    starSecond   : Star,
-    starThird    : Star,
-    starFourth   : Star,
-    starFifth    : Star) {
-    // rating 初期値: 1
-    private var _currentRating: Int = 1
+class RatingManager(private var _currentRating: Int = 1) {
+    private val maxRate = 5
+
     val currentRating: Int
         get() = _currentRating
 
-    val starList: List<Star> = listOf(
-        starFirst, starSecond, starThird, starFourth, starFifth
-    )
+    private val _starList: MutableList<Star> = mutableListOf()
+    val starList: List<Star>
+        get() = _starList
+
+    init {
+        initializeStarList(_currentRating)
+    }
+
+    private fun initializeStarList(rating: Int) {
+        for (index in 1..maxRate) {
+            val star: Star = if (index <= rating) Star(StarState.LIGHT) else Star(StarState.DARK)
+            _starList.add(star)
+        }
+    }
 
     fun changeRatingState(selectedRate: Int) {
         _currentRating = selectedRate
 
-        for ((index, star) in starList.withIndex()) {
+        for ((index, star) in _starList.withIndex()) {
             if (index < selectedRate) {
                 star.state = StarState.LIGHT
             } else {
@@ -26,6 +32,7 @@ class RatingManager(
             }
         }
     }
+
 
     enum class StarState { LIGHT, DARK }
 

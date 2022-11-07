@@ -60,20 +60,8 @@ class RecipeDetailFragment : Fragment() {
             safeArgs.recipeId,
             safeArgs.beanId,
             safeArgs.tasteId,
-            RatingManager(
-                Star(StarState.LIGHT),
-                Star(StarState.DARK),
-                Star(StarState.DARK),
-                Star(StarState.DARK),
-                Star(StarState.DARK)
-            ),
-            RatingManager(
-                Star(StarState.LIGHT),
-                Star(StarState.DARK),
-                Star(StarState.DARK),
-                Star(StarState.DARK),
-                Star(StarState.DARK)
-            )
+            RatingManager(),
+            RatingManager()
         )
     }
 

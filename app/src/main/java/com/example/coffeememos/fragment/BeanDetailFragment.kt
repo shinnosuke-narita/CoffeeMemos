@@ -56,13 +56,7 @@ class BeanDetailFragment : Fragment() {
 
         viewModel.initialize(
             safeArgs.beanId,
-            RatingManager(
-                Star(StarState.LIGHT),
-                Star(StarState.DARK),
-                Star(StarState.DARK),
-                Star(StarState.DARK),
-                Star(StarState.DARK)
-            )
+            RatingManager()
         )
     }
 

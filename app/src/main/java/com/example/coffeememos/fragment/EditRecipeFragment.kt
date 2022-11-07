@@ -43,13 +43,7 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
 
         viewModel.initialize(
             safeArgs.recipeId,
-            RatingManager(
-                RatingManager.Star(RatingManager.StarState.LIGHT),
-                RatingManager.Star(RatingManager.StarState.DARK),
-                RatingManager.Star(RatingManager.StarState.DARK),
-                RatingManager.Star(RatingManager.StarState.DARK),
-                RatingManager.Star(RatingManager.StarState.DARK)
-            )
+            RatingManager()
         )
 
     }

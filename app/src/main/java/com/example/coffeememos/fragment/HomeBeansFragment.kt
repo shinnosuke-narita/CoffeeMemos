@@ -133,6 +133,19 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> , OnFa
                 }
             }.show()
         }
+
+        // 新規保存のリスナー
+        setFragmentResultListener("createBean") { _, _ ->
+            Snackbar.make(binding.snackBarPlace, getString(R.string.bean_finish_create_message), Snackbar.LENGTH_SHORT).apply {
+                mContext?.let {
+                    setTextColor(ContextCompat.getColor(it, R.color.pink_dark))
+                    getView().setBackgroundColor(
+                        ContextCompat.getColor(it,
+                            R.color.white
+                        ))
+                }
+            }.show()
+        }
     }
 
     override fun onDestroyView() {

@@ -4,97 +4,94 @@ import androidx.lifecycle.*
 import com.example.coffeememos.util.Util
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
+import com.example.coffeememos.manager.RatingManager
+import com.example.coffeememos.Constants
 import kotlinx.coroutines.launch
 
 class NewBeanViewModel(val beanDao: BeanDao) : ViewModel() {
-    // お気に入り
+    // Favorite
     private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
     val isFavorite: LiveData<Boolean> = _isFavorite
-
-    // 現在のrate(初期値3)
-    private var currentRating: Int = 3
-
-    /**
-     * rateの状態管理フラグ
-     */
-    private var _starFirst: MutableLiveData<Boolean> = MutableLiveData(true)
-    val starFirst: LiveData<Boolean> = _starFirst
-
-    private var _starSecond: MutableLiveData<Boolean> = MutableLiveData(false)
-    val starSecond: LiveData<Boolean> = _starSecond
-
-    private var _starThird: MutableLiveData<Boolean> = MutableLiveData(false)
-    val starThird: LiveData<Boolean> = _starThird
-
-    private var _starFourth: MutableLiveData<Boolean> = MutableLiveData(false)
-    val starFourth: LiveData<Boolean> = _starFourth
-
-    private var _starFifth: MutableLiveData<Boolean> = MutableLiveData(false)
-    val starFifth: LiveData<Boolean> = _starFifth
-
-    private val starList = listOf(_starFirst, _starSecond, _starThird, _starFourth, _starFifth)
-
-    // view のリセットフラグ
-    private var _shouldResetView: MutableLiveData<Boolean> = MutableLiveData(false)
-    val shouldResetView: LiveData<Boolean> = _shouldResetView
-
-    // 現在の精製法
-    private var _selectedProcess: MutableLiveData<Int> = MutableLiveData(0)
-    val selectedProcess: LiveData<Int> = _selectedProcess
-
-
-    fun setProcessIndex(index: Int) {
-        _selectedProcess.value = index
-    }
-
-    fun setResetFlag(flag: Boolean) {
-        _shouldResetView.value = flag
-    }
 
     fun setFavoriteFlag(flag: Boolean) {
         _isFavorite.value = flag
     }
 
-    // rateのstate変更メソッド
-    fun changeRatingState(selectedRate: Int) {
 
-        currentRating = selectedRate
-        for ((index, star) in starList.withIndex()) {
-            star.value = index < selectedRate
-        }
+    // 精製法
+    private val _process: MutableLiveData<Int> = MutableLiveData(0)
+    val process: LiveData<Int> = _process
+
+    fun setProcess(process: Int) {
+        _process.value = process
     }
 
-    fun createNewBean(
-        country: String,
-        farm: String,
-        district: String,
-        species: String,
-        elevationFrom: String,
-        elevationTo: String,
-        purchaseStore: String,
-        comment: String
-    ) {
+
+    // Rating 関連
+    private var _ratingManager: RatingManager? = null
+    private val ratingManager: RatingManager
+        get() = _ratingManager!!
+
+    private var _beanCurrentRating: MutableLiveData<Int> = MutableLiveData(1)
+    val beanCurrentRating: LiveData<Int> = _beanCurrentRating
+
+    private val _beanStarList: MutableLiveData<List<RatingManager.Star>> = MutableLiveData(listOf())
+    val beanStarList: LiveData<List<RatingManager.Star>> = _beanStarList
+
+    fun updateRatingState(selectedRate: Int) {
+        ratingManager.changeRatingState(selectedRate)
+
+        _beanCurrentRating.value = ratingManager.currentRating
+        _beanStarList.value      = ratingManager.starList
+    }
+
+
+    // 更新されたデータを保持
+    private var _elevationFrom: Int = 0
+    private var _elevationTo  : Int = 0
+    private var _country      : String = ""
+    private var _farm         : String = ""
+    private var _district     : String = ""
+    private var _species      : String = ""
+    private var _store        : String = ""
+    private var _comment      : String = ""
+
+    fun setElevationFrom(elevationFrom: String)    { _elevationFrom = Util.convertStringIntoIntIfPossible(elevationFrom) }
+    fun setElevationTo(elevationTo: String)        { _elevationTo = Util.convertStringIntoIntIfPossible(elevationTo) }
+    fun setCountry(country: String)                { _country = country }
+    fun setFarm(farm: String)                      { _farm = farm }
+    fun setDistrict(district: String)              { _district = district }
+    fun setSpecies(species: String)                { _species = species }
+    fun setStore(store: String)                    { _store = store }
+    fun setComment(comment: String)                { _comment = comment }
+
+
+    // 初期化処理
+    fun initialize(ratingManager: RatingManager) {
+        if (_ratingManager != null) return
+
+        _ratingManager           = ratingManager
+        _beanCurrentRating.value = _ratingManager?.currentRating
+        _beanStarList.value      = _ratingManager?.starList
+    }
+
+    fun createNewBean() {
         viewModelScope.launch {
-            val iElevationFrom = Util.convertStringIntoIntIfPossible(elevationFrom)
-            val iElevationTo = Util.convertStringIntoIntIfPossible(elevationTo)
-
-            val createdAt = System.currentTimeMillis()
-
             beanDao.insert(
                 Bean(
-                    0,
-                    country,
-                    farm,
-                    district,
-                    species,
-                    iElevationFrom,
-                    iElevationTo,
-                    _selectedProcess.value!!,
-                    purchaseStore,
-                    comment,
-                    currentRating,
-                    _isFavorite.value!!,
-                    createdAt
+                    id            = 0,
+                    country       = _country,
+                    farm          = _farm,
+                    district      = _district,
+                    species       = _species,
+                    elevationFrom = _elevationFrom,
+                    elevationTo   = _elevationTo,
+                    process       = _process.value!!,
+                    store         = _store,
+                    comment       = _comment,
+                    rating        = _beanCurrentRating.value!!,
+                    isFavorite    = _isFavorite.value!!,
+                    createdAt     = System.currentTimeMillis()
                 )
             )
         }

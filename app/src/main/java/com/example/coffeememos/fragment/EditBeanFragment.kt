@@ -41,13 +41,7 @@ class EditBeanFragment : Fragment(), View.OnClickListener {
 
         viewModel.initialize(
             safeArgs.beanId,
-            RatingManager(
-                RatingManager.Star(RatingManager.StarState.LIGHT),
-                RatingManager.Star(RatingManager.StarState.DARK),
-                RatingManager.Star(RatingManager.StarState.DARK),
-                RatingManager.Star(RatingManager.StarState.DARK),
-                RatingManager.Star(RatingManager.StarState.DARK)
-            )
+            RatingManager()
         )
     }
 
