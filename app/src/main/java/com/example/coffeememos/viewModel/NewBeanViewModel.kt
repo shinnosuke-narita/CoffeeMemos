@@ -1,11 +1,10 @@
 package com.example.coffeememos.viewModel
 
 import androidx.lifecycle.*
-import com.example.coffeememos.util.Util
+import com.example.coffeememos.utilities.Util
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.manager.RatingManager
-import com.example.coffeememos.Constants
 import kotlinx.coroutines.launch
 
 class NewBeanViewModel(val beanDao: BeanDao) : ViewModel() {

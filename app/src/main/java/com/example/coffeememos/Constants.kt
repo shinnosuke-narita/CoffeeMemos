@@ -2,9 +2,6 @@ package com.example.coffeememos
 
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
-import com.example.coffeememos.entity.Taste
-import com.example.coffeememos.util.DateUtil
-import com.example.coffeememos.util.Util
 
 class Constants {
     companion object {

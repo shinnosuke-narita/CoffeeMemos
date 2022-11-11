@@ -1,7 +1,6 @@
 package com.example.coffeememos.fragment
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,9 +22,8 @@ import com.example.coffeememos.dialog.BasicDialogFragment
 import com.example.coffeememos.dialog.EditTasteDialogFragment
 import com.example.coffeememos.manager.ChartManager
 import com.example.coffeememos.manager.RatingManager
-import com.example.coffeememos.manager.RatingManager.Star
 import com.example.coffeememos.manager.RatingManager.StarState
-import com.example.coffeememos.util.DateUtil
+import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.viewModel.RecipeDetailViewModel
 import com.example.coffeememos.viewModel.RecipeDetailViewModelFactory
 import com.google.android.material.snackbar.Snackbar

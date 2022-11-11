@@ -19,8 +19,8 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe")
     suspend fun getAll(): List<Recipe>
 
-    @Query("SELECT * FROM recipe ORDER BY recipe_id DESC LIMIT 1")
-    suspend fun getNewestRecipe(): Recipe
+    @Query("SELECT recipe_id FROM recipe ORDER BY recipe_id DESC LIMIT 1")
+    suspend fun getNewestRecipeId(): Long
 
     @Query("SELECT * FROM recipe WHERE recipe_id = :id")
     suspend fun getRecipeById(id: Long): Recipe

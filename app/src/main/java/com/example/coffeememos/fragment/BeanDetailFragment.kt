@@ -14,20 +14,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.coffeememos.manager.ChartManager
 import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentBeanDetailBinding
-import com.example.coffeememos.databinding.FragmentRecipeDetailBinding
 import com.example.coffeememos.dialog.BasicDialogFragment
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.manager.RatingManager.*
-import com.example.coffeememos.util.DateUtil
 import com.example.coffeememos.viewModel.BeanDetailViewModel
 import com.example.coffeememos.viewModel.BeanDetailViewModelFactory
-import com.example.coffeememos.viewModel.RecipeDetailViewModel
-import com.example.coffeememos.viewModel.RecipeDetailViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 class BeanDetailFragment : Fragment() {

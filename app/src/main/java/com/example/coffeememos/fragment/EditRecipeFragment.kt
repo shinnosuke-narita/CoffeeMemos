@@ -229,6 +229,4 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
             R.id.beanStarFifth  -> viewModel.updateRatingState(5)
         }
     }
-
-
 }

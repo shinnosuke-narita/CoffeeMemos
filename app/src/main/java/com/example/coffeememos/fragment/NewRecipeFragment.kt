@@ -2,39 +2,38 @@ package com.example.coffeememos.fragment
 
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.graphics.Color
-import android.os.Build
-import android.os.Build.VERSION.SDK
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.SeekBar
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import com.example.coffeememos.*
+import com.example.coffeememos.CoffeeMemosApplication
+import com.example.coffeememos.Constants
+import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentNewRecipeBinding
-import com.example.coffeememos.entity.Bean
+import com.example.coffeememos.dialog.BasicDialogFragment
+import com.example.coffeememos.dialog.ListDialogFragment
+import com.example.coffeememos.listener.SimpleTextWatcher
+import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.state.NewRecipeMenuState
+import com.example.coffeememos.utilities.DateUtil
+import com.example.coffeememos.utilities.ViewUtil
+import com.example.coffeememos.viewModel.MainViewModel
 import com.example.coffeememos.viewModel.NewRecipeViewModel
 import com.example.coffeememos.viewModel.NewRecipeViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 class NewRecipeFragment :
     Fragment(),
-    SeekBar.OnSeekBarChangeListener,
-    AdapterView.OnItemSelectedListener {
-
+    View.OnClickListener {
     // viewBinding
     private  var _binding: FragmentNewRecipeBinding? = null
     private val binding
@@ -49,6 +48,9 @@ class NewRecipeFragment :
         NewRecipeViewModelFactory(db.recipeDao(), db.beanDao(), db.tasteDao())
     }
 
+    // 共有viewModel
+    private val mainViewModel: MainViewModel by activityViewModels()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
@@ -56,12 +58,14 @@ class NewRecipeFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel.initialize(RatingManager())
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentNewRecipeBinding.inflate(inflater, container, false)
         return binding.root
@@ -76,55 +80,170 @@ class NewRecipeFragment :
             findNavController().popBackStack()
         }
 
+
         // お気に入り 監視処理
         viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
             if (isFavorite) binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
             else binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
-
         binding.header.favoriteBtn.setOnClickListener {
             if (viewModel.isFavorite.value == true) viewModel.setFavoriteFlag(false)
             else viewModel.setFavoriteFlag(true)
         }
 
 
-        /**
-         * seekBar リスナーセット
-         */
-        binding.sourSeekBar.setOnSeekBarChangeListener(this)
-        binding.bitterSeekBar.setOnSeekBarChangeListener(this)
-        binding.sweetSeekBar.setOnSeekBarChangeListener(this)
-        binding.richSeekBar.setOnSeekBarChangeListener(this)
-        binding.flavorSeekBar.setOnSeekBarChangeListener(this)
+        // TextChangeListener セット
+        binding.sourValue.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setSour(editable.toString())
+            }
+        })
+        binding.bitterValue.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setBitter(editable.toString())
+            }
+        })
+        binding.sweetValue.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setSweet(editable.toString())
+            }
+        })
+        binding.flavorValue.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setFlavor(editable.toString())
+            }
+        })
+        binding.richValue.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setRich(editable.toString())
+            }
+        })
+
+        binding.toolEditText.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setTool(editable.toString())
+            }
+        })
+        binding.amountBeanEditText.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setAmountBeans(editable.toString())
+            }
+        })
+        binding.temperatureEditText.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setTemperature(editable.toString())
+            }
+        })
+        binding.preInfusionTimeEditText.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setPreInfusionTime(editable.toString())
+            }
+        })
+        binding.extractionTimeMinuteEditText.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setExtractionTimeMinutes(editable.toString())
+            }
+        })
+        binding.extractionTimeSecondsEditText.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setExtractionTimeSeconds(editable.toString())
+            }
+        })
+        binding.amountExtractionEditText.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setAmountExtraction(editable.toString())
+            }
+        })
+        binding.commentEditText.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.setComment(editable.toString())
+            }
+        })
+
+        // 編集ダイアログ
+        // Roast
+        viewModel.currentRoast.observe(viewLifecycleOwner) { roast ->
+            binding.roastTextView.text = Constants.roastList[roast]
+        }
+        // 編集アイコンクリックリスナ―
+        binding.selectRoastBtn.setOnClickListener {
+            ListDialogFragment
+                .create(viewModel.currentRoast.value!!, getString(R.string.edit_roast), "updateRoast", Constants.roastList.toTypedArray())
+                .show(childFragmentManager, ListDialogFragment::class.simpleName)
+        }
+        // RoastDialogからの結果を受信
+        childFragmentManager.setFragmentResultListener("updateRoast", viewLifecycleOwner) {_, bundle ->
+            viewModel.setRoast(bundle.getInt("newIndex"))
+        }
+
+        // Grind Size
+        viewModel.currentGrind.observe(viewLifecycleOwner) { grind ->
+            binding.grindTextView.text = Constants.grindSizeList[grind]
+        }
+        // 編集アイコンクリックリスナ―
+        binding.selectGrindBtn.setOnClickListener {
+            ListDialogFragment
+                .create(viewModel.currentGrind.value!!, getString(R.string.edit_grind), "updateGrind", Constants.grindSizeList.toTypedArray())
+                .show(childFragmentManager, ListDialogFragment::class.simpleName)
+        }
+        // GrindDialogからの結果を受信
+        childFragmentManager.setFragmentResultListener("updateGrind", viewLifecycleOwner) {_, bundle ->
+            viewModel.setGrind(bundle.getInt("newIndex"))
+        }
+
+
+        // コーヒー豆選択画面へ遷移
+        binding.selectBeanBtn.setOnClickListener { v ->
+            Navigation.findNavController(v).navigate(R.id.selectBeanFragment)
+        }
+        // コーヒー豆監視
+        mainViewModel.selectedBean.observe(viewLifecycleOwner) { bean ->
+            val beanContainer = binding.beanContainer
+            beanContainer.country.text     = bean.country
+            beanContainer.district.text    = bean.district
+            beanContainer.createdAt.text   = DateUtil.formatEpochTimeMills(bean.createdAt, DateUtil.pattern)
+            beanContainer.storeName.text   = bean.store
+            beanContainer.processName.text = Constants.processList[bean.process]
+            beanContainer.speciesName.text = bean.species
+            beanContainer.rating.text      = getString(R.string.rate_decimal, bean.rating.toString())
+            beanContainer.ratingWrapper.visibility = View.VISIBLE
+
+            ViewUtil.setRecipeTag(beanContainer.farm, bean.farm)
+            ViewUtil.setRecipeTag(beanContainer.district, bean.district)
+            ViewUtil.setFavoriteIcon(beanContainer.favoriteIcon, bean.isFavorite)
+        }
+
+
+        // Rating
+        val recipeStarViewList: List<ImageView> = listOf(
+            binding.starFirst,
+            binding.starSecond,
+            binding.starThird,
+            binding.starFourth,
+            binding.starFifth,
+        )
+        // rating ★Viewの状態監視処理
+        viewModel.recipeStarList.observe(viewLifecycleOwner) { starList ->
+            for ((index, star) in starList.withIndex()) {
+                if (star.state == RatingManager.StarState.LIGHT) recipeStarViewList[index].setImageResource(R.drawable.ic_baseline_star_beige_light_24)
+                else recipeStarViewList[index].setImageResource(R.drawable.ic_baseline_star_grey)
+            }
+        }
+        // Ratingの値 監視処理
+        viewModel.recipeCurrentRating.observe(viewLifecycleOwner) { currentRating ->
+            binding.beanRating.text = getString(R.string.rate_decimal, currentRating.toString())
+        }
+        // ★画像のクリックリスナーセット
+        binding.starFirst.setOnClickListener(this)
+        binding.starSecond.setOnClickListener(this)
+        binding.starThird.setOnClickListener(this)
+        binding.starFourth.setOnClickListener(this)
+        binding.starFifth.setOnClickListener(this)
+
 
         /**
-         * seekbar 監視処理
-         */
-        viewModel.sour.observe(viewLifecycleOwner) {
-            binding.sourValues.text = it.toString()
-            binding.sourSeekBar.progress = it - 1
-        }
-        viewModel.bitter.observe(viewLifecycleOwner) {
-            binding.bitterValues.text = it.toString()
-            binding.bitterSeekBar.progress = it - 1
-        }
-        viewModel.sweet.observe(viewLifecycleOwner) {
-            binding.sweetValues.text = it.toString()
-            binding.sweetSeekBar.progress = it - 1
-        }
-        viewModel.rich.observe(viewLifecycleOwner) {
-            binding.richValues.text = it.toString()
-            binding.richSeekBar.progress = it - 1
-        }
-
-        viewModel.flavor.observe(viewLifecycleOwner) {
-            binding.flavorValues.text = it.toString()
-            binding.flavorSeekBar.progress = it - 1
-        }
-
-        /**
-         * fab 監視処理
-         */
+        * fab 監視処理
+        */
         // TODO 隠れたメニューのvisibility GONE調整
         viewModel.isMenuOpened.observe(viewLifecycleOwner) { state ->
             when(state) {
@@ -143,78 +262,6 @@ class NewRecipeFragment :
             }
         }
 
-        /**
-         * rateの監視処理
-         */
-        viewModel.starFirst.observe(viewLifecycleOwner) { shouldSetColor ->
-            if (shouldSetColor) binding.starFirst.setImageResource(R.drawable.ic_baseline_star_yellow)
-            else binding.starFirst.setImageResource(R.drawable.ic_baseline_star_grey)
-        }
-        viewModel.starSecond.observe(viewLifecycleOwner) { shouldSetColor ->
-            if (shouldSetColor) binding.starSecond.setImageResource(R.drawable.ic_baseline_star_yellow)
-            else binding.starSecond.setImageResource(R.drawable.ic_baseline_star_grey)
-        }
-        viewModel.starThird.observe(viewLifecycleOwner) { shouldSetColor ->
-            if (shouldSetColor) binding.starThird.setImageResource(R.drawable.ic_baseline_star_yellow)
-            else binding.starThird.setImageResource(R.drawable.ic_baseline_star_grey)
-        }
-        viewModel.starFourth.observe(viewLifecycleOwner) { shouldSetColor ->
-            if (shouldSetColor) binding.starFourth.setImageResource(R.drawable.ic_baseline_star_yellow)
-            else binding.starFourth.setImageResource(R.drawable.ic_baseline_star_grey)
-        }
-        viewModel.starFifth.observe(viewLifecycleOwner) { shouldSetColor ->
-            if (shouldSetColor) binding.starFifth.setImageResource(R.drawable.ic_baseline_star_yellow)
-            else binding.starFifth.setImageResource(R.drawable.ic_baseline_star_grey)
-        }
-
-        /**
-         * rateのクリックリスナー
-         */
-        binding.starFirst.setOnClickListener { viewModel.changeRatingState(1) }
-        binding.starSecond.setOnClickListener { viewModel.changeRatingState(2) }
-        binding.starThird.setOnClickListener { viewModel.changeRatingState(3) }
-        binding.starFourth.setOnClickListener { viewModel.changeRatingState(4) }
-        binding.starFifth.setOnClickListener { viewModel.changeRatingState(5) }
-
-        /**
-         * resetView 監視処理
-         */
-        viewModel.shouldResetView.observe(viewLifecycleOwner) { shouldReset ->
-            if (!shouldReset)  return@observe
-
-            resetView()
-            Snackbar.make(binding.snackBarPlace, "新しいレシピを保存しました", Snackbar.LENGTH_SHORT).apply {
-                mContext?.let {
-                    setTextColor(ContextCompat.getColor(it, R.color.snackBar_text))
-                    getView().setBackgroundColor(ContextCompat.getColor(it, R.color.snackBar_background))
-                }
-            }.show()
-
-            // リセットフラグの初期化
-            viewModel.setResetFlag(false)
-        }
-
-        binding.selectBeanBtn.setOnClickListener { v ->
-
-            Navigation.findNavController(v).navigate(R.id.selectBeanFragment)
-
-            setFragmentResultListener("selectedBean") { key, result ->
-                viewModel.setBeanId(result.getLong("beanId"))
-
-                binding.beanContainer.rvCountry.text = result.getString("country")
-                binding.beanContainer.rvFarm.text = result.getString("farm")
-                binding.beanContainer.rvDistrict.text = result.getString("district")
-                binding.beanContainer.rvElevationFrom.text = getString(R.string.elevation_width_meters, result.getString("elevationFrom"))
-                binding.beanContainer.rvElevationTo.text = getString(R.string.elevation_width_meters, result.getString("elevationTo"))
-                binding.beanContainer.rvStore.text = result.getString("store")
-                binding.beanContainer.rvProcess.text = result.getString("process")
-                binding.beanContainer.rvRate.text = getString(R.string.rate_decimal, result.getString("rating"))
-            }
-        }
-
-
-
-
         binding.menuBtn.setOnClickListener { v ->
             when(viewModel.isMenuOpened.value) {
                 NewRecipeMenuState.MENU_OPENED -> viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
@@ -222,36 +269,34 @@ class NewRecipeFragment :
                 else -> viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
             }
         }
-
         // 計測画面に遷移
         binding.timeBtn.setOnClickListener { v ->
             Navigation.findNavController(v).navigate(R.id.timerFragment)
         }
-
+        // レシピ 保存処理
         binding.saveBtn.setOnClickListener {
-            // レシピ 保存処理
-            viewModel.createNewRecipeAndTaste(
-                binding.toolInputText.text.toString(),
-                binding.extractionTime.text.toString(),
-                binding.preInfusionTime.text.toString(),
-                binding.temperature.text.toString(),
-                binding.amountBeans.text.toString(),
-                binding.amountExtraction.text.toString(),
-                binding.comment.text.toString()
-            )
+            mainViewModel.selectedBean.value?.let {  bean ->
+                viewModel.createNewRecipeAndTaste(bean.id)
+                BasicDialogFragment
+                    .create(
+                        getString(R.string.create_recipe_message),
+                        getString(R.string.save),
+                        getString(R.string.cancel),
+                        "createRecipe")
+                    .show(childFragmentManager, BasicDialogFragment::class.simpleName)
 
-            viewModel.setResetFlag(true)
-        }
+                findNavController().popBackStack()
 
-        /**
-         * スピナーのセットアップ
-         */
-        mContext?.let {
-            binding.roastSpinner.adapter = ArrayAdapter(it, android.R.layout.simple_list_item_1, Constants.roastList)
-            binding.roastSpinner.onItemSelectedListener = this
+                return@setOnClickListener
+            }
 
-            binding.grindSizeSpinner.adapter = ArrayAdapter(it, android.R.layout.simple_list_item_1, Constants.grindSizeList)
-            binding.grindSizeSpinner.onItemSelectedListener = this
+            viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
+            Snackbar.make(binding.snackBarPlace, getString(R.string.bean_required_message), Snackbar.LENGTH_SHORT).apply {
+                mContext?.let {
+                    setTextColor(ContextCompat.getColor(it, R.color.delete_color))
+                    getView().setBackgroundColor(ContextCompat.getColor(it, R.color.white))
+                }
+            }.show()
         }
     }
 
@@ -265,34 +310,16 @@ class NewRecipeFragment :
         mContext = null
     }
 
-    /**
-     * seekBarリスナー
-     */
-    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, userFlag: Boolean) {
-        if (!userFlag) return
-
-        when(seekBar?.id) {
-            binding.sourSeekBar.id -> viewModel.changeTasteValue(TasteKind.SOUR, progress)
-            binding.bitterSeekBar.id -> viewModel.changeTasteValue(TasteKind.BITTER, progress)
-            binding.sweetSeekBar.id -> viewModel.changeTasteValue(TasteKind.SWEET, progress)
-            binding.richSeekBar.id -> viewModel.changeTasteValue(TasteKind.RICH, progress)
-            binding.flavorSeekBar.id -> viewModel.changeTasteValue(TasteKind.FLAVOR, progress)
+    // ★画像の共通クリックリスナー
+    override fun onClick(starView: View) {
+        when(starView.id) {
+            R.id.starFirst  -> viewModel.updateRatingState(1)
+            R.id.starSecond -> viewModel.updateRatingState(2)
+            R.id.starThird  -> viewModel.updateRatingState(3)
+            R.id.starFourth -> viewModel.updateRatingState(4)
+            R.id.starFifth  -> viewModel.updateRatingState(5)
         }
     }
-    override fun onStartTrackingTouch(p0: SeekBar?) {}
-    override fun onStopTrackingTouch(p0: SeekBar?) {}
-
-    /**
-     * spinner リスナー
-     */
-    override fun onItemSelected(av: AdapterView<*>?, view: View?, index: Int, id: Long) {
-        when (view?.id) {
-            binding.roastSpinner.id     -> viewModel.setRoastIndex(index)
-            binding.grindSizeSpinner.id -> viewModel.setGrindSizeIndex(index)
-        }
-    }
-
-    override fun onNothingSelected(p0: AdapterView<*>?) {}
 
 
     /**
@@ -308,39 +335,5 @@ class NewRecipeFragment :
         ObjectAnimator.ofFloat(view, "alpha",  0.0f).apply {
             duration = 500
         }.start()
-    }
-
-    /**
-     * viewのリセット
-     */
-    private fun resetView() {
-        // お気に入り の初期化
-        viewModel.setFavoriteFlag(false)
-
-        // seekbar の初期化
-        viewModel.setSourValue(3)
-        viewModel.setBitterValue(3)
-        viewModel.setSweetValue(3)
-        viewModel.setRichValue(3)
-        viewModel.setFlavorValue(3)
-
-        // spinner の初期化
-        binding.roastSpinner.setSelection(0)
-        binding.grindSizeSpinner.setSelection(0)
-
-        // textField の初期化
-        binding.toolInputText.setText("")
-        binding.amountBeans.setText("")
-        binding.temperature.setText("")
-        binding.preInfusionTime.setText("")
-        binding.extractionTime.setText("")
-        binding.amountExtraction.setText("")
-        binding.comment.setText("")
-
-        // rating の初期化
-        viewModel.changeRatingState(1)
-
-        // メニューを閉じる
-        viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
     }
 }

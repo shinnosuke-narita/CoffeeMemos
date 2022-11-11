@@ -1,13 +1,8 @@
-package com.example.coffeememos.util
+package com.example.coffeememos.utilities
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.example.coffeememos.Constants
 import kotlinx.coroutines.delay
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 class Util {
     companion object {

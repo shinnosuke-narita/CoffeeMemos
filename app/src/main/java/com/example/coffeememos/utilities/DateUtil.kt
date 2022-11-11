@@ -1,4 +1,4 @@
-package com.example.coffeememos.util
+package com.example.coffeememos.utilities
 
 import java.time.Instant
 import java.time.LocalDateTime

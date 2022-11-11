@@ -1,13 +1,10 @@
 package com.example.coffeememos.viewModel
 
 import androidx.lifecycle.*
-import com.example.coffeememos.Constants
-import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
-import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.manager.RatingManager
-import com.example.coffeememos.util.Util
+import com.example.coffeememos.utilities.Util
 import kotlinx.coroutines.launch
 
 class EditRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {

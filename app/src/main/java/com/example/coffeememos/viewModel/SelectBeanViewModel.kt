@@ -2,10 +2,7 @@ package com.example.coffeememos.viewModel
 
 import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
-import com.example.coffeememos.dao.RecipeDao
-import com.example.coffeememos.dao.TasteDao
 import com.example.coffeememos.entity.Bean
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class SelectBeanViewModel(
@@ -16,7 +13,7 @@ class SelectBeanViewModel(
 
     init {
         viewModelScope.launch {
-            _beanList.value = beanDao.getAll()
+            _beanList.postValue(beanDao.getAll())
         }
     }
 }

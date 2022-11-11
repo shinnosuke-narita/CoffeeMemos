@@ -75,6 +75,7 @@
     <string name="recipe_finish_delete_message">レシピを削除しました</string>
     <string name="bean_finish_delete_message">コーヒー豆を削除しました</string>
     <string name="bean_finish_create_message">コーヒー豆を保存しました</string>
+    <string name="bean_required_message">コーヒー豆が選択されてません</string>
 
     <string name="elevation_width_meters">%1$sm</string>
     <string name="elevation_from_to">%1$sm ~ %2$sm</string>

@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.manager.RatingManager
-import com.example.coffeememos.util.Util
+import com.example.coffeememos.utilities.Util
 import kotlinx.coroutines.launch
 
 class EditBeanViewModel(private val beanDao: BeanDao) : ViewModel() {

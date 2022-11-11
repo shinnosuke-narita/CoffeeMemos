@@ -4,10 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.entity.Bean
+import com.example.coffeememos.utilities.DateUtil
+import com.example.coffeememos.utilities.ViewUtil
 
 class BeanAdapter(context: Context, data: List<Bean>) : BaseAdapter<Bean, BeanViewHolder>(context, data) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeanViewHolder {
@@ -17,13 +21,15 @@ class BeanAdapter(context: Context, data: List<Bean>) : BaseAdapter<Bean, BeanVi
     }
 
     override fun onBindViewHolder(holder: BeanViewHolder, position: Int) {
-        holder.country.text         = data[position].country
-        holder.farm.text            = data[position].farm
-        holder.district.text        = data[position].district
-        holder.elevationFrom.text   = data[position].elevationFrom.toString()
-        holder.elevationTo.text     = data[position].elevationTo.toString()
-        holder.store.text           = data[position].store
-        holder.rate.text            = context.getString(R.string.rate_decimal, data[position].rating.toString())
+        holder.country.text     = data[position].country
+        holder.species.text     = data[position].species
+        holder.storeName.text   = data[position].store
+        holder.processName.text = Constants.processList[data[position].process]
+        holder.rate.text        = context.getString(R.string.rate_decimal, data[position].rating.toString())
+        holder.createdAt.text   = DateUtil.formatEpochTimeMills(data[position].createdAt, DateUtil.pattern)
+        ViewUtil.setRecipeTag(holder.farm, data[position].farm)
+        ViewUtil.setRecipeTag(holder.district, data[position].district)
+        ViewUtil.setFavoriteIcon(holder.favoriteIcon, data[position].isFavorite)
 
         // リストアイテムクリック時のコールバック
         holder.itemView.setOnClickListener { v ->
@@ -33,11 +39,13 @@ class BeanAdapter(context: Context, data: List<Bean>) : BaseAdapter<Bean, BeanVi
 }
 
 class BeanViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val country: TextView        = itemView.findViewById(R.id.rvCountry)
-    val farm: TextView           = itemView.findViewById(R.id.rvFarm)
-    val district: TextView       = itemView.findViewById(R.id.rvDistrict)
-    val elevationFrom: TextView  = itemView.findViewById(R.id.rvElevationFrom)
-    val elevationTo: TextView    = itemView.findViewById(R.id.rvElevationTo)
-    val store: TextView          = itemView.findViewById(R.id.rvStore)
-    val rate: TextView           = itemView.findViewById(R.id.rvRate)
+    val country     : TextView  = itemView.findViewById(R.id.country)
+    val farm        : TextView  = itemView.findViewById(R.id.farm)
+    val district    : TextView  = itemView.findViewById(R.id.district)
+    val storeName   : TextView  = itemView.findViewById(R.id.storeName)
+    val processName : TextView  = itemView.findViewById(R.id.processName)
+    val species     : TextView  = itemView.findViewById(R.id.speciesName)
+    val rate        : TextView  = itemView.findViewById(R.id.rating)
+    val favoriteIcon: ImageView = itemView.findViewById(R.id.favoriteIcon)
+    val createdAt   : TextView  = itemView.findViewById(R.id.createdAt)
 }

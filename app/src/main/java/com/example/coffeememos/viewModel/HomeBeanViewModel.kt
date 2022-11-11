@@ -6,7 +6,7 @@ import com.example.coffeememos.Constants
 import com.example.coffeememos.SimpleBeanInfo
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
-import com.example.coffeememos.util.DateUtil
+import com.example.coffeememos.utilities.DateUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
