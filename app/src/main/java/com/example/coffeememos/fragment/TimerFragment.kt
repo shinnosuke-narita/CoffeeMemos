@@ -46,10 +46,10 @@ class TimerFragment : Fragment() {
             binding.circleProgressBar.setProgressWithAnimation(100F)
         }
 
-        binding.stopBtn.setOnClickListener {
-            viewModel.stop()
-            binding.circleProgressBar.stopAnimation()
-        }
+//        binding.stopBtn.setOnClickListener {
+//            viewModel.stop()
+//            binding.circleProgressBar.stopAnimation()
+//        }
 
         binding.resetBtn.setOnClickListener {
             viewModel.reset()
