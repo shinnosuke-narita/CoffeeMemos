@@ -29,6 +29,8 @@ class TimerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val progressView = binding.circleProgressBar
+
         // header セッティング
         binding.header.headerTitle.text = getString(R.string.timer)
         binding.header.backBtn.setOnClickListener {
@@ -41,10 +43,12 @@ class TimerFragment : Fragment() {
 
         binding.startBtn.setOnClickListener {
             viewModel.start()
+            binding.circleProgressBar.setProgressWithAnimation(100F)
         }
 
         binding.stopBtn.setOnClickListener {
             viewModel.stop()
+            binding.circleProgressBar.stopAnimation()
         }
 
         binding.resetBtn.setOnClickListener {
