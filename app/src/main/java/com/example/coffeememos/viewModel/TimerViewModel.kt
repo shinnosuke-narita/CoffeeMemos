@@ -1,45 +1,108 @@
 package com.example.coffeememos.viewModel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
+import com.example.coffeememos.state.TimerButtonState
+import com.example.coffeememos.state.TimerState
+import kotlinx.coroutines.NonCancellable.isActive
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.sql.Time
 
 class TimerViewModel : ViewModel() {
-    // 現在の経過時間
-    private var _currentTime: MutableLiveData<Long> = MutableLiveData(0)
-    val currentTime: LiveData<Long> = _currentTime
+    // 蒸らし時間
+    private val _preInfusionTime: MutableLiveData<String> = MutableLiveData("0s")
+    val preInfusionTime: LiveData<String> = _preInfusionTime
 
-    private var _timerState: TimerState = TimerState.STOP
-
-
-    fun start() {
-       viewModelScope.launch {
-           val startTime: Long = System.currentTimeMillis()
-           val currentTime: Long = _currentTime.value!!
-           _timerState = TimerState.RUN
-
-           while(_timerState == TimerState.RUN) {
-               val now = System.currentTimeMillis()
-               var elapsedTime = (now - startTime) / 1000
-               elapsedTime += currentTime
-               _currentTime.postValue(elapsedTime)
-
-               delay(100L)
-           }
-       }
+    fun setPreInfusionTime() {
+        _preInfusionTime.value = String.format("%ds", getSeconds(currentTime.value ?: 0))
     }
 
-    fun stop() {
-        _timerState = TimerState.STOP
+
+    // 抽出時間
+    private val _extractionTime: MutableLiveData<String> = MutableLiveData("00m00s")
+    val extractionTime: LiveData<String> = _extractionTime
+
+    fun setExtractionTime() {
+        _extractionTime.value = String.format(
+            "%02dm%02ds",
+            getMinutes(currentTime.value ?: 0),
+            getSeconds(currentTime.value ?: 0))
     }
 
-    fun reset() {
-        _currentTime.value = 0L
+
+    // タイマーの状態
+    private var _timerState: MutableLiveData<TimerState> = MutableLiveData(TimerState.CLEAR)
+    val timerState: LiveData<TimerState> = _timerState
+
+    fun setTimerState(state: TimerState) {
+        _timerState.value = state
     }
 
-    enum class TimerState {
-        RUN, STOP
+
+    // タイマーの開始時間
+    private var _timerStartedAt: Long = 0L
+    // タイマーを止めた時間
+    private var _timerStoppedAt: Long = 0L
+    // タイマーが止まっていた時間
+    private var _timerStoppedPeriod: Long = 0L
+
+    // 現在の経過時間（ミリ秒）
+    val currentTime: LiveData<Long> =_timerState.switchMap { state ->
+        liveData {
+            when(state) {
+                TimerState.CLEAR -> {
+                    _timerStartedAt = 0L
+                    emit(0L)
+                }
+
+                TimerState.RUN -> {
+                    if (_timerStartedAt == 0L) {
+                        _timerStartedAt = System.currentTimeMillis()
+                    }
+                    // タイマーの時間 = 現在の時間 - (タイマーの開始時間 + タイマーを止めていた時間)
+                    _timerStartedAt += _timerStoppedPeriod
+
+                    while (true) {
+                        val now = System.currentTimeMillis()
+                        emit(now - _timerStartedAt)
+
+                        delay(10L)
+                    }
+                }
+
+                TimerState.STOP -> {
+                    _timerStoppedAt = System.currentTimeMillis()
+                    while (true) {
+                        val now = System.currentTimeMillis()
+                        _timerStoppedPeriod = now - _timerStoppedAt
+                        delay(10L)
+                    }
+                }
+            }
+        }
     }
+
+
+    // タイマー用のフォーマットされた時間
+    val mainTimerTime: LiveData<String> = currentTime.map { currentTime ->
+        return@map String.format(
+            "%02d:%02d",
+            getMinutes(currentTime),
+            getSeconds(currentTime)
+        )
+    }
+
+
+
+    // メインボタンの状態
+    val mainBtnState: LiveData<TimerButtonState> = _timerState.map { state ->
+        if (state == TimerState.RUN) TimerButtonState.STOP
+        else TimerButtonState.START
+    }
+
+
+    private fun getMinutes(timeMills: Long) = timeMills / 1000 / 60
+    private fun getSeconds(timeMills: Long) = timeMills / 1000 % 60
 }

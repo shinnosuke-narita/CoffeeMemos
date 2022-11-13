@@ -188,6 +188,8 @@ class CircleProgressBar(context: Context, attrs: AttributeSet) : View(context, a
     }
 
     fun stopAnimation() {
+        if (_objectAnimator == null) return
+
         _objectAnimator!!.cancel()
         progress = 0F
         invalidate()

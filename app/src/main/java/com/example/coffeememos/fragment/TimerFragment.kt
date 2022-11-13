@@ -9,7 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentTimerBinding
+import com.example.coffeememos.state.TimerButtonState
+import com.example.coffeememos.state.TimerState
 import com.example.coffeememos.viewModel.TimerViewModel
+import java.sql.Time
 
 class TimerFragment : Fragment() {
     private var _binding: FragmentTimerBinding? = null
@@ -29,30 +32,61 @@ class TimerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val progressView = binding.circleProgressBar
-
         // header セッティング
         binding.header.headerTitle.text = getString(R.string.timer)
         binding.header.backBtn.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        viewModel.currentTime.observe(viewLifecycleOwner) { currentTime ->
-            binding.timerView.text = currentTime.toString()
+        // タイマーの経過時間 監視処理
+        viewModel.mainTimerTime.observe(viewLifecycleOwner) { currentTime ->
+            binding.timerView.text = currentTime
         }
 
-        binding.startBtn.setOnClickListener {
-            viewModel.start()
-            binding.circleProgressBar.setProgressWithAnimation(100F)
+        // 抽出時間 監視処理
+        viewModel.extractionTime.observe(viewLifecycleOwner) { extrationTime ->
+            binding.extractionTime.text = extrationTime
         }
 
-//        binding.stopBtn.setOnClickListener {
-//            viewModel.stop()
-//            binding.circleProgressBar.stopAnimation()
-//        }
+
+        //蒸らし時間 監視処理
+        viewModel.preInfusionTime.observe(viewLifecycleOwner) { preInFusionTime ->
+            binding.preInfusionTime.text = preInFusionTime
+        }
+
+        // タイマーの状態 監視処理
+        viewModel.timerState.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                TimerState.RUN -> {
+                    binding.circleProgressBar.setProgressWithAnimation(100F)
+                }
+                TimerState.STOP -> {
+                    binding.circleProgressBar.stopAnimation()
+                    // 抽出時間の設定
+                    viewModel.setExtractionTime()}
+                TimerState.CLEAR -> {
+                    binding.circleProgressBar.stopAnimation()
+                }
+            }
+        }
+
+        // タイマーボタンの状態監視処理
+        viewModel.mainBtnState.observe(viewLifecycleOwner) { btnState ->
+            if (btnState == TimerButtonState.START) binding.mainBtnIcon.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+            else binding.mainBtnIcon.setImageResource(R.drawable.ic_baseline_stop_24)
+        }
+
+        binding.mainBtn.setOnClickListener {
+            if (viewModel.timerState.value == TimerState.RUN) viewModel.setTimerState(TimerState.STOP)
+            else viewModel.setTimerState(TimerState.RUN)
+        }
 
         binding.resetBtn.setOnClickListener {
-            viewModel.reset()
+            viewModel.setTimerState(TimerState.CLEAR)
+        }
+
+        binding.finishPreInfusionBtn.setOnClickListener {
+            viewModel.setPreInfusionTime()
         }
     }
 }
