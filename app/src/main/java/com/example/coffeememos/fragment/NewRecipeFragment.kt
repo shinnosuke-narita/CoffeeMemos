@@ -314,7 +314,7 @@ class NewRecipeFragment :
         // 計測画面に遷移
         binding.timeBtn.setOnClickListener { view ->
             viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
-
+            
             val showTimerAction = NewRecipeFragmentDirections.showTimerAction().apply {
                existsNewRecipeFragment = true
             }

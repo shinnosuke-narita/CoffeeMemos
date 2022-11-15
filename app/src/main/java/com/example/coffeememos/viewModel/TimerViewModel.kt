@@ -12,34 +12,12 @@ import kotlinx.coroutines.launch
 import java.sql.Time
 
 class TimerViewModel : ViewModel() {
-    // レシピ新規作成画面が
+    // レシピ新規作成画面がバックスタックにあるかどうか
     private val _newRecipeFragmentExists: MutableLiveData<Boolean> = MutableLiveData(false)
     val newRecipeFragmentExists: LiveData<Boolean> = _newRecipeFragmentExists
 
     fun setNewRecipeExistsFlag(flag: Boolean) {
         _newRecipeFragmentExists.value = flag
-    }
-
-
-
-    // 蒸らし時間
-    private val _preInfusionTime: MutableLiveData<String> = MutableLiveData("0s")
-    val preInfusionTime: LiveData<String> = _preInfusionTime
-
-    fun setPreInfusionTime() {
-        _preInfusionTime.value = String.format("%ds", getSeconds(currentTime.value ?: 0))
-    }
-
-
-    // 抽出時間
-    private val _extractionTime: MutableLiveData<String> = MutableLiveData("00m00s")
-    val extractionTime: LiveData<String> = _extractionTime
-
-    fun setExtractionTime() {
-        _extractionTime.value = String.format(
-            "%02dm%02ds",
-            getMinutes(currentTime.value ?: 0),
-            getSeconds(currentTime.value ?: 0))
     }
 
 
