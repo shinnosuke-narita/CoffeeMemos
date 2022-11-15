@@ -11,8 +11,12 @@
         android:label="Timer"
         tools:layout="@layout/fragment_timer" >
         <action
-            android:id="@+id/action_timerFragment_to_newRecipeFragment"
+            android:id="@+id/showNewRecipeAction"
             app:destination="@id/newRecipeFragment" />
+        <argument
+            android:name="existsNewRecipeFragment"
+            app:argType="boolean"
+            android:defaultValue="true"/>
     </fragment>
     <fragment
         android:id="@+id/newRecipeFragment"
@@ -20,11 +24,19 @@
         android:label="New Recipe"
         tools:layout="@layout/fragment_new_recipe" >
         <action
-            android:id="@+id/action_newRecipeFragment_to_timerFragment"
+            android:id="@+id/showTimerAction"
             app:destination="@id/timerFragment" />
         <action
             android:id="@+id/action_newRecipeFragment_to_selectedBeanFragment2"
             app:destination="@id/selectBeanFragment" />
+        <argument
+            android:name="preInfusionTimeInputType"
+            app:argType=".state.InputType"
+            android:defaultValue="MANUAL" />
+        <argument
+            android:name="extractionTimeInputType"
+            app:argType=".state.InputType"
+            android:defaultValue="MANUAL" />
     </fragment>
     <fragment
         android:id="@+id/newBeanFragment"

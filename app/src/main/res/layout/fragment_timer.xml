@@ -127,7 +127,7 @@
         android:background="@drawable/timer_button_background"
         android:layout_marginTop="15dp"
         android:padding="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/createRecipeBtn"
+        app:layout_constraintBottom_toTopOf="@+id/showNewRecipeBtn"
         app:layout_constraintTop_toBottomOf="@+id/circleProgressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -183,7 +183,7 @@
 
 
     <TextView
-        android:id="@+id/createRecipeBtn"
+        android:id="@+id/showNewRecipeBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"

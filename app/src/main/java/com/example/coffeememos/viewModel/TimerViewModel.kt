@@ -3,6 +3,7 @@ package com.example.coffeememos.viewModel
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
+import androidx.navigation.Navigation
 import com.example.coffeememos.state.TimerButtonState
 import com.example.coffeememos.state.TimerState
 import kotlinx.coroutines.NonCancellable.isActive
@@ -11,6 +12,16 @@ import kotlinx.coroutines.launch
 import java.sql.Time
 
 class TimerViewModel : ViewModel() {
+    // レシピ新規作成画面が
+    private val _newRecipeFragmentExists: MutableLiveData<Boolean> = MutableLiveData(false)
+    val newRecipeFragmentExists: LiveData<Boolean> = _newRecipeFragmentExists
+
+    fun setNewRecipeExistsFlag(flag: Boolean) {
+        _newRecipeFragmentExists.value = flag
+    }
+
+
+
     // 蒸らし時間
     private val _preInfusionTime: MutableLiveData<String> = MutableLiveData("0s")
     val preInfusionTime: LiveData<String> = _preInfusionTime
@@ -54,6 +65,8 @@ class TimerViewModel : ViewModel() {
             when(state) {
                 TimerState.CLEAR -> {
                     _timerStartedAt = 0L
+                    _timerStoppedAt = 0L
+                    _timerStoppedPeriod = 0L
                     emit(0L)
                 }
 
@@ -74,7 +87,7 @@ class TimerViewModel : ViewModel() {
 
                 TimerState.STOP -> {
                     _timerStoppedAt = System.currentTimeMillis()
-                    while (true) {
+                    while (_timerState.value!! == TimerState.STOP) {
                         val now = System.currentTimeMillis()
                         _timerStoppedPeriod = now - _timerStoppedAt
                         delay(10L)
@@ -95,13 +108,11 @@ class TimerViewModel : ViewModel() {
     }
 
 
-
     // メインボタンの状態
     val mainBtnState: LiveData<TimerButtonState> = _timerState.map { state ->
         if (state == TimerState.RUN) TimerButtonState.STOP
         else TimerButtonState.START
     }
-
 
     private fun getMinutes(timeMills: Long) = timeMills / 1000 / 60
     private fun getSeconds(timeMills: Long) = timeMills / 1000 % 60

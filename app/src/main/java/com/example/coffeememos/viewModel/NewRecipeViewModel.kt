@@ -7,6 +7,7 @@ import com.example.coffeememos.dao.TasteDao
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
 import com.example.coffeememos.manager.RatingManager
+import com.example.coffeememos.state.InputType
 import com.example.coffeememos.state.NewRecipeMenuState
 import com.example.coffeememos.utilities.Util
 import kotlinx.coroutines.launch
@@ -91,9 +92,7 @@ class NewRecipeViewModel(
     fun setComment(comment: String)                             { _comment = comment }
 
 
-    /**
-     * menuの状態管理フラグ
-     */
+    // menuの状態管理
     private var _isMenuOpened: MutableLiveData<NewRecipeMenuState> = MutableLiveData(NewRecipeMenuState.MENU_CLOSED)
     val isMenuOpened: LiveData<NewRecipeMenuState> = _isMenuOpened
 
@@ -102,18 +101,48 @@ class NewRecipeViewModel(
     }
 
 
+    // 蒸らし時間の入力タイプ
+    private val _preInfusionTimeInputType: MutableLiveData<InputType> = MutableLiveData(InputType.MANUAL)
+    val preInfusionTimeInputType: LiveData<InputType> = _preInfusionTimeInputType
+
+    fun setPreInfusionTimeInputType(type: InputType) {
+        _preInfusionTimeInputType.value = type
+    }
+
+    // 抽出時間の入力タイプ
+    private val _extractionTimeInputType: MutableLiveData<InputType> = MutableLiveData(InputType.MANUAL)
+    val extractionTimeInputType: LiveData<InputType> = _extractionTimeInputType
+
+    fun setExtractionTimeInputType(type: InputType) {
+        _extractionTimeInputType.value = type
+    }
+
+
     // viewModel 初期化処理
-    fun initialize(ratingManager: RatingManager) {
+    fun initialize(ratingManager: RatingManager, preInfusionInputType: InputType, extractionInputType: InputType) {
         if (_ratingManager != null) return
         _ratingManager = ratingManager
+
+        setPreInfusionTimeInputType(preInfusionInputType)
+        setExtractionTimeInputType(extractionInputType)
     }
 
 
     // 保存処理
-    fun createNewRecipeAndTaste(beanId: Long) {
+    fun createNewRecipeAndTaste(beanId: Long, preInfusionTime: Int = 0, extractionTime: Int = 0) {
         viewModelScope.launch {
-            // レシピ保存
             val createdAt = System.currentTimeMillis()
+            var resultPreInfusionTime: Int = _preInfusionTime
+            var resultExtractionTime: Int = _extractionTimeMinutes * 60 + _extractionTimeSeconds
+            if (preInfusionTime != 0) {
+                resultPreInfusionTime = preInfusionTime
+            }
+            if (extractionTime != 0) {
+                resultExtractionTime = extractionTime
+            }
+
+            // レシピ保存
+            // todo
             recipeDao.insert(
                 Recipe(
                     id                    = 0,

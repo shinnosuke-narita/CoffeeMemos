@@ -3,6 +3,7 @@ package com.example.coffeememos.fragment
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Bundle
+import android.renderscript.ScriptGroup
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.*
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
@@ -23,6 +23,7 @@ import com.example.coffeememos.dialog.BasicDialogFragment
 import com.example.coffeememos.dialog.ListDialogFragment
 import com.example.coffeememos.listener.SimpleTextWatcher
 import com.example.coffeememos.manager.RatingManager
+import com.example.coffeememos.state.InputType
 import com.example.coffeememos.state.NewRecipeMenuState
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
@@ -51,6 +52,8 @@ class NewRecipeFragment :
     // 共有viewModel
     private val mainViewModel: MainViewModel by activityViewModels()
 
+    private val safeArgs: NewRecipeFragmentArgs by navArgs()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
@@ -59,7 +62,10 @@ class NewRecipeFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.initialize(RatingManager())
+        viewModel.initialize(
+            RatingManager(),
+            safeArgs.preInfusionTimeInputType,
+            safeArgs.extractionTimeInputType)
     }
 
     override fun onCreateView(
@@ -89,6 +95,40 @@ class NewRecipeFragment :
         binding.header.favoriteBtn.setOnClickListener {
             if (viewModel.isFavorite.value == true) viewModel.setFavoriteFlag(false)
             else viewModel.setFavoriteFlag(true)
+        }
+
+
+        // 蒸らし時間 監視処理
+        viewModel.preInfusionTimeInputType.observe(viewLifecycleOwner) { inputType ->
+            changeVisibility(inputType, binding.preInfusionTimeEditText, binding.preInfusionTimeTextView)
+        }
+
+        mainViewModel.formattedPreInfusionTime.observe(viewLifecycleOwner) { preInfusionTime ->
+            binding.preInfusionTimeTextView.text = preInfusionTime
+        }
+
+        binding.changePreInfusionInputTypeIcon.setOnClickListener {
+            if (viewModel.preInfusionTimeInputType.value == InputType.AUTO)
+                viewModel.setPreInfusionTimeInputType(InputType.MANUAL)
+            else
+                viewModel.setPreInfusionTimeInputType(InputType.AUTO)
+        }
+
+
+        // 抽出時間 監視処理
+        viewModel.extractionTimeInputType.observe(viewLifecycleOwner) { inputType ->
+            changeVisibility(inputType, binding.extractionTimeWrapper, binding.extractionTimeTextView)
+        }
+
+        mainViewModel.formattedExtractionTime.observe(viewLifecycleOwner) { extractionTime ->
+            binding.extractionTimeTextView.text = extractionTime
+        }
+
+        binding.changeExtractionInputTypeIcon.setOnClickListener {
+            if (viewModel.extractionTimeInputType.value == InputType.AUTO)
+                viewModel.setExtractionTimeInputType(InputType.MANUAL)
+            else
+                viewModel.setExtractionTimeInputType(InputType.AUTO)
         }
 
 
@@ -244,23 +284,25 @@ class NewRecipeFragment :
         /**
         * fab 監視処理
         */
-        // TODO 隠れたメニューのvisibility GONE調整
         viewModel.isMenuOpened.observe(viewLifecycleOwner) { state ->
             when(state) {
                 NewRecipeMenuState.MENU_OPENED -> {
                     binding.wholeShadow.visibility = View.VISIBLE
                     binding.menuBtn.setImageResource(R.drawable.ic_baseline_close_24)
+                    enableBtn(binding.timeBtn, binding.saveBtn)
                     fadeInAnimation(binding.timeBtn)
                     fadeInAnimation(binding.saveBtn)
                 }
                 NewRecipeMenuState.MENU_CLOSED -> {
                     binding.wholeShadow.visibility = View.GONE
                     binding.menuBtn.setImageResource(R.drawable.ic_baseline_menu_24)
+                    disableBtn(binding.timeBtn, binding.saveBtn)
                     fadeOutAnimation(binding.timeBtn)
                     fadeOutAnimation(binding.saveBtn)
                 }
             }
         }
+
 
         binding.menuBtn.setOnClickListener { v ->
             when(viewModel.isMenuOpened.value) {
@@ -270,13 +312,23 @@ class NewRecipeFragment :
             }
         }
         // 計測画面に遷移
-        binding.timeBtn.setOnClickListener { v ->
-            Navigation.findNavController(v).navigate(R.id.timerFragment)
+        binding.timeBtn.setOnClickListener { view ->
+            viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
+
+            val showTimerAction = NewRecipeFragmentDirections.showTimerAction().apply {
+               existsNewRecipeFragment = true
+            }
+            Navigation.findNavController(view).navigate(showTimerAction)
+        }
+        // 計測画面からの戻り
+        setFragmentResultListener("returnFromTimer") { _, _ ->
+            viewModel.setPreInfusionTimeInputType(InputType.AUTO)
+            viewModel.setExtractionTimeInputType(InputType.AUTO)
         }
         // レシピ 保存処理
         binding.saveBtn.setOnClickListener {
             mainViewModel.selectedBean.value?.let {  bean ->
-                viewModel.createNewRecipeAndTaste(bean.id)
+
                 BasicDialogFragment
                     .create(
                         getString(R.string.create_recipe_message),
@@ -335,5 +387,24 @@ class NewRecipeFragment :
         ObjectAnimator.ofFloat(view, "alpha",  0.0f).apply {
             duration = 500
         }.start()
+    }
+
+
+    private fun changeVisibility(type: InputType, manualView: View, autoView: View) {
+        if (type == InputType.AUTO) {
+            manualView.visibility = View.INVISIBLE
+            autoView.visibility = View.VISIBLE
+        } else {
+            manualView.visibility = View.VISIBLE
+            autoView.visibility = View.GONE
+        }
+    }
+
+    private fun enableBtn(vararg views: View) {
+        for (view in views) { view.isEnabled = true }
+    }
+
+    private fun disableBtn(vararg views: View) {
+        for (view in views) { view.isEnabled = false }
     }
 }

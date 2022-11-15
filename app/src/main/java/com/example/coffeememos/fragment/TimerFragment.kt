@@ -1,16 +1,23 @@
 package com.example.coffeememos.fragment
 
 import android.os.Bundle
+import android.renderscript.ScriptGroup
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentTimerBinding
+import com.example.coffeememos.state.InputType
 import com.example.coffeememos.state.TimerButtonState
 import com.example.coffeememos.state.TimerState
+import com.example.coffeememos.viewModel.MainViewModel
 import com.example.coffeememos.viewModel.TimerViewModel
 import java.sql.Time
 
@@ -20,6 +27,17 @@ class TimerFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: TimerViewModel by viewModels()
+
+    // 共有viewModel
+    private val mainViewModel: MainViewModel by activityViewModels()
+
+    private val safeArgs: TimerFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.setNewRecipeExistsFlag(safeArgs.existsNewRecipeFragment)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,13 +62,13 @@ class TimerFragment : Fragment() {
         }
 
         // 抽出時間 監視処理
-        viewModel.extractionTime.observe(viewLifecycleOwner) { extrationTime ->
-            binding.extractionTime.text = extrationTime
+        mainViewModel.formattedExtractionTime.observe(viewLifecycleOwner) { extractionTime ->
+            binding.extractionTime.text = extractionTime
         }
 
 
         //蒸らし時間 監視処理
-        viewModel.preInfusionTime.observe(viewLifecycleOwner) { preInFusionTime ->
+        mainViewModel.formattedPreInfusionTime.observe(viewLifecycleOwner) { preInFusionTime ->
             binding.preInfusionTime.text = preInFusionTime
         }
 
@@ -63,7 +81,8 @@ class TimerFragment : Fragment() {
                 TimerState.STOP -> {
                     binding.circleProgressBar.stopAnimation()
                     // 抽出時間の設定
-                    viewModel.setExtractionTime()}
+                    mainViewModel.setExtractionTime(viewModel.currentTime.value!!)
+                }
                 TimerState.CLEAR -> {
                     binding.circleProgressBar.stopAnimation()
                 }
@@ -86,7 +105,23 @@ class TimerFragment : Fragment() {
         }
 
         binding.finishPreInfusionBtn.setOnClickListener {
-            viewModel.setPreInfusionTime()
+            mainViewModel.setPreInfusionTime(viewModel.currentTime.value!!)
+        }
+
+        binding.showNewRecipeBtn.setOnClickListener { view ->
+            if (viewModel.newRecipeFragmentExists.value!!) {
+                // レシピ新規作成画面から開かれた場合
+                setFragmentResult("returnFromTimer", Bundle())
+                findNavController().popBackStack()
+            } else {
+                // bottomタブから開かれていた場合
+                val showNewRecipeAction = TimerFragmentDirections.showNewRecipeAction().apply {
+                    preInfusionTimeInputType = InputType.AUTO
+                    extractionTimeInputType  = InputType.AUTO
+                }
+                Navigation.findNavController(view).navigate(showNewRecipeAction)
+            }
+
         }
     }
 }
