@@ -25,6 +25,7 @@ import com.example.coffeememos.listener.SimpleTextWatcher
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.state.InputType
 import com.example.coffeememos.state.NewRecipeMenuState
+import com.example.coffeememos.state.ProcessState
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
 import com.example.coffeememos.viewModel.MainViewModel
@@ -281,9 +282,25 @@ class NewRecipeFragment :
         binding.starFifth.setOnClickListener(this)
 
 
-        /**
-        * fab 監視処理
-        */
+        // progressBar 監視処理
+        viewModel.processState.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                ProcessState.BEFORE_PROCESSING -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+                ProcessState.PROCESSING -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                ProcessState.FINISH_PROCESSING -> {
+                    binding.progressBar.visibility = View.GONE
+                    setFragmentResult("createRecipe", Bundle())
+                    findNavController().popBackStack()
+                }
+            }
+        }
+
+
+        //fab 監視処理
         viewModel.isMenuOpened.observe(viewLifecycleOwner) { state ->
             when(state) {
                 NewRecipeMenuState.MENU_OPENED -> {
@@ -302,8 +319,7 @@ class NewRecipeFragment :
                 }
             }
         }
-
-
+        // menu クリックリスナー
         binding.menuBtn.setOnClickListener { v ->
             when(viewModel.isMenuOpened.value) {
                 NewRecipeMenuState.MENU_OPENED -> viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
@@ -327,8 +343,7 @@ class NewRecipeFragment :
         }
         // レシピ 保存処理
         binding.saveBtn.setOnClickListener {
-            mainViewModel.selectedBean.value?.let {  bean ->
-
+            mainViewModel.selectedBean.value?.let {  _ ->
                 BasicDialogFragment
                     .create(
                         getString(R.string.create_recipe_message),
@@ -336,8 +351,6 @@ class NewRecipeFragment :
                         getString(R.string.cancel),
                         "createRecipe")
                     .show(childFragmentManager, BasicDialogFragment::class.simpleName)
-
-                findNavController().popBackStack()
 
                 return@setOnClickListener
             }
@@ -349,6 +362,14 @@ class NewRecipeFragment :
                     getView().setBackgroundColor(ContextCompat.getColor(it, R.color.white))
                 }
             }.show()
+        }
+        childFragmentManager.setFragmentResultListener("createRecipe", viewLifecycleOwner) { _, _ ->
+            val beanId = mainViewModel.selectedBean.value!!.id
+            viewModel.createNewRecipeAndTaste(
+                beanId,
+                mainViewModel.preInfusionTime.value!!,
+                mainViewModel.extractionTime.value!!
+            )
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.coffeememos.viewModel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
@@ -9,8 +10,10 @@ import com.example.coffeememos.entity.Taste
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.state.InputType
 import com.example.coffeememos.state.NewRecipeMenuState
+import com.example.coffeememos.state.ProcessState
+import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.Util
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class NewRecipeViewModel(
     private val recipeDao: RecipeDao,
@@ -118,6 +121,11 @@ class NewRecipeViewModel(
     }
 
 
+    // 保存処理状態
+    private val _processState: MutableLiveData<ProcessState> = MutableLiveData(ProcessState.BEFORE_PROCESSING)
+    val processState: LiveData<ProcessState> = _processState
+
+
     // viewModel 初期化処理
     fun initialize(ratingManager: RatingManager, preInfusionInputType: InputType, extractionInputType: InputType) {
         if (_ratingManager != null) return
@@ -129,29 +137,37 @@ class NewRecipeViewModel(
 
 
     // 保存処理
-    fun createNewRecipeAndTaste(beanId: Long, preInfusionTime: Int = 0, extractionTime: Int = 0) {
-        viewModelScope.launch {
+    @OptIn(DelicateCoroutinesApi::class)
+    fun createNewRecipeAndTaste(beanId: Long, preInfusionTime: Long, extractionTime: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            // 保存処理開始
+            _processState.postValue(ProcessState.PROCESSING)
+
             val createdAt = System.currentTimeMillis()
-            var resultPreInfusionTime: Int = _preInfusionTime
-            var resultExtractionTime: Int = _extractionTimeMinutes * 60 + _extractionTimeSeconds
-            if (preInfusionTime != 0) {
+
+            // 蒸らし時間
+            val resultPreInfusionTime: Long
+            if (_preInfusionTimeInputType.value!! == InputType.AUTO )
                 resultPreInfusionTime = preInfusionTime
-            }
-            if (extractionTime != 0) {
+            else
+                resultPreInfusionTime =  (_preInfusionTime * 1000).toLong()
+
+            // 抽出時間
+            val resultExtractionTime : Long
+            if (_extractionTimeInputType.value!! == InputType.AUTO)
                 resultExtractionTime = extractionTime
-            }
+            else
+                resultExtractionTime = DateUtil.convertSecondsIntoMills(_extractionTimeMinutes, _extractionTimeSeconds)
 
             // レシピ保存
-            // todo
             recipeDao.insert(
                 Recipe(
                     id                    = 0,
                     beanId                = beanId,
                     tool                  = _tool,
                     roast                 = _currentRoast.value ?: 2,
-                    extractionTimeMinutes = _extractionTimeMinutes,
-                    extractionTimeSeconds = _extractionTimeSeconds,
-                    preInfusionTime       = _preInfusionTime,
+                    extractionTime        = resultExtractionTime,
+                    preInfusionTime       = resultPreInfusionTime,
                     amountExtraction      = _amountExtraction,
                     temperature           = _temperature,
                     grindSize             = _currentGrind.value ?: 3,
@@ -176,7 +192,15 @@ class NewRecipeViewModel(
                     flavor   = _flavor
                 )
             )
+
+            // 保存処理完了
+            _processState.postValue(ProcessState.FINISH_PROCESSING)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
     }
 }
 

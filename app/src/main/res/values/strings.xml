@@ -71,6 +71,7 @@
     <string name="delete_recipe_message">レシピを削除しますか</string>
     <string name="delete_bean_message">コーヒー豆を削除しますか</string>
     <string name="bean_finish_update_message">コーヒー豆を更新しました</string>
+    <string name="recipe_finish_save_message">レシピを保存しました</string>
     <string name="recipe_finish_update_message">レシピを更新しました</string>
     <string name="recipe_finish_delete_message">レシピを削除しました</string>
     <string name="bean_finish_delete_message">コーヒー豆を削除しました</string>
@@ -80,7 +81,11 @@
     <string name="elevation_width_meters">%1$sm</string>
     <string name="elevation_from_to">%1$sm ~ %2$sm</string>
     <string name="rate_decimal">%1$s.0</string>
-
+    <string name="amountBeans_gram">%1$dg</string>
+    <string name="amountExtraction_cc">%1$dcc</string>
+    <string name="temperature_degree">%1$d℃</string>
+    <string name="preInfusionTime_seconds">%1$d秒</string>
+    <string name="extractionTime_unit">%1$d分%2$d秒</string>
     <string name="new_recipe_Header">New</string>
     <string name="favorite_recipe_header">Favorites</string>
     <string name="high_rating_header">High Rating</string>

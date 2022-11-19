@@ -9,7 +9,7 @@ import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.dao.TasteDao
 import com.example.coffeememos.entity.*
 
-@Database(entities = [Recipe::class, Bean::class, Taste::class], version = 10)
+@Database(entities = [Recipe::class, Bean::class, Taste::class], version = 11)
 abstract class CoffeeMemosDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
     abstract fun beanDao(): BeanDao

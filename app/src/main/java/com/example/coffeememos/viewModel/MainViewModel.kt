@@ -3,6 +3,7 @@ package com.example.coffeememos.viewModel
 import androidx.lifecycle.*
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.state.InputType
+import com.example.coffeememos.utilities.DateUtil
 
 class MainViewModel : ViewModel() {
     private val _selectedBean: MutableLiveData<Bean> = MutableLiveData()
@@ -20,8 +21,8 @@ class MainViewModel : ViewModel() {
     val formattedExtractionTime: LiveData<String> = _extractionTime.map { extractionTime ->
         String.format(
             "%02d分%02d秒",
-            getMinutes(extractionTime),
-            getSeconds(extractionTime)
+            DateUtil.getMinutes(extractionTime),
+            DateUtil.getSeconds(extractionTime)
         )
     }
 
@@ -34,7 +35,7 @@ class MainViewModel : ViewModel() {
     val preInfusionTime: LiveData<Long> = _preInfusionTime
 
     val formattedPreInfusionTime: LiveData<String> = _preInfusionTime.map { preInfusionTime ->
-        String.format("%d秒", getSeconds(preInfusionTime))
+        String.format("%d秒", DateUtil.convertSeconds(preInfusionTime))
     }
 
     val preInfusionTimeSeconds: LiveData<String> = _preInfusionTime.map { preInfusionTime ->
@@ -44,8 +45,4 @@ class MainViewModel : ViewModel() {
     fun setPreInfusionTime(preInfusionTime: Long) {
         _preInfusionTime.value = preInfusionTime
     }
-
-
-    private fun getMinutes(timeMills: Long) = timeMills / 1000 / 60
-    private fun getSeconds(timeMills: Long) = timeMills / 1000 % 60
 }

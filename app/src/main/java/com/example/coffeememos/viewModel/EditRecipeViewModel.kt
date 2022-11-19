@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.manager.RatingManager
+import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.Util
 import kotlinx.coroutines.launch
 
@@ -60,22 +61,22 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
 
 
     // 更新データの保持
-    private var _tool: String = ""
-    private var _amountBeans: Int = 0
-    private var _temperature: Int = 0
-    private var _preInfusionTime: Int = 0
+    private var _tool                 : String = ""
+    private var _comment              : String = ""
+    private var _amountBeans          : Int = 0
+    private var _temperature          : Int = 0
+    private var _preInfusionTime      : Int = 0
     private var _extractionTimeMinutes: Int = 0
     private var _extractionTimeSeconds: Int = 0
-    private var _amountExtraction: Int = 0
-    private var _comment: String = ""
+    private var _amountExtraction     : Int = 0
 
     fun setTool(tool: String)                                   { _tool = tool }
     fun setAmountBeans(amountBeans: String)                     { _amountBeans = Util.convertStringIntoIntIfPossible(amountBeans) }
     fun setTemperature(temperature: String)                     { _temperature = Util.convertStringIntoIntIfPossible(temperature) }
     fun setPreInfusionTime(preInfusionTime: String)             { _preInfusionTime = Util.convertStringIntoIntIfPossible(preInfusionTime) }
-    fun setExtractionTimeMinutes(extractionTimeMinutes: String) {_extractionTimeMinutes = Util.convertStringIntoIntIfPossible(extractionTimeMinutes) }
-    fun setExtractionTimeSeconds(extractionTimeSeconds: String) {_extractionTimeSeconds = Util.convertStringIntoIntIfPossible(extractionTimeSeconds) }
-    fun setAmountExtraction(amountExtraction: String)           {_amountExtraction = Util.convertStringIntoIntIfPossible(amountExtraction) }
+    fun setExtractionTimeMinutes(extractionTimeMinutes: String) { _extractionTimeMinutes = Util.convertStringIntoIntIfPossible(extractionTimeMinutes) }
+    fun setExtractionTimeSeconds(extractionTimeSeconds: String) { _extractionTimeSeconds = Util.convertStringIntoIntIfPossible(extractionTimeSeconds) }
+    fun setAmountExtraction(amountExtraction: String)           { _amountExtraction = Util.convertStringIntoIntIfPossible(amountExtraction) }
     fun setComment(comment: String)                             { _comment = comment }
 
 
@@ -98,15 +99,17 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
 
     fun updateRecipe() {
         viewModelScope.launch {
+            val extractionTime = DateUtil.convertSecondsIntoMills(_extractionTimeMinutes, _extractionTimeSeconds)
+            val preInfusionTime = DateUtil.convertSecondsIntoMills(_preInfusionTime)
+
             recipeDao.update(
                 Recipe(
                     id                    = _selectedRecipe.value!!.id,
                     beanId                = _selectedRecipe.value!!.beanId,
                     tool                  = _tool,
                     roast                 = _currentRoast.value!!,
-                    extractionTimeMinutes = _extractionTimeMinutes,
-                    extractionTimeSeconds = _extractionTimeSeconds,
-                    preInfusionTime       = _preInfusionTime,
+                    extractionTime        = extractionTime,
+                    preInfusionTime       = preInfusionTime,
                     amountExtraction      = _amountExtraction,
                     temperature           = _temperature,
                     grindSize             = _currentGrind.value!!,

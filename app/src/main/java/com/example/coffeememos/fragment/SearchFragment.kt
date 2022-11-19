@@ -9,6 +9,7 @@ import com.example.coffeememos.R
 import com.example.coffeememos.adapter.SearchViewPagerAdapter
 import com.example.coffeememos.databinding.FragmentHomeRecipeBinding
 import com.example.coffeememos.databinding.FragmentSearchBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class SearchFragment : Fragment() {
@@ -16,6 +17,8 @@ class SearchFragment : Fragment() {
     private  var _binding: FragmentSearchBinding? = null
     private val binding
         get() = _binding!!
+
+    private val tabTitles: List<String> = listOf("Recipe", "Bean")
 
 
     override fun onCreateView(
@@ -32,6 +35,10 @@ class SearchFragment : Fragment() {
         val fragmentList: List<Fragment> = listOf(SearchRecipeFragment(), SearchBeanFragment())
 
         binding.searchViewPager.adapter = SearchViewPagerAdapter(this, fragmentList)
+
+        TabLayoutMediator(binding.tabLayout, binding.searchViewPager) {tab, position ->
+            tab.text = tabTitles[position]
+        }.attach()
     }
 
     override fun onDestroyView() {

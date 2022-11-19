@@ -120,15 +120,16 @@ class RecipeDetailFragment : Fragment() {
 
         viewModel.selectedRecipe.observe(viewLifecycleOwner) { recipe ->
             binding.toolText.text             = recipe.tool
-            binding.roastText.text            = Constants.roastList[recipe.roast]
-            binding.grindText.text            = Constants.grindSizeList[recipe.grindSize]
+            binding.recipeCommentText.text    = recipe.comment
             binding.amountBeanText.text       = recipe.amountOfBeans.toString()
             binding.temperatureText.text      = recipe.temperature.toString()
-            binding.preInfusionTimeText.text  = recipe.preInfusionTime.toString()
-            binding.extractionTimeText.text   = recipe.extractionTimeMinutes.toString()
             binding.amountExtractionText.text = recipe.amountExtraction.toString()
+            binding.roastText.text            = Constants.roastList[recipe.roast]
+            binding.grindText.text            = Constants.grindSizeList[recipe.grindSize]
+            binding.preInfusionTimeText.text  = DateUtil.formatPreInfusionTime(recipe.preInfusionTime)
+            binding.extractionTimeText.text   = DateUtil.formatExtractionTime(recipe.extractionTime)
             binding.createdDateText.text      = DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern)
-            binding.recipeCommentText.text    = recipe.comment
+
 
             if (recipe.isFavorite) binding.recipeFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
             else binding.recipeFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)

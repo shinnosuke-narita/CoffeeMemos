@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="dark_grey">#303030</color>
+    <color name="light_grey">#E7E7E7</color>
     <color name="white">#FFFFFFFF</color>
     <color name="bottom_nav_state_on">#C1AB97</color>
     <color name="bottom_nav_state_off">#B6B6B6</color>
@@ -15,7 +16,7 @@
     <color name="taste_section_text_color">#552A05</color>
     <color name="seek_bar_progress">#7E7974</color>
     <color name="normal_rating_progress">#7E7974</color>
-    <color name="active_rating_progress">#E4FA21</color>
+    <color name="active_rating_progress">#6B7571</color>
 
     <color name="beige_light">#F9ECDE</color>
     <color name="beige_dark">#F6E1CB</color>

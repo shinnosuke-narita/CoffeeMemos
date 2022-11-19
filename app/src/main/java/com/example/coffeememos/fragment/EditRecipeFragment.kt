@@ -21,8 +21,10 @@ import com.example.coffeememos.dialog.BasicDialogFragment
 import com.example.coffeememos.dialog.ListDialogFragment
 import com.example.coffeememos.listener.SimpleTextWatcher
 import com.example.coffeememos.manager.RatingManager
+import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.viewModel.EditRecipeViewModel
 import com.example.coffeememos.viewModel.EditRecipeViewModelFactory
+import java.util.*
 
 
 class EditRecipeFragment : Fragment(), View.OnClickListener {
@@ -70,14 +72,18 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
 
         // 選択されたレシピの監視処理
         viewModel.selectedRecipe.observe(viewLifecycleOwner) { recipe ->
+            val preInfusionTime = DateUtil.convertSeconds(recipe.preInfusionTime)
+            val extractionTimeMinutes = DateUtil.getMinutes(recipe.extractionTime)
+            val extractionTimeSeconds = DateUtil.getSeconds(recipe.extractionTime)
+
             binding.toolEditText.setText(recipe.tool)
             binding.amountBeanEditText.setText(recipe.amountOfBeans.toString())
             binding.temperatureEditText.setText(recipe.temperature.toString())
-            binding.preInfusionTimeEditText.setText(recipe.preInfusionTime.toString())
-            binding.extractionTimeMinuteEditText.setText(recipe.extractionTimeMinutes.toString())
-            binding.extractionTimeSecondsEditText.setText(recipe.extractionTimeSeconds.toString())
             binding.amountExtractionEditText.setText(recipe.amountExtraction.toString())
             binding.commentEditText.setText(recipe.comment)
+            binding.preInfusionTimeEditText.setText(preInfusionTime.toString())
+            binding.extractionTimeMinuteEditText.setText(extractionTimeMinutes.toString())
+            binding.extractionTimeSecondsEditText.setText(extractionTimeSeconds.toString())
         }
 
 

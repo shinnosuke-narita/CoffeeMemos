@@ -121,6 +121,17 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavo
                 }
             }.show()
         }
+        setFragmentResultListener("createRecipe") {_, _ ->
+            Snackbar.make(binding.snackBarPlace, getString(R.string.recipe_finish_save_message), Snackbar.LENGTH_SHORT).apply {
+                mContext?.let {
+                    setTextColor(ContextCompat.getColor(it, R.color.snackBar_text))
+                    getView().setBackgroundColor(
+                        ContextCompat.getColor(it,
+                            R.color.white
+                        ))
+                }
+            }.show()
+        }
     }
 
     override fun onDestroyView() {
