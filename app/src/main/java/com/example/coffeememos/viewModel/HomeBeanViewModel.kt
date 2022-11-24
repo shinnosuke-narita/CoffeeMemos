@@ -7,6 +7,7 @@ import com.example.coffeememos.SimpleBeanInfo
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.utilities.DateUtil
+import com.example.coffeememos.utilities.ViewUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -60,7 +61,7 @@ class HomeBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
 
     fun updateFavoriteIcon(clickedFavoriteIcon: View, beanId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (clickedFavoriteIcon.tag.equals(Constants.isFavoriteTagName)) {
+            if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {
                 // isFavorite 更新
                 beanDao.updateFavoriteByBeanId(beanId, false)
 

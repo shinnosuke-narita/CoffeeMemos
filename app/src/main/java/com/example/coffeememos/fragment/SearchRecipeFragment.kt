@@ -10,9 +10,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.CoffeeMemosApplication
+import com.example.coffeememos.CustomRecipe
 import com.example.coffeememos.R
 import com.example.coffeememos.adapter.RecipeDetailAdapter
 import com.example.coffeememos.databinding.FragmentSearchRecipeBinding
+import com.example.coffeememos.listener.OnFavoriteIconClickListener
+import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.viewModel.MainSearchViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
 
@@ -50,7 +53,18 @@ class SearchRecipeFragment : Fragment() {
 
         // 検索結果 監視処理
         viewModel.searchResult.observe(viewLifecycleOwner) { list ->
-            binding.searchResultRV.adapter = RecipeDetailAdapter(requireContext(), list)
+            binding.searchResultRV.adapter = RecipeDetailAdapter(requireContext(), list).apply {
+                setFavoriteListener(object : OnFavoriteIconClickListener {
+                    override fun onClick(view: View, id: Long) {
+
+                    }
+                })
+                setOnItemClickListener(object: OnItemClickListener<CustomRecipe> {
+                    override fun onClick(view: View, selectedItem: CustomRecipe) {
+
+                    }
+                })
+            }
         }
 
         sharedViewModel.searchKeyWord.observe(viewLifecycleOwner) { keyWord ->

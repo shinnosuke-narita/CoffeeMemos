@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.coffeememos.Constants.Companion.isFavoriteTagName
-import com.example.coffeememos.Constants.Companion.notFavoriteTagName
 import com.example.coffeememos.R
 import com.example.coffeememos.SimpleRecipe
+import com.example.coffeememos.utilities.ViewUtil.Companion.setTagAndFavoriteIcon
 
 class RecipeAdapter(context: Context, data: List<SimpleRecipe>) : BaseAdapter<SimpleRecipe, RecipeViewHolder>(context, data) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
@@ -27,7 +26,7 @@ class RecipeAdapter(context: Context, data: List<SimpleRecipe>) : BaseAdapter<Si
         holder.rating.text       = context.getString(R.string.rate_decimal, data[position].rating)
 
         // お気に入りアイコンのセット
-        setFavoriteIcon(holder.favorite, data[position].isFavorite)
+        setTagAndFavoriteIcon(holder.favorite, data[position].isFavorite)
 
         // お気に入りアイコン コールバックセット
         holder.favorite.setOnClickListener { clickedFavoriteIcon ->
@@ -37,17 +36,6 @@ class RecipeAdapter(context: Context, data: List<SimpleRecipe>) : BaseAdapter<Si
         // アイテムタップ時のコールバックセット
         holder.itemView.setOnClickListener { view ->
             mItemClickListener.onClick(view, data[position])
-        }
-    }
-
-    private fun setFavoriteIcon(favoriteIcon: ImageView, isFavorite: Boolean) {
-        if (isFavorite) {
-            favoriteIcon.tag = isFavoriteTagName
-            favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
-        }
-        else {
-            favoriteIcon.tag = notFavoriteTagName
-            favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
     }
 }

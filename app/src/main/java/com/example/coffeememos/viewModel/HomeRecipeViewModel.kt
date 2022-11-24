@@ -3,7 +3,6 @@ package com.example.coffeememos.viewModel
 import android.view.View
 import androidx.lifecycle.*
 import com.example.coffeememos.Constants
-import com.example.coffeememos.Constants.Companion.isFavoriteTagName
 import com.example.coffeememos.SimpleRecipe
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
@@ -12,6 +11,7 @@ import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
 import com.example.coffeememos.utilities.DateUtil
+import com.example.coffeememos.utilities.ViewUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -91,7 +91,7 @@ class HomeRecipeViewModel(private val beanDao: BeanDao, private val recipeDao: R
 
     fun updateFavoriteIcon(clickedFavoriteIcon: View, recipeId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (clickedFavoriteIcon.tag.equals(isFavoriteTagName)) {
+            if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {
                 // isFavorite 更新
                 recipeDao.updateFavoriteByRecipeId(recipeId, false)
             } else {

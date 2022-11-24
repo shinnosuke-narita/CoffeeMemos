@@ -15,6 +15,8 @@ import com.example.coffeememos.SimpleRecipe
 import com.example.coffeememos.entity.Bean
 
 import com.example.coffeememos.entity.RecipeWithBeans
+import com.example.coffeememos.utilities.ViewUtil.Companion.setFavoriteIcon
+import com.example.coffeememos.utilities.ViewUtil.Companion.setTagAndFavoriteIcon
 
 class SimpleBeanInfoAdapter(context: Context, data: List<SimpleBeanInfo>) : BaseAdapter<SimpleBeanInfo, SimpleBeanInfoViewHolder>(context, data) {
 
@@ -32,7 +34,7 @@ class SimpleBeanInfoAdapter(context: Context, data: List<SimpleBeanInfo>) : Base
         holder.rating.text       = context.getString(R.string.rate_decimal, data[position].rating)
 
         // お気に入りアイコンのセット
-        setFavoriteIcon(holder.favorite, data[position].isFavorite)
+        setTagAndFavoriteIcon(holder.favorite, data[position].isFavorite)
 
         // お気に入りアイコン コールバックセット
         holder.favorite.setOnClickListener { view ->
@@ -42,17 +44,6 @@ class SimpleBeanInfoAdapter(context: Context, data: List<SimpleBeanInfo>) : Base
         // アイテムタップ時のコールバックセット
         holder.itemView.setOnClickListener { view ->
             mItemClickListener.onClick(view, data[position])
-        }
-    }
-
-    private fun setFavoriteIcon(favoriteIcon: ImageView, isFavorite: Boolean) {
-        if (isFavorite) {
-            favoriteIcon.tag = Constants.isFavoriteTagName
-            favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
-        }
-        else {
-            favoriteIcon.tag = Constants.notFavoriteTagName
-            favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
     }
 }

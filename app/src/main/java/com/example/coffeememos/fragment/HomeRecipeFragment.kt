@@ -161,7 +161,6 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavo
     }
 
 
-
     private fun setUpRecyclerView(context: Context, rv: RecyclerView) {
         rv.layoutManager = LinearLayoutManager(context).apply {
             orientation = LinearLayoutManager.HORIZONTAL
