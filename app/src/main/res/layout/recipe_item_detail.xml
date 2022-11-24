@@ -6,7 +6,7 @@
     android:id="@+id/beanContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp"
+    android:layout_margin="15dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="5dp">
 
@@ -29,7 +29,7 @@
             tools:text="Hario V60" />
 
         <TextView
-            android:id="@+id/beanName"
+            android:id="@+id/country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -40,7 +40,6 @@
             android:textColor="@color/brown_light"
             android:textSize="11sp"
             android:textStyle="bold"
-
             app:layout_constraintStart_toStartOf="@+id/tool"
             app:layout_constraintTop_toBottomOf="@+id/tool"
             tools:text="ブラジル" />
@@ -58,7 +57,7 @@
             android:textSize="11sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/tool"
-            app:layout_constraintTop_toBottomOf="@+id/beanName"
+            app:layout_constraintTop_toBottomOf="@+id/country"
             tools:text="イタリアンロースト" />
 
         <TextView
@@ -92,7 +91,7 @@
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:layout_marginTop="15dp"
-            android:padding="1dp"
+            android:padding="2.2dp"
             android:src="@drawable/coffee_bean_icon"
             app:layout_constraintStart_toStartOf="@+id/createdAt"
             app:layout_constraintTop_toBottomOf="@+id/createdAt"
@@ -188,7 +187,7 @@
             app:tint="@color/brown_light" />
 
         <TextView
-            android:id="@+id/extractionTimeName"
+            android:id="@+id/extractionTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"

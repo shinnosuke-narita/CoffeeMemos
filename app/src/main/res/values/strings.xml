@@ -89,6 +89,8 @@
     <string name="new_recipe_Header">New</string>
     <string name="favorite_recipe_header">Favorites</string>
     <string name="high_rating_header">High Rating</string>
+    <string name="refine">絞り込み</string>
+    <string name="sort">並び替え</string>
 
     <string name="hint_country"><font size="15">原産地</font></string>
 </resources>

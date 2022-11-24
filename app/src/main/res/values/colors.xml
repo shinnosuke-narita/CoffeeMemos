@@ -28,4 +28,5 @@
     <color name="grey">#D8D3CE</color>
     <color name="grey_dark">#939291</color>
     <color name="delete_color">#913D3D</color>
+    <color name="shadow_color">#A12C2C2C</color>
 </resources>

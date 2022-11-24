@@ -611,7 +611,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:background="#A12C2C2C"/>
+        android:background="@color/shadow_color"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

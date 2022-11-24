@@ -14,32 +14,30 @@ import com.example.coffeememos.CustomRecipe
 import com.example.coffeememos.R
 import com.example.coffeememos.SimpleRecipe
 import com.example.coffeememos.utilities.DateUtil
+import com.example.coffeememos.utilities.ViewUtil
 import java.util.*
 
 class RecipeDetailAdapter(context: Context, data: List<CustomRecipe>) : BaseAdapter<CustomRecipe, RecipeDetailViewHolder>(context, data) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeDetailViewHolder {
         return RecipeDetailViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_detail, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_width_taste, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: RecipeDetailViewHolder, position: Int) {
         val recipe: CustomRecipe = data[position]
-        val preInfusionTime      : Long = DateUtil.convertSeconds(recipe.preInfusionTime)
-        val extractionTimeMinutes: Long = DateUtil.getMinutes(recipe.extractionTime)
-        val extractionTimeSeconds: Long = DateUtil.getSeconds(recipe.extractionTime)
 
-        holder.tool.text             = recipe.tool
-        holder.country.text          = recipe.country
-        holder.roast.text            = Constants.roastList[recipe.roast]
-        holder.grindSize.text        = Constants.grindSizeList[recipe.grindSize]
-        holder.createdAt.text        = DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern)
-        holder.amountBean.text       = context.getString(R.string.amountBeans_gram, recipe.amountBean)
-        holder.amountExtraction.text = context.getString(R.string.amountExtraction_cc, recipe.amountExtraction)
-        holder.temperature.text      = context.getString(R.string.temperature_degree, recipe.temperature)
-        holder.preInfusionTime.text  = context.getString(R.string.preInfusionTime_seconds, preInfusionTime)
-        holder.extractionTime.text   = context.getString(R.string.extractionTime_unit, extractionTimeMinutes, extractionTimeSeconds)
-        holder.rating.text           = context.getString(R.string.rate_decimal, recipe.rating.toString())
+        holder.tool.text       = recipe.tool
+        holder.createdAt.text  = DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern)
+        holder.sour.text       = recipe.sour.toString()
+        holder.bitter.text     = recipe.bitter.toString()
+        holder.sweet.text      = recipe.sweet.toString()
+        holder.flavor.text     = recipe.flavor.toString()
+        holder.rich.text       = recipe.rich.toString()
+        holder.rating.text     = context.getString(R.string.rate_decimal, recipe.rating.toString())
+        ViewUtil.setRecipeTag(holder.country, recipe.country)
+        ViewUtil.setRecipeTag(holder.roast, Constants.roastList[recipe.roast])
+        ViewUtil.setRecipeTag(holder.grindSize,  Constants.grindSizeList[recipe.grindSize])
 
         // お気に入りアイコンのセット
         setFavoriteIcon(holder.favorite, recipe.isFavorite)
@@ -69,16 +67,16 @@ class RecipeDetailAdapter(context: Context, data: List<CustomRecipe>) : BaseAdap
 
 
 class RecipeDetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val country  : TextView         = itemView.findViewById(R.id.country)
-    val tool     : TextView         = itemView.findViewById(R.id.tool)
-    val roast    : TextView         = itemView.findViewById(R.id.roast)
-    val grindSize: TextView         = itemView.findViewById(R.id.grindSize)
-    val createdAt: TextView         = itemView.findViewById(R.id.createdAt)
-    val amountBean: TextView        = itemView.findViewById(R.id.amountBean)
-    val amountExtraction: TextView  = itemView.findViewById(R.id.amountExtraction)
-    val temperature: TextView       = itemView.findViewById(R.id.temperature)
-    val preInfusionTime: TextView   = itemView.findViewById(R.id.preInfusionTime)
-    val extractionTime: TextView    = itemView.findViewById(R.id.extractionTime)
-    val rating   : TextView         = itemView.findViewById(R.id.rating)
-    val favorite : ImageView        = itemView.findViewById(R.id.favoriteIcon)
+    val country  : TextView   = itemView.findViewById(R.id.country)
+    val tool     : TextView   = itemView.findViewById(R.id.tool)
+    val roast    : TextView   = itemView.findViewById(R.id.roast)
+    val grindSize: TextView   = itemView.findViewById(R.id.grindSize)
+    val createdAt: TextView   = itemView.findViewById(R.id.createdAt)
+    val sour     : TextView   = itemView.findViewById(R.id.sourValue)
+    val bitter   : TextView   = itemView.findViewById(R.id.bitterValue)
+    val sweet    : TextView   = itemView.findViewById(R.id.sweetValue)
+    val flavor   : TextView   = itemView.findViewById(R.id.flavorValue)
+    val rich     : TextView   = itemView.findViewById(R.id.richValue)
+    val rating   : TextView   = itemView.findViewById(R.id.rating)
+    val favorite : ImageView  = itemView.findViewById(R.id.favoriteIcon)
 }

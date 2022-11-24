@@ -30,7 +30,7 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <EditText
-                android:id="@+id/headerTitle"
+                android:id="@+id/searchInput"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -41,6 +41,8 @@
                 android:fontFamily="sans-serif-medium"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/search_input_background"
+                android:inputType="text"
+                android:textCursorDrawable="@null"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/searchIcon"
@@ -52,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_search_24"
                 android:layout_marginStart="10dp"
-                app:layout_constraintStart_toEndOf="@+id/headerTitle"
+                app:layout_constraintStart_toEndOf="@+id/searchInput"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -64,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabTextColor="@color/grey"
-        app:tabSelectedTextColor="@color/beige_dark"
+        app:tabSelectedTextColor="@color/black"
         app:tabIndicatorColor="@color/beige_dark"
         app:layout_constraintTop_toBottomOf="@+id/header"/>
 
