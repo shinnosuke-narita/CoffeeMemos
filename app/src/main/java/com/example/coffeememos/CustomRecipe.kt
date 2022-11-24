@@ -14,4 +14,4 @@ data class CustomRecipe (
     val flavor    : Int,
     val rich      : Int,
     val rating    : Int,
-    val isFavorite: Boolean)
+    var isFavorite: Boolean)

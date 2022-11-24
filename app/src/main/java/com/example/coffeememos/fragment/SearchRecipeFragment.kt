@@ -56,7 +56,7 @@ class SearchRecipeFragment : Fragment() {
             binding.searchResultRV.adapter = RecipeDetailAdapter(requireContext(), list).apply {
                 setFavoriteListener(object : OnFavoriteIconClickListener {
                     override fun onClick(view: View, id: Long) {
-
+                        viewModel.updateFavoriteIcon(view, id)
                     }
                 })
                 setOnItemClickListener(object: OnItemClickListener<CustomRecipe> {

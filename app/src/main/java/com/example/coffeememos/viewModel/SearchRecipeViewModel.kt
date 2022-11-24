@@ -1,5 +1,6 @@
 package com.example.coffeememos.viewModel
 
+import android.view.View
 import androidx.lifecycle.*
 import com.example.coffeememos.*
 import com.example.coffeememos.dao.BeanDao
@@ -9,7 +10,9 @@ import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
 import com.example.coffeememos.utilities.DateUtil
+import com.example.coffeememos.utilities.ViewUtil
 import com.github.mikephil.charting.utils.Utils.init
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -22,6 +25,11 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
     // beanWithRecipeListとtasteListを監視
     val customRecipeList = MediatorLiveData<List<CustomRecipe>>().apply {
         addSource(beanWithRecipeList) {
+            if (updateFavorite) {
+                updateFavorite = false
+                return@addSource
+            }
+
             value = makeCustomRecipeList()
         }
         addSource(tasteList) {
@@ -141,6 +149,30 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
 
         // ソートされた結果をセット
         _searchResult.value = sortedResult
+    }
+
+    private var updateFavorite: Boolean = false
+
+    fun updateFavoriteIcon(clickedFavoriteIcon: View, recipeId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {
+                // isFavorite 更新
+                recipeDao.updateFavoriteByRecipeId(recipeId, false)
+
+                updateFavorite = true
+                for (recipe in customRecipeList.value!!) {
+                    if (recipe.recipeId == recipeId) {
+                        recipe.isFavorite = false
+                        break
+                    }
+                }
+
+
+            } else {
+                // isFavorite 更新
+                recipeDao.updateFavoriteByRecipeId(recipeId, true)
+            }
+        }
     }
 
     class SearchRecipeViewModelFactory(
