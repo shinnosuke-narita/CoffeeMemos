@@ -74,4 +74,10 @@ class SortFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

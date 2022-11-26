@@ -42,272 +42,353 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/countryTitle"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/countryWrapper"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="@string/country"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/countryAddIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_baseline_add_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/countryTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/countryTitle" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/countryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/country"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/countryAddIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/countryTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/countryTitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include
                 android:id="@+id/countryContainer"
                 layout="@layout/filter_edit_text_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/countryTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/countryWrapper" />
 
-            <TextView
-                android:id="@+id/toolTitle"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/toolWrapper"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/tool"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/countryTitle"
-                app:layout_constraintStart_toStartOf="@+id/countryTitle" />
+                app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
+                app:layout_constraintStart_toStartOf="@+id/countryWrapper"
+                app:layout_constraintTop_toBottomOf="@+id/countryWrapper">
 
-            <ImageView
-                android:id="@+id/toolAddIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_baseline_add_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/toolTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/toolTitle" />
+                <TextView
+                    android:id="@+id/toolTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tool"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/toolAddIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/toolTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/toolTitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <include
                 android:id="@+id/toolContainer"
                 layout="@layout/filter_edit_text_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/toolTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/toolWrapper" />
 
-            <TextView
-                android:id="@+id/roastTitle"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/roastWrapper"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/roast"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/toolTitle"
-                app:layout_constraintStart_toStartOf="@+id/countryTitle" />
+                app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
+                app:layout_constraintStart_toStartOf="@+id/countryWrapper"
+                app:layout_constraintTop_toBottomOf="@+id/toolWrapper">
 
-            <ImageView
-                android:id="@+id/roastAddIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_baseline_add_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/roastTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/roastTitle" />
+                <TextView
+                    android:id="@+id/roastTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/roast"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/grindSizeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/grind_size"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/roastTitle"
-                app:layout_constraintStart_toStartOf="@+id/countryTitle" />
+                <ImageView
+                    android:id="@+id/roastAddIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/roastTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/roastTitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:id="@+id/grindSizeAddIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_baseline_add_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/grindSizeTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/grindSizeTitle" />
-
-            <TextView
-                android:id="@+id/ratingTitle"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/grindSizeWrapper"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="評価"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/grindSizeTitle"
-                app:layout_constraintStart_toStartOf="@+id/countryTitle" />
+                app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
+                app:layout_constraintStart_toStartOf="@+id/countryWrapper"
+                app:layout_constraintTop_toBottomOf="@+id/roastWrapper">
 
-            <ImageView
-                android:id="@+id/ratingAddIcon"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/grindSizeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/grind_size"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/grindSizeAddIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/grindSizeTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/grindSizeTitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ratingWrapper"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_baseline_add_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ratingTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/ratingTitle" />
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
+                app:layout_constraintStart_toStartOf="@+id/countryWrapper"
+                app:layout_constraintTop_toBottomOf="@+id/grindSizeWrapper">
+
+                <TextView
+                    android:id="@+id/ratingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="評価"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ratingAddIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ratingTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/ratingTitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include
                 android:id="@+id/ratingContainer"
                 layout="@layout/filter_radio_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/ratingTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/ratingWrapper" />
 
-            <TextView
-                android:id="@+id/sourTitle"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/sourWrapper"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/sour"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/ratingTitle"
-                app:layout_constraintStart_toStartOf="@+id/countryTitle" />
+                app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
+                app:layout_constraintStart_toStartOf="@+id/countryWrapper"
+                app:layout_constraintTop_toBottomOf="@+id/ratingWrapper">
 
-            <ImageView
-                android:id="@+id/sourAddIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_baseline_add_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/sourTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/sourTitle" />
+                <TextView
+                    android:id="@+id/sourTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sour"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
+                <ImageView
+                    android:id="@+id/sourAddIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/sourTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/sourTitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include
                 android:id="@+id/sourContainer"
                 layout="@layout/filter_radio_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/sourTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/sourWrapper" />
 
-            <TextView
-                android:id="@+id/bitterTitle"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bitterWrapper"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/bitter"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/sourTitle"
-                app:layout_constraintStart_toStartOf="@+id/countryTitle" />
+                app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
+                app:layout_constraintStart_toStartOf="@+id/countryWrapper"
+                app:layout_constraintTop_toBottomOf="@+id/sourWrapper">
 
-            <ImageView
-                android:id="@+id/bitterAddIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_baseline_add_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/bitterTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/bitterTitle" />
+                <TextView
+                    android:id="@+id/bitterTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bitter"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/bitterAddIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/bitterTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/bitterTitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include
                 android:id="@+id/bitterContainer"
                 layout="@layout/filter_radio_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/bitterTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/bitterWrapper" />
 
-            <TextView
-                android:id="@+id/sweetTitle"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/sweetWrapper"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/sweet"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/bitterTitle"
-                app:layout_constraintStart_toStartOf="@+id/countryTitle" />
+                app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
+                app:layout_constraintStart_toStartOf="@+id/countryWrapper"
+                app:layout_constraintTop_toBottomOf="@+id/bitterWrapper">
 
-            <ImageView
-                android:id="@+id/sweetAddIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_baseline_add_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/sweetTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/sweetTitle" />
+                <TextView
+                    android:id="@+id/sweetTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sweet"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/sweetAddIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/sweetTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/sweetTitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include
                 android:id="@+id/sweetContainer"
                 layout="@layout/filter_radio_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/sweetTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/sweetWrapper" />
 
-            <TextView
-                android:id="@+id/flavorTitle"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/flavorWrapper"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/flavor"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/sweetTitle"
-                app:layout_constraintStart_toStartOf="@+id/countryTitle" />
+                app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
+                app:layout_constraintStart_toStartOf="@+id/countryWrapper"
+                app:layout_constraintTop_toBottomOf="@+id/sweetWrapper">
 
-            <ImageView
-                android:id="@+id/flavorAddIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_baseline_add_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/flavorTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/flavorTitle" />
+                <TextView
+                    android:id="@+id/flavorTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/flavor"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/flavorAddIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/flavorTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/flavorTitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include
                 android:id="@+id/flavorContainer"
                 layout="@layout/filter_radio_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/sweetTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/flavorWrapper" />
 
-            <TextView
-                android:id="@+id/richTitle"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/richWrapper"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/rich"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/flavorTitle"
-                app:layout_constraintStart_toStartOf="@+id/countryTitle" />
+                app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
+                app:layout_constraintStart_toStartOf="@+id/countryWrapper"
+                app:layout_constraintTop_toBottomOf="@+id/flavorWrapper">
 
-            <ImageView
-                android:id="@+id/richAddIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_baseline_add_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/richTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/richTitle" />
+                <TextView
+                    android:id="@+id/richTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rich"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/richAddIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/richTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/richTitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include
                 android:id="@+id/richContainer"
                 layout="@layout/filter_radio_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/richTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/richWrapper" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,6 +26,7 @@ import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.state.InputType
 import com.example.coffeememos.state.NewRecipeMenuState
 import com.example.coffeememos.state.ProcessState
+import com.example.coffeememos.utilities.AnimUtil
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
 import com.example.coffeememos.viewModel.MainViewModel
@@ -307,15 +308,15 @@ class NewRecipeFragment :
                     binding.wholeShadow.visibility = View.VISIBLE
                     binding.menuBtn.setImageResource(R.drawable.ic_baseline_close_24)
                     enableBtn(binding.timeBtn, binding.saveBtn)
-                    fadeInAnimation(binding.timeBtn)
-                    fadeInAnimation(binding.saveBtn)
+                    AnimUtil.fadeInAnimation(binding.timeBtn, 500L)
+                    AnimUtil.fadeInAnimation(binding.saveBtn, 500L)
                 }
                 NewRecipeMenuState.MENU_CLOSED -> {
                     binding.wholeShadow.visibility = View.GONE
                     binding.menuBtn.setImageResource(R.drawable.ic_baseline_menu_24)
                     disableBtn(binding.timeBtn, binding.saveBtn)
-                    fadeOutAnimation(binding.timeBtn)
-                    fadeOutAnimation(binding.saveBtn)
+                    AnimUtil.fadeOutAnimation(binding.timeBtn, 500L)
+                    AnimUtil.fadeOutAnimation(binding.saveBtn, 500L)
                 }
             }
         }
@@ -393,23 +394,6 @@ class NewRecipeFragment :
             R.id.starFifth  -> viewModel.updateRatingState(5)
         }
     }
-
-
-    /**
-     * アニメーション関連
-     */
-    private fun fadeInAnimation(view: View) {
-        ObjectAnimator.ofFloat(view, "alpha", 0.0f, 1.0f).apply {
-            duration = 500
-        }.start()
-    }
-
-    private fun fadeOutAnimation(view: View) {
-        ObjectAnimator.ofFloat(view, "alpha",  0.0f).apply {
-            duration = 500
-        }.start()
-    }
-
 
     private fun changeVisibility(type: InputType, manualView: View, autoView: View) {
         if (type == InputType.AUTO) {
