@@ -8,7 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.coffeememos.R
-import com.example.coffeememos.SortItem
+import com.example.coffeememos.search.SortItem
 
 class SortAdapter (private val context: Context, private val data: List<SortItem>) : BaseAdapter() {
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

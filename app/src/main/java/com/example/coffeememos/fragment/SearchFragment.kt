@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.coffeememos.R
-import com.example.coffeememos.SearchKeyWord
-import com.example.coffeememos.SearchType
+import com.example.coffeememos.search.SearchKeyWord
+import com.example.coffeememos.search.SearchType
 import com.example.coffeememos.adapter.SearchViewPagerAdapter
-import com.example.coffeememos.databinding.FragmentHomeRecipeBinding
 import com.example.coffeememos.databinding.FragmentSearchBinding
 import com.example.coffeememos.viewModel.MainSearchViewModel
 import com.google.android.material.tabs.TabLayoutMediator

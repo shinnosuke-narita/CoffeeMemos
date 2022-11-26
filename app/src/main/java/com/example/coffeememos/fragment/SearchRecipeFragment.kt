@@ -82,9 +82,20 @@ class SearchRecipeFragment : Fragment() {
         binding.sortBtn.setOnClickListener { view ->
             viewModel.changeBottomSheetState()
 
+            // TODO SortFragment 初期化時の値を変更する！
             childFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_bottom,R.anim.go_down,R.anim.enter_from_bottom, R.anim.go_down)
                 .replace(R.id.bottomSheet, SortFragment.create(0))
+                .addToBackStack(null)
+                .commit()
+        }
+
+        binding.refineBtn.setOnClickListener { view ->
+            viewModel.changeBottomSheetState()
+
+            childFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_from_bottom,R.anim.go_down,R.anim.enter_from_bottom, R.anim.go_down)
+                .replace(R.id.bottomSheet, FilterFragment())
                 .addToBackStack(null)
                 .commit()
         }

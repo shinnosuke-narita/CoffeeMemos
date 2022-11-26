@@ -5,14 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.example.coffeememos.SortType
+import com.example.coffeememos.search.SortType
 import com.example.coffeememos.adapter.SortAdapter
 import com.example.coffeememos.databinding.FragmentSortBinding
-import com.example.coffeememos.viewModel.MainSearchViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
 import com.example.coffeememos.viewModel.SortViewModel
 

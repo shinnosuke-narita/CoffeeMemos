@@ -3,7 +3,7 @@ package com.example.coffeememos.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.coffeememos.SearchKeyWord
+import com.example.coffeememos.search.SearchKeyWord
 
 class MainSearchViewModel : ViewModel() {
     // 検索キーワード

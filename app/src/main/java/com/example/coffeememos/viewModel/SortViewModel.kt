@@ -1,11 +1,8 @@
 package com.example.coffeememos.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.coffeememos.SearchType
-import com.example.coffeememos.SortItem
-import com.example.coffeememos.SortType
+import com.example.coffeememos.search.SortItem
+import com.example.coffeememos.search.SortType
 
 class SortViewModel : ViewModel() {
     // listview data

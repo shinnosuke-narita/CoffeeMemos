@@ -1,4 +1,4 @@
-package com.example.coffeememos
+package com.example.coffeememos.search
 
 enum class SortType {
     NEW        { override fun getSortName(): String = "新しい順"},

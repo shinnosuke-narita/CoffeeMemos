@@ -9,11 +9,11 @@ import com.example.coffeememos.dao.TasteDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
-import com.example.coffeememos.utilities.DateUtil
+import com.example.coffeememos.search.SearchKeyWord
+import com.example.coffeememos.search.SearchType
+import com.example.coffeememos.search.SortType
 import com.example.coffeememos.utilities.ViewUtil
-import com.github.mikephil.charting.utils.Utils.init
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val tasteDao: TasteDao) : ViewModel() {
@@ -135,9 +135,9 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
         val currentSearchResult = _searchResult.value!!
 
         val sortedResult: List<CustomRecipe> = when(sortType) {
-            SortType.OLD        -> currentSearchResult.sortedBy {recipe -> recipe.recipeId}
+            SortType.OLD        -> currentSearchResult.sortedBy { recipe -> recipe.recipeId}
             SortType.NEW        -> currentSearchResult.sortedByDescending { recipe -> recipe.recipeId }
-            SortType.ROAST      -> currentSearchResult.sortedByDescending {recipe -> recipe.roast}
+            SortType.ROAST      -> currentSearchResult.sortedByDescending { recipe -> recipe.roast}
             SortType.GRIND_SIZE -> currentSearchResult.sortedByDescending { recipe -> recipe.grindSize }
             SortType.RATING     -> currentSearchResult.sortedByDescending { recipe -> recipe.rating }
             SortType.SOUR       -> currentSearchResult.sortedByDescending { recipe -> recipe.sour }
