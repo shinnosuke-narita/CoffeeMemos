@@ -1,12 +1,16 @@
 package com.example.coffeememos.fragment
 
+import android.animation.ValueAnimator
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import android.view.ViewTreeObserver
+import androidx.core.animation.addListener
+import androidx.core.animation.doOnEnd
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentFilterBinding
@@ -22,6 +26,9 @@ class FilterFragment : Fragment() {
     private val viewModel: FilterViewModel by viewModels()
 
     private lateinit var wrapperList: List<ViewGroup>
+
+    private lateinit var containerView: View
+    var flag = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,138 +54,185 @@ class FilterFragment : Fragment() {
             binding.richWrapper
         )
 
-        viewModel.makeMenuInfoList(wrapperList)
         return binding.root
     }
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        // 隠れたメニューの高さ取得
-//        binding.countryContainer.root.post {
-//            viewModel.inputTextContainerHeight = binding.countryContainer.root.height.toFloat()
-//        }
-//        // 隠れたメニューの高さ取得
-//        binding.ratingContainer.root.post {
-//            viewModel.radioGroupContainerHeight = binding.ratingContainer.root.height.toFloat()
-//        }
-
-
         viewModel.countryMenuState.observe(viewLifecycleOwner) { state ->
             if (state == null) return@observe
 
-
-            if (state == MenuState.OPEN) {
-                val containerView = layoutInflater.inflate(R.layout.filter_edit_text_layout, binding.countryContainer)
-
-                containerView.findViewById<EditText>(R.id.countryEditText).setOnClickListener {
-                    Log.d("testtest", "Hello World")
-                }
-            } else {
-                binding.countryContainer.removeAllViews()
-            }
-
-
-
-//            val clickedIndex: Int = wrapperList.indexOf(binding.countryWrapper)
-//
-//            if (state == MenuState.OPEN) {
-//                for ((index, targetView) in wrapperList.withIndex()) {
-//                    if (index <= clickedIndex) continue
-//
-////                    AnimUtil.fadeInAnimation(binding.countryContainer.root, 500L)
-////                    AnimUtil.translateYAnimation(
-////                        targetView,
-////                        300L,
-////                        0f,
-////                        viewModel.inputTextContainerHeight
-////                    )
-//                }
-//                viewModel.updateMenuInfoList(binding.countryWrapper.id, MenuState.OPEN)
-//            } else {
-//                for ((index, targetView) in wrapperList.withIndex()) {
-//                    if (index <= clickedIndex) continue
-//
-////                    AnimUtil.fadeOutAnimation(binding.countryContainer.root, 100L)
-////                    AnimUtil.translateYAnimation(
-////                        targetView,
-////                        300L,
-////                        viewModel.inputTextContainerHeight,
-////                        0f
-////                    )
-//                }
-//                viewModel.updateMenuInfoList(binding.countryWrapper.id, MenuState.CLOSE)
-//            }
+            if (state == MenuState.OPEN) expandMenu(R.layout.filter_edit_text_layout, binding.countryContainer)
+            else collapseMenu(binding.countryContainer)
         }
 
         viewModel.toolMenuState.observe(viewLifecycleOwner) { state ->
             if (state == null) return@observe
 
-            val clickedIndex: Int = wrapperList.indexOf(binding.toolWrapper)
+            if (state == MenuState.OPEN) expandMenu(R.layout.filter_edit_text_layout, binding.toolContainer)
+            else collapseMenu(binding.toolContainer)
+        }
 
-            val openContainerHeight = viewModel.calculateOpenContainerHeight(clickedIndex)
-            val toolContainerHeight = viewModel.inputTextContainerHeight
+        viewModel.ratingMenuState.observe(viewLifecycleOwner) { state ->
+            if (state == null) return@observe
 
-            if (state == MenuState.OPEN) {
-                for ((index, targetView) in wrapperList.withIndex()) {
-                    if (index <= clickedIndex) continue
+            if (state == MenuState.OPEN) expandMenu(R.layout.filter_radio_button_layout, binding.ratingContainer)
+            else collapseMenu(binding.ratingContainer)
+        }
 
-                    AnimUtil.fadeInAnimation(binding.toolContainer.root, 500L)
-                    AnimUtil.translateYAnimation(binding.toolContainer.root, 300L, 0f, openContainerHeight)
-                    AnimUtil.translateYAnimation(
-                        targetView,
-                        300L,
-                        openContainerHeight,
-                        openContainerHeight + toolContainerHeight
-                    )
+        viewModel.sourMenuState.observe(viewLifecycleOwner) { state ->
+            if (state == null) return@observe
 
+            if (state == MenuState.OPEN) expandMenu(R.layout.filter_radio_button_layout, binding.sourContainer)
+            else collapseMenu(binding.sourContainer)
+        }
 
-                }
-            } else {
-                for ((index, targetView) in wrapperList.withIndex()) {
-                    if (index <= clickedIndex) continue
+        viewModel.bitterMenuState.observe(viewLifecycleOwner) { state ->
+            if (state == null) return@observe
 
-                    AnimUtil.fadeOutAnimation(binding.toolContainer.root, 100L)
-                    AnimUtil.translateYAnimation(
-                        targetView,
-                        300L,
-                        openContainerHeight + toolContainerHeight,
-                        openContainerHeight
-                    )
-                }
-            }
+            if (state == MenuState.OPEN) expandMenu(R.layout.filter_radio_button_layout, binding.bitterContainer)
+            else collapseMenu(binding.bitterContainer)
+        }
+
+        viewModel.sweetMenuState.observe(viewLifecycleOwner) { state ->
+            if (state == null) return@observe
+
+            if (state == MenuState.OPEN) expandMenu(R.layout.filter_radio_button_layout, binding.sweetContainer)
+            else collapseMenu(binding.sweetContainer)
+        }
+
+        viewModel.flavorMenuState.observe(viewLifecycleOwner) { state ->
+            if (state == null) return@observe
+
+            if (state == MenuState.OPEN) expandMenu(R.layout.filter_radio_button_layout, binding.flavorContainer)
+            else collapseMenu(binding.flavorContainer)
+        }
+
+        viewModel.richMenuState.observe(viewLifecycleOwner) { state ->
+            if (state == null) return@observe
+
+            if (state == MenuState.OPEN) expandMenu(R.layout.filter_radio_button_layout, binding.richContainer)
+            else collapseMenu(binding.richContainer)
         }
 
 
 
 
         binding.countryWrapper.setOnClickListener {
-            val currentMenuState: MenuState = viewModel.countryMenuState.value ?: MenuState.CLOSE
+            val currentState = viewModel.countryMenuState.value ?: MenuState.CLOSE
 
-            if (currentMenuState == MenuState.OPEN) {
-                viewModel.setCountryState(MenuState.CLOSE)
-            } else {
-                viewModel.setCountryState(MenuState.OPEN)
-            }
+            if (currentState == MenuState.OPEN) viewModel.setCountryState(MenuState.CLOSE)
+            else viewModel.setCountryState(MenuState.OPEN)
 
-
-
-
+            viewModel.updateMenuState(binding.countryContainer, requireActivity())
         }
 
         binding.toolWrapper.setOnClickListener {
-            val currentMenuState: MenuState = viewModel.toolMenuState.value ?: MenuState.CLOSE
+            val currentState = viewModel.toolMenuState.value ?: MenuState.CLOSE
 
-            if (currentMenuState == MenuState.OPEN) {
-                viewModel.setToolState(MenuState.CLOSE)
-            } else {
-                viewModel.setToolState(MenuState.OPEN)
-            }
+            if (currentState == MenuState.OPEN) viewModel.setToolState(MenuState.CLOSE)
+            else viewModel.setToolState(MenuState.OPEN)
+
+            viewModel.updateMenuState(binding.toolContainer, requireActivity())
+        }
+
+        binding.ratingWrapper.setOnClickListener {
+            val currentState = viewModel.ratingMenuState.value ?: MenuState.CLOSE
+
+            if (currentState == MenuState.OPEN) viewModel.setRatingState(MenuState.CLOSE)
+            else viewModel.setRatingState(MenuState.OPEN)
+
+            viewModel.updateMenuState(binding.ratingContainer, requireActivity())
+        }
+
+        binding.sourWrapper.setOnClickListener {
+            val currentState = viewModel.sourMenuState.value ?: MenuState.CLOSE
+
+            if (currentState == MenuState.OPEN) viewModel.setSourState(MenuState.CLOSE)
+            else viewModel.setSourState(MenuState.OPEN)
+
+            viewModel.updateMenuState(binding.sourContainer, requireActivity())
+        }
+
+        binding.bitterWrapper.setOnClickListener {
+            val currentState = viewModel.bitterMenuState.value ?: MenuState.CLOSE
+
+            if (currentState == MenuState.OPEN) viewModel.setBitterState(MenuState.CLOSE)
+            else viewModel.setBitterState(MenuState.OPEN)
+
+            viewModel.updateMenuState(binding.bitterContainer, requireActivity())
+        }
+
+        binding.sweetWrapper.setOnClickListener {
+            val currentState = viewModel.sweetMenuState.value ?: MenuState.CLOSE
+
+            if (currentState == MenuState.OPEN) viewModel.setSweetState(MenuState.CLOSE)
+            else viewModel.setSweetState(MenuState.OPEN)
+
+            viewModel.updateMenuState(binding.sweetContainer, requireActivity())
+        }
+
+        binding.flavorWrapper.setOnClickListener {
+            val currentState = viewModel.flavorMenuState.value ?: MenuState.CLOSE
+
+            if (currentState == MenuState.OPEN) viewModel.setFlavorState(MenuState.CLOSE)
+            else viewModel.setFlavorState(MenuState.OPEN)
+
+            viewModel.updateMenuState(binding.flavorContainer, requireActivity())
+        }
+
+        binding.richWrapper.setOnClickListener {
+            val currentState = viewModel.richMenuState.value ?: MenuState.CLOSE
+
+            if (currentState == MenuState.OPEN) viewModel.setRichState(MenuState.CLOSE)
+            else viewModel.setRichState(MenuState.OPEN)
+
+            viewModel.updateMenuState(binding.richContainer, requireActivity())
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun expandMenu(resId: Int, parentView: ViewGroup) {
+        val containerView = layoutInflater.inflate(resId, null)
+
+        // viewの大きさを計測
+        containerView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+        val containerHeight: Int = containerView.measuredHeight
+
+        parentView.addView(containerView)
+        containerView.layoutParams.height = 1
+
+        ValueAnimator.ofInt(0, containerHeight).apply {
+            duration = 300
+            addUpdateListener {
+                parentView.getChildAt(0).layoutParams.height = it.animatedValue as Int
+                parentView.getChildAt(0).requestLayout()
+            }
+            start()
+        }
+    }
+
+    private fun collapseMenu(parentView: ViewGroup) {
+        ValueAnimator.ofInt(parentView.height, 0).apply {
+            duration = 300
+            addUpdateListener {
+                parentView.getChildAt(0).layoutParams.height = it.animatedValue as Int
+                parentView.getChildAt(0).requestLayout()
+            }
+            addListener {
+                doOnEnd {
+                    parentView.removeAllViews()
+                }
+            }
+            start()
+        }
     }
 }

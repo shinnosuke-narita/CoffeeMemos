@@ -60,7 +60,7 @@
     <string name="review">評価</string>
 
 
-    <!-- ボタン関連  -->
+    <!-- メッセージ関連  -->
     <string name="prompt">選択してください</string>
     <string name="cancel">キャンセル</string>
     <string name="save">保存</string>

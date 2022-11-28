@@ -41,7 +41,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/roastWrapper"
@@ -106,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:tag="editText"
+                android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/roastWrapper"
                 app:layout_constraintStart_toStartOf="@+id/roastWrapper"
                 app:layout_constraintTop_toBottomOf="@+id/grindSizeWrapper">
@@ -136,16 +138,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:animateLayoutChanges="true"
+                android:elevation="5dp"
+                android:tag="@string/country"
                 app:layout_constraintTop_toBottomOf="@id/countryWrapper" />
-
-
-<!--            <include-->
-<!--                android:id="@+id/countryContainer"-->
-<!--                layout="@layout/filter_edit_text_layout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/countryWrapper" />-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/toolWrapper"
@@ -177,12 +172,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/toolTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <include
+            <LinearLayout
                 android:id="@+id/toolContainer"
-                layout="@layout/filter_edit_text_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/toolWrapper" />
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:tag="@string/tool"
+                app:layout_constraintTop_toBottomOf="@id/toolWrapper" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ratingWrapper"
@@ -192,7 +188,7 @@
                 android:tag="radioGroup"
                 app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
                 app:layout_constraintStart_toStartOf="@+id/countryWrapper"
-                app:layout_constraintTop_toBottomOf="@+id/toolWrapper">
+                app:layout_constraintTop_toBottomOf="@+id/toolContainer">
 
                 <TextView
                     android:id="@+id/ratingTitle"
@@ -214,12 +210,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/ratingTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <include
+            <LinearLayout
                 android:id="@+id/ratingContainer"
-                layout="@layout/filter_radio_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/ratingWrapper" />
+                android:orientation="vertical"
+                android:tag="@string/review"
+                app:layout_constraintTop_toBottomOf="@id/ratingWrapper" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/sourWrapper"
@@ -229,7 +226,7 @@
                 android:tag="radioGroup"
                 app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
                 app:layout_constraintStart_toStartOf="@+id/countryWrapper"
-                app:layout_constraintTop_toBottomOf="@+id/ratingWrapper">
+                app:layout_constraintTop_toBottomOf="@+id/ratingContainer">
 
                 <TextView
                     android:id="@+id/sourTitle"
@@ -251,12 +248,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/sourTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <include
+            <LinearLayout
                 android:id="@+id/sourContainer"
-                layout="@layout/filter_radio_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/sourWrapper" />
+                android:orientation="vertical"
+                android:tag="@string/sour"
+                app:layout_constraintTop_toBottomOf="@id/sourWrapper" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bitterWrapper"
@@ -266,7 +264,7 @@
                 android:tag="radioGroup"
                 app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
                 app:layout_constraintStart_toStartOf="@+id/countryWrapper"
-                app:layout_constraintTop_toBottomOf="@+id/sourWrapper">
+                app:layout_constraintTop_toBottomOf="@+id/sourContainer">
 
                 <TextView
                     android:id="@+id/bitterTitle"
@@ -288,12 +286,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/bitterTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <include
+            <LinearLayout
                 android:id="@+id/bitterContainer"
-                layout="@layout/filter_radio_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/bitterWrapper" />
+                android:orientation="vertical"
+                android:tag="@string/bitter"
+                app:layout_constraintTop_toBottomOf="@id/bitterWrapper" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/sweetWrapper"
@@ -303,7 +302,7 @@
                 android:tag="radioGroup"
                 app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
                 app:layout_constraintStart_toStartOf="@+id/countryWrapper"
-                app:layout_constraintTop_toBottomOf="@+id/bitterWrapper">
+                app:layout_constraintTop_toBottomOf="@+id/bitterContainer">
 
                 <TextView
                     android:id="@+id/sweetTitle"
@@ -325,12 +324,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/sweetTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <include
+            <LinearLayout
                 android:id="@+id/sweetContainer"
-                layout="@layout/filter_radio_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/sweetWrapper" />
+                android:orientation="vertical"
+                android:tag="@string/sweet"
+                app:layout_constraintTop_toBottomOf="@id/sweetWrapper" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/flavorWrapper"
@@ -340,7 +340,7 @@
                 android:tag="radioGroup"
                 app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
                 app:layout_constraintStart_toStartOf="@+id/countryWrapper"
-                app:layout_constraintTop_toBottomOf="@+id/sweetWrapper">
+                app:layout_constraintTop_toBottomOf="@+id/sweetContainer">
 
                 <TextView
                     android:id="@+id/flavorTitle"
@@ -362,12 +362,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/flavorTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <include
+            <LinearLayout
                 android:id="@+id/flavorContainer"
-                layout="@layout/filter_radio_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/flavorWrapper" />
+                android:orientation="vertical"
+                android:tag="@string/flavor"
+                app:layout_constraintTop_toBottomOf="@id/flavorWrapper" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/richWrapper"
@@ -377,7 +378,7 @@
                 android:tag="radioGroup"
                 app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
                 app:layout_constraintStart_toStartOf="@+id/countryWrapper"
-                app:layout_constraintTop_toBottomOf="@+id/flavorWrapper">
+                app:layout_constraintTop_toBottomOf="@+id/flavorContainer">
 
                 <TextView
                     android:id="@+id/richTitle"
@@ -399,12 +400,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/richTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <include
+            <LinearLayout
                 android:id="@+id/richContainer"
-                layout="@layout/filter_radio_button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/richWrapper" />
+                android:orientation="vertical"
+                android:tag="@string/rich"
+                app:layout_constraintTop_toBottomOf="@id/richWrapper" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
