@@ -1,6 +1,5 @@
 package com.example.coffeememos.viewModel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
@@ -9,7 +8,7 @@ import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.state.InputType
-import com.example.coffeememos.state.NewRecipeMenuState
+import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.state.ProcessState
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.Util
@@ -96,10 +95,10 @@ class NewRecipeViewModel(
 
 
     // menuの状態管理
-    private var _isMenuOpened: MutableLiveData<NewRecipeMenuState> = MutableLiveData(NewRecipeMenuState.MENU_CLOSED)
-    val isMenuOpened: LiveData<NewRecipeMenuState> = _isMenuOpened
+    private var _isMenuOpened: MutableLiveData<MenuState> = MutableLiveData(MenuState.CLOSE)
+    val isMenuOpened: LiveData<MenuState> = _isMenuOpened
 
-    fun setMenuOpenedFlag(menuState: NewRecipeMenuState) {
+    fun setMenuOpenedFlag(menuState: MenuState) {
         _isMenuOpened.value = menuState
     }
 

@@ -18,5 +18,12 @@ class AnimUtil {
                 start()
             }
         }
+
+        fun translateYAnimation(view: View, duration: Long, startPos: Float, endPos: Float) {
+            ObjectAnimator.ofFloat(view, "translationY", startPos, endPos).apply {
+                this.duration = duration
+                start()
+            }
+        }
     }
 }

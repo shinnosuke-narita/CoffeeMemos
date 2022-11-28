@@ -1,15 +1,12 @@
 package com.example.coffeememos.fragment
 
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Bundle
-import android.renderscript.ScriptGroup
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.*
 import androidx.navigation.Navigation
@@ -24,7 +21,7 @@ import com.example.coffeememos.dialog.ListDialogFragment
 import com.example.coffeememos.listener.SimpleTextWatcher
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.state.InputType
-import com.example.coffeememos.state.NewRecipeMenuState
+import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.state.ProcessState
 import com.example.coffeememos.utilities.AnimUtil
 import com.example.coffeememos.utilities.DateUtil
@@ -304,14 +301,14 @@ class NewRecipeFragment :
         //fab 監視処理
         viewModel.isMenuOpened.observe(viewLifecycleOwner) { state ->
             when(state) {
-                NewRecipeMenuState.MENU_OPENED -> {
+                MenuState.OPEN -> {
                     binding.wholeShadow.visibility = View.VISIBLE
                     binding.menuBtn.setImageResource(R.drawable.ic_baseline_close_24)
                     enableBtn(binding.timeBtn, binding.saveBtn)
                     AnimUtil.fadeInAnimation(binding.timeBtn, 500L)
                     AnimUtil.fadeInAnimation(binding.saveBtn, 500L)
                 }
-                NewRecipeMenuState.MENU_CLOSED -> {
+                MenuState.CLOSE -> {
                     binding.wholeShadow.visibility = View.GONE
                     binding.menuBtn.setImageResource(R.drawable.ic_baseline_menu_24)
                     disableBtn(binding.timeBtn, binding.saveBtn)
@@ -323,14 +320,14 @@ class NewRecipeFragment :
         // menu クリックリスナー
         binding.menuBtn.setOnClickListener { v ->
             when(viewModel.isMenuOpened.value) {
-                NewRecipeMenuState.MENU_OPENED -> viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
-                NewRecipeMenuState.MENU_CLOSED -> viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_OPENED)
-                else -> viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
+                MenuState.OPEN -> viewModel.setMenuOpenedFlag(MenuState.CLOSE)
+                MenuState.CLOSE -> viewModel.setMenuOpenedFlag(MenuState.OPEN)
+                else -> viewModel.setMenuOpenedFlag(MenuState.CLOSE)
             }
         }
         // 計測画面に遷移
         binding.timeBtn.setOnClickListener { view ->
-            viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
+            viewModel.setMenuOpenedFlag(MenuState.CLOSE)
             
             val showTimerAction = NewRecipeFragmentDirections.showTimerAction().apply {
                existsNewRecipeFragment = true
@@ -356,7 +353,7 @@ class NewRecipeFragment :
                 return@setOnClickListener
             }
 
-            viewModel.setMenuOpenedFlag(NewRecipeMenuState.MENU_CLOSED)
+            viewModel.setMenuOpenedFlag(MenuState.CLOSE)
             Snackbar.make(binding.snackBarPlace, getString(R.string.bean_required_message), Snackbar.LENGTH_SHORT).apply {
                 mContext?.let {
                     setTextColor(ContextCompat.getColor(it, R.color.delete_color))
