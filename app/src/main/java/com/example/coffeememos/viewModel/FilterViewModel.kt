@@ -12,13 +12,6 @@ import com.example.coffeememos.search.FilterMenuInfo
 import com.example.coffeememos.state.MenuState
 
 class FilterViewModel : ViewModel() {
-    // 隠れているコンテナの高さ(EditText)
-    var inputTextContainerHeight: Float = 0f
-
-    // 隠れているコンテナの高さ(RadioGroup)
-    var radioGroupContainerHeight: Float = 0f
-
-
     private val _countryMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
     val countryMenuState: LiveData<MenuState> = _countryMenuState
 
@@ -76,6 +69,7 @@ class FilterViewModel : ViewModel() {
     }
 
 
+    // 現在開いているメニューのタグを保持する
     private var currentOpenViewTag: String? = null
 
     fun updateMenuState(clickedView: View, context: Activity) {
@@ -102,7 +96,6 @@ class FilterViewModel : ViewModel() {
             currentOpenViewTag = clickedView.tag.toString()
         }
     }
-
 
     private fun isSameAsCurrentOpenedView(clickedView: View): Boolean {
         return clickedView.tag.toString() == currentOpenViewTag

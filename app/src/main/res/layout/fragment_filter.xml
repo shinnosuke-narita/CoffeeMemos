@@ -116,7 +116,6 @@
                     android:id="@+id/countryTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:text="@string/country"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -133,14 +132,48 @@
                     app:layout_constraintBottom_toBottomOf="@+id/countryTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/countryContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:elevation="5dp"
+                android:padding="20dp"
                 android:tag="@string/country"
-                app:layout_constraintTop_toBottomOf="@id/countryWrapper" />
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/countryWrapper" >
+
+                <LinearLayout
+                    android:id="@+id/filterElementContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+                <EditText
+                    android:id="@+id/inputText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/finishIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/filterElementContainer"/>
+
+                <ImageView
+                    android:id="@+id/finishIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_check_24"
+                    app:tint="@color/grey_dark"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/inputText"
+                    app:layout_constraintTop_toTopOf="@+id/inputText"
+                    app:layout_constraintBottom_toBottomOf="@+id/inputText" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/toolWrapper"

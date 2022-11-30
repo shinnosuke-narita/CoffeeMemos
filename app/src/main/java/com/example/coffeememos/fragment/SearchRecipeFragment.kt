@@ -89,7 +89,7 @@ class SearchRecipeFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
-
+        // 絞り込みボタン クリックリスナ―
         binding.refineBtn.setOnClickListener { view ->
             viewModel.changeBottomSheetState()
 

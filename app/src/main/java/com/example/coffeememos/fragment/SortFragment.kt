@@ -69,7 +69,7 @@ class SortFragment : Fragment() {
 
             // sort 処理
             val sortType: SortType = viewModel.getSelectedSortType()
-            searchRecipeViewModel.sortSearchResult(sortType)
+            searchRecipeViewModel.sortSearchResult(sortType, searchRecipeViewModel.searchResult.value!!)
 
             parentFragmentManager.popBackStack()
         }

@@ -9,6 +9,7 @@ import com.example.coffeememos.dao.TasteDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
+import com.example.coffeememos.manager.SearchFilterManager
 import com.example.coffeememos.search.SearchKeyWord
 import com.example.coffeememos.search.SearchType
 import com.example.coffeememos.search.SortType
@@ -92,6 +93,9 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
     val currentSortType: LiveData<SortType> = _currentSortType
 
 
+    // filter 管理
+    val filterManager: SearchFilterManager = SearchFilterManager()
+
     // BottomSheet 状態監視
     private val _isOpened: MutableLiveData<Boolean> = MutableLiveData(false)
     val isOpened: LiveData<Boolean> = _isOpened
@@ -131,9 +135,9 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
     }
 
     // 並び替え処理
-    fun sortSearchResult(sortType: SortType) {
-        val currentSearchResult = _searchResult.value!!
+    fun sortSearchResult(sortType: SortType, currentSearchResult: List<CustomRecipe>) {
 
+        // todo currentSortTypeの更新処理
         val sortedResult: List<CustomRecipe> = when(sortType) {
             SortType.OLD        -> currentSearchResult.sortedBy { recipe -> recipe.recipeId}
             SortType.NEW        -> currentSearchResult.sortedByDescending { recipe -> recipe.recipeId }
@@ -170,9 +174,16 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
 
             } else {
                 // isFavorite 更新
+                // todo 更新処理 上記と同じループ処理とフラグ更新が必要
                 recipeDao.updateFavoriteByRecipeId(recipeId, true)
             }
         }
+    }
+
+    // filter
+    fun filterSearchResult() {
+        val result = filterManager.filerList(_searchResult.value!!)
+        sortSearchResult(_currentSortType.value!!, result)
     }
 
     class SearchRecipeViewModelFactory(

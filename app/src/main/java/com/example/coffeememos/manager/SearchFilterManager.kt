@@ -3,19 +3,19 @@ package com.example.coffeememos.manager
 import com.example.coffeememos.CustomRecipe
 import java.util.*
 
-class SearchFilterManager(private val currentSearchResult: List<CustomRecipe>) {
+class SearchFilterManager() {
     private val filteredRecipeList: MutableList<CustomRecipe> = mutableListOf()
 
-    private val sourValues     : MutableList<Int> = mutableListOf()
-    private val bitterValues   : MutableList<Int> = mutableListOf()
-    private val sweetValues    : MutableList<Int> = mutableListOf()
-    private val flavorValues   : MutableList<Int> = mutableListOf()
-    private val richValues     : MutableList<Int> = mutableListOf()
-    private val grindSizeValues: MutableList<Int> = mutableListOf()
-    private val roastValues    : MutableList<Int> = mutableListOf()
-    private val ratingValues   : MutableList<Int> = mutableListOf()
-    private var inputCountry   : String = ""
-    private var inputTool      : String = ""
+    val sourValues     : MutableList<Int> = mutableListOf()
+    val bitterValues   : MutableList<Int> = mutableListOf()
+    val sweetValues    : MutableList<Int> = mutableListOf()
+    val flavorValues   : MutableList<Int> = mutableListOf()
+    val richValues     : MutableList<Int> = mutableListOf()
+    val grindSizeValues: MutableList<Int> = mutableListOf()
+    val roastValues    : MutableList<Int> = mutableListOf()
+    val ratingValues   : MutableList<Int> = mutableListOf()
+    val countryValues   : MutableList<String> = mutableListOf()
+    val toolValues      : MutableList<String> = mutableListOf()
 
     fun addSourValue(value: Int) {
         sourValues.add(value)
@@ -41,14 +41,19 @@ class SearchFilterManager(private val currentSearchResult: List<CustomRecipe>) {
     fun addRatingValue(value: Int) {
         ratingValues.add(value)
     }
-    fun setCountry(country: String) {
-        inputCountry = country
+    fun addCountryValue(value: String) {
+        countryValues.add(value)
     }
-    fun setTool(tool: String)  {
-        inputTool = tool
+    fun removeCountryValue(value: String) {
+        countryValues.remove(value)
+    }
+    fun addToolValue(value: String)  {
+        toolValues.add(value)
     }
 
-    fun filerList() {
+    fun filerList(currentSearchResult: List<CustomRecipe>): List<CustomRecipe> {
+        filteredRecipeList.clear()
+
         for (recipe in currentSearchResult) {
             if (addRecipeIfPassCheck(recipe, recipe.sour, sourValues)) continue
             if (addRecipeIfPassCheck(recipe, recipe.bitter, bitterValues)) continue
@@ -58,9 +63,11 @@ class SearchFilterManager(private val currentSearchResult: List<CustomRecipe>) {
             if (addRecipeIfPassCheck(recipe, recipe.roast, roastValues)) continue
             if (addRecipeIfPassCheck(recipe, recipe.grindSize, grindSizeValues)) continue
             if (addRecipeIfPassCheck(recipe, recipe.rating, ratingValues)) continue
-            if (addRecipeIfPassCheck(recipe, recipe.country, inputCountry)) continue
-            addRecipeIfPassCheck(recipe, recipe.tool, inputTool)
+            if (addRecipeIfPassCheck(recipe, recipe.country, countryValues)) continue
+            addRecipeIfPassCheck(recipe, recipe.tool, toolValues)
         }
+
+        return filteredRecipeList
     }
 
     // recipeを追加したら、trueを返す
@@ -77,12 +84,14 @@ class SearchFilterManager(private val currentSearchResult: List<CustomRecipe>) {
     }
 
     // recipeを追加したら、trueを返す
-    private fun addRecipeIfPassCheck(recipe: CustomRecipe, recipeValue: String, inputValue: String): Boolean {
-        if (inputValue.isEmpty()) return false
+    private fun addRecipeIfPassCheck(recipe: CustomRecipe, recipeValue: String, selectedValues: List<String>): Boolean {
+        if (selectedValues.isEmpty()) return false
 
-        if (recipeValue == inputValue) {
-            filteredRecipeList.add(recipe)
-            return true
+        for (selectedValue in selectedValues) {
+            if (recipeValue.contains(selectedValue)) {
+                filteredRecipeList.add(recipe)
+                return true
+            }
         }
         return false
     }
