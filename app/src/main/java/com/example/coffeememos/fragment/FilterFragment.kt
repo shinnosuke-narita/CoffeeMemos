@@ -1,31 +1,22 @@
 package com.example.coffeememos.fragment
 
 import android.animation.ValueAnimator
-import android.app.ActionBar
 import android.content.Context
-import android.inputmethodservice.InputMethodService
-import android.media.Image
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.animation.addListener
-import androidx.core.animation.doOnEnd
-import androidx.core.view.children
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentFilterBinding
 import com.example.coffeememos.manager.SearchFilterManager
 import com.example.coffeememos.state.MenuState
-import com.example.coffeememos.utilities.AnimUtil
 import com.example.coffeememos.viewModel.FilterViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
 
@@ -39,7 +30,6 @@ class FilterFragment : Fragment() {
     private val parentViewModel: SearchRecipeViewModel by viewModels({ requireParentFragment() })
 
     private lateinit var filterManager: SearchFilterManager
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,23 +54,29 @@ class FilterFragment : Fragment() {
             if (state == null) return@observe
 
             if (state == MenuState.OPEN) {
-                setUpEditTextContainer()
+                setUpEditTextContainer(binding.countryFilterElements, filterManager.countryValues) {
+                    filterManager.removeCountryValue(it)
+                }
                 expandMenu(binding.countryContainer)
             }
             else {
                 // キーボード非表示
-                val inputMService = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMService.hideSoftInputFromWindow(binding.root.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-                collapseMenu(binding.countryContainer, binding.filterElementContainer)
+                hideKeyBoard()
+                collapseMenu(binding.countryContainer, binding.countryFilterElements)
             }
         }
         viewModel.toolMenuState.observe(viewLifecycleOwner) { state ->
             if (state == null) return@observe
 
             if (state == MenuState.OPEN) {
-
+                setUpEditTextContainer(binding.toolFilterElements, filterManager.toolValues) {
+                    filterManager.removeToolValue(it)
+                }
+                expandMenu(binding.toolContainer)
             } else {
-
+                // キーボード非表示
+                hideKeyBoard()
+                collapseMenu(binding.toolContainer, binding.toolFilterElements)
             }
         }
 //        viewModel.ratingMenuState.observe(viewLifecycleOwner) { state ->
@@ -190,21 +186,26 @@ class FilterFragment : Fragment() {
             viewModel.updateMenuState(binding.richContainer, requireActivity())
         }
 
-        binding.finishIcon.setOnClickListener {
-            val inputText = binding.inputText.text.toString()
+        binding.countryDoneBtn.setOnClickListener {
+            val inputText = binding.countryInputText.text.toString()
 
-            // 絞り込み要素をinflate
-            val itemView = layoutInflater.inflate(R.layout.filtered_element_text, null)
-            itemView.findViewById<TextView>(R.id.valueText).text = inputText
-            itemView.findViewById<ImageView>(R.id.deleteBtn).setOnClickListener {
-                binding.filterElementContainer.removeView(itemView)
-                filterManager.removeCountryValue(inputText)
+            addFilterElementView(inputText, binding.countryFilterElements, filterManager.countryValues) {
+                filterManager.removeCountryValue(it)
             }
-
-            binding.filterElementContainer.addView(itemView, 0, ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
 
             // filterManagerのデータ更新
             filterManager.addCountryValue(inputText)
+        }
+
+        binding.toolDoneBtn.setOnClickListener {
+            val inputText = binding.toolInputText.text.toString()
+
+            addFilterElementView(inputText, binding.toolFilterElements, filterManager.toolValues) {
+                filterManager.removeToolValue(it)
+            }
+
+            // filterManagerのデータ更新
+            filterManager.addToolValue(inputText)
         }
 
         // 閉じる処理
@@ -219,23 +220,7 @@ class FilterFragment : Fragment() {
         _binding = null
     }
 
-    private fun setUpEditTextContainer() {
-        if (filterManager.countryValues.isNotEmpty()) {
-            for (text in filterManager.countryValues) {
-                val itemView = layoutInflater.inflate(R.layout.filtered_element_text, null)
-                itemView.findViewById<TextView>(R.id.valueText).text = text
-                itemView.findViewById<ImageView>(R.id.deleteBtn).setOnClickListener {
-                    binding.filterElementContainer.removeView(itemView)
-                    filterManager.removeCountryValue(text)
-                }
-
-                binding.filterElementContainer.addView(itemView, 0, ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
-            }
-        }
-    }
-
     private fun expandMenu(containerView: View) {
-
         // viewの大きさを計測
         containerView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
         val containerHeight: Int = containerView.measuredHeight
@@ -244,15 +229,10 @@ class FilterFragment : Fragment() {
         val anim = ValueAnimator.ofInt(0, containerHeight).apply {
             addUpdateListener {
                 val updateValue = it.animatedValue as Int
-
-                if (updateValue == 0) {
-                    containerView.visibility = View.VISIBLE
-                }
-
-                if (updateValue == containerHeight) {
-                    containerView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                } else {
-                    containerView.layoutParams.height = it.animatedValue as Int
+                when (updateValue) {
+                    0               -> containerView.visibility = View.VISIBLE
+                    containerHeight -> containerView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                    else            -> containerView.layoutParams.height = updateValue
                 }
 
                 containerView.requestLayout()
@@ -276,5 +256,83 @@ class FilterFragment : Fragment() {
             }
             start()
         }
+    }
+
+    private fun addFilterElementView(elementTxt: String, filterContainer: ViewGroup, dataList: List<String>, deleteValueProcess: (String) -> Unit) {
+        val itemView = layoutInflater.inflate(R.layout.filtered_element_text, null)
+        itemView.findViewById<TextView>(R.id.valueText).text = elementTxt
+        itemView.findViewById<ImageView>(R.id.deleteBtn).setOnClickListener {
+            deleteValueProcess(elementTxt)
+            remakeView(elementTxt, filterContainer, dataList, deleteValueProcess)
+        }
+
+        // 子ビューのwidthを計算
+        val itemWidth = getWrapContentWidth(itemView)
+
+        if (filterContainer.childCount > 0) {
+            val lastIndex = filterContainer.childCount - 1
+            val linearLayout = filterContainer.getChildAt(lastIndex) as ViewGroup
+
+            var currentTotalChildViewWidth = 0
+            for (index in 0 until linearLayout.childCount) {
+                currentTotalChildViewWidth += getWrapContentWidth(linearLayout.getChildAt(index))
+            }
+
+            val currentMargin = getMatchParentWidth(linearLayout) - currentTotalChildViewWidth
+            if (currentMargin > itemWidth) {
+                linearLayout.addView(itemView)
+            } else {
+                val newLinearLayout = setUpLinearLayout()
+                newLinearLayout.addView(itemView)
+                filterContainer.addView(newLinearLayout)
+            }
+        } else {
+            val newLinearLayout = setUpLinearLayout()
+            newLinearLayout.addView(itemView)
+            filterContainer.addView(newLinearLayout)
+        }
+    }
+
+    private fun setUpEditTextContainer(filterContainer: ViewGroup, dataList: List<String>, deleteValueProcess: (String) -> Unit) {
+        if (dataList.isEmpty()) return
+
+        for (text in dataList) {
+            addFilterElementView(text, filterContainer, dataList, deleteValueProcess)
+        }
+    }
+
+    private fun remakeView(inputText: String, container: ViewGroup, valuesList: List<String>, deleteValueProcess: (String) -> Unit) {
+        container.removeAllViews()
+
+        if (valuesList.isEmpty())  return
+
+        for (text in valuesList) {
+            addFilterElementView(inputText, container, valuesList, deleteValueProcess)
+        }
+    }
+
+
+    private fun getWrapContentWidth(view: View): Int {
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+        return view.measuredWidth
+    }
+
+    private fun getMatchParentWidth(view: View): Int {
+        val parentWidth = (view.parent as View).width
+
+        view.measure(View.MeasureSpec.makeMeasureSpec(parentWidth, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+        return view.measuredWidth
+    }
+
+    private fun hideKeyBoard() {
+        val inputMService = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMService.hideSoftInputFromWindow(binding.root.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+    }
+
+    private fun setUpLinearLayout(): ViewGroup {
+        val newLinearLayout = LinearLayout(requireContext())
+        newLinearLayout.orientation = LinearLayout.HORIZONTAL
+        newLinearLayout.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        return newLinearLayout
     }
 }

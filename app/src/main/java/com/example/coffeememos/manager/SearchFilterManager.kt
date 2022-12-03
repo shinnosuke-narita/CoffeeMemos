@@ -50,6 +50,9 @@ class SearchFilterManager() {
     fun addToolValue(value: String)  {
         toolValues.add(value)
     }
+    fun removeToolValue(value: String) {
+        toolValues.remove(value)
+    }
 
     fun filerList(currentSearchResult: List<CustomRecipe>): List<CustomRecipe> {
         filteredRecipeList.clear()
