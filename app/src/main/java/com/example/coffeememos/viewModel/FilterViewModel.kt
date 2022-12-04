@@ -42,12 +42,34 @@ class FilterViewModel : ViewModel() {
     private val _ratingMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
     val ratingMenuState: LiveData<MenuState> = _ratingMenuState
 
-    fun setRatingState(isOpen: MenuState) {
+    private val _ratingRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
+    val ratingRadioBtnState: LiveData<MutableList<Boolean>> = _ratingRadioBtnState
+
+    val selectedRatingText: LiveData<String> = _ratingRadioBtnState.map { list ->
+        buildSelectedText(list) { index ->  formatValue(index) }
+    }
+
+    fun setRatingRadioBtnState(selectedIndex: Int) {
+        _ratingRadioBtnState.value = updateList(selectedIndex, _ratingRadioBtnState.value!!)
+    }
+
+    fun setRatingMenuState(isOpen: MenuState) {
         _ratingMenuState.value = isOpen
     }
 
     private val _sourMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
     val sourMenuState: LiveData<MenuState> = _sourMenuState
+
+    private val _sourRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
+    val sourRadioBtnState: LiveData<MutableList<Boolean>> = _sourRadioBtnState
+
+    val selectedSourText: LiveData<String> = _sourRadioBtnState.map { list ->
+        buildSelectedText(list) { index ->  formatValue(index) }
+    }
+
+    fun setSourRadioBtnState(selectedIndex: Int) {
+        _sourRadioBtnState.value = updateList(selectedIndex, _sourRadioBtnState.value!!)
+    }
 
     fun setSourState(isOpen: MenuState) {
         _sourMenuState.value = isOpen
@@ -56,12 +78,34 @@ class FilterViewModel : ViewModel() {
     private val _bitterMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
     val bitterMenuState: LiveData<MenuState> = _bitterMenuState
 
+    private val _bitterRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
+    val bitterRadioBtnState: LiveData<MutableList<Boolean>> = _bitterRadioBtnState
+
+    val selectedBitterText: LiveData<String> = _bitterRadioBtnState.map { list ->
+        buildSelectedText(list) { index ->  formatValue(index) }
+    }
+
+    fun setBitterRadioBtnState(selectedIndex: Int) {
+        _bitterRadioBtnState.value = updateList(selectedIndex, _bitterRadioBtnState.value!!)
+    }
+
     fun setBitterState(isOpen: MenuState) {
         _bitterMenuState.value = isOpen
     }
 
     private val _sweetMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
     val sweetMenuState: LiveData<MenuState> = _sweetMenuState
+
+    private val _sweetRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
+    val sweetRadioBtnState: LiveData<MutableList<Boolean>> = _sweetRadioBtnState
+
+    val selectedSweetText: LiveData<String> = _sweetRadioBtnState.map { list ->
+        buildSelectedText(list) { index ->  formatValue(index) }
+    }
+
+    fun setSweetRadioBtnState(selectedIndex: Int) {
+        _sweetRadioBtnState.value = updateList(selectedIndex, _sweetRadioBtnState.value!!)
+    }
 
     fun setSweetState(isOpen: MenuState) {
         _sweetMenuState.value = isOpen
@@ -70,6 +114,17 @@ class FilterViewModel : ViewModel() {
     private val _flavorMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
     val flavorMenuState: LiveData<MenuState> = _flavorMenuState
 
+    private val _flavorRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
+    val flavorRadioBtnState: LiveData<MutableList<Boolean>> = _flavorRadioBtnState
+
+    val selectedFlavorText: LiveData<String> = _flavorRadioBtnState.map { list ->
+        buildSelectedText(list) { index ->  formatValue(index) }
+    }
+
+    fun setFlavorRadioBtnState(selectedIndex: Int) {
+        _flavorRadioBtnState.value = updateList(selectedIndex, _flavorRadioBtnState.value!!)
+    }
+
     fun setFlavorState(isOpen: MenuState) {
         _flavorMenuState.value = isOpen
     }
@@ -77,16 +132,22 @@ class FilterViewModel : ViewModel() {
     private val _richMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
     val richMenuState: LiveData<MenuState> = _richMenuState
 
+    private val _richRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
+    val richRadioBtnState: LiveData<MutableList<Boolean>> = _richRadioBtnState
+
+    val selectedRichText: LiveData<String> = _richRadioBtnState.map { list ->
+        buildSelectedText(list) { index ->  formatValue(index) }
+    }
+
+    fun setRichRadioBtnState(selectedIndex: Int) {
+        _richRadioBtnState.value = updateList(selectedIndex, _richRadioBtnState.value!!)
+    }
+
     fun setRichState(isOpen: MenuState) {
         _richMenuState.value = isOpen
     }
 
-    private val _ratingRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
-    val ratingRadioBtnState: LiveData<MutableList<Boolean>> = _ratingRadioBtnState
-
-    val selectedRatingText: LiveData<String> = _ratingRadioBtnState.map { list ->
-        buildSelectedText(list) { index -> "${index + 1}.0,  " }
-    }
+    private fun formatValue(index: Int): String = "${index + 1}.0,  "
 
     private fun buildSelectedText(list: MutableList<Boolean>, processData: (Int) -> String): String {
         var resultText = ""
@@ -101,10 +162,6 @@ class FilterViewModel : ViewModel() {
         val subStrLastIndex = resultText.lastIndexOf(",")
         resultText = resultText.substring(0, subStrLastIndex)
         return resultText
-    }
-
-    fun setRatingRadioBtnState(selectedIndex: Int) {
-        _ratingRadioBtnState.value = updateList(selectedIndex, _ratingRadioBtnState.value!!)
     }
 
     private val  _roastBtnStateList: MutableLiveData<MutableList<Boolean>> =

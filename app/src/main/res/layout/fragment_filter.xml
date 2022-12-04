@@ -318,10 +318,9 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
-                    android:id="@+id/selectedRatingTxt"
+                    android:id="@+id/selectedRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
                     android:textSize="13sp"
                     android:textColor="@color/grey_dark"
                     android:visibility="gone"
@@ -367,6 +366,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
+                <TextView
+                    android:id="@+id/selectedSour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/grey_dark"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/sourTitle"
+                    app:layout_constraintStart_toStartOf="@+id/sourTitle"/>
+
                 <ImageView
                     android:id="@+id/sourAddIcon"
                     android:layout_width="wrap_content"
@@ -377,13 +386,14 @@
                     app:layout_constraintBottom_toBottomOf="@+id/sourTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <include
+                layout="@layout/filter_radio_button_layout"
                 android:id="@+id/sourContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:visibility="gone"
                 android:tag="@string/sour"
-                app:layout_constraintTop_toBottomOf="@id/sourWrapper" />
+                app:layout_constraintTop_toBottomOf="@+id/sourWrapper" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bitterWrapper"
@@ -405,6 +415,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
+                <TextView
+                    android:id="@+id/selectedBitter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/grey_dark"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/bitterTitle"
+                    app:layout_constraintStart_toStartOf="@+id/bitterTitle"/>
+
                 <ImageView
                     android:id="@+id/bitterAddIcon"
                     android:layout_width="wrap_content"
@@ -415,13 +435,14 @@
                     app:layout_constraintBottom_toBottomOf="@+id/bitterTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <include
+                layout="@layout/filter_radio_button_layout"
                 android:id="@+id/bitterContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:visibility="gone"
                 android:tag="@string/bitter"
-                app:layout_constraintTop_toBottomOf="@id/bitterWrapper" />
+                app:layout_constraintTop_toBottomOf="@+id/bitterWrapper" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/sweetWrapper"
@@ -443,6 +464,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
+                <TextView
+                    android:id="@+id/selectedSweet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/grey_dark"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/sweetTitle"
+                    app:layout_constraintStart_toStartOf="@+id/sweetTitle"/>
+
                 <ImageView
                     android:id="@+id/sweetAddIcon"
                     android:layout_width="wrap_content"
@@ -453,13 +484,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/sweetTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <include
+                layout="@layout/filter_radio_button_layout"
                 android:id="@+id/sweetContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:tag="@string/sweet"
-                app:layout_constraintTop_toBottomOf="@id/sweetWrapper" />
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/sweetWrapper" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/flavorWrapper"
@@ -481,6 +512,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
+                <TextView
+                    android:id="@+id/selectedFlavor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/grey_dark"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/flavorTitle"
+                    app:layout_constraintStart_toStartOf="@+id/flavorTitle"/>
+
                 <ImageView
                     android:id="@+id/flavorAddIcon"
                     android:layout_width="wrap_content"
@@ -491,13 +532,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/flavorTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <include
+                layout="@layout/filter_radio_button_layout"
                 android:id="@+id/flavorContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:tag="@string/flavor"
-                app:layout_constraintTop_toBottomOf="@id/flavorWrapper" />
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/flavorWrapper" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/richWrapper"
@@ -519,6 +560,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
+                <TextView
+                    android:id="@+id/selectedRich"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/grey_dark"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/richTitle"
+                    app:layout_constraintStart_toStartOf="@+id/richTitle"/>
+
                 <ImageView
                     android:id="@+id/richAddIcon"
                     android:layout_width="wrap_content"
@@ -529,13 +580,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/richTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <include
+                layout="@layout/filter_radio_button_layout"
                 android:id="@+id/richContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:tag="@string/rich"
-                app:layout_constraintTop_toBottomOf="@id/richWrapper" />
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/richWrapper" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

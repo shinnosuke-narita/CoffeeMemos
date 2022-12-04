@@ -32,6 +32,11 @@ class FilterFragment : Fragment() {
     private lateinit var filterManager: SearchFilterManager
 
     private lateinit var ratingRadioBtnList: List<ImageView>
+    private lateinit var sourRadioBtnList: List<ImageView>
+    private lateinit var bitterRadioBtnList: List<ImageView>
+    private lateinit var sweetRadioBtnList: List<ImageView>
+    private lateinit var flavorRadioBtnList: List<ImageView>
+    private lateinit var richRadioBtnList: List<ImageView>
     private val roastViewList: MutableList<View> = mutableListOf()
     private val grindSizeViewList: MutableList<View> = mutableListOf()
 
@@ -50,17 +55,59 @@ class FilterFragment : Fragment() {
         _binding = FragmentFilterBinding.inflate(inflater, container, false)
 
         binding.ratingContainer.root.tag = requireActivity().getString(R.string.review)
+        binding.sourContainer.root.tag = requireActivity().getString(R.string.sour)
+        binding.bitterContainer.root.tag = requireActivity().getString(R.string.bitter)
+        binding.sweetContainer.root.tag = requireActivity().getString(R.string.sweet)
+        binding.flavorContainer.root.tag = requireActivity().getString(R.string.flavor)
+        binding.richContainer.root.tag = requireActivity().getString(R.string.rich)
+
         ratingRadioBtnList = listOf(
             binding.ratingContainer.radioBtnFirst,
             binding.ratingContainer.radioBtnSecond,
             binding.ratingContainer.radioBtnThird,
             binding.ratingContainer.radioBtnFourth,
             binding.ratingContainer.radioBtnFifth)
+        sourRadioBtnList = listOf(
+            binding.sourContainer.radioBtnFirst,
+            binding.sourContainer.radioBtnSecond,
+            binding.sourContainer.radioBtnThird,
+            binding.sourContainer.radioBtnFourth,
+            binding.sourContainer.radioBtnFifth
+        )
+        bitterRadioBtnList = listOf(
+            binding.bitterContainer.radioBtnFirst,
+            binding.bitterContainer.radioBtnSecond,
+            binding.bitterContainer.radioBtnThird,
+            binding.bitterContainer.radioBtnFourth,
+            binding.bitterContainer.radioBtnFifth
+        )
+        sweetRadioBtnList = listOf(
+            binding.sweetContainer.radioBtnFirst,
+            binding.sweetContainer.radioBtnSecond,
+            binding.sweetContainer.radioBtnThird,
+            binding.sweetContainer.radioBtnFourth,
+            binding.sweetContainer.radioBtnFifth
+        )
+        flavorRadioBtnList = listOf(
+            binding.flavorContainer.radioBtnFirst,
+            binding.flavorContainer.radioBtnSecond,
+            binding.flavorContainer.radioBtnThird,
+            binding.flavorContainer.radioBtnFourth,
+            binding.flavorContainer.radioBtnFifth
+        )
+        richRadioBtnList = listOf(
+            binding.richContainer.radioBtnFirst,
+            binding.richContainer.radioBtnSecond,
+            binding.richContainer.radioBtnThird,
+            binding.richContainer.radioBtnFourth,
+            binding.richContainer.radioBtnFifth
+        )
+
+
 
         setUpRadioBtnContainer(Constants.roastList, binding.roastContainer, roastViewList) { index ->
             viewModel.setRoastRadioBtnState(index)
         }
-
         setUpRadioBtnContainer(Constants.grindSizeList, binding.grindSizeContainer, grindSizeViewList) { index ->
             viewModel.setGrindSizeRadioBtnState(index)
         }
@@ -137,6 +184,8 @@ class FilterFragment : Fragment() {
                 collapseMenu(binding.countryContainer, binding.countryFilterElements)
             }
         }
+
+
         viewModel.toolMenuState.observe(viewLifecycleOwner) { state ->
             if (state == null) return@observe
 
@@ -151,6 +200,7 @@ class FilterFragment : Fragment() {
                 collapseMenu(binding.toolContainer, binding.toolFilterElements)
             }
         }
+        // 評価 監視処理
         viewModel.ratingMenuState.observe(viewLifecycleOwner) { state ->
             if (state == null) return@observe
 
@@ -160,59 +210,132 @@ class FilterFragment : Fragment() {
                 collapseMenu(binding.ratingContainer.root)
             }
         }
-
         viewModel.ratingRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             for ((i, isClicked) in stateList.withIndex()) {
                 if (isClicked) ratingRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
                 else ratingRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
             }
         }
-
         viewModel.selectedRatingText.observe(viewLifecycleOwner) { text ->
             if (text.isEmpty()) {
-                binding.selectedRatingTxt.visibility = View.GONE
+                binding.selectedRating.visibility = View.GONE
                 return@observe
             }
 
-            binding.selectedRatingTxt.visibility = View.VISIBLE
-            binding.selectedRatingTxt.text = text
+            binding.selectedRating.visibility = View.VISIBLE
+            binding.selectedRating.text = text
         }
+        // 酸味 監視処理
+        viewModel.sourMenuState.observe(viewLifecycleOwner) { state ->
+            if (state == null) return@observe
 
-        for ((i, btn) in ratingRadioBtnList.withIndex()) {
-            btn.setOnClickListener {
-                viewModel.setRatingRadioBtnState(i)
+            if (state == MenuState.OPEN) expandMenu(binding.sourContainer.root)
+            else collapseMenu(binding.sourContainer.root)
+        }
+        viewModel.sourRadioBtnState.observe(viewLifecycleOwner) { stateList ->
+            for ((i, isClicked) in stateList.withIndex()) {
+                if (isClicked) sourRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
+                else sourRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
             }
         }
-//        viewModel.sourMenuState.observe(viewLifecycleOwner) { state ->
-//            if (state == null) return@observe
-//
-//            if (state == MenuState.OPEN) expandMenu(R.layout.filter_radio_button_layout, binding.sourContainer)
-//            else collapseMenu(binding.sourContainer)
-//        }
-//        viewModel.bitterMenuState.observe(viewLifecycleOwner) { state ->
-//            if (state == null) return@observe
-//
-//            if (state == MenuState.OPEN) expandMenu(R.layout.filter_radio_button_layout, binding.bitterContainer)
-//            else collapseMenu(binding.bitterContainer)
-//        }
-//        viewModel.sweetMenuState.observe(viewLifecycleOwner) { state ->
-//            if (state == null) return@observe
-//
-//            if (state == MenuState.OPEN) expandMenu(R.layout.filter_radio_button_layout, binding.sweetContainer)
-//            else collapseMenu(binding.sweetContainer)
-//        }
-//        viewModel.flavorMenuState.observe(viewLifecycleOwner) { state ->
-//            if (state == null) return@observe
-//
-//            if (state == MenuState.OPEN) expandMenu(R.layout.filter_radio_button_layout, binding.flavorContainer)
-//            else collapseMenu(binding.flavorContainer)
-//        }
-//        viewModel.richMenuState.observe(viewLifecycleOwner) { state ->
-//            if (state == null) return@observe
-//
-//            if (state == MenuState.OPEN) expandMenu(R.layout.filter_radio_button_layout, binding.richContainer)
-//            else collapseMenu(binding.richContainer)
-//        }
+        viewModel.selectedSourText.observe(viewLifecycleOwner) { text ->
+            if (text.isEmpty()) {
+                binding.selectedSour.visibility = View.GONE
+                return@observe
+            }
+
+            binding.selectedSour.visibility = View.VISIBLE
+            binding.selectedSour.text = text
+        }
+        // 苦味 監視処理
+        viewModel.bitterMenuState.observe(viewLifecycleOwner) { state ->
+            if (state == null) return@observe
+
+            if (state == MenuState.OPEN) expandMenu(binding.bitterContainer.root)
+            else collapseMenu(binding.bitterContainer.root)
+        }
+        viewModel.bitterRadioBtnState.observe(viewLifecycleOwner) { stateList ->
+            for ((i, isClicked) in stateList.withIndex()) {
+                if (isClicked) bitterRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
+                else bitterRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
+            }
+        }
+        viewModel.selectedBitterText.observe(viewLifecycleOwner) { text ->
+            if (text.isEmpty()) {
+                binding.selectedBitter.visibility = View.GONE
+                return@observe
+            }
+
+            binding.selectedBitter.visibility = View.VISIBLE
+            binding.selectedBitter.text = text
+        }
+        // 甘味 監視処理
+        viewModel.sweetMenuState.observe(viewLifecycleOwner) { state ->
+            if (state == null) return@observe
+
+            if (state == MenuState.OPEN) expandMenu(binding.sweetContainer.root)
+            else collapseMenu(binding.sweetContainer.root)
+        }
+        viewModel.sweetRadioBtnState.observe(viewLifecycleOwner) { stateList ->
+            for ((i, isClicked) in stateList.withIndex()) {
+                if (isClicked) sweetRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
+                else sweetRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
+            }
+        }
+        viewModel.selectedSweetText.observe(viewLifecycleOwner) { text ->
+            if (text.isEmpty()) {
+                binding.selectedSweet.visibility = View.GONE
+                return@observe
+            }
+
+            binding.selectedSweet.visibility = View.VISIBLE
+            binding.selectedSweet.text = text
+        }
+        // 香り 監視処理
+        viewModel.flavorMenuState.observe(viewLifecycleOwner) { state ->
+            if (state == null) return@observe
+
+            if (state == MenuState.OPEN) expandMenu(binding.flavorContainer.root)
+            else collapseMenu(binding.flavorContainer.root)
+        }
+        viewModel.flavorRadioBtnState.observe(viewLifecycleOwner) { stateList ->
+            for ((i, isClicked) in stateList.withIndex()) {
+                if (isClicked) flavorRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
+                else flavorRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
+            }
+        }
+        viewModel.selectedFlavorText.observe(viewLifecycleOwner) { text ->
+            if (text.isEmpty()) {
+                binding.selectedFlavor.visibility = View.GONE
+                return@observe
+            }
+
+            binding.selectedFlavor.visibility = View.VISIBLE
+            binding.selectedFlavor.text = text
+        }
+        // コク 監視処理
+        viewModel.richMenuState.observe(viewLifecycleOwner) { state ->
+            if (state == null) return@observe
+
+            if (state == MenuState.OPEN) expandMenu(binding.richContainer.root)
+            else collapseMenu(binding.richContainer.root)
+        }
+        viewModel.richRadioBtnState.observe(viewLifecycleOwner) { stateList ->
+            for ((i, isClicked) in stateList.withIndex()) {
+                if (isClicked) richRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
+                else richRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
+            }
+        }
+        viewModel.selectedRichText.observe(viewLifecycleOwner) { text ->
+            if (text.isEmpty()) {
+                binding.selectedRich.visibility = View.GONE
+                return@observe
+            }
+
+            binding.selectedRich.visibility = View.VISIBLE
+            binding.selectedRich.text = text
+        }
+
 
         binding.roastWrapper.setOnClickListener {
             val currentState = viewModel.roastMenuState.value ?: MenuState.CLOSE
@@ -252,8 +375,8 @@ class FilterFragment : Fragment() {
         binding.ratingWrapper.setOnClickListener {
             val currentState = viewModel.ratingMenuState.value ?: MenuState.CLOSE
 
-            if (currentState == MenuState.OPEN) viewModel.setRatingState(MenuState.CLOSE)
-            else viewModel.setRatingState(MenuState.OPEN)
+            if (currentState == MenuState.OPEN) viewModel.setRatingMenuState(MenuState.CLOSE)
+            else viewModel.setRatingMenuState(MenuState.OPEN)
 
             viewModel.updateMenuState(binding.ratingContainer.root, requireActivity())
         }
@@ -263,7 +386,7 @@ class FilterFragment : Fragment() {
             if (currentState == MenuState.OPEN) viewModel.setSourState(MenuState.CLOSE)
             else viewModel.setSourState(MenuState.OPEN)
 
-            viewModel.updateMenuState(binding.sourContainer, requireActivity())
+            viewModel.updateMenuState(binding.sourContainer.root, requireActivity())
         }
 
         binding.bitterWrapper.setOnClickListener {
@@ -272,7 +395,7 @@ class FilterFragment : Fragment() {
             if (currentState == MenuState.OPEN) viewModel.setBitterState(MenuState.CLOSE)
             else viewModel.setBitterState(MenuState.OPEN)
 
-            viewModel.updateMenuState(binding.bitterContainer, requireActivity())
+            viewModel.updateMenuState(binding.bitterContainer.root, requireActivity())
         }
 
         binding.sweetWrapper.setOnClickListener {
@@ -281,7 +404,7 @@ class FilterFragment : Fragment() {
             if (currentState == MenuState.OPEN) viewModel.setSweetState(MenuState.CLOSE)
             else viewModel.setSweetState(MenuState.OPEN)
 
-            viewModel.updateMenuState(binding.sweetContainer, requireActivity())
+            viewModel.updateMenuState(binding.sweetContainer.root, requireActivity())
         }
 
         binding.flavorWrapper.setOnClickListener {
@@ -290,7 +413,7 @@ class FilterFragment : Fragment() {
             if (currentState == MenuState.OPEN) viewModel.setFlavorState(MenuState.CLOSE)
             else viewModel.setFlavorState(MenuState.OPEN)
 
-            viewModel.updateMenuState(binding.flavorContainer, requireActivity())
+            viewModel.updateMenuState(binding.flavorContainer.root, requireActivity())
         }
 
         binding.richWrapper.setOnClickListener {
@@ -299,7 +422,39 @@ class FilterFragment : Fragment() {
             if (currentState == MenuState.OPEN) viewModel.setRichState(MenuState.CLOSE)
             else viewModel.setRichState(MenuState.OPEN)
 
-            viewModel.updateMenuState(binding.richContainer, requireActivity())
+            viewModel.updateMenuState(binding.richContainer.root, requireActivity())
+        }
+
+        // ラジオボタン クリックリスナ―
+        for ((i, btn) in ratingRadioBtnList.withIndex()) {
+            btn.setOnClickListener {
+                viewModel.setRatingRadioBtnState(i)
+            }
+        }
+        for ((i, btn) in sourRadioBtnList.withIndex()) {
+            btn.setOnClickListener {
+                viewModel.setSourRadioBtnState(i)
+            }
+        }
+        for ((i, btn) in bitterRadioBtnList.withIndex()) {
+            btn.setOnClickListener {
+                viewModel.setBitterRadioBtnState(i)
+            }
+        }
+        for ((i, btn) in sweetRadioBtnList.withIndex()) {
+            btn.setOnClickListener {
+                viewModel.setSweetRadioBtnState(i)
+            }
+        }
+        for ((i, btn) in flavorRadioBtnList.withIndex()) {
+            btn.setOnClickListener {
+                viewModel.setFlavorRadioBtnState(i)
+            }
+        }
+        for ((i, btn) in richRadioBtnList.withIndex()) {
+            btn.setOnClickListener {
+                viewModel.setRichRadioBtnState(i)
+            }
         }
 
         binding.countryDoneBtn.setOnClickListener {
