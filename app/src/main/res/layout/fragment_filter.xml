@@ -62,6 +62,18 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
+                <TextView
+                    android:id="@+id/selectedRoast"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/roastTitle"
+                    app:layout_constraintStart_toStartOf="@+id/roastTitle"
+                    app:layout_constraintEnd_toStartOf="@+id/roastAddIcon"/>
+
                 <ImageView
                     android:id="@+id/roastAddIcon"
                     android:layout_width="wrap_content"
@@ -72,6 +84,16 @@
                     app:layout_constraintBottom_toBottomOf="@+id/roastTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <LinearLayout
+                android:id="@+id/roastContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:orientation="vertical"
+                android:tag="@string/roast"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/roastWrapper" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/grindSizeWrapper"
                 android:layout_width="0dp"
@@ -79,7 +101,7 @@
                 android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="@+id/countryWrapper"
                 app:layout_constraintStart_toStartOf="@+id/countryWrapper"
-                app:layout_constraintTop_toBottomOf="@+id/roastWrapper">
+                app:layout_constraintTop_toBottomOf="@+id/roastContainer">
 
                 <TextView
                     android:id="@+id/grindSizeTitle"
@@ -91,6 +113,18 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
+                <TextView
+                    android:id="@+id/selectedGrindSize"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/grindSizeTitle"
+                    app:layout_constraintStart_toStartOf="@+id/grindSizeTitle"
+                    app:layout_constraintEnd_toStartOf="@+id/grindSizeAddIcon"/>
+
                 <ImageView
                     android:id="@+id/grindSizeAddIcon"
                     android:layout_width="wrap_content"
@@ -101,6 +135,16 @@
                     app:layout_constraintBottom_toBottomOf="@+id/grindSizeTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <LinearLayout
+                android:id="@+id/grindSizeContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:tag="@string/grind_size"
+                app:layout_constraintTop_toBottomOf="@+id/grindSizeWrapper" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/countryWrapper"
                 android:layout_width="0dp"
@@ -110,7 +154,7 @@
                 android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/roastWrapper"
                 app:layout_constraintStart_toStartOf="@+id/roastWrapper"
-                app:layout_constraintTop_toBottomOf="@+id/grindSizeWrapper">
+                app:layout_constraintTop_toBottomOf="@+id/grindSizeContainer">
 
                 <TextView
                     android:id="@+id/countryTitle"
@@ -273,6 +317,17 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
+                <TextView
+                    android:id="@+id/selectedRatingTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="13sp"
+                    android:textColor="@color/grey_dark"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/ratingTitle"
+                    app:layout_constraintStart_toStartOf="@+id/ratingTitle"/>
+
                 <ImageView
                     android:id="@+id/ratingAddIcon"
                     android:layout_width="wrap_content"
@@ -283,13 +338,14 @@
                     app:layout_constraintBottom_toBottomOf="@+id/ratingTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <include
+                layout="@layout/filter_radio_button_layout"
                 android:id="@+id/ratingContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:visibility="gone"
                 android:tag="@string/review"
-                app:layout_constraintTop_toBottomOf="@id/ratingWrapper" />
+                app:layout_constraintTop_toBottomOf="@+id/ratingWrapper" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/sourWrapper"

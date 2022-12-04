@@ -6,60 +6,108 @@
     android:layout_height="wrap_content"
     android:padding="20dp">
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RadioButton
-            android:id="@+id/radioBtnFirst"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1.0"
-            android:enabled="false"
-            android:textColor="@color/black" />
-
-        <RadioButton
-            android:id="@+id/radioBtnSecond"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2.0"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black" />
-
-        <RadioButton
-            android:id="@+id/radioBtnThird"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3.0"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black" />
-
-        <RadioButton
-            android:id="@+id/radioBtnFourth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4.0"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black" />
-
-        <RadioButton
-            android:id="@+id/radioBtnFifth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5.0"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black" />
-    </RadioGroup>
-
     <ImageView
-        android:id="@+id/finishIcon"
+        android:id="@+id/radioBtnFirst"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_baseline_radio_button_unchecked_24"
+        app:tint="@color/grey_dark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/valueFist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_check_24"
+        android:text="1.0"
+        android:textSize="14sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/radioBtnFirst"
+        app:layout_constraintStart_toEndOf="@+id/radioBtnFirst"
+        app:layout_constraintTop_toTopOf="@+id/radioBtnFirst" />
+
+    <ImageView
+        android:id="@+id/radioBtnSecond"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/ic_baseline_radio_button_unchecked_24"
         app:tint="@color/grey_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/valueFist" />
+
+    <TextView
+        android:id="@+id/valueSecond"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2.0"
+        android:textSize="14sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/radioBtnSecond"
+        app:layout_constraintStart_toEndOf="@+id/radioBtnSecond"
+        app:layout_constraintTop_toTopOf="@+id/radioBtnSecond" />
+
+    <ImageView
+        android:id="@+id/radioBtnThird"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/ic_baseline_radio_button_unchecked_24"
+        app:tint="@color/grey_dark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/valueSecond" />
+
+    <TextView
+        android:id="@+id/valueThird"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3.0"
+        android:textSize="14sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/radioBtnThird"
+        app:layout_constraintStart_toEndOf="@+id/radioBtnThird"
+        app:layout_constraintTop_toTopOf="@+id/radioBtnThird" />
+
+
+    <ImageView
+        android:id="@+id/radioBtnFourth"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/ic_baseline_radio_button_unchecked_24"
+        app:tint="@color/grey_dark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/valueThird" />
+
+    <TextView
+        android:id="@+id/valueFourth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4.0"
+        android:textSize="14sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/radioBtnFourth"
+        app:layout_constraintStart_toEndOf="@+id/radioBtnFourth"
+        app:layout_constraintTop_toTopOf="@+id/radioBtnFourth" />
+
+    <ImageView
+        android:id="@+id/radioBtnFifth"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/ic_baseline_radio_button_unchecked_24"
+        app:tint="@color/grey_dark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/valueFourth" />
+
+    <TextView
+        android:id="@+id/valueFifth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5.0"
+        android:textSize="14sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/radioBtnFifth"
+        app:layout_constraintStart_toEndOf="@+id/radioBtnFifth"
+        app:layout_constraintTop_toTopOf="@+id/radioBtnFifth" />
 </androidx.constraintlayout.widget.ConstraintLayout>
