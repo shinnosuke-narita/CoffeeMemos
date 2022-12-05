@@ -126,13 +126,7 @@ class FilterFragment : Fragment() {
         }
 
         viewModel.selectedRoastText.observe(viewLifecycleOwner) { selectedText ->
-            if (selectedText.isEmpty()) {
-                binding.selectedRoast.visibility = View.GONE
-                return@observe
-            }
-
-            binding.selectedRoast.visibility = View.VISIBLE
-            binding.selectedRoast.text = selectedText
+            updateFilteringView(selectedText, binding.selectedRoast)
         }
 
         viewModel.roastMenuState.observe(viewLifecycleOwner) { state ->
@@ -151,13 +145,7 @@ class FilterFragment : Fragment() {
         }
 
         viewModel.selectedGrindSizeText.observe(viewLifecycleOwner) { selectedText ->
-            if (selectedText.isEmpty()) {
-                binding.selectedGrindSize.visibility = View.GONE
-                return@observe
-            }
-
-            binding.selectedGrindSize.visibility = View.VISIBLE
-            binding.selectedGrindSize.text = selectedText
+            updateFilteringView(selectedText, binding.selectedGrindSize)
         }
 
         viewModel.grindSizeMenuState.observe(viewLifecycleOwner) { state ->
@@ -184,13 +172,7 @@ class FilterFragment : Fragment() {
             }
         }
         viewModel.inputCountriesText.observe(viewLifecycleOwner) { text ->
-            if (text.isEmpty()) {
-                binding.inputCountries.visibility = View.GONE
-                return@observe
-            }
-
-            binding.inputCountries.visibility = View.VISIBLE
-            binding.inputCountries.text = text
+            updateFilteringView(text, binding.inputCountries)
         }
 
         // 抽出器具 監視処理
@@ -236,13 +218,7 @@ class FilterFragment : Fragment() {
             }
         }
         viewModel.selectedRatingText.observe(viewLifecycleOwner) { text ->
-            if (text.isEmpty()) {
-                binding.selectedRating.visibility = View.GONE
-                return@observe
-            }
-
-            binding.selectedRating.visibility = View.VISIBLE
-            binding.selectedRating.text = text
+            updateFilteringView(text, binding.selectedRating)
         }
 
         // 酸味 監視処理
@@ -259,13 +235,7 @@ class FilterFragment : Fragment() {
             }
         }
         viewModel.selectedSourText.observe(viewLifecycleOwner) { text ->
-            if (text.isEmpty()) {
-                binding.selectedSour.visibility = View.GONE
-                return@observe
-            }
-
-            binding.selectedSour.visibility = View.VISIBLE
-            binding.selectedSour.text = text
+            updateFilteringView(text, binding.selectedSour)
         }
         // 苦味 監視処理
         viewModel.bitterMenuState.observe(viewLifecycleOwner) { state ->
@@ -281,13 +251,7 @@ class FilterFragment : Fragment() {
             }
         }
         viewModel.selectedBitterText.observe(viewLifecycleOwner) { text ->
-            if (text.isEmpty()) {
-                binding.selectedBitter.visibility = View.GONE
-                return@observe
-            }
-
-            binding.selectedBitter.visibility = View.VISIBLE
-            binding.selectedBitter.text = text
+            updateFilteringView(text, binding.selectedBitter)
         }
         // 甘味 監視処理
         viewModel.sweetMenuState.observe(viewLifecycleOwner) { state ->
@@ -303,13 +267,7 @@ class FilterFragment : Fragment() {
             }
         }
         viewModel.selectedSweetText.observe(viewLifecycleOwner) { text ->
-            if (text.isEmpty()) {
-                binding.selectedSweet.visibility = View.GONE
-                return@observe
-            }
-
-            binding.selectedSweet.visibility = View.VISIBLE
-            binding.selectedSweet.text = text
+            updateFilteringView(text, binding.selectedSweet)
         }
         // 香り 監視処理
         viewModel.flavorMenuState.observe(viewLifecycleOwner) { state ->
@@ -325,13 +283,7 @@ class FilterFragment : Fragment() {
             }
         }
         viewModel.selectedFlavorText.observe(viewLifecycleOwner) { text ->
-            if (text.isEmpty()) {
-                binding.selectedFlavor.visibility = View.GONE
-                return@observe
-            }
-
-            binding.selectedFlavor.visibility = View.VISIBLE
-            binding.selectedFlavor.text = text
+            updateFilteringView(text, binding.selectedFlavor)
         }
         // コク 監視処理
         viewModel.richMenuState.observe(viewLifecycleOwner) { state ->
@@ -347,13 +299,7 @@ class FilterFragment : Fragment() {
             }
         }
         viewModel.selectedRichText.observe(viewLifecycleOwner) { text ->
-            if (text.isEmpty()) {
-                binding.selectedRich.visibility = View.GONE
-                return@observe
-            }
-
-            binding.selectedRich.visibility = View.VISIBLE
-            binding.selectedRich.text = text
+            updateFilteringView(text, binding.selectedRich)
         }
 
 
@@ -569,7 +515,6 @@ class FilterFragment : Fragment() {
         }
     }
 
-
     private fun getWrapContentWidth(view: View): Int {
         view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
         return view.measuredWidth
@@ -605,5 +550,15 @@ class FilterFragment : Fragment() {
 
             viewList.add(itemView)
         }
+    }
+
+    private fun updateFilteringView(text: String, view: TextView) {
+        if (text.isEmpty()) {
+            view.visibility = View.GONE
+            return
+        }
+
+        view.visibility = View.VISIBLE
+        view.text = text
     }
 }
