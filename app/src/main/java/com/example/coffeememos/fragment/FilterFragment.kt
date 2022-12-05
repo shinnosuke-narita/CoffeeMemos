@@ -118,11 +118,7 @@ class FilterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.roastBtnStateList.observe(viewLifecycleOwner) { list ->
-            for ((i, isSelected) in list.withIndex()) {
-                val radioBtn = roastViewList[i].findViewById<ImageView>(R.id.radioBtn)
-                if (isSelected) radioBtn.setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
-                else radioBtn.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
-            }
+           setRadioBtnResource(list) { index -> roastViewList[index].findViewById(R.id.radioBtn) }
         }
 
         viewModel.selectedRoastText.observe(viewLifecycleOwner) { selectedText ->
@@ -137,11 +133,7 @@ class FilterFragment : Fragment() {
         }
 
         viewModel.grindSizeBtnStateList.observe(viewLifecycleOwner) { list ->
-            for ((i, isSelected) in list.withIndex()) {
-                val radioBtn = grindSizeViewList[i].findViewById<ImageView>(R.id.radioBtn)
-                if (isSelected) radioBtn.setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
-                else radioBtn.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
-            }
+            setRadioBtnResource(list) { index -> grindSizeViewList[index].findViewById<ImageView>(R.id.radioBtn) }
         }
 
         viewModel.selectedGrindSizeText.observe(viewLifecycleOwner) { selectedText ->
@@ -212,10 +204,7 @@ class FilterFragment : Fragment() {
             }
         }
         viewModel.ratingRadioBtnState.observe(viewLifecycleOwner) { stateList ->
-            for ((i, isClicked) in stateList.withIndex()) {
-                if (isClicked) ratingRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
-                else ratingRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
-            }
+            setRadioBtnResource(stateList) { index -> ratingRadioBtnList[index] }
         }
         viewModel.selectedRatingText.observe(viewLifecycleOwner) { text ->
             updateFilteringView(text, binding.selectedRating)
@@ -229,10 +218,7 @@ class FilterFragment : Fragment() {
             else collapseMenu(binding.sourContainer.root)
         }
         viewModel.sourRadioBtnState.observe(viewLifecycleOwner) { stateList ->
-            for ((i, isClicked) in stateList.withIndex()) {
-                if (isClicked) sourRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
-                else sourRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
-            }
+            setRadioBtnResource(stateList) { index -> sourRadioBtnList[index] }
         }
         viewModel.selectedSourText.observe(viewLifecycleOwner) { text ->
             updateFilteringView(text, binding.selectedSour)
@@ -245,10 +231,7 @@ class FilterFragment : Fragment() {
             else collapseMenu(binding.bitterContainer.root)
         }
         viewModel.bitterRadioBtnState.observe(viewLifecycleOwner) { stateList ->
-            for ((i, isClicked) in stateList.withIndex()) {
-                if (isClicked) bitterRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
-                else bitterRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
-            }
+            setRadioBtnResource(stateList) { index -> bitterRadioBtnList[index] }
         }
         viewModel.selectedBitterText.observe(viewLifecycleOwner) { text ->
             updateFilteringView(text, binding.selectedBitter)
@@ -261,10 +244,7 @@ class FilterFragment : Fragment() {
             else collapseMenu(binding.sweetContainer.root)
         }
         viewModel.sweetRadioBtnState.observe(viewLifecycleOwner) { stateList ->
-            for ((i, isClicked) in stateList.withIndex()) {
-                if (isClicked) sweetRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
-                else sweetRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
-            }
+            setRadioBtnResource(stateList) { index -> sweetRadioBtnList[index] }
         }
         viewModel.selectedSweetText.observe(viewLifecycleOwner) { text ->
             updateFilteringView(text, binding.selectedSweet)
@@ -277,10 +257,7 @@ class FilterFragment : Fragment() {
             else collapseMenu(binding.flavorContainer.root)
         }
         viewModel.flavorRadioBtnState.observe(viewLifecycleOwner) { stateList ->
-            for ((i, isClicked) in stateList.withIndex()) {
-                if (isClicked) flavorRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
-                else flavorRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
-            }
+            setRadioBtnResource(stateList) { index -> flavorRadioBtnList[index] }
         }
         viewModel.selectedFlavorText.observe(viewLifecycleOwner) { text ->
             updateFilteringView(text, binding.selectedFlavor)
@@ -293,15 +270,11 @@ class FilterFragment : Fragment() {
             else collapseMenu(binding.richContainer.root)
         }
         viewModel.richRadioBtnState.observe(viewLifecycleOwner) { stateList ->
-            for ((i, isClicked) in stateList.withIndex()) {
-                if (isClicked) richRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
-                else richRadioBtnList[i].setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
-            }
+            setRadioBtnResource(stateList) { index -> richRadioBtnList[index] }
         }
         viewModel.selectedRichText.observe(viewLifecycleOwner) { text ->
             updateFilteringView(text, binding.selectedRich)
         }
-
 
         binding.roastWrapper.setOnClickListener {
             val currentState = viewModel.roastMenuState.value ?: MenuState.CLOSE
@@ -560,5 +533,13 @@ class FilterFragment : Fragment() {
 
         view.visibility = View.VISIBLE
         view.text = text
+    }
+
+    private fun setRadioBtnResource(btnStateList: List<Boolean>, getRadioBtnView: (Int) -> ImageView) {
+        for ((i, isSelected) in btnStateList.withIndex()) {
+            val radioBtn = getRadioBtnView(i)
+            if (isSelected) radioBtn.setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
+            else radioBtn.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
+        }
     }
 }
