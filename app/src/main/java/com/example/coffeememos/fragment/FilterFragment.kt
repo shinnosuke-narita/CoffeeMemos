@@ -17,6 +17,8 @@ import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentFilterBinding
 import com.example.coffeememos.manager.SearchFilterManager
 import com.example.coffeememos.state.MenuState
+import com.example.coffeememos.utilities.AnimUtil.Companion.collapseMenu
+import com.example.coffeememos.utilities.AnimUtil.Companion.expandMenu
 import com.example.coffeememos.viewModel.FilterViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
 
@@ -512,57 +514,6 @@ class FilterFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun expandMenu(containerView: View) {
-        // viewの大きさを計測
-        containerView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
-        val containerHeight: Int = containerView.measuredHeight
-
-        containerView.layoutParams.height = 0
-        val anim = ValueAnimator.ofInt(0, containerHeight).apply {
-            addUpdateListener {
-                val updateValue = it.animatedValue as Int
-                when (updateValue) {
-                    0               -> containerView.visibility = View.VISIBLE
-                    containerHeight -> containerView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                    else            -> containerView.layoutParams.height = updateValue
-                }
-
-                containerView.requestLayout()
-            }
-            duration = 300
-        }
-        anim.start()
-    }
-
-    private fun collapseMenu(parentView: ViewGroup, filterElementView: ViewGroup) {
-        ValueAnimator.ofInt(parentView.height, 0).apply {
-            duration = 300
-            addUpdateListener {
-                if (it.animatedValue == 0) {
-                    parentView.visibility = View.GONE
-                    filterElementView.removeAllViews()
-                }
-                parentView.layoutParams.height = it.animatedValue as Int
-                parentView.requestLayout()
-            }
-            start()
-        }
-    }
-
-    private fun collapseMenu(parentView: ViewGroup) {
-        ValueAnimator.ofInt(parentView.height, 0).apply {
-            duration = 300
-            addUpdateListener {
-                if (it.animatedValue == 0) {
-                    parentView.visibility = View.GONE
-                }
-                parentView.layoutParams.height = it.animatedValue as Int
-                parentView.requestLayout()
-            }
-            start()
-        }
     }
 
     private fun addFilterElementView(elementTxt: String, filterContainer: ViewGroup, dataList: List<String>, deleteValueProcess: (String) -> Unit) {
