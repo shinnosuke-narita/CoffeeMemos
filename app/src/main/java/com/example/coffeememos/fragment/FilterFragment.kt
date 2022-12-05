@@ -45,7 +45,6 @@ class FilterFragment : Fragment() {
 
         // フィルタリング管理マネージャー
         filterManager = parentViewModel.filterManager
-
     }
 
     override fun onCreateView(
@@ -102,8 +101,6 @@ class FilterFragment : Fragment() {
             binding.richContainer.radioBtnFourth,
             binding.richContainer.radioBtnFifth
         )
-
-
 
         setUpRadioBtnContainer(Constants.roastList, binding.roastContainer, roastViewList) { index ->
             viewModel.setRoastRadioBtnState(index)
@@ -167,14 +164,14 @@ class FilterFragment : Fragment() {
             if (state == MenuState.OPEN)  expandMenu(binding.grindSizeContainer)
             else collapseMenu(binding.grindSizeContainer)
         }
-
-
+        // 原産地 監視処理
         viewModel.countryMenuState.observe(viewLifecycleOwner) { state ->
             if (state == null) return@observe
 
             if (state == MenuState.OPEN) {
                 setUpEditTextContainer(binding.countryFilterElements, filterManager.countryValues) {
                     filterManager.removeCountryValue(it)
+                    viewModel.updateInputCountriesText(filterManager.countryValues)
                 }
                 expandMenu(binding.countryContainer)
             }
@@ -184,14 +181,24 @@ class FilterFragment : Fragment() {
                 collapseMenu(binding.countryContainer, binding.countryFilterElements)
             }
         }
+        viewModel.inputCountriesText.observe(viewLifecycleOwner) { text ->
+            if (text.isEmpty()) {
+                binding.inputCountries.visibility = View.GONE
+                return@observe
+            }
 
+            binding.inputCountries.visibility = View.VISIBLE
+            binding.inputCountries.text = text
+        }
 
+        // 抽出器具 監視処理
         viewModel.toolMenuState.observe(viewLifecycleOwner) { state ->
             if (state == null) return@observe
 
             if (state == MenuState.OPEN) {
                 setUpEditTextContainer(binding.toolFilterElements, filterManager.toolValues) {
                     filterManager.removeToolValue(it)
+                    viewModel.updateInputToolsText(filterManager.toolValues)
                 }
                 expandMenu(binding.toolContainer)
             } else {
@@ -200,6 +207,16 @@ class FilterFragment : Fragment() {
                 collapseMenu(binding.toolContainer, binding.toolFilterElements)
             }
         }
+        viewModel.inputToolsText.observe(viewLifecycleOwner) { text ->
+            if (text.isEmpty()) {
+                binding.inputTools.visibility = View.GONE
+                return@observe
+            }
+
+            binding.inputTools.visibility = View.VISIBLE
+            binding.inputTools.text = text
+        }
+
         // 評価 監視処理
         viewModel.ratingMenuState.observe(viewLifecycleOwner) { state ->
             if (state == null) return@observe
@@ -225,6 +242,7 @@ class FilterFragment : Fragment() {
             binding.selectedRating.visibility = View.VISIBLE
             binding.selectedRating.text = text
         }
+
         // 酸味 監視処理
         viewModel.sourMenuState.observe(viewLifecycleOwner) { state ->
             if (state == null) return@observe
@@ -462,10 +480,11 @@ class FilterFragment : Fragment() {
 
             addFilterElementView(inputText, binding.countryFilterElements, filterManager.countryValues) {
                 filterManager.removeCountryValue(it)
+                viewModel.updateInputCountriesText(filterManager.countryValues)
             }
 
-            // filterManagerのデータ更新
             filterManager.addCountryValue(inputText)
+            viewModel.updateInputCountriesText(filterManager.countryValues)
         }
 
         binding.toolDoneBtn.setOnClickListener {
@@ -473,10 +492,12 @@ class FilterFragment : Fragment() {
 
             addFilterElementView(inputText, binding.toolFilterElements, filterManager.toolValues) {
                 filterManager.removeToolValue(it)
+                viewModel.updateInputToolsText(filterManager.toolValues)
             }
 
             // filterManagerのデータ更新
             filterManager.addToolValue(inputText)
+            viewModel.updateInputToolsText(filterManager.toolValues)
         }
 
         // 閉じる処理

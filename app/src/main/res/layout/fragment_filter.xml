@@ -174,6 +174,19 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/countryTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/countryTitle" />
+
+                <TextView
+                    android:id="@+id/inputCountries"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/countryTitle"
+                    app:layout_constraintStart_toStartOf="@+id/countryTitle"
+                    app:layout_constraintEnd_toStartOf="@+id/countryAddIcon"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -249,6 +262,18 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/toolTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/toolTitle" />
+
+                <TextView
+                    android:id="@+id/inputTools"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/toolTitle"
+                    app:layout_constraintStart_toStartOf="@+id/toolTitle"
+                    app:layout_constraintEnd_toStartOf="@+id/toolAddIcon"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

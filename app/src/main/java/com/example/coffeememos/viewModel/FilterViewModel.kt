@@ -9,6 +9,7 @@ import androidx.lifecycle.map
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.state.MenuState
+import com.example.coffeememos.utilities.StringUtil
 
 class FilterViewModel : ViewModel() {
     private val _roastMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
@@ -28,15 +29,39 @@ class FilterViewModel : ViewModel() {
     private val _countryMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
     val countryMenuState: LiveData<MenuState> = _countryMenuState
 
+    private val _inputCountriesText: MutableLiveData<String> = MutableLiveData("")
+    val inputCountriesText: LiveData<String> = _inputCountriesText
+
     fun setCountryState(isOpen: MenuState) {
         _countryMenuState.value = isOpen
+    }
+
+    fun updateInputCountriesText(updatedList: List<String>){
+        if (updatedList.isEmpty()) {
+            _inputCountriesText.value = ""
+            return
+        }
+
+        _inputCountriesText.value = updatedList.joinToString(", ")
     }
 
     private val _toolMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
     val toolMenuState: LiveData<MenuState> = _toolMenuState
 
+    private val _inputToolsText: MutableLiveData<String> = MutableLiveData("")
+    val inputToolsText: LiveData<String> = _inputToolsText
+
     fun setToolState(isOpen: MenuState) {
         _toolMenuState.value = isOpen
+    }
+
+    fun updateInputToolsText(updatedList: List<String>) {
+        if (updatedList.isEmpty()) {
+            _inputToolsText.value = ""
+            return
+        }
+
+        _inputToolsText.value = updatedList.joinToString(", ")
     }
 
     private val _ratingMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
@@ -159,9 +184,7 @@ class FilterViewModel : ViewModel() {
         // 未選択の場合、空文字列を返す
         if (resultText.isEmpty()) return resultText
 
-        val subStrLastIndex = resultText.lastIndexOf(",")
-        resultText = resultText.substring(0, subStrLastIndex)
-        return resultText
+        return StringUtil.subStringLastSeparator(resultText, ",")
     }
 
     private val  _roastBtnStateList: MutableLiveData<MutableList<Boolean>> =
