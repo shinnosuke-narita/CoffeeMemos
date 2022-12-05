@@ -28,7 +28,6 @@ class FilterFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: FilterViewModel by viewModels()
-
     private val parentViewModel: SearchRecipeViewModel by viewModels({ requireParentFragment() })
 
     private lateinit var filterManager: SearchFilterManager
@@ -39,6 +38,7 @@ class FilterFragment : Fragment() {
     private lateinit var sweetRadioBtnList: List<ImageView>
     private lateinit var flavorRadioBtnList: List<ImageView>
     private lateinit var richRadioBtnList: List<ImageView>
+
     private val roastViewList: MutableList<View> = mutableListOf()
     private val grindSizeViewList: MutableList<View> = mutableListOf()
 
@@ -249,93 +249,59 @@ class FilterFragment : Fragment() {
             updateFilteringView(text, binding.selectedRich)
         }
 
+
+        // MenuState 更新処理
         binding.roastWrapper.setOnClickListener {
-            val currentState = viewModel.roastMenuState.value ?: MenuState.CLOSE
-
-            if (currentState == MenuState.OPEN) viewModel.setRoastState(MenuState.CLOSE)
-            else viewModel.setRoastState(MenuState.OPEN)
-
-            viewModel.updateMenuState(binding.roastContainer, requireActivity())
+            updateMenuState(viewModel.roastMenuState.value, binding.roastContainer,
+                { viewModel.setRoastState(MenuState.OPEN) },
+                { viewModel.setRoastState(MenuState.CLOSE) })
         }
-
         binding.grindSizeWrapper.setOnClickListener {
-            val currentState = viewModel.grindSizeMenuState.value ?: MenuState.CLOSE
-
-            if (currentState == MenuState.OPEN) viewModel.setGrindSizeState(MenuState.CLOSE)
-            else viewModel.setGrindSizeState(MenuState.OPEN)
-
-            viewModel.updateMenuState(binding.grindSizeContainer, requireActivity())
+            updateMenuState(viewModel.grindSizeMenuState.value, binding.grindSizeContainer,
+                { viewModel.setGrindSizeState(MenuState.OPEN) },
+                { viewModel.setGrindSizeState(MenuState.CLOSE) })
         }
-
-
         binding.countryWrapper.setOnClickListener {
-            val currentState = viewModel.countryMenuState.value ?: MenuState.CLOSE
-
-            if (currentState == MenuState.OPEN) viewModel.setCountryState(MenuState.CLOSE)
-            else viewModel.setCountryState(MenuState.OPEN)
-
-            viewModel.updateMenuState(binding.countryContainer, requireActivity())
+            updateMenuState(viewModel.countryMenuState.value, binding.countryContainer,
+                { viewModel.setCountryState(MenuState.OPEN) },
+                { viewModel.setCountryState(MenuState.CLOSE) })
         }
         binding.toolWrapper.setOnClickListener {
-            val currentState = viewModel.toolMenuState.value ?: MenuState.CLOSE
-
-            if (currentState == MenuState.OPEN) viewModel.setToolState(MenuState.CLOSE)
-            else viewModel.setToolState(MenuState.OPEN)
-
-            viewModel.updateMenuState(binding.toolContainer, requireActivity())
+            updateMenuState(viewModel.toolMenuState.value, binding.toolContainer,
+                { viewModel.setToolState(MenuState.OPEN) },
+                { viewModel.setToolState(MenuState.CLOSE) })
         }
         binding.ratingWrapper.setOnClickListener {
-            val currentState = viewModel.ratingMenuState.value ?: MenuState.CLOSE
-
-            if (currentState == MenuState.OPEN) viewModel.setRatingMenuState(MenuState.CLOSE)
-            else viewModel.setRatingMenuState(MenuState.OPEN)
-
-            viewModel.updateMenuState(binding.ratingContainer.root, requireActivity())
+            updateMenuState(viewModel.ratingMenuState.value, binding.ratingContainer.root,
+                { viewModel.setRatingMenuState(MenuState.OPEN) },
+                { viewModel.setRatingMenuState(MenuState.CLOSE) })
         }
         binding.sourWrapper.setOnClickListener {
-            val currentState = viewModel.sourMenuState.value ?: MenuState.CLOSE
-
-            if (currentState == MenuState.OPEN) viewModel.setSourState(MenuState.CLOSE)
-            else viewModel.setSourState(MenuState.OPEN)
-
-            viewModel.updateMenuState(binding.sourContainer.root, requireActivity())
+            updateMenuState(viewModel.sourMenuState.value, binding.sourContainer.root,
+                { viewModel.setSourState(MenuState.OPEN) },
+                { viewModel.setSourState(MenuState.CLOSE) })
         }
-
         binding.bitterWrapper.setOnClickListener {
-            val currentState = viewModel.bitterMenuState.value ?: MenuState.CLOSE
-
-            if (currentState == MenuState.OPEN) viewModel.setBitterState(MenuState.CLOSE)
-            else viewModel.setBitterState(MenuState.OPEN)
-
-            viewModel.updateMenuState(binding.bitterContainer.root, requireActivity())
+            updateMenuState(viewModel.bitterMenuState.value, binding.bitterContainer.root,
+                { viewModel.setBitterState(MenuState.OPEN) },
+                { viewModel.setBitterState(MenuState.CLOSE) })
         }
-
         binding.sweetWrapper.setOnClickListener {
-            val currentState = viewModel.sweetMenuState.value ?: MenuState.CLOSE
-
-            if (currentState == MenuState.OPEN) viewModel.setSweetState(MenuState.CLOSE)
-            else viewModel.setSweetState(MenuState.OPEN)
-
-            viewModel.updateMenuState(binding.sweetContainer.root, requireActivity())
+            updateMenuState(viewModel.sweetMenuState.value, binding.sweetContainer.root,
+                { viewModel.setSweetState(MenuState.OPEN) },
+                { viewModel.setSweetState(MenuState.CLOSE) })
         }
-
         binding.flavorWrapper.setOnClickListener {
-            val currentState = viewModel.flavorMenuState.value ?: MenuState.CLOSE
-
-            if (currentState == MenuState.OPEN) viewModel.setFlavorState(MenuState.CLOSE)
-            else viewModel.setFlavorState(MenuState.OPEN)
-
-            viewModel.updateMenuState(binding.flavorContainer.root, requireActivity())
+            updateMenuState(viewModel.flavorMenuState.value, binding.flavorContainer.root,
+                { viewModel.setFlavorState(MenuState.OPEN) },
+                { viewModel.setFlavorState(MenuState.CLOSE) })
         }
-
         binding.richWrapper.setOnClickListener {
-            val currentState = viewModel.richMenuState.value ?: MenuState.CLOSE
-
-            if (currentState == MenuState.OPEN) viewModel.setRichState(MenuState.CLOSE)
-            else viewModel.setRichState(MenuState.OPEN)
-
-            viewModel.updateMenuState(binding.richContainer.root, requireActivity())
+            updateMenuState(viewModel.richMenuState.value, binding.richContainer.root,
+                { viewModel.setRichState(MenuState.OPEN) },
+                { viewModel.setRichState(MenuState.CLOSE) })
         }
+
 
         // ラジオボタン クリックリスナ―
         for ((i, btn) in ratingRadioBtnList.withIndex()) {
@@ -521,5 +487,13 @@ class FilterFragment : Fragment() {
 
         if (state == MenuState.OPEN)  expandMenu(containerView)
         else collapseMenu(containerView)
+    }
+
+    private fun updateMenuState(_currentState: MenuState?, containerView: ViewGroup, setOpenProcess: () -> Unit, setCloseProcess: () -> Unit) {
+        val currentState = _currentState ?: MenuState.CLOSE
+        if (currentState == MenuState.OPEN) setCloseProcess()
+        else setOpenProcess()
+
+        viewModel.updateMenuState(containerView, requireActivity())
     }
 }
