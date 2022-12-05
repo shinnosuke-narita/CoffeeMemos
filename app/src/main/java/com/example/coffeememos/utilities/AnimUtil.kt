@@ -28,7 +28,7 @@ class AnimUtil {
             }
         }
 
-        fun expandMenu(containerView: View) {
+        fun expandMenu(containerView: ViewGroup) {
             // viewの大きさを計測
             containerView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
             val containerHeight: Int = containerView.measuredHeight

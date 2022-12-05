@@ -126,10 +126,7 @@ class FilterFragment : Fragment() {
         }
 
         viewModel.roastMenuState.observe(viewLifecycleOwner) { state ->
-            if (state == null) return@observe
-
-            if (state == MenuState.OPEN)  expandMenu(binding.roastContainer)
-            else collapseMenu(binding.roastContainer)
+            expandOrCollapse(state, binding.roastContainer)
         }
 
         viewModel.grindSizeBtnStateList.observe(viewLifecycleOwner) { list ->
@@ -141,10 +138,7 @@ class FilterFragment : Fragment() {
         }
 
         viewModel.grindSizeMenuState.observe(viewLifecycleOwner) { state ->
-            if (state == null) return@observe
-
-            if (state == MenuState.OPEN)  expandMenu(binding.grindSizeContainer)
-            else collapseMenu(binding.grindSizeContainer)
+           expandOrCollapse(state, binding.grindSizeContainer)
         }
         // 原産地 監視処理
         viewModel.countryMenuState.observe(viewLifecycleOwner) { state ->
@@ -195,13 +189,7 @@ class FilterFragment : Fragment() {
 
         // 評価 監視処理
         viewModel.ratingMenuState.observe(viewLifecycleOwner) { state ->
-            if (state == null) return@observe
-
-            if (state == MenuState.OPEN) {
-                expandMenu(binding.ratingContainer.root)
-            } else {
-                collapseMenu(binding.ratingContainer.root)
-            }
+           expandOrCollapse(state, binding.ratingContainer.root)
         }
         viewModel.ratingRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> ratingRadioBtnList[index] }
@@ -212,10 +200,7 @@ class FilterFragment : Fragment() {
 
         // 酸味 監視処理
         viewModel.sourMenuState.observe(viewLifecycleOwner) { state ->
-            if (state == null) return@observe
-
-            if (state == MenuState.OPEN) expandMenu(binding.sourContainer.root)
-            else collapseMenu(binding.sourContainer.root)
+            expandOrCollapse(state, binding.sourContainer.root)
         }
         viewModel.sourRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> sourRadioBtnList[index] }
@@ -225,10 +210,7 @@ class FilterFragment : Fragment() {
         }
         // 苦味 監視処理
         viewModel.bitterMenuState.observe(viewLifecycleOwner) { state ->
-            if (state == null) return@observe
-
-            if (state == MenuState.OPEN) expandMenu(binding.bitterContainer.root)
-            else collapseMenu(binding.bitterContainer.root)
+            expandOrCollapse(state, binding.bitterContainer.root)
         }
         viewModel.bitterRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> bitterRadioBtnList[index] }
@@ -238,10 +220,7 @@ class FilterFragment : Fragment() {
         }
         // 甘味 監視処理
         viewModel.sweetMenuState.observe(viewLifecycleOwner) { state ->
-            if (state == null) return@observe
-
-            if (state == MenuState.OPEN) expandMenu(binding.sweetContainer.root)
-            else collapseMenu(binding.sweetContainer.root)
+            expandOrCollapse(state, binding.sweetContainer.root)
         }
         viewModel.sweetRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> sweetRadioBtnList[index] }
@@ -251,10 +230,7 @@ class FilterFragment : Fragment() {
         }
         // 香り 監視処理
         viewModel.flavorMenuState.observe(viewLifecycleOwner) { state ->
-            if (state == null) return@observe
-
-            if (state == MenuState.OPEN) expandMenu(binding.flavorContainer.root)
-            else collapseMenu(binding.flavorContainer.root)
+            expandOrCollapse(state, binding.flavorContainer.root)
         }
         viewModel.flavorRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> flavorRadioBtnList[index] }
@@ -264,10 +240,7 @@ class FilterFragment : Fragment() {
         }
         // コク 監視処理
         viewModel.richMenuState.observe(viewLifecycleOwner) { state ->
-            if (state == null) return@observe
-
-            if (state == MenuState.OPEN) expandMenu(binding.richContainer.root)
-            else collapseMenu(binding.richContainer.root)
+            expandOrCollapse(state, binding.richContainer.root)
         }
         viewModel.richRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> richRadioBtnList[index] }
@@ -541,5 +514,12 @@ class FilterFragment : Fragment() {
             if (isSelected) radioBtn.setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
             else radioBtn.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
         }
+    }
+
+    private fun expandOrCollapse(state: MenuState?, containerView: ViewGroup) {
+        if (state == null) return
+
+        if (state == MenuState.OPEN)  expandMenu(containerView)
+        else collapseMenu(containerView)
     }
 }
