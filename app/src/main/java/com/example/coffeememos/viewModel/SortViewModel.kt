@@ -8,15 +8,15 @@ class SortViewModel : ViewModel() {
     // listview data
     lateinit var sortItemList: List<SortItem>
 
-    fun setSortItemList(index: Int) {
-        sortItemList = makeSortData(index)
+    fun setSortItemList(sortName: String) {
+        sortItemList = makeSortData(sortName)
     }
 
-    private fun makeSortData(index: Int): List<SortItem> {
+    private fun makeSortData(sortName: String): List<SortItem> {
         val result: MutableList<SortItem> = mutableListOf()
 
-        for ((i, sortType) in SortType.values().withIndex()) {
-            val isSelected: Boolean = i == index
+        for (sortType in SortType.values()) {
+            val isSelected: Boolean = sortType.getSortName() == sortName
             result.add(SortItem(sortType, isSelected))
         }
         return result

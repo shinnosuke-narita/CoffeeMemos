@@ -83,8 +83,25 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
     private val _searchResult: MutableLiveData<List<CustomRecipe>> = MutableLiveData(listOf())
     val searchResult: LiveData<List<CustomRecipe>> = _searchResult
 
+
+    // 絞り込み結果
+    private val _filteringResult: MutableLiveData<List<CustomRecipe>> = MutableLiveData(null)
+    val filteringResult: LiveData<List<CustomRecipe>> = _filteringResult
+
     fun setSearchResult(list: List<CustomRecipe>) {
         _searchResult.value = list
+    }
+
+    val recipeCount: MediatorLiveData<Int?> = MediatorLiveData<Int?>().apply {
+        addSource(_searchResult) { list ->
+            value = list.size
+        }
+
+        addSource(_filteringResult) { list ->
+            if (list == null) return@addSource
+
+            value = list.size
+        }
     }
 
 
@@ -108,6 +125,7 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
     // キーワード検索
     fun freeWordSearch(keyWord: SearchKeyWord) {
         if (keyWord.type == SearchType.BEAN) return
+        if (keyWord.keyWord == "") return
 
         val result: MutableList<CustomRecipe> = mutableListOf()
         val _keyWord: String = keyWord.keyWord
@@ -135,24 +153,34 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
     }
 
     // 並び替え処理
-    fun sortSearchResult(sortType: SortType, currentSearchResult: List<CustomRecipe>) {
+    fun sortSearchResult(sortType: SortType) {
+        // currentSortTypeの更新処理
+        _currentSortType.value = sortType
 
-        // todo currentSortTypeの更新処理
-        val sortedResult: List<CustomRecipe> = when(sortType) {
-            SortType.OLD        -> currentSearchResult.sortedBy { recipe -> recipe.recipeId}
-            SortType.NEW        -> currentSearchResult.sortedByDescending { recipe -> recipe.recipeId }
-            SortType.ROAST      -> currentSearchResult.sortedByDescending { recipe -> recipe.roast}
-            SortType.GRIND_SIZE -> currentSearchResult.sortedByDescending { recipe -> recipe.grindSize }
-            SortType.RATING     -> currentSearchResult.sortedByDescending { recipe -> recipe.rating }
-            SortType.SOUR       -> currentSearchResult.sortedByDescending { recipe -> recipe.sour }
-            SortType.BITTER     -> currentSearchResult.sortedByDescending { recipe -> recipe.bitter }
-            SortType.SWEET      -> currentSearchResult.sortedByDescending { recipe -> recipe.sweet }
-            SortType.FLAVOR     -> currentSearchResult.sortedByDescending { recipe -> recipe.flavor }
-            SortType.RICH       -> currentSearchResult.sortedByDescending { recipe -> recipe.rich }
+        if (_filteringResult.value == null) {
+            val sortedResult: List<CustomRecipe> = sortList(sortType, _searchResult.value!!)
+            _searchResult.value = sortedResult
+        } else {
+            val sortedResult: List<CustomRecipe> = sortList(sortType, _filteringResult.value!!)
+            _filteringResult.value = sortedResult
+        }
+    }
+
+    private fun sortList(sortType: SortType, list: List<CustomRecipe>): List<CustomRecipe> {
+        val result = when(sortType) {
+            SortType.OLD        -> list.sortedBy { recipe -> recipe.recipeId}
+            SortType.NEW        -> list.sortedByDescending { recipe -> recipe.recipeId }
+            SortType.ROAST      -> list.sortedByDescending { recipe -> recipe.roast}
+            SortType.GRIND_SIZE -> list.sortedByDescending { recipe -> recipe.grindSize }
+            SortType.RATING     -> list.sortedByDescending { recipe -> recipe.rating }
+            SortType.SOUR       -> list.sortedByDescending { recipe -> recipe.sour }
+            SortType.BITTER     -> list.sortedByDescending { recipe -> recipe.bitter }
+            SortType.SWEET      -> list.sortedByDescending { recipe -> recipe.sweet }
+            SortType.FLAVOR     -> list.sortedByDescending { recipe -> recipe.flavor }
+            SortType.RICH       -> list.sortedByDescending { recipe -> recipe.rich }
         }
 
-        // ソートされた結果をセット
-        _searchResult.value = sortedResult
+        return result
     }
 
     private var updateFavorite: Boolean = false
@@ -182,8 +210,11 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
 
     // filter
     fun filterSearchResult() {
-        val result = filterManager.filerList(_searchResult.value!!)
-        sortSearchResult(_currentSortType.value!!, result)
+        val filteringList = filterManager.filerList(_searchResult.value!!)
+
+        val result = sortList(_currentSortType.value!!, filteringList)
+
+        _filteringResult.value = result
     }
 
     class SearchRecipeViewModelFactory(

@@ -6,15 +6,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.SearchRecipeFragment">
 
+    <TextView
+        android:id="@+id/recipeCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp"
+        android:textColor="@color/black"
+        android:textSize="19sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="20件" />
+
+    <TextView
+        android:id="@+id/currentSortText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        tools:text="新しい順"
+        android:textColor="@color/grey_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/recipeCount"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/sortIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/ic_baseline_sort_24"
+        app:tint="@color/grey_dark"
+        app:layout_constraintTop_toTopOf="@+id/currentSortText"
+        app:layout_constraintEnd_toStartOf="@+id/currentSortText"
+        app:layout_constraintBottom_toBottomOf="@+id/currentSortText" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchResultRV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:clipToPadding="false"
+        android:layout_marginTop="10dp"
         android:paddingBottom="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/recipeCount"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/btnWrapper"

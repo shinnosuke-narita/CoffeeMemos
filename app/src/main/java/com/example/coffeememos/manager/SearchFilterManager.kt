@@ -14,8 +14,8 @@ class SearchFilterManager() {
     val grindSizeValues: MutableList<Int> = mutableListOf()
     val roastValues    : MutableList<Int> = mutableListOf()
     val ratingValues   : MutableList<Int> = mutableListOf()
-    val countryValues   : MutableList<String> = mutableListOf()
-    val toolValues      : MutableList<String> = mutableListOf()
+    val countryValues  : MutableList<String> = mutableListOf()
+    val toolValues     : MutableList<String> = mutableListOf()
 
     fun addSourValue(value: Int) {
         sourValues.add(value)
@@ -54,7 +54,36 @@ class SearchFilterManager() {
         toolValues.remove(value)
     }
 
+    fun resetList() {
+        roastValues.clear()
+        grindSizeValues.clear()
+        ratingValues.clear()
+        sourValues.clear()
+        bitterValues.clear()
+        sweetValues.clear()
+        flavorValues.clear()
+        richValues.clear()
+    }
+
+    private fun filteringElementsCountIsZero(): Boolean {
+        if (sourValues.isNotEmpty()) return false
+        if (bitterValues.isNotEmpty()) return false
+        if (sweetValues.isNotEmpty()) return false
+        if (flavorValues.isNotEmpty()) return false
+        if (richValues.isNotEmpty()) return false
+        if (grindSizeValues.isNotEmpty()) return false
+        if (roastValues.isNotEmpty()) return false
+        if (ratingValues.isNotEmpty()) return false
+        if (countryValues.isNotEmpty()) return false
+        if (toolValues.isNotEmpty()) return false
+        return true
+    }
+
     fun filerList(currentSearchResult: List<CustomRecipe>): List<CustomRecipe> {
+        // フィルタリングする要素がない場合、そのまま現在のリストを返す
+        if (filteringElementsCountIsZero()) return currentSearchResult
+
+        // 結果リストのクリア
         filteredRecipeList.clear()
 
         for (recipe in currentSearchResult) {

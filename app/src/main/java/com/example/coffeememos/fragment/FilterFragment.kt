@@ -47,6 +47,7 @@ class FilterFragment : Fragment() {
 
         // フィルタリング管理マネージャー
         filterManager = parentViewModel.filterManager
+        viewModel.initialize(filterManager)
     }
 
     override fun onCreateView(
@@ -362,7 +363,9 @@ class FilterFragment : Fragment() {
 
         // 閉じる処理
         binding.closeIcon.setOnClickListener {
-            //parentViewModel.filterSearchResult()
+            viewModel.setUpFilterManagerData(filterManager)
+            parentViewModel.filterSearchResult()
+
             parentViewModel.changeBottomSheetState()
             parentFragmentManager.popBackStack()
 

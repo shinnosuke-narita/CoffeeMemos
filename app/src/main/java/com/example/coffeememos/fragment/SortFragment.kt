@@ -25,10 +25,10 @@ class SortFragment : Fragment() {
     private lateinit var _adapter: BaseAdapter
 
     companion object  {
-        fun create(selectedIndex: Int): SortFragment {
+        fun create(sortName: String): SortFragment {
             return SortFragment().apply {
                 arguments = Bundle().apply {
-                    putInt("selectedIndex", selectedIndex)
+                    putString("sortName", sortName)
                 }
             }
         }
@@ -36,10 +36,9 @@ class SortFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val sortName = arguments?.getString("sortName", "") ?: ""
 
-        val index = arguments?.getInt("selectedIndex", 0) ?: 0
-
-        viewModel.setSortItemList(index)
+        viewModel.setSortItemList(sortName)
     }
 
     override fun onCreateView(
@@ -69,7 +68,7 @@ class SortFragment : Fragment() {
 
             // sort 処理
             val sortType: SortType = viewModel.getSelectedSortType()
-            searchRecipeViewModel.sortSearchResult(sortType, searchRecipeViewModel.searchResult.value!!)
+            searchRecipeViewModel.sortSearchResult(sortType)
 
             parentFragmentManager.popBackStack()
         }

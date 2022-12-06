@@ -67,6 +67,33 @@ class SearchRecipeFragment : Fragment() {
             }
         }
 
+        viewModel.filteringResult.observe(viewLifecycleOwner) { list ->
+            if (list == null) return@observe
+
+            binding.searchResultRV.adapter = RecipeDetailAdapter(requireContext(), list).apply {
+                setFavoriteListener(object : OnFavoriteIconClickListener {
+                    override fun onClick(view: View, id: Long) {
+                        viewModel.updateFavoriteIcon(view, id)
+                    }
+                })
+                setOnItemClickListener(object: OnItemClickListener<CustomRecipe> {
+                    override fun onClick(view: View, selectedItem: CustomRecipe) {
+
+                    }
+                })
+            }
+        }
+
+        // レシピ数 監視処理
+        viewModel.recipeCount.observe(viewLifecycleOwner) { count ->
+            binding.recipeCount.text = requireContext().getString(R.string.recipeCount, count)
+        }
+
+        // 現在のソート 監視処理
+        viewModel.currentSortType.observe(viewLifecycleOwner) { sortType ->
+            binding.currentSortText.text = sortType.getSortName()
+        }
+
         sharedViewModel.searchKeyWord.observe(viewLifecycleOwner) { keyWord ->
             viewModel.freeWordSearch(keyWord)
         }
@@ -82,10 +109,9 @@ class SearchRecipeFragment : Fragment() {
         binding.sortBtn.setOnClickListener { view ->
             viewModel.changeBottomSheetState()
 
-            // TODO SortFragment 初期化時の値を変更する！
             childFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_bottom,R.anim.go_down,R.anim.enter_from_bottom, R.anim.go_down)
-                .replace(R.id.bottomSheet, SortFragment.create(0))
+                .replace(R.id.bottomSheet, SortFragment.create(viewModel.currentSortType.value!!.getSortName()))
                 .addToBackStack(null)
                 .commit()
         }
