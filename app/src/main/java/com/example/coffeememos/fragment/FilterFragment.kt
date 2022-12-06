@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.coffeememos.Constants
@@ -369,6 +370,12 @@ class FilterFragment : Fragment() {
             parentViewModel.changeBottomSheetState()
             parentFragmentManager.popBackStack()
 
+        }
+
+        // backキー ハンドリング
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            parentViewModel.changeBottomSheetState()
+            parentFragmentManager.popBackStack()
         }
     }
 

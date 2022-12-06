@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.coffeememos.search.SortType
@@ -70,6 +71,12 @@ class SortFragment : Fragment() {
             val sortType: SortType = viewModel.getSelectedSortType()
             searchRecipeViewModel.sortSearchResult(sortType)
 
+            parentFragmentManager.popBackStack()
+        }
+
+        // バックキー ハンドリング
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            searchRecipeViewModel.changeBottomSheetState()
             parentFragmentManager.popBackStack()
         }
     }
