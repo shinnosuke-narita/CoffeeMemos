@@ -18,6 +18,31 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="20件" />
 
+    <ImageView
+        android:id="@+id/clearIcon"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="5dp"
+        app:tint="@color/pink_dark"
+        android:src="@drawable/ic_baseline_close_24"
+        app:layout_constraintTop_toBottomOf="@+id/recipeCount"
+        app:layout_constraintStart_toStartOf="@+id/recipeCount" />
+
+
+    <TextView
+        android:id="@+id/clearBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="条件クリア"
+        android:textColor="@color/pink_dark"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/clearIcon"
+        app:layout_constraintTop_toTopOf="@+id/clearIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/clearIcon"/>
+
+
+
     <TextView
         android:id="@+id/currentSortText"
         android:layout_width="wrap_content"
@@ -49,7 +74,7 @@
         android:paddingBottom="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipeCount"
+        app:layout_constraintTop_toBottomOf="@+id/clearBtn"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.cardview.widget.CardView

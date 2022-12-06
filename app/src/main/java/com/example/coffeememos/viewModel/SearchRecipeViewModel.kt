@@ -85,8 +85,8 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
 
 
     // 絞り込み結果
-    private val _filteringResult: MutableLiveData<List<CustomRecipe>> = MutableLiveData(null)
-    val filteringResult: LiveData<List<CustomRecipe>> = _filteringResult
+    private val _filteringResult: MutableLiveData<List<CustomRecipe>?> = MutableLiveData(null)
+    val filteringResult: LiveData<List<CustomRecipe>?> = _filteringResult
 
     fun setSearchResult(list: List<CustomRecipe>) {
         _searchResult.value = list
@@ -111,7 +111,7 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
 
 
     // filter 管理
-    val filterManager: SearchFilterManager = SearchFilterManager()
+    var filterManager: SearchFilterManager = SearchFilterManager()
 
     // BottomSheet 状態監視
     private val _isOpened: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -120,7 +120,6 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
     fun changeBottomSheetState() {
         _isOpened.value = !(_isOpened.value!!)
     }
-
 
     // キーワード検索
     fun freeWordSearch(keyWord: SearchKeyWord) {
@@ -215,6 +214,13 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
         val result = sortList(_currentSortType.value!!, filteringList)
 
         _filteringResult.value = result
+    }
+
+    fun resetResult() {
+        _searchResult.value = customRecipeList.value
+        _filteringResult.value = null
+        filterManager = SearchFilterManager()
+        _currentSortType.value = SortType.NEW
     }
 
     class SearchRecipeViewModelFactory(

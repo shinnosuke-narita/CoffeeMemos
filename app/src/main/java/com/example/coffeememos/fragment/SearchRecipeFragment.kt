@@ -125,6 +125,10 @@ class SearchRecipeFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+
+        binding.clearBtn.setOnClickListener {
+            viewModel.resetResult()
+        }
     }
 
     override fun onDestroyView() {
