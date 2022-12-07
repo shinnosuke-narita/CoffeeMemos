@@ -6,6 +6,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.SearchRecipeFragment">
 
+    <Button
+        android:id="@+id/clearBtn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="条件クリア"
+        android:textColor="@color/pink_dark"
+        android:textSize="10sp"
+        android:padding="0dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="5dp"
+        android:layout_marginEnd="10dp"
+        android:drawableLeft="@drawable/ic_baseline_close_24"
+        android:drawableTint="@color/pink_dark"
+        android:background="@drawable/filter_clear_background"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toTopOf="@+id/currentSortText"
+        app:layout_constraintEnd_toStartOf="@+id/currentSortText"
+        app:layout_constraintBottom_toBottomOf="@+id/currentSortText"/>
+
+
     <TextView
         android:id="@+id/recipeCount"
         android:layout_width="wrap_content"
@@ -13,68 +36,45 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="15dp"
         android:textColor="@color/black"
-        android:textSize="19sp"
+        android:textSize="22sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="20件" />
 
-    <ImageView
-        android:id="@+id/clearIcon"
-        android:layout_width="19dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="5dp"
-        app:tint="@color/pink_dark"
-        android:src="@drawable/ic_baseline_close_24"
-        app:layout_constraintTop_toBottomOf="@+id/recipeCount"
-        app:layout_constraintStart_toStartOf="@+id/recipeCount" />
 
 
-    <TextView
-        android:id="@+id/clearBtn"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/currentSortText"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:text="条件クリア"
-        android:textColor="@color/pink_dark"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/clearIcon"
-        app:layout_constraintTop_toTopOf="@+id/clearIcon"
-        app:layout_constraintBottom_toBottomOf="@+id/clearIcon"/>
-
-
-
-    <TextView
-        android:id="@+id/currentSortText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="15dp"
         tools:text="新しい順"
         android:textColor="@color/grey_dark"
+        android:textSize="10sp"
+        android:padding="0dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="5dp"
+        android:layout_marginEnd="10dp"
+        android:drawableLeft="@drawable/ic_baseline_sort_24"
+        android:drawableTint="@color/grey_dark"
+        android:background="@drawable/taste_tag_background"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toTopOf="@+id/recipeCount"
         app:layout_constraintBottom_toBottomOf="@+id/recipeCount"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
-        android:id="@+id/sortIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:src="@drawable/ic_baseline_sort_24"
-        app:tint="@color/grey_dark"
-        app:layout_constraintTop_toTopOf="@+id/currentSortText"
-        app:layout_constraintEnd_toStartOf="@+id/currentSortText"
-        app:layout_constraintBottom_toBottomOf="@+id/currentSortText" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchResultRV"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:paddingBottom="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clearBtn"
+        app:layout_constraintTop_toBottomOf="@+id/recipeCount"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.cardview.widget.CardView

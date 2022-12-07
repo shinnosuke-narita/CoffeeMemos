@@ -51,6 +51,7 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
                     val item = CustomRecipe(
                         recipe.id,
                         recipe.beanId,
+                        taste.id,
                         bean.country,
                         recipe.tool,
                         recipe.roast,
@@ -222,6 +223,8 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
         filterManager = SearchFilterManager()
         _currentSortType.value = SortType.NEW
     }
+
+
 
     class SearchRecipeViewModelFactory(
         private val beanDao: BeanDao,

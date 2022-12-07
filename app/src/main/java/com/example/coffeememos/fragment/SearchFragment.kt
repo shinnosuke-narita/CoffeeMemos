@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.coffeememos.search.SearchKeyWord
 import com.example.coffeememos.search.SearchType
 import com.example.coffeememos.adapter.SearchViewPagerAdapter
@@ -27,7 +28,7 @@ class SearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
@@ -54,12 +55,14 @@ class SearchFragment : Fragment() {
                 )
             }
         }
+
+        binding.backBtn.setOnClickListener{
+            findNavController().popBackStack()
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

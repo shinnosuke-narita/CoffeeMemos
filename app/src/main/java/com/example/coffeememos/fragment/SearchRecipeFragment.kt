@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.CoffeeMemosApplication
@@ -53,36 +55,16 @@ class SearchRecipeFragment : Fragment() {
 
         // 検索結果 監視処理
         viewModel.searchResult.observe(viewLifecycleOwner) { list ->
-            binding.searchResultRV.adapter = RecipeDetailAdapter(requireContext(), list).apply {
-                setFavoriteListener(object : OnFavoriteIconClickListener {
-                    override fun onClick(view: View, id: Long) {
-                        viewModel.updateFavoriteIcon(view, id)
-                    }
-                })
-                setOnItemClickListener(object: OnItemClickListener<CustomRecipe> {
-                    override fun onClick(view: View, selectedItem: CustomRecipe) {
-
-                    }
-                })
-            }
+            binding.searchResultRV.adapter = setUpAdapter(list)
         }
 
         viewModel.filteringResult.observe(viewLifecycleOwner) { list ->
             if (list == null) return@observe
 
-            binding.searchResultRV.adapter = RecipeDetailAdapter(requireContext(), list).apply {
-                setFavoriteListener(object : OnFavoriteIconClickListener {
-                    override fun onClick(view: View, id: Long) {
-                        viewModel.updateFavoriteIcon(view, id)
-                    }
-                })
-                setOnItemClickListener(object: OnItemClickListener<CustomRecipe> {
-                    override fun onClick(view: View, selectedItem: CustomRecipe) {
-
-                    }
-                })
-            }
+            binding.searchResultRV.adapter = setUpAdapter(list)
         }
+
+
 
         // レシピ数 監視処理
         viewModel.recipeCount.observe(viewLifecycleOwner) { count ->
@@ -139,6 +121,27 @@ class SearchRecipeFragment : Fragment() {
     private fun setUpRecyclerView(context: Context, rv: RecyclerView) {
         rv.layoutManager = LinearLayoutManager(context).apply {
             orientation = LinearLayoutManager.VERTICAL
+        }
+    }
+
+    private fun setUpAdapter(list: List<CustomRecipe>): RecipeDetailAdapter {
+        return RecipeDetailAdapter(requireContext(), list).apply {
+            setFavoriteListener(object : OnFavoriteIconClickListener {
+                override fun onClick(view: View, id: Long) {
+                    viewModel.updateFavoriteIcon(view, id)
+                }
+            })
+            setOnItemClickListener(object : OnItemClickListener<CustomRecipe> {
+                override fun onClick(view: View, selectedItem: CustomRecipe) {
+                    val showDetailAction = SearchFragmentDirections.showRecipeDetailAction().apply {
+                        recipeId = selectedItem.recipeId
+                        beanId   = selectedItem.beanId
+                        tasteId  = selectedItem.tasteId
+                    }
+
+                    Navigation.findNavController(view).navigate(showDetailAction)
+                }
+            })
         }
     }
 }
