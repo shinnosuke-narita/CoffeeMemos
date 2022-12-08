@@ -2,7 +2,7 @@
     <string name="app_name">CoffeeMemos</string>
     <string name="bottom_nav_home">Home</string>
     <string name="bottom_nav_favorite">Favorite</string>
-    <string name="bottom_nav_search">Beans</string>
+    <string name="bottom_nav_search">Search</string>
     <string name="bottom_nav_timer">Timer</string>
 
     <!-- 後で消す    -->

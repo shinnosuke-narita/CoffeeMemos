@@ -121,7 +121,6 @@ class TimerFragment : Fragment() {
                 }
                 Navigation.findNavController(view).navigate(showNewRecipeAction)
             }
-
         }
     }
 }

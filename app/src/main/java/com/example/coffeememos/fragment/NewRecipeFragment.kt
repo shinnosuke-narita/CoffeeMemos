@@ -292,7 +292,7 @@ class NewRecipeFragment :
                 ProcessState.FINISH_PROCESSING -> {
                     binding.progressBar.visibility = View.GONE
                     setFragmentResult("createRecipe", Bundle())
-                    findNavController().popBackStack()
+                    findNavController().navigate(R.id.action_back_to_homeRecipeFragment)
                 }
             }
         }
@@ -300,6 +300,8 @@ class NewRecipeFragment :
 
         //fab 監視処理
         viewModel.isMenuOpened.observe(viewLifecycleOwner) { state ->
+            if (state == null) return@observe
+
             when(state) {
                 MenuState.OPEN -> {
                     binding.wholeShadow.visibility = View.VISIBLE
@@ -318,11 +320,11 @@ class NewRecipeFragment :
             }
         }
         // menu クリックリスナー
-        binding.menuBtn.setOnClickListener { v ->
+        binding.menuBtn.setOnClickListener {
             when(viewModel.isMenuOpened.value) {
                 MenuState.OPEN -> viewModel.setMenuOpenedFlag(MenuState.CLOSE)
                 MenuState.CLOSE -> viewModel.setMenuOpenedFlag(MenuState.OPEN)
-                else -> viewModel.setMenuOpenedFlag(MenuState.CLOSE)
+                else -> viewModel.setMenuOpenedFlag(MenuState.OPEN)
             }
         }
         // 計測画面に遷移

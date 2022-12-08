@@ -417,6 +417,7 @@
                         android:layout_margin="0dp"
                         android:hint="@string/extraction_time_minutes"
                         android:inputType="number"
+                        android:nextFocusDown="@+id/extractionTimeSecondsEditText"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/unitMinute"
                         app:layout_constraintStart_toStartOf="parent"

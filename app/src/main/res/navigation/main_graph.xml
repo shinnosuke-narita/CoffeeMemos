@@ -16,7 +16,7 @@
         <argument
             android:name="existsNewRecipeFragment"
             app:argType="boolean"
-            android:defaultValue="true"/>
+            android:defaultValue="false"/>
     </fragment>
     <fragment
         android:id="@+id/newRecipeFragment"
@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_newRecipeFragment_to_selectedBeanFragment2"
             app:destination="@id/selectBeanFragment" />
+        <action
+            android:id="@+id/action_back_to_homeRecipeFragment"
+            app:popUpTo="@+id/homeRecipeFragment" />
         <argument
             android:name="preInfusionTimeInputType"
             app:argType=".state.InputType"
