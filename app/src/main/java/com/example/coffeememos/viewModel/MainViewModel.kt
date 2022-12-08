@@ -6,11 +6,15 @@ import com.example.coffeememos.state.InputType
 import com.example.coffeememos.utilities.DateUtil
 
 class MainViewModel : ViewModel() {
-    private val _selectedBean: MutableLiveData<Bean> = MutableLiveData()
-    val selectedBean: LiveData<Bean> = _selectedBean
+    private val _selectedBean: MutableLiveData<Bean?> = MutableLiveData(null)
+    val selectedBean: LiveData<Bean?> = _selectedBean
 
     fun setBean(bean: Bean) {
         _selectedBean.value = bean
+    }
+
+    fun resetBean() {
+        _selectedBean.value = null
     }
 
 

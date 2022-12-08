@@ -237,6 +237,8 @@ class NewRecipeFragment :
         }
         // コーヒー豆監視
         mainViewModel.selectedBean.observe(viewLifecycleOwner) { bean ->
+            if (bean == null) return@observe
+
             val beanContainer = binding.beanContainer
             beanContainer.country.text     = bean.country
             beanContainer.district.text    = bean.district
@@ -290,9 +292,18 @@ class NewRecipeFragment :
                     binding.progressBar.visibility = View.VISIBLE
                 }
                 ProcessState.FINISH_PROCESSING -> {
+                    // mainViewModel データをリセット
+                    mainViewModel.resetBean()
+                    mainViewModel.setPreInfusionTime(0L)
+                    mainViewModel.setExtractionTime(0L)
+
                     binding.progressBar.visibility = View.GONE
                     setFragmentResult("createRecipe", Bundle())
+                    // ホームレシピ画面までもどる(タイマー画面はバックスタックから消す)
                     findNavController().navigate(R.id.action_back_to_homeRecipeFragment)
+                }
+                else -> {
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         }
