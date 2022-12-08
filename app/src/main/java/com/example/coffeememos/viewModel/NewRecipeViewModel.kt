@@ -87,8 +87,10 @@ class NewRecipeViewModel(
     private var _tool                 : String = ""
     private var _comment              : String = ""
 
-    private fun validate(context: Activity, value: String): Int {
-        if (value == "") return -1
+
+    // バリデートエラー時、trueを返す
+    private fun validate(context: Activity, value: String): Boolean {
+        if (value == "") return true
 
         val convertRes = Util.convertStringIntoIntIfPossible(value)
         val message =
@@ -105,29 +107,36 @@ class NewRecipeViewModel(
                 delay(VALIDATION_MESSAGE_DISPLAY_TIME)
                 _tasteValidation.postValue(TasteValidation(ValidationState.NORMAL, ""))
             }
-            return -1
+            return true
         }
 
-        return convertRes
+        return false
     }
 
     fun setSour(context: Activity, sour: String) {
-        val res = validate(context, sour)
-        if (res == -1) return
+        if (validate(context, sour)) return
 
-        _sour = res
+        _sour = sour.toInt()
     }
-    fun setBitter(bitter: String) {
-        _bitter =  Util.convertStringIntoIntIfPossible(bitter)
+    fun setBitter(context: Activity, bitter: String) {
+        if (validate(context, bitter)) return
+
+        _bitter = bitter.toInt()
     }
-    fun setSweet(sweet: String) {
-        _sweet =  Util.convertStringIntoIntIfPossible(sweet)
+    fun setSweet(context: Activity, sweet: String) {
+        if (validate(context, sweet)) return
+
+        _sweet = sweet.toInt()
     }
-    fun setFlavor(flavor: String) {
-        _flavor = Util.convertStringIntoIntIfPossible(flavor)
+    fun setFlavor(context: Activity, flavor: String) {
+        if (validate(context, flavor)) return
+
+        _flavor = flavor.toInt()
     }
-    fun setRich(rich: String) {
-        _rich = Util.convertStringIntoIntIfPossible(rich)
+    fun setRich(context: Activity, rich: String) {
+        if (validate(context, rich)) return
+
+        _rich = rich.toInt()
     }
     fun setAmountBeans(amountBeans: String) { _amountBeans = Util.convertStringIntoIntIfPossible(amountBeans) }
     fun setTemperature(temperature: String) { _temperature = Util.convertStringIntoIntIfPossible(temperature) }

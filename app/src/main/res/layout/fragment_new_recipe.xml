@@ -114,7 +114,7 @@
                     android:layout_marginTop="5dp"
                     android:visibility="gone"
                     tools:text="hello world"
-                    android:textColor="@color/delete_color"
+                    android:textColor="@color/validation_color"
                     app:layout_constraintTop_toBottomOf="@+id/tasteAttention"
                     app:layout_constraintStart_toStartOf="@+id/tasteAttention" />
 

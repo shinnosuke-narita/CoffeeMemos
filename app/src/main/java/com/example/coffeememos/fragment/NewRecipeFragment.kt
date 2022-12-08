@@ -140,22 +140,22 @@ class NewRecipeFragment :
         })
         binding.bitterValue.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setBitter(editable.toString())
+                viewModel.setBitter(requireActivity(), editable.toString())
             }
         })
         binding.sweetValue.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setSweet(editable.toString())
+                viewModel.setSweet(requireActivity(), editable.toString())
             }
         })
         binding.flavorValue.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setFlavor(editable.toString())
+                viewModel.setFlavor(requireActivity(), editable.toString())
             }
         })
         binding.richValue.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setRich(editable.toString())
+                viewModel.setRich(requireActivity(), editable.toString())
             }
         })
 
