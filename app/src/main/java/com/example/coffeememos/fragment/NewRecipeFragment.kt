@@ -26,6 +26,7 @@ import com.example.coffeememos.state.ProcessState
 import com.example.coffeememos.utilities.AnimUtil
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
+import com.example.coffeememos.validate.ValidationState
 import com.example.coffeememos.viewModel.MainViewModel
 import com.example.coffeememos.viewModel.NewRecipeViewModel
 import com.example.coffeememos.viewModel.NewRecipeViewModelFactory
@@ -134,7 +135,7 @@ class NewRecipeFragment :
         // TextChangeListener セット
         binding.sourValue.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.setSour(editable.toString())
+                viewModel.setSour(requireActivity(), editable.toString())
             }
         })
         binding.bitterValue.addTextChangedListener(object : SimpleTextWatcher() {
@@ -198,6 +199,16 @@ class NewRecipeFragment :
                 viewModel.setComment(editable.toString())
             }
         })
+
+        viewModel.tasteValidation.observe(viewLifecycleOwner) { validation ->
+            if (validation.state == ValidationState.ERROR) {
+                binding.tasteValidateMessage.visibility = View.VISIBLE
+                binding.tasteValidateMessage.text = validation.message
+            } else {
+                binding.tasteValidateMessage.visibility = View.GONE
+                binding.tasteValidateMessage.text = validation.message
+            }
+        }
 
         // 編集ダイアログ
         // Roast

@@ -99,6 +99,24 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 
+                <TextView
+                    android:id="@+id/tasteAttention"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="※1~5の5段階で入力できます。"
+                    app:layout_constraintTop_toBottomOf="@+id/tasteTitle"
+                    app:layout_constraintStart_toStartOf="@+id/tasteTitle" />
+
+                <TextView
+                    android:id="@+id/tasteValidateMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    tools:text="hello world"
+                    android:textColor="@color/delete_color"
+                    app:layout_constraintTop_toBottomOf="@+id/tasteAttention"
+                    app:layout_constraintStart_toStartOf="@+id/tasteAttention" />
 
                 <TextView
                     android:id="@+id/sourTitle"
@@ -108,7 +126,7 @@
                     android:text="@string/sour"
                     android:textSize="15sp"
                     android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@+id/tasteTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/tasteValidateMessage"
                     app:layout_constraintStart_toStartOf="@+id/sourValue"
                     app:layout_constraintEnd_toEndOf="@+id/sourValue"/>
 

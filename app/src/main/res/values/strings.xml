@@ -77,6 +77,8 @@
     <string name="bean_finish_delete_message">コーヒー豆を削除しました</string>
     <string name="bean_finish_create_message">コーヒー豆を保存しました</string>
     <string name="bean_required_message">コーヒー豆が選択されてません</string>
+    <string name="taste_max_value_validation">入力の最大値は%1$dです</string>
+    <string name="taste_minimum_value_validation">入力の最小値は%1$dです</string>
 
     <string name="elevation_width_meters">%1$sm</string>
     <string name="elevation_from_to">%1$sm ~ %2$sm</string>

@@ -159,5 +159,8 @@ class Constants {
             "ハニープロセス",
             "アナエロビックファーメンテーション",
         )
+
+        const val TASTE_MAX_VALUE: Int = 5
+        const val TASTE_MINIMUM_VALUE: Int = 1
     }
 }

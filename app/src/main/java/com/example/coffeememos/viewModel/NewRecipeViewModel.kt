@@ -1,6 +1,10 @@
 package com.example.coffeememos.viewModel
 
+import android.app.Activity
+import android.content.Context
 import androidx.lifecycle.*
+import com.example.coffeememos.Constants
+import com.example.coffeememos.R
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.dao.TasteDao
@@ -12,6 +16,8 @@ import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.state.ProcessState
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.Util
+import com.example.coffeememos.validate.TasteValidation
+import com.example.coffeememos.validate.ValidationState
 import kotlinx.coroutines.*
 
 class NewRecipeViewModel(
@@ -19,6 +25,8 @@ class NewRecipeViewModel(
     private val beanDao: BeanDao,
     private val tasteDao: TasteDao
 ) : ViewModel() {
+    private val VALIDATION_MESSAGE_DISPLAY_TIME: Long = 1500L
+
     // お気に入り
     private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
     val isFavorite: LiveData<Boolean> = _isFavorite
@@ -79,20 +87,64 @@ class NewRecipeViewModel(
     private var _tool                 : String = ""
     private var _comment              : String = ""
 
-    fun setSour(sour: String)                                   { _sour =  Util.convertStringIntoIntIfPossible(sour) }
-    fun setBitter(bitter: String)                               { _bitter =  Util.convertStringIntoIntIfPossible(bitter) }
-    fun setSweet(sweet: String)                                 { _sweet =  Util.convertStringIntoIntIfPossible(sweet) }
-    fun setFlavor(flavor: String)                               { _flavor = Util.convertStringIntoIntIfPossible(flavor) }
-    fun setRich(rich: String)                                   { _rich = Util.convertStringIntoIntIfPossible(rich) }
-    fun setAmountBeans(amountBeans: String)                     { _amountBeans = Util.convertStringIntoIntIfPossible(amountBeans) }
-    fun setTemperature(temperature: String)                     { _temperature = Util.convertStringIntoIntIfPossible(temperature) }
-    fun setPreInfusionTime(preInfusionTime: String)             { _preInfusionTime = Util.convertStringIntoIntIfPossible(preInfusionTime) }
+    private fun validate(context: Activity, value: String): Int {
+        if (value == "") return -1
+
+        val convertRes = Util.convertStringIntoIntIfPossible(value)
+        val message =
+            if (convertRes == 0) {
+                context.getString(R.string.taste_minimum_value_validation, Constants.TASTE_MINIMUM_VALUE)
+            } else if (convertRes > Constants.TASTE_MAX_VALUE) {
+                context.getString(R.string.taste_max_value_validation, Constants.TASTE_MAX_VALUE)
+            } else ""
+
+        if (message != "") {
+            _tasteValidation.value = TasteValidation(ValidationState.ERROR, message)
+
+            viewModelScope.launch(Dispatchers.Default) {
+                delay(VALIDATION_MESSAGE_DISPLAY_TIME)
+                _tasteValidation.postValue(TasteValidation(ValidationState.NORMAL, ""))
+            }
+            return -1
+        }
+
+        return convertRes
+    }
+
+    fun setSour(context: Activity, sour: String) {
+        val res = validate(context, sour)
+        if (res == -1) return
+
+        _sour = res
+    }
+    fun setBitter(bitter: String) {
+        _bitter =  Util.convertStringIntoIntIfPossible(bitter)
+    }
+    fun setSweet(sweet: String) {
+        _sweet =  Util.convertStringIntoIntIfPossible(sweet)
+    }
+    fun setFlavor(flavor: String) {
+        _flavor = Util.convertStringIntoIntIfPossible(flavor)
+    }
+    fun setRich(rich: String) {
+        _rich = Util.convertStringIntoIntIfPossible(rich)
+    }
+    fun setAmountBeans(amountBeans: String) { _amountBeans = Util.convertStringIntoIntIfPossible(amountBeans) }
+    fun setTemperature(temperature: String) { _temperature = Util.convertStringIntoIntIfPossible(temperature) }
+    fun setPreInfusionTime(preInfusionTime: String) { _preInfusionTime = Util.convertStringIntoIntIfPossible(preInfusionTime) }
     fun setExtractionTimeMinutes(extractionTimeMinutes: String) {_extractionTimeMinutes = Util.convertStringIntoIntIfPossible(extractionTimeMinutes) }
     fun setExtractionTimeSeconds(extractionTimeSeconds: String) {_extractionTimeSeconds = Util.convertStringIntoIntIfPossible(extractionTimeSeconds) }
-    fun setAmountExtraction(amountExtraction: String)           {_amountExtraction = Util.convertStringIntoIntIfPossible(amountExtraction) }
-    fun setTool(tool: String)                                   { _tool = tool }
-    fun setComment(comment: String)                             { _comment = comment }
+    fun setAmountExtraction(amountExtraction: String) {_amountExtraction = Util.convertStringIntoIntIfPossible(amountExtraction) }
+    fun setTool(tool: String) { _tool = tool }
+    fun setComment(comment: String) { _comment = comment }
 
+    // tasteバリデーション
+    private val _tasteValidation: MutableLiveData<TasteValidation> = MutableLiveData()
+    val tasteValidation: LiveData<TasteValidation> = _tasteValidation
+
+    fun setTasteValidation(validation: TasteValidation) {
+        _tasteValidation.value = validation
+    }
 
     // menuの状態管理
     private var _isMenuOpened: MutableLiveData<MenuState> = MutableLiveData(null)
@@ -136,7 +188,6 @@ class NewRecipeViewModel(
 
 
     // 保存処理
-    @OptIn(DelicateCoroutinesApi::class)
     fun createNewRecipeAndTaste(beanId: Long, preInfusionTime: Long, extractionTime: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             // 保存処理開始
