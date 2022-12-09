@@ -5,56 +5,48 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.R
+import com.example.coffeememos.databinding.FragmentSearchBeanBinding
+import com.example.coffeememos.databinding.FragmentSearchRecipeBinding
+import com.example.coffeememos.databinding.SearchContentsBinding
+import com.example.coffeememos.viewModel.MainSearchViewModel
+import com.example.coffeememos.viewModel.SearchBeanViewModel
+import com.example.coffeememos.viewModel.SearchRecipeViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SearchBeanFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SearchBeanFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    // viewBinding
+    private var _mainBinding: FragmentSearchBeanBinding? = null
+    private val mainBinding get() = _mainBinding!!
+    // merge tag 使用
+    private var _binding: SearchContentsBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: SearchBeanViewModel by viewModels {
+        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
+        SearchBeanViewModel.SearchBeanViewModelFactory(db.beanDao())
+    }
+
+    // 共有viewModel
+    private val sharedViewModel: MainSearchViewModel by viewModels({ requireParentFragment() })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_bean, container, false)
+    ): View {
+        _mainBinding = FragmentSearchBeanBinding.inflate(inflater, container, false)
+        _binding = SearchContentsBinding.bind(mainBinding.root)
+        return mainBinding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SearchBeanFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SearchBeanFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
     }
 }

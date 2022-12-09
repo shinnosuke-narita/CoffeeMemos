@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +15,7 @@ import com.example.coffeememos.CustomRecipe
 import com.example.coffeememos.R
 import com.example.coffeememos.adapter.RecipeDetailAdapter
 import com.example.coffeememos.databinding.FragmentSearchRecipeBinding
+import com.example.coffeememos.databinding.SearchContentsBinding
 import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.viewModel.MainSearchViewModel
@@ -24,8 +24,12 @@ import com.example.coffeememos.viewModel.SearchRecipeViewModel
 
 class SearchRecipeFragment : Fragment() {
     // viewBinding
-    private var _binding: FragmentSearchRecipeBinding? = null
+    private var _mainBinding: FragmentSearchRecipeBinding? = null
+    private val mainBinding get() = _mainBinding!!
+    // merge tag 使用
+    private var _binding: SearchContentsBinding? = null
     private val binding get() = _binding!!
+
 
     private val viewModel: SearchRecipeViewModel by viewModels {
         val db = ((context?.applicationContext) as CoffeeMemosApplication).database
@@ -39,8 +43,9 @@ class SearchRecipeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSearchRecipeBinding.inflate(inflater, container, false)
-        return binding.root
+        _mainBinding = FragmentSearchRecipeBinding.inflate(inflater, container, false)
+        _binding = SearchContentsBinding.bind(mainBinding.root)
+        return mainBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,7 +73,7 @@ class SearchRecipeFragment : Fragment() {
 
         // レシピ数 監視処理
         viewModel.recipeCount.observe(viewLifecycleOwner) { count ->
-            binding.recipeCount.text = requireContext().getString(R.string.recipeCount, count)
+            binding.itemCount.text = requireContext().getString(R.string.recipeCount, count)
         }
 
         // 現在のソート 監視処理
