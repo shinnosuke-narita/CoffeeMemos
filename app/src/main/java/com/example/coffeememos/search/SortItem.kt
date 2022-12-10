@@ -1,3 +1,3 @@
 package com.example.coffeememos.search
 
-data class SortItem(val type: SortType, var isSelected: Boolean)
+data class SortItem(val type: RecipeSortType, var isSelected: Boolean)

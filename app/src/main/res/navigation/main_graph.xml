@@ -63,6 +63,9 @@
         <action
             android:id="@+id/show_recipe_detail_action"
             app:destination="@id/recipeDetailFragment" />
+        <action
+            android:id="@+id/show_bean_detail_action"
+            app:destination="@id/beanDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeRecipeFragment"

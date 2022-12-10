@@ -2,7 +2,6 @@ package com.example.coffeememos.viewModel
 
 import android.view.View
 import androidx.lifecycle.*
-import com.example.coffeememos.Constants
 import com.example.coffeememos.SimpleBeanInfo
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
@@ -14,7 +13,7 @@ import kotlinx.coroutines.launch
 class HomeBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
     private val maxDisplayItemAmount = 10
 
-    private var allBean: LiveData<List<Bean>> = beanDao.getAllBean().asLiveData()
+    private var allBean: LiveData<List<Bean>> = beanDao.getAllByFlow().asLiveData()
 
     val simpleBeanInfoList: LiveData<MutableList<SimpleBeanInfo>> = Transformations.map(allBean) { allBean ->
         val result = mutableListOf<SimpleBeanInfo>()

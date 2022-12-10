@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.entity.Bean
+import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
 
-class BeanAdapter(context: Context, data: List<Bean>) : BaseAdapter<Bean, BeanViewHolder>(context, data) {
+class BeanAdapter(context: Context, data: List<CustomBean>) : BaseAdapter<CustomBean, BeanViewHolder>(context, data) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeanViewHolder {
         return BeanViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.bean_item, parent, false)

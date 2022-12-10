@@ -8,7 +8,7 @@ import android.widget.BaseAdapter
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.coffeememos.search.SortType
+import com.example.coffeememos.search.RecipeSortType
 import com.example.coffeememos.adapter.SortAdapter
 import com.example.coffeememos.databinding.FragmentSortBinding
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
@@ -68,7 +68,7 @@ class SortFragment : Fragment() {
             searchRecipeViewModel.changeBottomSheetState()
 
             // sort 処理
-            val sortType: SortType = viewModel.getSelectedSortType()
+            val sortType: RecipeSortType = viewModel.getSelectedSortType()
             searchRecipeViewModel.sortSearchResult(sortType)
 
             parentFragmentManager.popBackStack()

@@ -1,16 +1,24 @@
 package com.example.coffeememos.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.R
+import com.example.coffeememos.adapter.BeanAdapter
 import com.example.coffeememos.databinding.FragmentSearchBeanBinding
 import com.example.coffeememos.databinding.FragmentSearchRecipeBinding
 import com.example.coffeememos.databinding.SearchContentsBinding
+import com.example.coffeememos.entity.CustomBean
+import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.viewModel.MainSearchViewModel
 import com.example.coffeememos.viewModel.SearchBeanViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
@@ -47,6 +55,36 @@ class SearchBeanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpRecyclerView(requireContext(), binding.searchResultRV)
 
+        viewModel.searchResult.observe(viewLifecycleOwner) { list ->
+            if (list == null) return@observe
+
+            binding.searchResultRV.adapter = BeanAdapter(requireContext(), list).apply {
+                setOnItemClickListener (object : OnItemClickListener<CustomBean> {
+                    override fun onClick(view: View, bean: CustomBean) {
+                        val showDetailAction = SearchFragmentDirections.showBeanDetailAction().apply {
+                            beanId = bean.id
+                        }
+
+                        Navigation.findNavController(view).navigate(showDetailAction)
+                    }
+                })
+            }
+        }
+
+        viewModel.allCustomBean.observe(viewLifecycleOwner) { list ->
+            viewModel.setSearchResult(list)
+        }
+
+        viewModel.currentSortType.observe(viewLifecycleOwner) { type ->
+            binding.currentSortText.text = type.getSortName()
+        }
+    }
+
+    private fun setUpRecyclerView(context: Context, rv: RecyclerView) {
+        rv.layoutManager = LinearLayoutManager(context).apply {
+            orientation = LinearLayoutManager.VERTICAL
+        }
     }
 }

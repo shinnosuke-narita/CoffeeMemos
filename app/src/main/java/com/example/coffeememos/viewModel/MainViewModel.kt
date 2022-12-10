@@ -2,14 +2,15 @@ package com.example.coffeememos.viewModel
 
 import androidx.lifecycle.*
 import com.example.coffeememos.entity.Bean
+import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.state.InputType
 import com.example.coffeememos.utilities.DateUtil
 
 class MainViewModel : ViewModel() {
-    private val _selectedBean: MutableLiveData<Bean?> = MutableLiveData(null)
-    val selectedBean: LiveData<Bean?> = _selectedBean
+    private val _selectedBean: MutableLiveData<CustomBean?> = MutableLiveData(null)
+    val selectedBean: LiveData<CustomBean?> = _selectedBean
 
-    fun setBean(bean: Bean) {
+    fun setBean(bean: CustomBean) {
         _selectedBean.value = bean
     }
 

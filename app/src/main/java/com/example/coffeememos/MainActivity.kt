@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.coffeememos.Constants
 import com.example.coffeememos.databinding.ActivityMainBinding
+import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -77,20 +78,24 @@ class MainActivity : AppCompatActivity() {
                 beanDao.insert(Constants.sampleBean5)
 
                 val beans = beanDao.getAll()
+                val recipeList: MutableList<Recipe> = mutableListOf()
                 for (bean in beans) {
-                    Constants.sampleRecipe1.beanId = bean.id
-                    Constants.sampleRecipe2.beanId = bean.id
-                    recipeDao.insert(Constants.sampleRecipe1)
-                    recipeDao.insert(Constants.sampleRecipe2)
+                    for (i in 0 until 60) {
+                        Constants.sampleRecipe1.beanId = bean.id
+                        Constants.sampleRecipe2.beanId = bean.id
+                        recipeList.add(Constants.sampleRecipe1)
+                        recipeList.add(Constants.sampleRecipe2)
+                    }
                 }
+                recipeDao.insertAll(recipeList)
 
-                val recipes = recipeDao.getAll()
-                for ((index, recipe) in recipes.withIndex()) {
+                val recipeIds: List<Long> = recipeDao.getIds()
+                for ((index, id) in recipeIds.withIndex()) {
                     val value = (index % 5) + 1
                     tasteDao.insert(
                         Taste(
                             0,
-                            recipe.id,
+                            id,
                             value,
                             value,
                             value,
@@ -99,6 +104,10 @@ class MainActivity : AppCompatActivity() {
                         )
                     )
                 }
+
+                Log.d("initializeDataProcess", "==========================================")
+                Log.d("initializeDataProcess", "finish")
+                Log.d("initializeDataProcess", "==========================================")
             }
         }
 

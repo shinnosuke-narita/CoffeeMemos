@@ -3,19 +3,14 @@ package com.example.coffeememos.viewModel
 import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
+import com.example.coffeememos.entity.CustomBean
 import kotlinx.coroutines.launch
 
 class SelectBeanViewModel(
     val beanDao: BeanDao
 ) : ViewModel() {
-    private var _beanList: MutableLiveData<List<Bean>> = MutableLiveData(listOf())
-    val beanList: LiveData<List<Bean>> = _beanList
+    val beanList: LiveData<List<CustomBean>> = beanDao.getCustomBean().asLiveData()
 
-    init {
-        viewModelScope.launch {
-            _beanList.postValue(beanDao.getAll())
-        }
-    }
 }
 
 class SelectBeanViewModelFactory(private val beanDao: BeanDao)
