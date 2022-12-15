@@ -67,13 +67,12 @@ class SearchRecipeFragment : Fragment() {
             binding.searchResultRV.adapter = setUpAdapter(list)
         }
 
+        // 絞り込み結果 監視処理
         viewModel.filteringResult.observe(viewLifecycleOwner) { list ->
             if (list == null) return@observe
 
             binding.searchResultRV.adapter = setUpAdapter(list)
         }
-
-
 
         // レシピ数 監視処理
         viewModel.recipeCount.observe(viewLifecycleOwner) { count ->

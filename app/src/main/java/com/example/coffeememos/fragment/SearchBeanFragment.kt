@@ -59,6 +59,7 @@ class SearchBeanFragment : Fragment() {
 
         setUpRecyclerView(requireContext(), binding.searchResultRV)
 
+        // 検索結果 監視処理
         viewModel.searchResult.observe(viewLifecycleOwner) { list ->
             if (list == null) return@observe
 
@@ -79,8 +80,14 @@ class SearchBeanFragment : Fragment() {
             viewModel.setSearchResult(list)
         }
 
+        // 現在のソート 監視処理
         viewModel.currentSortType.observe(viewLifecycleOwner) { type ->
             binding.currentSortText.text = type.getSortName()
+        }
+
+        // レシピ数 監視処理
+        viewModel.recipeCount.observe(viewLifecycleOwner) { count ->
+            binding.itemCount.text = requireContext().getString(R.string.recipeCount, count)
         }
 
         viewModel.isOpened.observe(viewLifecycleOwner) { isOpened ->

@@ -26,6 +26,19 @@ class SearchBeanViewModel(beanDao: BeanDao) : ViewModel() {
     private val _currentSortType: MutableLiveData<BeanSortType> = MutableLiveData(BeanSortType.NEW)
     val currentSortType: LiveData<BeanSortType> = _currentSortType
 
+    val recipeCount: MediatorLiveData<Int?> = MediatorLiveData<Int?>().apply {
+        addSource(_searchResult) { list ->
+            if (list == null) return@addSource
+            value = list.size
+        }
+
+        addSource(_filteringResult) { list ->
+            if (list == null) return@addSource
+
+            value = list.size
+        }
+    }
+
     // BottomSheet 状態監視
     private val _isOpened: MutableLiveData<Boolean> = MutableLiveData(false)
     val isOpened: LiveData<Boolean> = _isOpened
