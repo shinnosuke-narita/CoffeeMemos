@@ -26,6 +26,13 @@ class SearchBeanViewModel(beanDao: BeanDao) : ViewModel() {
     private val _currentSortType: MutableLiveData<BeanSortType> = MutableLiveData(BeanSortType.NEW)
     val currentSortType: LiveData<BeanSortType> = _currentSortType
 
+    // BottomSheet 状態監視
+    private val _isOpened: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isOpened: LiveData<Boolean> = _isOpened
+
+    fun changeBottomSheetState() {
+        _isOpened.value = !(_isOpened.value!!)
+    }
 
     // 並び替え処理
     fun sortSearchResult(sortType: BeanSortType) {

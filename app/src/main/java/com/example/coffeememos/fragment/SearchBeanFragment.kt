@@ -19,6 +19,8 @@ import com.example.coffeememos.databinding.FragmentSearchRecipeBinding
 import com.example.coffeememos.databinding.SearchContentsBinding
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.listener.OnItemClickListener
+import com.example.coffeememos.search.BeanSortType
+import com.example.coffeememos.search.RecipeSortType
 import com.example.coffeememos.viewModel.MainSearchViewModel
 import com.example.coffeememos.viewModel.SearchBeanViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
@@ -79,6 +81,34 @@ class SearchBeanFragment : Fragment() {
 
         viewModel.currentSortType.observe(viewLifecycleOwner) { type ->
             binding.currentSortText.text = type.getSortName()
+        }
+
+        viewModel.isOpened.observe(viewLifecycleOwner) { isOpened ->
+            if (isOpened) binding.wholeShadow.visibility = View.VISIBLE
+            else binding.wholeShadow.visibility = View.GONE
+        }
+
+        binding.sortBtn.setOnClickListener { view ->
+            viewModel.changeBottomSheetState()
+
+            val originData = BeanSortType.getNameList()
+            val currentSortTypeName = viewModel.currentSortType.value!!.getSortName()
+            val currentIndex = BeanSortType.getIndexByName(currentSortTypeName)
+
+            childFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_from_bottom,R.anim.go_down,R.anim.enter_from_bottom, R.anim.go_down)
+                .replace(R.id.bottomSheet, SortFragment.create(currentIndex, originData.toTypedArray()))
+                .addToBackStack(null)
+                .commit()
+        }
+
+        childFragmentManager.setFragmentResultListener("sortResult", viewLifecycleOwner) { _, bundle ->
+            viewModel.changeBottomSheetState()
+
+            val selectedIndex: Int = bundle.getInt("selectedIndex", 0)
+            val selectedSortType: BeanSortType = BeanSortType.getSortTypeByIndex(selectedIndex)
+
+            viewModel.sortSearchResult(selectedSortType)
         }
     }
 
