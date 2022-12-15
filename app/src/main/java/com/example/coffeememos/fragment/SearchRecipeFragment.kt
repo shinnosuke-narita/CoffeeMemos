@@ -1,11 +1,13 @@
 package com.example.coffeememos.fragment
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,8 +18,10 @@ import com.example.coffeememos.R
 import com.example.coffeememos.adapter.RecipeDetailAdapter
 import com.example.coffeememos.databinding.FragmentSearchRecipeBinding
 import com.example.coffeememos.databinding.SearchContentsBinding
+import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.listener.OnItemClickListener
+import com.example.coffeememos.search.RecipeSortType
 import com.example.coffeememos.viewModel.MainSearchViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
 
@@ -96,11 +100,24 @@ class SearchRecipeFragment : Fragment() {
         binding.sortBtn.setOnClickListener { view ->
             viewModel.changeBottomSheetState()
 
+            val originData = RecipeSortType.getNameList()
+            val currentSortTypeName = viewModel.currentSortType.value!!.getSortName()
+            val currentIndex = RecipeSortType.getIndexByName(currentSortTypeName)
+
             childFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_bottom,R.anim.go_down,R.anim.enter_from_bottom, R.anim.go_down)
-                .replace(R.id.bottomSheet, SortFragment.create(viewModel.currentSortType.value!!.getSortName()))
+                .replace(R.id.bottomSheet, SortFragment.create(currentIndex, originData.toTypedArray()))
                 .addToBackStack(null)
                 .commit()
+        }
+
+        childFragmentManager.setFragmentResultListener("sortResult", viewLifecycleOwner) { _, bundle ->
+            viewModel.changeBottomSheetState()
+
+            val selectedIndex: Int = bundle.getInt("selectedIndex", 0)
+            val selectedSortType: RecipeSortType = RecipeSortType.getSortTypeByIndex(selectedIndex)
+
+            viewModel.sortSearchResult(selectedSortType)
         }
         // 絞り込みボタン クリックリスナ―
         binding.refineBtn.setOnClickListener { view ->

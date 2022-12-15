@@ -13,4 +13,32 @@ enum class RecipeSortType {
     RICH       { override fun getSortName(): String = "コク順"};
 
     abstract fun getSortName(): String
+
+    companion object {
+        fun getNameList(): List<String> {
+            val res = mutableListOf<String>()
+            for (sortType in values()) {
+                res.add(sortType.getSortName())
+            }
+            return res
+        }
+
+        fun getIndexByName(sortName: String): Int {
+            for ((i, name) in getNameList().withIndex()) {
+                if (name == sortName) return i
+            }
+
+            return 0
+        }
+
+        fun getSortTypeByIndex(index: Int): RecipeSortType {
+            for ((i, sortType) in values().withIndex()) {
+                if (i == index) {
+                    return sortType
+                }
+            }
+
+            return RecipeSortType.NEW
+        }
+    }
 }

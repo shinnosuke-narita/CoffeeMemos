@@ -8,9 +8,9 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.coffeememos.R
-import com.example.coffeememos.search.SortItem
+import com.example.coffeememos.manager.DialogDataHolder
 
-class SortAdapter (private val context: Context, private val data: List<SortItem>) : BaseAdapter() {
+class SortAdapter (private val context: Context, private val data: List<DialogDataHolder.DialogData>) : BaseAdapter() {
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getCount(): Int {
@@ -29,7 +29,7 @@ class SortAdapter (private val context: Context, private val data: List<SortItem
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val itemView: View = convertView ?: inflater.inflate(R.layout.sort_list_item, null)
 
-        itemView.findViewById<TextView>(R.id.sortName).text = data[position].type.getSortName()
+        itemView.findViewById<TextView>(R.id.sortName).text = data[position].name
 
         if (data[position].isSelected) {
             itemView.findViewById<ImageView>(R.id.checkIcon).visibility = View.VISIBLE

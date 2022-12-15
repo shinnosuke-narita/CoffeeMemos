@@ -7,29 +7,26 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import com.example.coffeememos.search.RecipeSortType
+import androidx.fragment.app.setFragmentResult
 import com.example.coffeememos.adapter.SortAdapter
 import com.example.coffeememos.databinding.FragmentSortBinding
-import com.example.coffeememos.viewModel.SearchRecipeViewModel
-import com.example.coffeememos.viewModel.SortViewModel
+import com.example.coffeememos.manager.DialogDataHolder
 
 class SortFragment : Fragment() {
     private var _binding: FragmentSortBinding? = null
     private val binding
         get() = _binding!!
 
-    private val viewModel: SortViewModel by viewModels()
-    // 親のviewModel
-    private val searchRecipeViewModel: SearchRecipeViewModel by viewModels({requireParentFragment()})
-
     private lateinit var _adapter: BaseAdapter
 
+    private lateinit var dataHolder: DialogDataHolder
+
     companion object  {
-        fun create(sortName: String): SortFragment {
+        fun create(index: Int, originData: Array<String>): SortFragment {
             return SortFragment().apply {
                 arguments = Bundle().apply {
-                    putString("sortName", sortName)
+                    putInt("index", index)
+                    putStringArray("originData", originData)
                 }
             }
         }
@@ -37,9 +34,13 @@ class SortFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sortName = arguments?.getString("sortName", "") ?: ""
+        arguments?.let { bundle ->
 
-        viewModel.setSortItemList(sortName)
+            dataHolder = DialogDataHolder(
+                bundle.getInt("index"),
+                bundle.getStringArray("originData") ?: arrayOf()
+            )
+        }
     }
 
     override fun onCreateView(
@@ -54,29 +55,24 @@ class SortFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // アダプター保持
-        _adapter = SortAdapter(requireContext(), viewModel.sortItemList)
+        _adapter = SortAdapter(requireContext(), dataHolder.dialogData)
         binding.lv.adapter = _adapter
         binding.lv.setOnItemClickListener { _, _, position, _ ->
-            viewModel.changeData(position)
+            dataHolder.updateProcessList(position)
             _adapter.notifyDataSetChanged()
         }
 
-
         // 閉じるボタンクリックリスナ―
         binding.closeIcon.setOnClickListener {
-            // shadow消す
-            searchRecipeViewModel.changeBottomSheetState()
-
-            // sort 処理
-            val sortType: RecipeSortType = viewModel.getSelectedSortType()
-            searchRecipeViewModel.sortSearchResult(sortType)
+            setFragmentResult("sortResult", Bundle().apply {
+                putInt("selectedIndex", dataHolder.currentIndex)
+            })
 
             parentFragmentManager.popBackStack()
         }
 
         // バックキー ハンドリング
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            searchRecipeViewModel.changeBottomSheetState()
             parentFragmentManager.popBackStack()
         }
     }
