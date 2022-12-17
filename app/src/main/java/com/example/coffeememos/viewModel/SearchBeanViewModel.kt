@@ -1,11 +1,14 @@
 package com.example.coffeememos.viewModel
 
 import androidx.lifecycle.*
+import com.example.coffeememos.Constants
 import com.example.coffeememos.CustomRecipe
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.search.BeanSortType
 import com.example.coffeememos.search.RecipeSortType
+import com.example.coffeememos.search.SearchKeyWord
+import com.example.coffeememos.search.SearchType
 
 class SearchBeanViewModel(beanDao: BeanDao) : ViewModel() {
     val allCustomBean: LiveData<List<CustomBean>> = beanDao.getCustomBean().asLiveData()
@@ -47,6 +50,43 @@ class SearchBeanViewModel(beanDao: BeanDao) : ViewModel() {
         _isOpened.value = !(_isOpened.value!!)
     }
 
+    fun freeWordSearch(keyWord: SearchKeyWord) {
+        if (keyWord.type == SearchType.RECIPE) return
+        if (keyWord.keyWord == "") return
+
+        val result: MutableList<CustomBean> = mutableListOf()
+        val _keyWord: String = keyWord.keyWord
+
+        for(bean in allCustomBean.value!!) {
+            if (bean.country.contains(_keyWord)) {
+                result.add(bean)
+                continue
+            }
+            if(bean.farm.contains(_keyWord)) {
+                result.add(bean)
+                continue
+            }
+            if (bean.district.contains(_keyWord)) {
+                result.add(bean)
+                continue
+            }
+            if (bean.store.contains(_keyWord)) {
+                result.add(bean)
+                continue
+            }
+            if (bean.species.contains(_keyWord)) {
+                result.add(bean)
+                continue
+            }
+            if (Constants.processList[bean.process].contains(_keyWord)) {
+                result.add(bean)
+                continue
+            }
+        }
+
+        _searchResult.value = result
+    }
+
     // 並び替え処理
     fun sortSearchResult(sortType: BeanSortType) {
         // currentSortTypeの更新処理
@@ -70,9 +110,6 @@ class SearchBeanViewModel(beanDao: BeanDao) : ViewModel() {
 
         return result
     }
-
-
-
 
     class SearchBeanViewModelFactory(
         private val beanDao: BeanDao

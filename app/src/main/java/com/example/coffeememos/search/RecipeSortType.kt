@@ -1,5 +1,6 @@
 package com.example.coffeememos.search
 
+// todo コーヒーのソートタイプとレシピのソートタイプを抽出するメソッドを用意すればいけるかも？
 enum class RecipeSortType {
     NEW        { override fun getSortName(): String = "新しい順"},
     OLD        { override fun getSortName(): String = "古い順"},

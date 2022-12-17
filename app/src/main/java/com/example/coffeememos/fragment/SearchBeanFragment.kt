@@ -85,6 +85,10 @@ class SearchBeanFragment : Fragment() {
             binding.currentSortText.text = type.getSortName()
         }
 
+        sharedViewModel.searchKeyWord.observe(viewLifecycleOwner) { keyWord ->
+            viewModel.freeWordSearch(keyWord)
+        }
+
         // レシピ数 監視処理
         viewModel.recipeCount.observe(viewLifecycleOwner) { count ->
             binding.itemCount.text = requireContext().getString(R.string.recipeCount, count)
