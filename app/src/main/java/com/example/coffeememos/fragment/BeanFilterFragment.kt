@@ -7,15 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentBeanFilterBinding
 import com.example.coffeememos.databinding.FragmentFilterBinding
+import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.viewModel.BeanFilterViewModel
 import com.example.coffeememos.viewModel.FilterViewModel
 import com.example.coffeememos.viewModel.SearchBeanViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
 
-class BeanFilterFragment : Fragment() {
+class BeanFilterFragment : BaseFilterFragment() {
     private var _binding: FragmentBeanFilterBinding? = null
     private val binding
         get() = _binding!!
@@ -36,10 +38,95 @@ class BeanFilterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val tag = binding.ratingContainer.root.tag
-
+        // view セットアップ
         setUpView()
+
+        viewModel.countryMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.countryContainer.root)
+        }
+
+        viewModel.farmMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.farmContainer.root)
+        }
+
+        viewModel.districtMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.districtContainer.root)
+        }
+
+        viewModel.storeMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.storeContainer.root)
+        }
+
+        viewModel.speciesMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.speciesContainer.root)
+        }
+
+        viewModel.ratingMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.ratingContainer.root)
+        }
+
+        viewModel.processMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.processContainer)
+        }
+
+        viewModel.processBtnStateList.observe(viewLifecycleOwner) { list ->
+            setRadioBtnResource(list) { index -> processViewList[index].findViewById(R.id.radioBtn) }
+        }
+
+        viewModel.selectedProcessText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.processTitleWrapper.selectedItem)
+        }
+
+        binding.countryTitleWrapper.root.setOnClickListener {
+            updateMenuState(viewModel.countryMenuState.value, binding.countryContainer.root,
+                { viewModel.setCountryMenuState(MenuState.OPEN)},
+                { viewModel.setCountryMenuState(MenuState.CLOSE)}
+            )
+        }
+
+        binding.farmTitleWrapper.root.setOnClickListener {
+            updateMenuState(viewModel.farmMenuState.value, binding.farmContainer.root,
+                { viewModel.setFarmMenuState(MenuState.OPEN)},
+                { viewModel.setFarmMenuState(MenuState.CLOSE)}
+            )
+        }
+
+        binding.districtTitleWrapper.root.setOnClickListener {
+            updateMenuState(viewModel.districtMenuState.value, binding.districtContainer.root,
+                { viewModel.setDistrictMenuState(MenuState.OPEN)},
+                { viewModel.setDistrictMenuState(MenuState.CLOSE)}
+            )
+        }
+
+        binding.storeTitleWrapper.root.setOnClickListener {
+            updateMenuState(viewModel.storeMenuState.value, binding.storeContainer.root,
+                { viewModel.setStoreMenuState(MenuState.OPEN)},
+                { viewModel.setStoreMenuState(MenuState.CLOSE)}
+            )
+        }
+
+        binding.speciesTitleWrapper.root.setOnClickListener {
+            updateMenuState(viewModel.speciesMenuState.value, binding.speciesContainer.root,
+                { viewModel.setSpeciesMenuState(MenuState.OPEN)},
+                { viewModel.setSpeciesMenuState(MenuState.CLOSE)}
+            )
+        }
+
+        binding.processTitleWrapper.root.setOnClickListener {
+            updateMenuState(viewModel.processMenuState.value, binding.processContainer,
+                { viewModel.setProcessMenuState(MenuState.OPEN)},
+                { viewModel.setProcessMenuState(MenuState.CLOSE)}
+            )
+        }
+
+        binding.ratingTitleWrapper.root.setOnClickListener {
+            updateMenuState(viewModel.ratingMenuState.value, binding.ratingContainer.root,
+                { viewModel.setRatingMenuState(MenuState.OPEN)},
+                { viewModel.setRatingMenuState(MenuState.CLOSE)}
+            )
+        }
+
+
     }
 
     private fun setUpView() {
@@ -61,9 +148,17 @@ class BeanFilterFragment : Fragment() {
         binding.ratingContainer.root.tag = getString(R.string.review)
         binding.processContainer.tag = getString(R.string.process)
 
+        // コーヒー精製法のコンテナ セットアップ
+        setUpRadioBtnContainer(Constants.processList, binding.processContainer, processViewList) { index ->
+            viewModel.setProcessBtnState(index)
+        }
+    }
 
+    private fun updateMenuState(_currentState: MenuState?, containerView: ViewGroup, setOpenProcess: () -> Unit, setCloseProcess: () -> Unit) {
+        val currentState = _currentState ?: MenuState.CLOSE
+        if (currentState == MenuState.OPEN) setCloseProcess()
+        else setOpenProcess()
 
-
-
+        viewModel.updateMenuState(containerView, requireActivity())
     }
 }

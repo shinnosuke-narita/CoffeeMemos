@@ -1,17 +1,11 @@
 package com.example.coffeememos.fragment
 
-import android.animation.ValueAnimator
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.addCallback
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
@@ -21,7 +15,6 @@ import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.utilities.AnimUtil.Companion.collapseMenu
 import com.example.coffeememos.utilities.AnimUtil.Companion.expandMenu
 import com.example.coffeememos.utilities.SystemUtil
-import com.example.coffeememos.utilities.SystemUtil.Companion.hideKeyBoard
 import com.example.coffeememos.viewModel.FilterViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
 
@@ -126,7 +119,7 @@ class FilterFragment : BaseFilterFragment() {
         }
 
         viewModel.selectedRoastText.observe(viewLifecycleOwner) { selectedText ->
-            updateFilteringView(selectedText, binding.selectedRoast)
+            updateCurrentFilterElementText(selectedText, binding.selectedRoast)
         }
 
         viewModel.roastMenuState.observe(viewLifecycleOwner) { state ->
@@ -138,7 +131,7 @@ class FilterFragment : BaseFilterFragment() {
         }
 
         viewModel.selectedGrindSizeText.observe(viewLifecycleOwner) { selectedText ->
-            updateFilteringView(selectedText, binding.selectedGrindSize)
+            updateCurrentFilterElementText(selectedText, binding.selectedGrindSize)
         }
 
         viewModel.grindSizeMenuState.observe(viewLifecycleOwner) { state ->
@@ -162,7 +155,7 @@ class FilterFragment : BaseFilterFragment() {
             }
         }
         viewModel.inputCountriesText.observe(viewLifecycleOwner) { text ->
-            updateFilteringView(text, binding.inputCountries)
+            updateCurrentFilterElementText(text, binding.inputCountries)
         }
 
         // 抽出器具 監視処理
@@ -199,7 +192,7 @@ class FilterFragment : BaseFilterFragment() {
             setRadioBtnResource(stateList) { index -> ratingRadioBtnList[index] }
         }
         viewModel.selectedRatingText.observe(viewLifecycleOwner) { text ->
-            updateFilteringView(text, binding.selectedRating)
+            updateCurrentFilterElementText(text, binding.selectedRating)
         }
 
         // 酸味 監視処理
@@ -210,7 +203,7 @@ class FilterFragment : BaseFilterFragment() {
             setRadioBtnResource(stateList) { index -> sourRadioBtnList[index] }
         }
         viewModel.selectedSourText.observe(viewLifecycleOwner) { text ->
-            updateFilteringView(text, binding.selectedSour)
+            updateCurrentFilterElementText(text, binding.selectedSour)
         }
         // 苦味 監視処理
         viewModel.bitterMenuState.observe(viewLifecycleOwner) { state ->
@@ -220,7 +213,7 @@ class FilterFragment : BaseFilterFragment() {
             setRadioBtnResource(stateList) { index -> bitterRadioBtnList[index] }
         }
         viewModel.selectedBitterText.observe(viewLifecycleOwner) { text ->
-            updateFilteringView(text, binding.selectedBitter)
+            updateCurrentFilterElementText(text, binding.selectedBitter)
         }
         // 甘味 監視処理
         viewModel.sweetMenuState.observe(viewLifecycleOwner) { state ->
@@ -230,7 +223,7 @@ class FilterFragment : BaseFilterFragment() {
             setRadioBtnResource(stateList) { index -> sweetRadioBtnList[index] }
         }
         viewModel.selectedSweetText.observe(viewLifecycleOwner) { text ->
-            updateFilteringView(text, binding.selectedSweet)
+            updateCurrentFilterElementText(text, binding.selectedSweet)
         }
         // 香り 監視処理
         viewModel.flavorMenuState.observe(viewLifecycleOwner) { state ->
@@ -240,7 +233,7 @@ class FilterFragment : BaseFilterFragment() {
             setRadioBtnResource(stateList) { index -> flavorRadioBtnList[index] }
         }
         viewModel.selectedFlavorText.observe(viewLifecycleOwner) { text ->
-            updateFilteringView(text, binding.selectedFlavor)
+            updateCurrentFilterElementText(text, binding.selectedFlavor)
         }
         // コク 監視処理
         viewModel.richMenuState.observe(viewLifecycleOwner) { state ->
@@ -250,7 +243,7 @@ class FilterFragment : BaseFilterFragment() {
             setRadioBtnResource(stateList) { index -> richRadioBtnList[index] }
         }
         viewModel.selectedRichText.observe(viewLifecycleOwner) { text ->
-            updateFilteringView(text, binding.selectedRich)
+            updateCurrentFilterElementText(text, binding.selectedRich)
         }
 
 

@@ -1,9 +1,7 @@
 package com.example.coffeememos.fragment
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -99,7 +97,7 @@ open class BaseFilterFragment : Fragment() {
         }
     }
 
-    protected fun updateFilteringView(text: String, view: TextView) {
+    protected fun updateCurrentFilterElementText(text: String, view: TextView) {
         if (text.isEmpty()) {
             view.visibility = View.GONE
             return

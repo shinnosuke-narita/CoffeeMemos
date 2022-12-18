@@ -4,7 +4,6 @@ import android.app.Activity
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
@@ -12,7 +11,7 @@ import com.example.coffeememos.manager.SearchFilterManager
 import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.utilities.StringUtil
 
-class FilterViewModel : ViewModel() {
+class FilterViewModel : BaseFilterViewModel() {
     private val _roastMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
     val roastMenuState: LiveData<MenuState> = _roastMenuState
 
@@ -25,7 +24,7 @@ class FilterViewModel : ViewModel() {
     }
 
     fun setRoastRadioBtnState(selectedIndex: Int) {
-        _roastBtnStateList.value = updateList(selectedIndex, _roastBtnStateList.value!!)
+        _roastBtnStateList.value = updateBtnStateList(selectedIndex, _roastBtnStateList.value!!)
     }
 
     fun setRoastState(isOpen: MenuState) {
@@ -46,7 +45,7 @@ class FilterViewModel : ViewModel() {
     }
 
     fun setGrindSizeRadioBtnState(selectedIndex: Int) {
-        _grindSizeBtnStateList.value = updateList(selectedIndex, _grindSizeBtnStateList.value!!)
+        _grindSizeBtnStateList.value = updateBtnStateList(selectedIndex, _grindSizeBtnStateList.value!!)
     }
 
     fun setGrindSizeState(isOpen: MenuState) {
@@ -102,7 +101,7 @@ class FilterViewModel : ViewModel() {
     }
 
     fun setRatingRadioBtnState(selectedIndex: Int) {
-        _ratingRadioBtnState.value = updateList(selectedIndex, _ratingRadioBtnState.value!!)
+        _ratingRadioBtnState.value = updateBtnStateList(selectedIndex, _ratingRadioBtnState.value!!)
     }
 
     fun setRatingMenuState(isOpen: MenuState) {
@@ -120,7 +119,7 @@ class FilterViewModel : ViewModel() {
     }
 
     fun setSourRadioBtnState(selectedIndex: Int) {
-        _sourRadioBtnState.value = updateList(selectedIndex, _sourRadioBtnState.value!!)
+        _sourRadioBtnState.value = updateBtnStateList(selectedIndex, _sourRadioBtnState.value!!)
     }
 
     fun setSourState(isOpen: MenuState) {
@@ -138,7 +137,7 @@ class FilterViewModel : ViewModel() {
     }
 
     fun setBitterRadioBtnState(selectedIndex: Int) {
-        _bitterRadioBtnState.value = updateList(selectedIndex, _bitterRadioBtnState.value!!)
+        _bitterRadioBtnState.value = updateBtnStateList(selectedIndex, _bitterRadioBtnState.value!!)
     }
 
     fun setBitterState(isOpen: MenuState) {
@@ -156,7 +155,7 @@ class FilterViewModel : ViewModel() {
     }
 
     fun setSweetRadioBtnState(selectedIndex: Int) {
-        _sweetRadioBtnState.value = updateList(selectedIndex, _sweetRadioBtnState.value!!)
+        _sweetRadioBtnState.value = updateBtnStateList(selectedIndex, _sweetRadioBtnState.value!!)
     }
 
     fun setSweetState(isOpen: MenuState) {
@@ -174,7 +173,7 @@ class FilterViewModel : ViewModel() {
     }
 
     fun setFlavorRadioBtnState(selectedIndex: Int) {
-        _flavorRadioBtnState.value = updateList(selectedIndex, _flavorRadioBtnState.value!!)
+        _flavorRadioBtnState.value = updateBtnStateList(selectedIndex, _flavorRadioBtnState.value!!)
     }
 
     fun setFlavorState(isOpen: MenuState) {
@@ -192,7 +191,7 @@ class FilterViewModel : ViewModel() {
     }
 
     fun setRichRadioBtnState(selectedIndex: Int) {
-        _richRadioBtnState.value = updateList(selectedIndex, _richRadioBtnState.value!!)
+        _richRadioBtnState.value = updateBtnStateList(selectedIndex, _richRadioBtnState.value!!)
     }
 
     fun setRichState(isOpen: MenuState) {
@@ -201,33 +200,7 @@ class FilterViewModel : ViewModel() {
 
     private fun formatValue(index: Int): String = "${index + 1}.0,  "
 
-    private fun buildSelectedText(list: MutableList<Boolean>, processData: (Int) -> String): String {
-        var resultText = ""
-        for ((i, isSelected) in list.withIndex()) {
-            if (isSelected) {
-                resultText += processData(i)
-            }
-        }
-        // 未選択の場合、空文字列を返す
-        if (resultText.isEmpty()) return resultText
 
-        return StringUtil.subStringLastSeparator(resultText, ",")
-    }
-
-
-    private fun updateList(selectedIndex: Int, currentList: MutableList<Boolean>): MutableList<Boolean> {
-        val updatedList = MutableList(currentList.size) { i -> currentList[i]}
-
-        for ((i, state) in currentList.withIndex()) {
-            if (i != selectedIndex) continue
-
-            updatedList[i] = !state
-        }
-        return updatedList
-    }
-
-    // 現在開いているメニューのタグを保持する
-    private var currentOpenViewTag: String? = null
 
     fun updateMenuState(clickedView: View, context: Activity) {
         if (notExistCurrentOpenedView()) {
@@ -254,14 +227,6 @@ class FilterViewModel : ViewModel() {
 
             currentOpenViewTag = clickedView.tag.toString()
         }
-    }
-
-    private fun isSameAsCurrentOpenedView(clickedView: View): Boolean {
-        return clickedView.tag.toString() == currentOpenViewTag
-    }
-
-    private fun notExistCurrentOpenedView(): Boolean {
-        return currentOpenViewTag == null
     }
 
     fun setUpFilterManagerData(filterManager: SearchFilterManager) {
