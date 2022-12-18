@@ -3,7 +3,7 @@ package com.example.coffeememos.manager
 import com.example.coffeememos.CustomRecipe
 import java.util.*
 
-class SearchFilterManager() {
+class SearchFilterManager {
     private val filteredRecipeList: MutableList<CustomRecipe> = mutableListOf()
 
     val sourValues     : MutableList<Int> = mutableListOf()

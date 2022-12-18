@@ -2,11 +2,9 @@ package com.example.coffeememos.viewModel
 
 import androidx.lifecycle.*
 import com.example.coffeememos.Constants
-import com.example.coffeememos.CustomRecipe
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.search.BeanSortType
-import com.example.coffeememos.search.RecipeSortType
 import com.example.coffeememos.search.SearchKeyWord
 import com.example.coffeememos.search.SearchType
 

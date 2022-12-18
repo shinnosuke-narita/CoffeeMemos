@@ -121,6 +121,16 @@ class SearchBeanFragment : Fragment() {
 
             viewModel.sortSearchResult(selectedSortType)
         }
+
+        binding.refineBtn.setOnClickListener { view ->
+            viewModel.changeBottomSheetState()
+
+            childFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_from_bottom,R.anim.go_down,R.anim.enter_from_bottom, R.anim.go_down)
+                .replace(R.id.bottomSheet, BeanFilterFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun setUpRecyclerView(context: Context, rv: RecyclerView) {

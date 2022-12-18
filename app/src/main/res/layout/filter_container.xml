@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:tag="@string/country"
+    android:visibility="gone"
+    app:layout_constraintTop_toBottomOf="@id/countryWrapper" >
+
+    <LinearLayout
+        android:id="@+id/inputtedFilterElements"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/inputText"
+        app:layout_constraintStart_toStartOf="@+id/inputText"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <EditText
+        android:id="@+id/inputText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textSize="14sp"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/doneBtn"
+        app:layout_constraintTop_toBottomOf="@+id/inputtedFilterElements"/>
+
+    <ImageView
+        android:id="@+id/doneBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_check_24"
+        app:tint="@color/grey_dark"
+        android:layout_marginStart="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/inputText"
+        app:layout_constraintTop_toTopOf="@+id/inputText"
+        app:layout_constraintBottom_toBottomOf="@+id/inputText" />
+</androidx.constraintlayout.widget.ConstraintLayout>
