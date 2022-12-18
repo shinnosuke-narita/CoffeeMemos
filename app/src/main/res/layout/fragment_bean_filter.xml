@@ -140,7 +140,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:tag="@string/review"
                 app:layout_constraintTop_toBottomOf="@+id/ratingTitleWrapper" />
 
             <include
@@ -158,7 +157,6 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:orientation="vertical"
-                android:tag="@string/roast"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/processTitleWrapper" />
         </androidx.constraintlayout.widget.ConstraintLayout>

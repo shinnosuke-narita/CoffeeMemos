@@ -243,13 +243,13 @@ class FilterViewModel : ViewModel() {
                 context.getString(R.string.roast) -> _roastMenuState.value = MenuState.CLOSE
                 context.getString(R.string.grind_size) -> _grindSizeMenuState.value = MenuState.CLOSE
                 context.getString(R.string.country) -> _countryMenuState.value = MenuState.CLOSE
-                context.getString(R.string.tool)   -> _toolMenuState.value = MenuState.CLOSE
+                context.getString(R.string.tool) -> _toolMenuState.value = MenuState.CLOSE
                 context.getString(R.string.review) -> _ratingMenuState.value = MenuState.CLOSE
-                context.getString(R.string.sour)   -> _sourMenuState.value = MenuState.CLOSE
+                context.getString(R.string.sour) -> _sourMenuState.value = MenuState.CLOSE
                 context.getString(R.string.bitter) -> _bitterMenuState.value = MenuState.CLOSE
-                context.getString(R.string.sweet)  -> _sweetMenuState.value = MenuState.CLOSE
+                context.getString(R.string.sweet) -> _sweetMenuState.value = MenuState.CLOSE
                 context.getString(R.string.flavor) -> _flavorMenuState.value = MenuState.CLOSE
-                context.getString(R.string.rich)   -> _richMenuState.value = MenuState.CLOSE
+                context.getString(R.string.rich) -> _richMenuState.value = MenuState.CLOSE
             }
 
             currentOpenViewTag = clickedView.tag.toString()

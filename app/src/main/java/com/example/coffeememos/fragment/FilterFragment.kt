@@ -20,10 +20,12 @@ import com.example.coffeememos.manager.SearchFilterManager
 import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.utilities.AnimUtil.Companion.collapseMenu
 import com.example.coffeememos.utilities.AnimUtil.Companion.expandMenu
+import com.example.coffeememos.utilities.SystemUtil
+import com.example.coffeememos.utilities.SystemUtil.Companion.hideKeyBoard
 import com.example.coffeememos.viewModel.FilterViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
 
-class FilterFragment : Fragment() {
+class FilterFragment : BaseFilterFragment() {
     private var _binding: FragmentFilterBinding? = null
     private val binding
         get() = _binding!!
@@ -155,7 +157,7 @@ class FilterFragment : Fragment() {
             }
             else {
                 // キーボード非表示
-                hideKeyBoard()
+                SystemUtil.hideKeyBoard(requireContext(), binding.root)
                 collapseMenu(binding.countryContainer, binding.countryFilterElements)
             }
         }
@@ -175,7 +177,7 @@ class FilterFragment : Fragment() {
                 expandMenu(binding.toolContainer)
             } else {
                 // キーボード非表示
-                hideKeyBoard()
+                SystemUtil.hideKeyBoard(requireContext(), binding.root)
                 collapseMenu(binding.toolContainer, binding.toolFilterElements)
             }
         }
@@ -382,121 +384,6 @@ class FilterFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun addFilterElementView(elementTxt: String, filterContainer: ViewGroup, dataList: List<String>, deleteValueProcess: (String) -> Unit) {
-        val itemView = layoutInflater.inflate(R.layout.filtered_element_text, null)
-        itemView.findViewById<TextView>(R.id.valueText).text = elementTxt
-        itemView.findViewById<ImageView>(R.id.deleteBtn).setOnClickListener {
-            deleteValueProcess(elementTxt)
-            remakeView(elementTxt, filterContainer, dataList, deleteValueProcess)
-        }
-
-        // 子ビューのwidthを計算
-        val itemWidth = getWrapContentWidth(itemView)
-
-        if (filterContainer.childCount > 0) {
-            val lastIndex = filterContainer.childCount - 1
-            val linearLayout = filterContainer.getChildAt(lastIndex) as ViewGroup
-
-            var currentTotalChildViewWidth = 0
-            for (index in 0 until linearLayout.childCount) {
-                currentTotalChildViewWidth += getWrapContentWidth(linearLayout.getChildAt(index))
-            }
-
-            val currentMargin = getMatchParentWidth(linearLayout) - currentTotalChildViewWidth
-            if (currentMargin > itemWidth) {
-                linearLayout.addView(itemView)
-            } else {
-                val newLinearLayout = setUpLinearLayout()
-                newLinearLayout.addView(itemView)
-                filterContainer.addView(newLinearLayout)
-            }
-        } else {
-            val newLinearLayout = setUpLinearLayout()
-            newLinearLayout.addView(itemView)
-            filterContainer.addView(newLinearLayout)
-        }
-    }
-
-    private fun setUpEditTextContainer(filterContainer: ViewGroup, dataList: List<String>, deleteValueProcess: (String) -> Unit) {
-        if (dataList.isEmpty()) return
-
-        for (text in dataList) {
-            addFilterElementView(text, filterContainer, dataList, deleteValueProcess)
-        }
-    }
-
-    private fun remakeView(inputText: String, container: ViewGroup, valuesList: List<String>, deleteValueProcess: (String) -> Unit) {
-        container.removeAllViews()
-
-        if (valuesList.isEmpty())  return
-
-        for (text in valuesList) {
-            addFilterElementView(inputText, container, valuesList, deleteValueProcess)
-        }
-    }
-
-    private fun getWrapContentWidth(view: View): Int {
-        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
-        return view.measuredWidth
-    }
-
-    private fun getMatchParentWidth(view: View): Int {
-        val parentWidth = (view.parent as View).width
-
-        view.measure(View.MeasureSpec.makeMeasureSpec(parentWidth, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
-        return view.measuredWidth
-    }
-
-    private fun hideKeyBoard() {
-        val inputMService = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMService.hideSoftInputFromWindow(binding.root.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-    }
-
-    private fun setUpLinearLayout(): ViewGroup {
-        val newLinearLayout = LinearLayout(requireContext())
-        newLinearLayout.orientation = LinearLayout.HORIZONTAL
-        newLinearLayout.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        return newLinearLayout
-    }
-
-    private fun setUpRadioBtnContainer(dataList: List<String>, containerView: ViewGroup, viewList: MutableList<View>, clickListenerProcess:(Int) -> Unit ) {
-        for ((i, data) in dataList.withIndex()) {
-            val itemView = layoutInflater.inflate(R.layout.radio_btn_item, null)
-            itemView.findViewById<TextView>(R.id.name).text = data
-            itemView.setOnClickListener {
-                clickListenerProcess(i)
-            }
-            containerView.addView(itemView)
-
-            viewList.add(itemView)
-        }
-    }
-
-    private fun updateFilteringView(text: String, view: TextView) {
-        if (text.isEmpty()) {
-            view.visibility = View.GONE
-            return
-        }
-
-        view.visibility = View.VISIBLE
-        view.text = text
-    }
-
-    private fun setRadioBtnResource(btnStateList: List<Boolean>, getRadioBtnView: (Int) -> ImageView) {
-        for ((i, isSelected) in btnStateList.withIndex()) {
-            val radioBtn = getRadioBtnView(i)
-            if (isSelected) radioBtn.setImageResource(R.drawable.ic_baseline_radio_button_checked_24)
-            else radioBtn.setImageResource(R.drawable.ic_baseline_radio_button_unchecked_24)
-        }
-    }
-
-    private fun expandOrCollapse(state: MenuState?, containerView: ViewGroup) {
-        if (state == null) return
-
-        if (state == MenuState.OPEN)  expandMenu(containerView)
-        else collapseMenu(containerView)
     }
 
     private fun updateMenuState(_currentState: MenuState?, containerView: ViewGroup, setOpenProcess: () -> Unit, setCloseProcess: () -> Unit) {
