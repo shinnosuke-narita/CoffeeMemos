@@ -125,8 +125,6 @@ class BeanFilterFragment : BaseFilterFragment() {
                 { viewModel.setRatingMenuState(MenuState.CLOSE)}
             )
         }
-
-
     }
 
     private fun setUpView() {
@@ -148,7 +146,7 @@ class BeanFilterFragment : BaseFilterFragment() {
         binding.ratingContainer.root.tag = getString(R.string.review)
         binding.processContainer.tag = getString(R.string.process)
 
-        // コーヒー精製法のコンテナ セットアップ
+        // コーヒー精製法コンテナ セットアップ
         setUpRadioBtnContainer(Constants.processList, binding.processContainer, processViewList) { index ->
             viewModel.setProcessBtnState(index)
         }

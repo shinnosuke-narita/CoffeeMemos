@@ -1,11 +1,8 @@
-package com.example.coffeememos.manager
+package com.example.coffeememos.search
 
 import com.example.coffeememos.CustomRecipe
-import java.util.*
 
-class SearchFilterManager {
-    private val filteredRecipeList: MutableList<CustomRecipe> = mutableListOf()
-
+class SearchFilterManager : BaseSearchFilterManager<CustomRecipe>() {
     val sourValues     : MutableList<Int> = mutableListOf()
     val bitterValues   : MutableList<Int> = mutableListOf()
     val sweetValues    : MutableList<Int> = mutableListOf()
@@ -65,7 +62,22 @@ class SearchFilterManager {
         richValues.clear()
     }
 
-    private fun filteringElementsCountIsZero(): Boolean {
+    override fun filter(currentSearchResult: List<CustomRecipe>) {
+        for (recipe in currentSearchResult) {
+            if (addItemIfPassCheck(recipe, recipe.sour, sourValues)) continue
+            if (addItemIfPassCheck(recipe, recipe.bitter, bitterValues)) continue
+            if (addItemIfPassCheck(recipe, recipe.sweet, sweetValues)) continue
+            if (addItemIfPassCheck(recipe, recipe.flavor, flavorValues)) continue
+            if (addItemIfPassCheck(recipe, recipe.rich, richValues)) continue
+            if (addItemIfPassCheck(recipe, recipe.roast, roastValues)) continue
+            if (addItemIfPassCheck(recipe, recipe.grindSize, grindSizeValues)) continue
+            if (addItemIfPassCheck(recipe, recipe.rating, ratingValues)) continue
+            if (addItemIfPassCheck(recipe, recipe.country, countryValues)) continue
+            addItemIfPassCheck(recipe, recipe.tool, toolValues)
+        }
+    }
+
+    override fun filteringElementsCountIsZero(): Boolean {
         if (sourValues.isNotEmpty()) return false
         if (bitterValues.isNotEmpty()) return false
         if (sweetValues.isNotEmpty()) return false
@@ -77,54 +89,5 @@ class SearchFilterManager {
         if (countryValues.isNotEmpty()) return false
         if (toolValues.isNotEmpty()) return false
         return true
-    }
-
-    fun filerList(currentSearchResult: List<CustomRecipe>): List<CustomRecipe> {
-        // フィルタリングする要素がない場合、そのまま現在のリストを返す
-        if (filteringElementsCountIsZero()) return currentSearchResult
-
-        // 結果リストのクリア
-        filteredRecipeList.clear()
-
-        for (recipe in currentSearchResult) {
-            if (addRecipeIfPassCheck(recipe, recipe.sour, sourValues)) continue
-            if (addRecipeIfPassCheck(recipe, recipe.bitter, bitterValues)) continue
-            if (addRecipeIfPassCheck(recipe, recipe.sweet, sweetValues)) continue
-            if (addRecipeIfPassCheck(recipe, recipe.flavor, flavorValues)) continue
-            if (addRecipeIfPassCheck(recipe, recipe.rich, richValues)) continue
-            if (addRecipeIfPassCheck(recipe, recipe.roast, roastValues)) continue
-            if (addRecipeIfPassCheck(recipe, recipe.grindSize, grindSizeValues)) continue
-            if (addRecipeIfPassCheck(recipe, recipe.rating, ratingValues)) continue
-            if (addRecipeIfPassCheck(recipe, recipe.country, countryValues)) continue
-            addRecipeIfPassCheck(recipe, recipe.tool, toolValues)
-        }
-
-        return filteredRecipeList
-    }
-
-    // recipeを追加したら、trueを返す
-    private fun addRecipeIfPassCheck(recipe: CustomRecipe, recipeValue: Int, selectedValues: List<Int>): Boolean {
-        if (selectedValues.isEmpty()) return false
-
-        for (selectedValue in selectedValues) {
-            if (recipeValue == selectedValue) {
-                filteredRecipeList.add(recipe)
-                return true
-            }
-        }
-        return false
-    }
-
-    // recipeを追加したら、trueを返す
-    private fun addRecipeIfPassCheck(recipe: CustomRecipe, recipeValue: String, selectedValues: List<String>): Boolean {
-        if (selectedValues.isEmpty()) return false
-
-        for (selectedValue in selectedValues) {
-            if (recipeValue.contains(selectedValue)) {
-                filteredRecipeList.add(recipe)
-                return true
-            }
-        }
-        return false
     }
 }

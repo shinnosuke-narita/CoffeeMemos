@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentFilterBinding
-import com.example.coffeememos.manager.SearchFilterManager
+import com.example.coffeememos.search.SearchFilterManager
 import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.utilities.AnimUtil.Companion.collapseMenu
 import com.example.coffeememos.utilities.AnimUtil.Companion.expandMenu

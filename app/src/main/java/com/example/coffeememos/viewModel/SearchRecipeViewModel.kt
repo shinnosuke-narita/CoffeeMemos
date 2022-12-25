@@ -9,7 +9,7 @@ import com.example.coffeememos.dao.TasteDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
-import com.example.coffeememos.manager.SearchFilterManager
+import com.example.coffeememos.search.SearchFilterManager
 import com.example.coffeememos.search.SearchKeyWord
 import com.example.coffeememos.search.SearchType
 import com.example.coffeememos.search.RecipeSortType
@@ -210,7 +210,7 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
 
     // filter
     fun filterSearchResult() {
-        val filteringList = filterManager.filerList(_searchResult.value!!)
+        val filteringList = filterManager.makeList(_searchResult.value!!)
 
         val result = sortList(_currentSortType.value!!, filteringList)
 

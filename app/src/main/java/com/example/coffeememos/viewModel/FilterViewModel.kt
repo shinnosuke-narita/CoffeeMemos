@@ -7,9 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
-import com.example.coffeememos.manager.SearchFilterManager
+import com.example.coffeememos.search.SearchFilterManager
 import com.example.coffeememos.state.MenuState
-import com.example.coffeememos.utilities.StringUtil
 
 class FilterViewModel : BaseFilterViewModel() {
     private val _roastMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
