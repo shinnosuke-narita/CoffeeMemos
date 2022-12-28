@@ -4,11 +4,12 @@ import androidx.lifecycle.*
 import com.example.coffeememos.Constants
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.CustomBean
-import com.example.coffeememos.search.BeanSortType
-import com.example.coffeememos.search.SearchKeyWord
-import com.example.coffeememos.search.SearchType
+import com.example.coffeememos.search.*
 
 class SearchBeanViewModel(beanDao: BeanDao) : ViewModel() {
+    // filter 管理
+    var filterManager: BeanFilterManager = BeanFilterManager()
+
     val allCustomBean: LiveData<List<CustomBean>> = beanDao.getCustomBean().asLiveData()
 
     private val _searchResult: MutableLiveData<List<CustomBean>> = MutableLiveData(null)

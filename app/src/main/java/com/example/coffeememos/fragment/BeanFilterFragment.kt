@@ -11,7 +11,11 @@ import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentBeanFilterBinding
 import com.example.coffeememos.databinding.FragmentFilterBinding
+import com.example.coffeememos.search.BeanFilterManager
+import com.example.coffeememos.search.SearchFilterManager
 import com.example.coffeememos.state.MenuState
+import com.example.coffeememos.utilities.AnimUtil
+import com.example.coffeememos.utilities.SystemUtil
 import com.example.coffeememos.viewModel.BeanFilterViewModel
 import com.example.coffeememos.viewModel.FilterViewModel
 import com.example.coffeememos.viewModel.SearchBeanViewModel
@@ -27,7 +31,15 @@ class BeanFilterFragment : BaseFilterFragment() {
 
     private val processViewList: MutableList<View> = mutableListOf()
 
+    private lateinit var filterManager: BeanFilterManager
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // フィルタリング管理マネージャー
+        filterManager = parentViewModel.filterManager
+        // viewModel.initialize(filterManager)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,23 +54,108 @@ class BeanFilterFragment : BaseFilterFragment() {
         setUpView()
 
         viewModel.countryMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.countryContainer.root)
+           openOrCollapse(
+               state,
+               binding.countryContainer.root,
+               binding.countryContainer.inputtedFilterElements,
+               viewModel.countryValues.value!!
+           ) { viewModel.removeCountryValue(it) }
+        }
+
+        viewModel.countryValues.observe(viewLifecycleOwner) { list ->
+            if (viewModel.countryMenuState.value == MenuState.CLOSE || viewModel.countryMenuState.value == null) return@observe
+
+            remakeView(binding.countryContainer.inputtedFilterElements, list) {
+                viewModel.removeCountryValue(it)
+            }
+        }
+
+        viewModel.inputCountriesText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.countryTitleWrapper.selectedItem)
         }
 
         viewModel.farmMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.farmContainer.root)
+            openOrCollapse(
+               state,
+               binding.farmContainer.root,
+               binding.farmContainer.inputtedFilterElements,
+               viewModel.farmValues.value!!
+           ) { viewModel.removeFarmValue(it) }
+        }
+        viewModel.farmValues.observe(viewLifecycleOwner) { list ->
+            if (viewModel.farmMenuState.value == MenuState.CLOSE || viewModel.farmMenuState.value == null) return@observe
+
+            remakeView(binding.farmContainer.inputtedFilterElements, list) {
+                viewModel.removeFarmValue(it)
+            }
+        }
+
+        viewModel.inputFarmText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.farmTitleWrapper.selectedItem)
         }
 
         viewModel.districtMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.districtContainer.root)
+            openOrCollapse(
+               state,
+               binding.districtContainer.root,
+               binding.districtContainer.inputtedFilterElements,
+               viewModel.districtValues.value!!
+           ) { viewModel.removeDistrictValue(it) }
+        }
+
+        viewModel.districtValues.observe(viewLifecycleOwner) { list ->
+            if (viewModel.districtMenuState.value == MenuState.CLOSE || viewModel.districtMenuState.value == null) return@observe
+
+            remakeView(binding.districtContainer.inputtedFilterElements, list) {
+                viewModel.removeDistrictValue(it)
+            }
+        }
+
+        viewModel.inputDistrictText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.districtTitleWrapper.selectedItem)
         }
 
         viewModel.storeMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.storeContainer.root)
+           openOrCollapse(
+               state,
+               binding.storeContainer.root,
+               binding.storeContainer.inputtedFilterElements,
+               viewModel.storeValues.value!!
+           ) { viewModel.removeStoreValue(it) }
+        }
+
+
+        viewModel.storeValues.observe(viewLifecycleOwner) { list ->
+            if (viewModel.storeMenuState.value == MenuState.CLOSE || viewModel.storeMenuState.value == null) return@observe
+
+            remakeView(binding.storeContainer.inputtedFilterElements, list) {
+                viewModel.removeStoreValue(it)
+            }
+        }
+
+        viewModel.inputStoreText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.storeTitleWrapper.selectedItem)
         }
 
         viewModel.speciesMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.speciesContainer.root)
+           openOrCollapse(
+               state,
+               binding.speciesContainer.root,
+               binding.speciesContainer.inputtedFilterElements,
+               viewModel.speciesValues.value!!
+           ) { viewModel.removeSpeciesValue(it) }
+        }
+
+        viewModel.speciesValues.observe(viewLifecycleOwner) { list ->
+            if (viewModel.speciesMenuState.value == MenuState.CLOSE || viewModel.speciesMenuState.value == null) return@observe
+
+            remakeView(binding.speciesContainer.inputtedFilterElements, list) {
+                viewModel.removeSpeciesValue(it)
+            }
+        }
+
+        viewModel.inputSpeciesText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.speciesTitleWrapper.selectedItem)
         }
 
         viewModel.ratingMenuState.observe(viewLifecycleOwner) { state ->
@@ -125,6 +222,32 @@ class BeanFilterFragment : BaseFilterFragment() {
                 { viewModel.setRatingMenuState(MenuState.CLOSE)}
             )
         }
+
+        binding.countryContainer.doneBtn.setOnClickListener {
+            val inputText = binding.countryContainer.inputText.text.toString()
+            viewModel.addCountryValue(inputText)
+        }
+        binding.farmContainer.doneBtn.setOnClickListener {
+            val inputText = binding.farmContainer.inputText.text.toString()
+            viewModel.addFarmValue(inputText)
+        }
+        binding.districtContainer.doneBtn.setOnClickListener {
+            val inputText = binding.districtContainer.inputText.text.toString()
+            viewModel.addDistrictValue(inputText)
+        }
+        binding.storeContainer.doneBtn.setOnClickListener {
+            val inputText = binding.storeContainer.inputText.text.toString()
+            viewModel.addStoreValue(inputText)
+        }
+        binding.speciesContainer.doneBtn.setOnClickListener {
+            val inputText = binding.speciesContainer.inputText.text.toString()
+            viewModel.addSpeciesValue(inputText)
+        }
+        binding.farmContainer.doneBtn.setOnClickListener {
+            val inputText = binding.farmContainer.inputText.text.toString()
+            viewModel.addFarmValue(inputText)
+        }
+
     }
 
     private fun setUpView() {
@@ -158,5 +281,21 @@ class BeanFilterFragment : BaseFilterFragment() {
         else setOpenProcess()
 
         viewModel.updateMenuState(containerView, requireActivity())
+    }
+
+    private fun openOrCollapse(state: MenuState?, parentContainer: ViewGroup, elementsContainer: ViewGroup, data: List<String>, removeProcess: (element: String) -> Unit) {
+        if (state == null) return
+
+            if (state == MenuState.OPEN) {
+                setUpEditTextContainer(elementsContainer, data) {
+                    removeProcess(it)
+                }
+                AnimUtil.expandMenu(parentContainer)
+            }
+            else {
+                // キーボード非表示
+                SystemUtil.hideKeyBoard(requireContext(), binding.root)
+                AnimUtil.collapseMenu(parentContainer, elementsContainer)
+            }
     }
 }

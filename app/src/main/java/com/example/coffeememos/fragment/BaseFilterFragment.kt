@@ -17,7 +17,6 @@ open class BaseFilterFragment : Fragment() {
         itemView.findViewById<TextView>(R.id.valueText).text = elementTxt
         itemView.findViewById<ImageView>(R.id.deleteBtn).setOnClickListener {
             deleteValueProcess(elementTxt)
-            remakeView(elementTxt, filterContainer, dataList, deleteValueProcess)
         }
 
         // 子ビューのwidthを計算
@@ -55,13 +54,13 @@ open class BaseFilterFragment : Fragment() {
         }
     }
 
-    protected fun remakeView(inputText: String, container: ViewGroup, valuesList: List<String>, deleteValueProcess: (String) -> Unit) {
+    protected fun remakeView(container: ViewGroup, valuesList: List<String>, deleteValueProcess: (String) -> Unit) {
         container.removeAllViews()
 
         if (valuesList.isEmpty())  return
 
         for (text in valuesList) {
-            addFilterElementView(inputText, container, valuesList, deleteValueProcess)
+            addFilterElementView(text, container, valuesList, deleteValueProcess)
         }
     }
 
@@ -97,14 +96,14 @@ open class BaseFilterFragment : Fragment() {
         }
     }
 
-    protected fun updateCurrentFilterElementText(text: String, view: TextView) {
+    protected fun updateCurrentFilterElementText(text: String, textView: TextView) {
         if (text.isEmpty()) {
-            view.visibility = View.GONE
+            textView.visibility = View.GONE
             return
         }
 
-        view.visibility = View.VISIBLE
-        view.text = text
+        textView.visibility = View.VISIBLE
+        textView.text = text
     }
 
     protected fun setRadioBtnResource(btnStateList: List<Boolean>, getRadioBtnView: (Int) -> ImageView) {

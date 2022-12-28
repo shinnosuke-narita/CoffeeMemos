@@ -14,17 +14,32 @@ class BeanFilterManager : BaseSearchFilterManager<CustomBean>() {
     fun addCountryValue(value: String) {
         countryValues.add(value)
     }
+    fun removeCountryValue(value: String) {
+        countryValues.remove(value)
+    }
     fun addFarmValue(value: String) {
         farmValues.add(value)
+    }
+    fun removeFarmValue(value: String) {
+        farmValues.remove(value)
     }
     fun addDistrictValue(value: String) {
         districtValues.add(value)
     }
+    fun removeDistrictValue(value: String) {
+        districtValues.remove(value)
+    }
     fun addStoreValue(value: String) {
         storeValues.add(value)
     }
+    fun removeStoreValue(value: String) {
+        storeValues.remove(value)
+    }
     fun addSpeciesValue(value: String) {
         speciesValues.add(value)
+    }
+    fun removeSpeciesValue(value: String) {
+        speciesValues.remove(value)
     }
     fun addRatingValue(value: Int) {
         ratingValues.add(value)
