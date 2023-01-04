@@ -143,11 +143,11 @@ class BeanFilterViewModel : BaseFilterViewModel() {
     private val _ratingRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
     val ratingRadioBtnState: LiveData<MutableList<Boolean>> = _ratingRadioBtnState
 
-    private val _processBtnStateList: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(Constants.processList.size) { false })
-    val processBtnStateList: LiveData<MutableList<Boolean>> = _processBtnStateList
+    private val _processRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(Constants.processList.size) { false })
+    val processBtnStateList: LiveData<MutableList<Boolean>> = _processRadioBtnState
 
     fun setProcessBtnState(selectedIndex: Int) {
-        _processBtnStateList.value = updateBtnStateList(selectedIndex, _processBtnStateList.value!!)
+        _processRadioBtnState.value = updateBtnStateList(selectedIndex, _processRadioBtnState.value!!)
     }
     fun setRatingRadioBtnState(selectedIndex: Int) {
         _ratingRadioBtnState.value = updateBtnStateList(selectedIndex, _ratingRadioBtnState.value!!)
@@ -174,7 +174,7 @@ class BeanFilterViewModel : BaseFilterViewModel() {
 
         return@map list.joinToString(", ")
     }
-    val selectedProcessText: LiveData<String> = _processBtnStateList.map { list ->
+    val selectedProcessText: LiveData<String> = _processRadioBtnState.map { list ->
         buildSelectedText(list) { index -> "${Constants.processList[index]},  " }
     }
     val inputSpeciesText: LiveData<String> = _speciesValues.map { list ->
@@ -196,6 +196,41 @@ class BeanFilterViewModel : BaseFilterViewModel() {
         filterManager.collectStoreValue(_storeValues.value!!)
         filterManager.collectSpeciesValue(_speciesValues.value!!)
         filterManager.collectRatingValue(_ratingRadioBtnState.value!!)
-        filterManager.collectProcessValue(_processBtnStateList.value!!)
+        filterManager.collectProcessValue(_processRadioBtnState.value!!)
+    }
+
+    // viewModel 初期化処理
+    fun initialize(filterManager: BeanFilterManager) {
+        _countryValues.value = filterManager.countryValues
+        _farmValues.value = filterManager.farmValues
+        _districtValues.value = filterManager.districtValues
+        _storeValues.value = filterManager.storeValues
+        _speciesValues.value = filterManager.speciesValues
+
+        initRatingBtnState(filterManager)
+        initProcessBtnState(filterManager)
+    }
+
+    // ラジオボタンの初期化処理
+    private fun initRatingBtnState(filterManager: BeanFilterManager) {
+        if (filterManager.ratingValues.isEmpty()) return
+
+        val list = _ratingRadioBtnState.value!!
+        for (value in filterManager.ratingValues) {
+            val index = value - 1
+            list[index] = true
+        }
+        _ratingRadioBtnState.value = list
+    }
+    private fun initProcessBtnState(filterManager: BeanFilterManager) {
+        if (filterManager.processValues.isEmpty()) return
+
+        val list = _processRadioBtnState.value!!
+        for (value in filterManager.processValues) {
+            val index = value
+            list[index] = true
+        }
+        _processRadioBtnState.value = list
+
     }
 }

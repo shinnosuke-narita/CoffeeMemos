@@ -37,7 +37,8 @@ class BeanFilterFragment : BaseFilterFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // viewModel.initialize(filterManager)
+        // viewModel 初期化
+        viewModel.initialize(parentViewModel.filterManager)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
