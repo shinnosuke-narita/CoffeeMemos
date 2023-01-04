@@ -110,6 +110,15 @@ class SearchBeanViewModel(beanDao: BeanDao) : ViewModel() {
         return result
     }
 
+    // filter
+    fun filterSearchResult() {
+        val filteringList = filterManager.makeList(_searchResult.value!!)
+
+        val result = sortList(_currentSortType.value!!, filteringList)
+
+        _filteringResult.value = result
+    }
+
     class SearchBeanViewModelFactory(
         private val beanDao: BeanDao
     ) : ViewModelProvider.Factory {

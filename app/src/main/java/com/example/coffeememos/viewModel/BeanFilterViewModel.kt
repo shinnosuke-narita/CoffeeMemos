@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
+import com.example.coffeememos.search.BeanFilterManager
 import com.example.coffeememos.state.MenuState
 
 class BeanFilterViewModel : BaseFilterViewModel() {
@@ -146,9 +147,20 @@ class BeanFilterViewModel : BaseFilterViewModel() {
     private val _ratingMenuState: MutableLiveData<MenuState> = MutableLiveData(null)
     val ratingMenuState: LiveData<MenuState> = _ratingMenuState
 
+    private val _ratingRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
+    val ratingRadioBtnState: LiveData<MutableList<Boolean>> = _ratingRadioBtnState
+
+    val selectedRatingText: LiveData<String> = _ratingRadioBtnState.map { list ->
+        buildSelectedText(list) { index ->  formatIndex(index) }
+    }
+
     fun setRatingMenuState(state: MenuState) {
         _ratingMenuState.value = state
     }
+    fun setRatingRadioBtnState(selectedIndex: Int) {
+        _ratingRadioBtnState.value = updateBtnStateList(selectedIndex, _ratingRadioBtnState.value!!)
+    }
+
 
     private fun addList(value: String, currentValues: List<String>): List<String> {
         val result = mutableListOf<String>()
@@ -186,5 +198,17 @@ class BeanFilterViewModel : BaseFilterViewModel() {
 
             currentOpenViewTag = clickedView.tag.toString()
         }
+    }
+
+    fun setUpFilteringManager(filterManager: BeanFilterManager) {
+        filterManager.resetList()
+
+        filterManager.collectCountryValue(_countryValues.value!!)
+        filterManager.collectFarmValue(_farmValues.value!!)
+        filterManager.collectDistrictValue(_districtValues.value!!)
+        filterManager.collectStoreValue(_storeValues.value!!)
+        filterManager.collectSpeciesValue(_speciesValues.value!!)
+        filterManager.collectRatingValue(_ratingRadioBtnState.value!!)
+        filterManager.collectProcessValue(_processBtnStateList.value!!)
     }
 }

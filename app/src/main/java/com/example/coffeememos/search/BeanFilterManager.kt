@@ -11,41 +11,45 @@ class BeanFilterManager : BaseSearchFilterManager<CustomBean>() {
     val ratingValues   : MutableList<Int> = mutableListOf()
     val processValues  : MutableList<Int> = mutableListOf()
 
-    fun addCountryValue(value: String) {
-        countryValues.add(value)
+    fun collectCountryValue(values: List<String>) {
+        if (values.isEmpty()) return
+
+        countryValues.addAll(values)
     }
-    fun removeCountryValue(value: String) {
-        countryValues.remove(value)
+    fun collectFarmValue(values: List<String>) {
+        if (values.isEmpty()) return
+
+        farmValues.addAll(values)
     }
-    fun addFarmValue(value: String) {
-        farmValues.add(value)
+    fun collectDistrictValue(values: List<String>) {
+        if (values.isEmpty()) return
+
+        districtValues.addAll(values)
     }
-    fun removeFarmValue(value: String) {
-        farmValues.remove(value)
+    fun collectStoreValue(values: List<String>) {
+        if (values.isEmpty()) return
+
+        storeValues.addAll(values)
     }
-    fun addDistrictValue(value: String) {
-        districtValues.add(value)
+    fun collectSpeciesValue(values: List<String>) {
+        if (values.isEmpty()) return
+
+        speciesValues.addAll(values)
     }
-    fun removeDistrictValue(value: String) {
-        districtValues.remove(value)
+    fun collectRatingValue(values: List<Boolean>) {
+         for ((i, isSelected) in values.withIndex()) {
+            if (isSelected) {
+                val ratingValue = i + 1
+                ratingValues.add(ratingValue)
+            }
+        }
     }
-    fun addStoreValue(value: String) {
-        storeValues.add(value)
-    }
-    fun removeStoreValue(value: String) {
-        storeValues.remove(value)
-    }
-    fun addSpeciesValue(value: String) {
-        speciesValues.add(value)
-    }
-    fun removeSpeciesValue(value: String) {
-        speciesValues.remove(value)
-    }
-    fun addRatingValue(value: Int) {
-        ratingValues.add(value)
-    }
-    fun addProcessValue(value: Int) {
-        processValues.add(value)
+    fun collectProcessValue(values: List<Boolean>) {
+         for ((i, isSelected) in values.withIndex()) {
+            if (isSelected) {
+                ratingValues.add(i)
+            }
+        }
     }
 
     fun resetList() {

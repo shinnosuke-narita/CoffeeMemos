@@ -96,7 +96,7 @@ class FilterViewModel : BaseFilterViewModel() {
     val ratingRadioBtnState: LiveData<MutableList<Boolean>> = _ratingRadioBtnState
 
     val selectedRatingText: LiveData<String> = _ratingRadioBtnState.map { list ->
-        buildSelectedText(list) { index ->  formatValue(index) }
+        buildSelectedText(list) { index ->  formatIndex(index) }
     }
 
     fun setRatingRadioBtnState(selectedIndex: Int) {
@@ -114,7 +114,7 @@ class FilterViewModel : BaseFilterViewModel() {
     val sourRadioBtnState: LiveData<MutableList<Boolean>> = _sourRadioBtnState
 
     val selectedSourText: LiveData<String> = _sourRadioBtnState.map { list ->
-        buildSelectedText(list) { index ->  formatValue(index) }
+        buildSelectedText(list) { index ->  formatIndex(index) }
     }
 
     fun setSourRadioBtnState(selectedIndex: Int) {
@@ -132,7 +132,7 @@ class FilterViewModel : BaseFilterViewModel() {
     val bitterRadioBtnState: LiveData<MutableList<Boolean>> = _bitterRadioBtnState
 
     val selectedBitterText: LiveData<String> = _bitterRadioBtnState.map { list ->
-        buildSelectedText(list) { index ->  formatValue(index) }
+        buildSelectedText(list) { index ->  formatIndex(index) }
     }
 
     fun setBitterRadioBtnState(selectedIndex: Int) {
@@ -150,7 +150,7 @@ class FilterViewModel : BaseFilterViewModel() {
     val sweetRadioBtnState: LiveData<MutableList<Boolean>> = _sweetRadioBtnState
 
     val selectedSweetText: LiveData<String> = _sweetRadioBtnState.map { list ->
-        buildSelectedText(list) { index ->  formatValue(index) }
+        buildSelectedText(list) { index ->  formatIndex(index) }
     }
 
     fun setSweetRadioBtnState(selectedIndex: Int) {
@@ -168,7 +168,7 @@ class FilterViewModel : BaseFilterViewModel() {
     val flavorRadioBtnState: LiveData<MutableList<Boolean>> = _flavorRadioBtnState
 
     val selectedFlavorText: LiveData<String> = _flavorRadioBtnState.map { list ->
-        buildSelectedText(list) { index ->  formatValue(index) }
+        buildSelectedText(list) { index ->  formatIndex(index) }
     }
 
     fun setFlavorRadioBtnState(selectedIndex: Int) {
@@ -186,7 +186,7 @@ class FilterViewModel : BaseFilterViewModel() {
     val richRadioBtnState: LiveData<MutableList<Boolean>> = _richRadioBtnState
 
     val selectedRichText: LiveData<String> = _richRadioBtnState.map { list ->
-        buildSelectedText(list) { index ->  formatValue(index) }
+        buildSelectedText(list) { index ->  formatIndex(index) }
     }
 
     fun setRichRadioBtnState(selectedIndex: Int) {
@@ -196,9 +196,6 @@ class FilterViewModel : BaseFilterViewModel() {
     fun setRichState(isOpen: MenuState) {
         _richMenuState.value = isOpen
     }
-
-    private fun formatValue(index: Int): String = "${index + 1}.0,  "
-
 
 
     fun updateMenuState(clickedView: View, context: Activity) {

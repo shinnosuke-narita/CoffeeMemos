@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
@@ -30,14 +32,11 @@ class BeanFilterFragment : BaseFilterFragment() {
     private val parentViewModel: SearchBeanViewModel by viewModels({ requireParentFragment() })
 
     private val processViewList: MutableList<View> = mutableListOf()
-
-    private lateinit var filterManager: BeanFilterManager
+    private lateinit var ratingRadioBtnList: List<ImageView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // フィルタリング管理マネージャー
-        filterManager = parentViewModel.filterManager
         // viewModel.initialize(filterManager)
     }
     override fun onCreateView(
@@ -161,6 +160,12 @@ class BeanFilterFragment : BaseFilterFragment() {
         viewModel.ratingMenuState.observe(viewLifecycleOwner) { state ->
             expandOrCollapse(state, binding.ratingContainer.root)
         }
+        viewModel.ratingRadioBtnState.observe(viewLifecycleOwner) { stateList ->
+            setRadioBtnResource(stateList) { index -> ratingRadioBtnList[index] }
+        }
+        viewModel.selectedRatingText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.ratingTitleWrapper.selectedItem)
+        }
 
         viewModel.processMenuState.observe(viewLifecycleOwner) { state ->
             expandOrCollapse(state, binding.processContainer)
@@ -247,7 +252,21 @@ class BeanFilterFragment : BaseFilterFragment() {
             val inputText = binding.farmContainer.inputText.text.toString()
             viewModel.addFarmValue(inputText)
         }
+        // 評価のラジオボタンのクリックリスナ―
+        for ((i, btn) in ratingRadioBtnList.withIndex()) {
+            btn.setOnClickListener {
+                viewModel.setRatingRadioBtnState(i)
+            }
+        }
 
+        binding.closeIcon.setOnClickListener {
+            // filterManager データセットアップ
+            viewModel.setUpFilteringManager(parentViewModel.filterManager)
+
+           setFragmentResult("filterResult", Bundle())
+
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun setUpView() {
@@ -273,6 +292,14 @@ class BeanFilterFragment : BaseFilterFragment() {
         setUpRadioBtnContainer(Constants.processList, binding.processContainer, processViewList) { index ->
             viewModel.setProcessBtnState(index)
         }
+
+       // 評価のRadioButton 保持
+        ratingRadioBtnList = listOf(
+            binding.ratingContainer.radioBtnFirst,
+            binding.ratingContainer.radioBtnSecond,
+            binding.ratingContainer.radioBtnThird,
+            binding.ratingContainer.radioBtnFourth,
+            binding.ratingContainer.radioBtnFifth)
     }
 
     private fun updateMenuState(_currentState: MenuState?, containerView: ViewGroup, setOpenProcess: () -> Unit, setCloseProcess: () -> Unit) {
@@ -286,16 +313,16 @@ class BeanFilterFragment : BaseFilterFragment() {
     private fun openOrCollapse(state: MenuState?, parentContainer: ViewGroup, elementsContainer: ViewGroup, data: List<String>, removeProcess: (element: String) -> Unit) {
         if (state == null) return
 
-            if (state == MenuState.OPEN) {
-                setUpEditTextContainer(elementsContainer, data) {
-                    removeProcess(it)
-                }
-                AnimUtil.expandMenu(parentContainer)
+        if (state == MenuState.OPEN) {
+            setUpEditTextContainer(elementsContainer, data) {
+                removeProcess(it)
             }
-            else {
-                // キーボード非表示
-                SystemUtil.hideKeyBoard(requireContext(), binding.root)
-                AnimUtil.collapseMenu(parentContainer, elementsContainer)
-            }
+            AnimUtil.expandMenu(parentContainer)
+        }
+        else {
+            // キーボード非表示
+            SystemUtil.hideKeyBoard(requireContext(), binding.root)
+            AnimUtil.collapseMenu(parentContainer, elementsContainer)
+        }
     }
 }

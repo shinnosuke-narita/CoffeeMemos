@@ -63,17 +63,14 @@ class SearchBeanFragment : Fragment() {
         viewModel.searchResult.observe(viewLifecycleOwner) { list ->
             if (list == null) return@observe
 
-            binding.searchResultRV.adapter = BeanAdapter(requireContext(), list).apply {
-                setOnItemClickListener (object : OnItemClickListener<CustomBean> {
-                    override fun onClick(view: View, bean: CustomBean) {
-                        val showDetailAction = SearchFragmentDirections.showBeanDetailAction().apply {
-                            beanId = bean.id
-                        }
+            binding.searchResultRV.adapter = setUpAdapter(list)
+        }
 
-                        Navigation.findNavController(view).navigate(showDetailAction)
-                    }
-                })
-            }
+        // 絞り込み結果 監視処理
+        viewModel.filteringResult.observe(viewLifecycleOwner) { list ->
+            if (list == null) return@observe
+
+            binding.searchResultRV.adapter = setUpAdapter(list)
         }
 
         viewModel.allCustomBean.observe(viewLifecycleOwner) { list ->
@@ -131,11 +128,31 @@ class SearchBeanFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+
+        childFragmentManager.setFragmentResultListener("filterResult", viewLifecycleOwner) { _, bundle ->
+            viewModel.changeBottomSheetState()
+
+            viewModel.filterSearchResult()
+        }
     }
 
     private fun setUpRecyclerView(context: Context, rv: RecyclerView) {
         rv.layoutManager = LinearLayoutManager(context).apply {
             orientation = LinearLayoutManager.VERTICAL
+        }
+    }
+
+    private fun setUpAdapter(list: List<CustomBean>): BeanAdapter {
+        return BeanAdapter(requireContext(), list).apply {
+            setOnItemClickListener(object : OnItemClickListener<CustomBean> {
+                override fun onClick(view: View, bean: CustomBean) {
+                    val showDetailAction = SearchFragmentDirections.showBeanDetailAction().apply {
+                        beanId = bean.id
+                    }
+
+                    Navigation.findNavController(view).navigate(showDetailAction)
+                }
+            })
         }
     }
 }

@@ -40,5 +40,6 @@ open class BaseFilterViewModel : ViewModel() {
         return StringUtil.subStringLastSeparator(resultText, ",")
     }
 
-
+    // indexをフォーマットする。
+    protected fun formatIndex(index: Int): String = "${index + 1}.0,  "
 }

@@ -364,7 +364,6 @@ class FilterFragment : BaseFilterFragment() {
 
             parentViewModel.changeBottomSheetState()
             parentFragmentManager.popBackStack()
-
         }
 
         // backキー ハンドリング
