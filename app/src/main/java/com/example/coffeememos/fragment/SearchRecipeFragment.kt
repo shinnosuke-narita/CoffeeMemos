@@ -128,6 +128,12 @@ class SearchRecipeFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+        // 絞り込み画面 リスナー
+        childFragmentManager.setFragmentResultListener("filterResult", viewLifecycleOwner) { _, bundle ->
+            viewModel.changeBottomSheetState()
+
+            viewModel.filterSearchResult()
+        }
 
         binding.clearBtn.setOnClickListener {
             viewModel.resetResult()

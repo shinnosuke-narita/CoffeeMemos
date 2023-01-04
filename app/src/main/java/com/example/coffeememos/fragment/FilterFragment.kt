@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.addCallback
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
@@ -15,7 +16,7 @@ import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.utilities.AnimUtil.Companion.collapseMenu
 import com.example.coffeememos.utilities.AnimUtil.Companion.expandMenu
 import com.example.coffeememos.utilities.SystemUtil
-import com.example.coffeememos.viewModel.FilterViewModel
+import com.example.coffeememos.viewModel.RecipeFilterViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
 
 class FilterFragment : BaseFilterFragment() {
@@ -23,10 +24,8 @@ class FilterFragment : BaseFilterFragment() {
     private val binding
         get() = _binding!!
 
-    private val viewModel: FilterViewModel by viewModels()
+    private val viewModel: RecipeFilterViewModel by viewModels()
     private val parentViewModel: SearchRecipeViewModel by viewModels({ requireParentFragment() })
-
-    private lateinit var filterManager: SearchFilterManager
 
     private lateinit var ratingRadioBtnList: List<ImageView>
     private lateinit var sourRadioBtnList: List<ImageView>
@@ -41,9 +40,8 @@ class FilterFragment : BaseFilterFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // フィルタリング管理マネージャー
-        filterManager = parentViewModel.filterManager
-        viewModel.initialize(filterManager)
+        // viewModel 初期化
+        viewModel.initialize(parentViewModel.filterManager)
     }
 
     override fun onCreateView(
@@ -114,138 +112,124 @@ class FilterFragment : BaseFilterFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // RadioButton 状態監視処理
         viewModel.roastBtnStateList.observe(viewLifecycleOwner) { list ->
            setRadioBtnResource(list) { index -> roastViewList[index].findViewById(R.id.radioBtn) }
         }
-
-        viewModel.selectedRoastText.observe(viewLifecycleOwner) { selectedText ->
-            updateCurrentFilterElementText(selectedText, binding.selectedRoast)
-        }
-
-        viewModel.roastMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.roastContainer)
-        }
-
         viewModel.grindSizeBtnStateList.observe(viewLifecycleOwner) { list ->
             setRadioBtnResource(list) { index -> grindSizeViewList[index].findViewById<ImageView>(R.id.radioBtn) }
-        }
-
-        viewModel.selectedGrindSizeText.observe(viewLifecycleOwner) { selectedText ->
-            updateCurrentFilterElementText(selectedText, binding.selectedGrindSize)
-        }
-
-        viewModel.grindSizeMenuState.observe(viewLifecycleOwner) { state ->
-           expandOrCollapse(state, binding.grindSizeContainer)
-        }
-        // 原産地 監視処理
-        viewModel.countryMenuState.observe(viewLifecycleOwner) { state ->
-            if (state == null) return@observe
-
-            if (state == MenuState.OPEN) {
-                setUpEditTextContainer(binding.countryFilterElements, filterManager.countryValues) {
-                    filterManager.removeCountryValue(it)
-                    viewModel.updateInputCountriesText(filterManager.countryValues)
-                }
-                expandMenu(binding.countryContainer)
-            }
-            else {
-                // キーボード非表示
-                SystemUtil.hideKeyBoard(requireContext(), binding.root)
-                collapseMenu(binding.countryContainer, binding.countryFilterElements)
-            }
-        }
-        viewModel.inputCountriesText.observe(viewLifecycleOwner) { text ->
-            updateCurrentFilterElementText(text, binding.inputCountries)
-        }
-
-        // 抽出器具 監視処理
-        viewModel.toolMenuState.observe(viewLifecycleOwner) { state ->
-            if (state == null) return@observe
-
-            if (state == MenuState.OPEN) {
-                setUpEditTextContainer(binding.toolFilterElements, filterManager.toolValues) {
-                    filterManager.removeToolValue(it)
-                    viewModel.updateInputToolsText(filterManager.toolValues)
-                }
-                expandMenu(binding.toolContainer)
-            } else {
-                // キーボード非表示
-                SystemUtil.hideKeyBoard(requireContext(), binding.root)
-                collapseMenu(binding.toolContainer, binding.toolFilterElements)
-            }
-        }
-        viewModel.inputToolsText.observe(viewLifecycleOwner) { text ->
-            if (text.isEmpty()) {
-                binding.inputTools.visibility = View.GONE
-                return@observe
-            }
-
-            binding.inputTools.visibility = View.VISIBLE
-            binding.inputTools.text = text
-        }
-
-        // 評価 監視処理
-        viewModel.ratingMenuState.observe(viewLifecycleOwner) { state ->
-           expandOrCollapse(state, binding.ratingContainer.root)
         }
         viewModel.ratingRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> ratingRadioBtnList[index] }
         }
-        viewModel.selectedRatingText.observe(viewLifecycleOwner) { text ->
-            updateCurrentFilterElementText(text, binding.selectedRating)
-        }
-
-        // 酸味 監視処理
-        viewModel.sourMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.sourContainer.root)
-        }
         viewModel.sourRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> sourRadioBtnList[index] }
-        }
-        viewModel.selectedSourText.observe(viewLifecycleOwner) { text ->
-            updateCurrentFilterElementText(text, binding.selectedSour)
-        }
-        // 苦味 監視処理
-        viewModel.bitterMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.bitterContainer.root)
         }
         viewModel.bitterRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> bitterRadioBtnList[index] }
         }
-        viewModel.selectedBitterText.observe(viewLifecycleOwner) { text ->
-            updateCurrentFilterElementText(text, binding.selectedBitter)
-        }
-        // 甘味 監視処理
-        viewModel.sweetMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.sweetContainer.root)
-        }
         viewModel.sweetRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> sweetRadioBtnList[index] }
-        }
-        viewModel.selectedSweetText.observe(viewLifecycleOwner) { text ->
-            updateCurrentFilterElementText(text, binding.selectedSweet)
-        }
-        // 香り 監視処理
-        viewModel.flavorMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.flavorContainer.root)
         }
         viewModel.flavorRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> flavorRadioBtnList[index] }
         }
-        viewModel.selectedFlavorText.observe(viewLifecycleOwner) { text ->
-            updateCurrentFilterElementText(text, binding.selectedFlavor)
+        viewModel.richRadioBtnState.observe(viewLifecycleOwner) { stateList ->
+            setRadioBtnResource(stateList) { index -> richRadioBtnList[index] }
         }
-        // コク 監視処理
+
+
+        // Menu開閉状態 監視処理
+        viewModel.roastMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.roastContainer)
+        }
+        viewModel.grindSizeMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.grindSizeContainer)
+        }
+        viewModel.countryMenuState.observe(viewLifecycleOwner) { state ->
+            openOrCollapse(
+                state,
+                binding.countryContainer,
+                binding.countryFilterElements,
+                binding.root,
+                viewModel.countryValues.value!!,
+            ) { viewModel.removeCountryValue(it) }
+        }
+        viewModel.toolMenuState.observe(viewLifecycleOwner) { state ->
+            openOrCollapse(
+                state,
+                binding.toolContainer,
+                binding.toolFilterElements,
+                binding.root,
+                viewModel.toolValues.value!!,
+            ) { viewModel.removeToolValue(it) }
+        }
+        viewModel.ratingMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.ratingContainer.root)
+        }
+        viewModel.sourMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.sourContainer.root)
+        }
+        viewModel.bitterMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.bitterContainer.root)
+        }
+        viewModel.flavorMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.flavorContainer.root)
+        }
+        viewModel.sweetMenuState.observe(viewLifecycleOwner) { state ->
+            expandOrCollapse(state, binding.sweetContainer.root)
+        }
         viewModel.richMenuState.observe(viewLifecycleOwner) { state ->
             expandOrCollapse(state, binding.richContainer.root)
         }
-        viewModel.richRadioBtnState.observe(viewLifecycleOwner) { stateList ->
-            setRadioBtnResource(stateList) { index -> richRadioBtnList[index] }
+
+        // 絞り込みデータ監視処理
+        viewModel.countryValues.observe(viewLifecycleOwner) { list ->
+            if (viewModel.countryMenuState.value == MenuState.CLOSE || viewModel.countryMenuState.value == null) return@observe
+
+            remakeView(binding.countryFilterElements, list) {
+                viewModel.removeCountryValue(it)
+            }
+        }
+        viewModel.toolValues.observe(viewLifecycleOwner) { list ->
+            if (viewModel.toolMenuState.value == MenuState.CLOSE || viewModel.toolMenuState.value == null) return@observe
+
+            remakeView(binding.toolFilterElements, list) {
+                viewModel.removeToolValue(it)
+            }
+        }
+
+        // 絞り込み要素表示テキスト 監視処理
+        viewModel.selectedRoastText.observe(viewLifecycleOwner) { selectedText ->
+            updateCurrentFilterElementText(selectedText, binding.selectedRoast)
+        }
+        viewModel.selectedGrindSizeText.observe(viewLifecycleOwner) { selectedText ->
+            updateCurrentFilterElementText(selectedText, binding.selectedGrindSize)
+        }
+        viewModel.inputCountriesText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.inputCountries)
+        }
+        viewModel.inputToolsText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.inputTools)
+        }
+        viewModel.selectedRatingText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.selectedRating)
+        }
+        viewModel.selectedSourText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.selectedSour)
+        }
+        viewModel.selectedBitterText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.selectedBitter)
+        }
+        viewModel.selectedSweetText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.selectedSweet)
+        }
+        viewModel.selectedFlavorText.observe(viewLifecycleOwner) { text ->
+            updateCurrentFilterElementText(text, binding.selectedFlavor)
         }
         viewModel.selectedRichText.observe(viewLifecycleOwner) { text ->
             updateCurrentFilterElementText(text, binding.selectedRich)
         }
-
 
         // MenuState 更新処理
         binding.roastWrapper.setOnClickListener {
@@ -299,7 +283,6 @@ class FilterFragment : BaseFilterFragment() {
                 { viewModel.setRichState(MenuState.CLOSE) })
         }
 
-
         // ラジオボタン クリックリスナ―
         for ((i, btn) in ratingRadioBtnList.withIndex()) {
             btn.setOnClickListener {
@@ -332,37 +315,23 @@ class FilterFragment : BaseFilterFragment() {
             }
         }
 
+        // 絞り込み要素の入力完了ボタン クリックリスナー
         binding.countryDoneBtn.setOnClickListener {
             val inputText = binding.countryInputText.text.toString()
-
-            addFilterElementView(inputText, binding.countryFilterElements, filterManager.countryValues) {
-                filterManager.removeCountryValue(it)
-                viewModel.updateInputCountriesText(filterManager.countryValues)
-            }
-
-            filterManager.addCountryValue(inputText)
-            viewModel.updateInputCountriesText(filterManager.countryValues)
+            viewModel.addCountryValue(inputText)
         }
 
         binding.toolDoneBtn.setOnClickListener {
             val inputText = binding.toolInputText.text.toString()
-
-            addFilterElementView(inputText, binding.toolFilterElements, filterManager.toolValues) {
-                filterManager.removeToolValue(it)
-                viewModel.updateInputToolsText(filterManager.toolValues)
-            }
-
-            // filterManagerのデータ更新
-            filterManager.addToolValue(inputText)
-            viewModel.updateInputToolsText(filterManager.toolValues)
+            viewModel.addToolValue(inputText)
         }
 
         // 閉じる処理
         binding.closeIcon.setOnClickListener {
-            viewModel.setUpFilterManagerData(filterManager)
-            parentViewModel.filterSearchResult()
+            // filterManagerのデータセット
+            viewModel.setUpFilterManagerData(parentViewModel.filterManager)
 
-            parentViewModel.changeBottomSheetState()
+            setFragmentResult("filterResult", Bundle())
             parentFragmentManager.popBackStack()
         }
 

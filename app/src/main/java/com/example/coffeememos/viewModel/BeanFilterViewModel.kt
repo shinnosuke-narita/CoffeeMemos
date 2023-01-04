@@ -125,19 +125,6 @@ class BeanFilterViewModel : BaseFilterViewModel() {
     fun removeSpeciesValue(species: String) {
         _speciesValues.value = removeList(species, _speciesValues.value!!)
     }
-    // 共通処理
-    private fun addList(value: String, currentValues: List<String>): List<String> {
-        val result = mutableListOf<String>()
-        result.addAll(currentValues)
-        result.add(value)
-        return result
-    }
-    private fun removeList(value: String, currentValue: List<String>): List<String> {
-        val result = mutableListOf<String>()
-        result.addAll(currentValue)
-        result.remove(value)
-        return result
-    }
 
     // ラジオボタンの状態管理( 選択されたvalue 管理)
     private val _ratingRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})

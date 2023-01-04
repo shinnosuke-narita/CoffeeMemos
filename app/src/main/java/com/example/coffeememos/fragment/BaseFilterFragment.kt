@@ -9,10 +9,11 @@ import androidx.fragment.app.Fragment
 import com.example.coffeememos.R
 import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.utilities.AnimUtil
+import com.example.coffeememos.utilities.SystemUtil
 
 open class BaseFilterFragment : Fragment() {
 
-    protected fun addFilterElementView(elementTxt: String, filterContainer: ViewGroup, dataList: List<String>, deleteValueProcess: (String) -> Unit) {
+    protected fun addFilterElementView(elementTxt: String, filterContainer: ViewGroup, deleteValueProcess: (String) -> Unit) {
         val itemView = layoutInflater.inflate(R.layout.filtered_element_text, null)
         itemView.findViewById<TextView>(R.id.valueText).text = elementTxt
         itemView.findViewById<ImageView>(R.id.deleteBtn).setOnClickListener {
@@ -50,7 +51,7 @@ open class BaseFilterFragment : Fragment() {
         if (dataList.isEmpty()) return
 
         for (text in dataList) {
-            addFilterElementView(text, filterContainer, dataList, deleteValueProcess)
+            addFilterElementView(text, filterContainer, deleteValueProcess)
         }
     }
 
@@ -60,7 +61,7 @@ open class BaseFilterFragment : Fragment() {
         if (valuesList.isEmpty())  return
 
         for (text in valuesList) {
-            addFilterElementView(text, container, valuesList, deleteValueProcess)
+            addFilterElementView(text, container, deleteValueProcess)
         }
     }
 
@@ -119,5 +120,28 @@ open class BaseFilterFragment : Fragment() {
 
         if (state == MenuState.OPEN) AnimUtil.expandMenu(containerView)
         else AnimUtil.collapseMenu(containerView)
+    }
+
+    protected fun openOrCollapse(
+        state: MenuState?,
+        parentContainer: ViewGroup,
+        elementsContainer: ViewGroup,
+        rootView: ViewGroup,
+        data: List<String>,
+        removeProcess: (element: String) -> Unit
+    ) {
+        if (state == null) return
+
+        if (state == MenuState.OPEN) {
+            setUpEditTextContainer(elementsContainer, data) {
+                removeProcess(it)
+            }
+            AnimUtil.expandMenu(parentContainer)
+        }
+        else {
+            // キーボード非表示
+            SystemUtil.hideKeyBoard(requireContext(), rootView)
+            AnimUtil.collapseMenu(parentContainer, elementsContainer)
+        }
     }
 }

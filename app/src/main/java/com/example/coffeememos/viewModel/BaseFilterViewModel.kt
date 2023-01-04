@@ -40,6 +40,20 @@ open class BaseFilterViewModel : ViewModel() {
         return StringUtil.subStringLastSeparator(resultText, ",")
     }
 
+    // 入力されたデータを更新する共通処理
+    protected fun addList(value: String, currentValues: List<String>): List<String> {
+        val result = mutableListOf<String>()
+        result.addAll(currentValues)
+        result.add(value)
+        return result
+    }
+    protected fun removeList(value: String, currentValue: List<String>): List<String> {
+        val result = mutableListOf<String>()
+        result.addAll(currentValue)
+        result.remove(value)
+        return result
+    }
+
     // indexをフォーマットする。
     protected fun formatIndex(index: Int): String = "${index + 1}.0,  "
 }

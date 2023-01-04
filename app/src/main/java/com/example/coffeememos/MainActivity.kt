@@ -78,16 +78,16 @@ class MainActivity : AppCompatActivity() {
                 beanDao.insert(Constants.sampleBean5)
 
                 val beans = beanDao.getAll()
-                val recipeList: MutableList<Recipe> = mutableListOf()
                 for (bean in beans) {
+                    val recipeList: MutableList<Recipe> = mutableListOf()
                     for (i in 0 until 60) {
                         Constants.sampleRecipe1.beanId = bean.id
                         Constants.sampleRecipe2.beanId = bean.id
                         recipeList.add(Constants.sampleRecipe1)
                         recipeList.add(Constants.sampleRecipe2)
                     }
+                    recipeDao.insertAll(recipeList)
                 }
-                recipeDao.insertAll(recipeList)
 
                 val recipeIds: List<Long> = recipeDao.getIds()
                 for ((index, id) in recipeIds.withIndex()) {

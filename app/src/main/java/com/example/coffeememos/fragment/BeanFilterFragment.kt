@@ -1,8 +1,6 @@
 package com.example.coffeememos.fragment
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,16 +10,11 @@ import androidx.fragment.app.viewModels
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentBeanFilterBinding
-import com.example.coffeememos.databinding.FragmentFilterBinding
-import com.example.coffeememos.search.BeanFilterManager
-import com.example.coffeememos.search.SearchFilterManager
 import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.utilities.AnimUtil
 import com.example.coffeememos.utilities.SystemUtil
 import com.example.coffeememos.viewModel.BeanFilterViewModel
-import com.example.coffeememos.viewModel.FilterViewModel
 import com.example.coffeememos.viewModel.SearchBeanViewModel
-import com.example.coffeememos.viewModel.SearchRecipeViewModel
 
 class BeanFilterFragment : BaseFilterFragment() {
     private var _binding: FragmentBeanFilterBinding? = null
@@ -58,6 +51,7 @@ class BeanFilterFragment : BaseFilterFragment() {
                state,
                binding.countryContainer.root,
                binding.countryContainer.inputtedFilterElements,
+               binding.root,
                viewModel.countryValues.value!!
            ) { viewModel.removeCountryValue(it) }
         }
@@ -79,6 +73,7 @@ class BeanFilterFragment : BaseFilterFragment() {
                state,
                binding.farmContainer.root,
                binding.farmContainer.inputtedFilterElements,
+                binding.root,
                viewModel.farmValues.value!!
            ) { viewModel.removeFarmValue(it) }
         }
@@ -99,6 +94,7 @@ class BeanFilterFragment : BaseFilterFragment() {
                state,
                binding.districtContainer.root,
                binding.districtContainer.inputtedFilterElements,
+                binding.root,
                viewModel.districtValues.value!!
            ) { viewModel.removeDistrictValue(it) }
         }
@@ -120,6 +116,7 @@ class BeanFilterFragment : BaseFilterFragment() {
                state,
                binding.storeContainer.root,
                binding.storeContainer.inputtedFilterElements,
+               binding.root,
                viewModel.storeValues.value!!
            ) { viewModel.removeStoreValue(it) }
         }
@@ -142,6 +139,7 @@ class BeanFilterFragment : BaseFilterFragment() {
                state,
                binding.speciesContainer.root,
                binding.speciesContainer.inputtedFilterElements,
+               binding.root,
                viewModel.speciesValues.value!!
            ) { viewModel.removeSpeciesValue(it) }
         }
@@ -265,7 +263,6 @@ class BeanFilterFragment : BaseFilterFragment() {
             viewModel.setUpFilteringManager(parentViewModel.filterManager)
 
            setFragmentResult("filterResult", Bundle())
-
             parentFragmentManager.popBackStack()
         }
     }
@@ -309,21 +306,5 @@ class BeanFilterFragment : BaseFilterFragment() {
         else setOpenProcess()
 
         viewModel.updateMenuState(containerView, requireActivity())
-    }
-
-    private fun openOrCollapse(state: MenuState?, parentContainer: ViewGroup, elementsContainer: ViewGroup, data: List<String>, removeProcess: (element: String) -> Unit) {
-        if (state == null) return
-
-        if (state == MenuState.OPEN) {
-            setUpEditTextContainer(elementsContainer, data) {
-                removeProcess(it)
-            }
-            AnimUtil.expandMenu(parentContainer)
-        }
-        else {
-            // キーボード非表示
-            SystemUtil.hideKeyBoard(requireContext(), binding.root)
-            AnimUtil.collapseMenu(parentContainer, elementsContainer)
-        }
     }
 }
