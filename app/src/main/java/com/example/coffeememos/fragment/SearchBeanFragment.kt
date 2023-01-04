@@ -134,6 +134,10 @@ class SearchBeanFragment : Fragment() {
 
             viewModel.filterSearchResult()
         }
+
+       binding.clearBtn.setOnClickListener {
+           viewModel.resetResult()
+       }
     }
 
     private fun setUpRecyclerView(context: Context, rv: RecyclerView) {

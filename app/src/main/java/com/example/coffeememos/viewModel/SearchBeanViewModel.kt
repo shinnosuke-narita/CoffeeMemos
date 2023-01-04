@@ -119,6 +119,13 @@ class SearchBeanViewModel(beanDao: BeanDao) : ViewModel() {
         _filteringResult.value = result
     }
 
+    fun resetResult() {
+        _searchResult.value = allCustomBean.value
+        _filteringResult.value = null
+        filterManager.resetList()
+        _currentSortType.value = BeanSortType.NEW
+    }
+
     class SearchBeanViewModelFactory(
         private val beanDao: BeanDao
     ) : ViewModelProvider.Factory {
