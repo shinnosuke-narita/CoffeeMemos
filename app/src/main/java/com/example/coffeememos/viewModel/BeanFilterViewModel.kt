@@ -36,27 +36,21 @@ class BeanFilterViewModel : BaseFilterViewModel() {
     fun setCountryMenuState(state: MenuState) {
         _countryMenuState.value = state
     }
-
     fun setFarmMenuState(state: MenuState) {
         _farmMenuState.value = state
     }
-
     fun setDistrictMenuState(state: MenuState) {
         _districtMenuState.value = state
     }
-
     fun setStoreMenuState(state: MenuState) {
         _storeMenuState.value = state
     }
-
     fun setSpeciesMenuState(state: MenuState) {
         _speciesMenuState.value = state
     }
-
     fun setProcessMenuState(state: MenuState) {
         _processMenuState.value = state
     }
-
     fun setRatingMenuState(state: MenuState) {
         _ratingMenuState.value = state
     }
