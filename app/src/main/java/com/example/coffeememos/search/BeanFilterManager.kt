@@ -3,25 +3,25 @@ package com.example.coffeememos.search
 import com.example.coffeememos.entity.CustomBean
 
 class BeanFilterManager : BaseSearchFilterManager<CustomBean>() {
-    private var _countryValues  : MutableList<String> = mutableListOf()
+    private var _countryValues: MutableList<String> = mutableListOf()
     val countryValues: List<String> get() = _countryValues
 
-    private var _farmValues     : MutableList<String> = mutableListOf()
+    private var _farmValues: MutableList<String> = mutableListOf()
     val farmValues: List<String> get() = _farmValues
 
-    private var _districtValues : MutableList<String> = mutableListOf()
+    private var _districtValues: MutableList<String> = mutableListOf()
     val districtValues: List<String> get() = _districtValues
 
-    private var _storeValues    : MutableList<String> = mutableListOf()
+    private var _storeValues: MutableList<String> = mutableListOf()
     val storeValues: List<String> get() = _storeValues
 
-    private var _speciesValues  : MutableList<String> = mutableListOf()
+    private var _speciesValues: MutableList<String> = mutableListOf()
     val speciesValues: List<String> get() = _speciesValues
 
-    private var _ratingValues   : MutableList<Int> = mutableListOf()
+    private var _ratingValues: MutableList<Int> = mutableListOf()
     val ratingValues: List<Int> get() = _ratingValues
 
-    private var _processValues  : MutableList<Int> = mutableListOf()
+    private var _processValues: MutableList<Int> = mutableListOf()
     val processValues: List<Int> get() = _processValues
 
     fun collectCountryValue(values: List<String>) {
