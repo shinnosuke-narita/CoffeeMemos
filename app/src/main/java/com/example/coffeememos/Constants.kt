@@ -7,7 +7,7 @@ class Constants {
     companion object {
         private val timeStamp = System.currentTimeMillis()
 
-        const val databaseResetFlag = false
+        const val databaseResetFlag: Boolean = false
 
         // コーヒーアイコンのライセンスURL
         val attributeAuthorUrl = "<a href=\"https://www.flaticon.com/free-icons/coffee\" title=\"coffee icons\">Coffee icons created by srip - Flaticon</a>"
@@ -159,8 +159,5 @@ class Constants {
             "ハニープロセス",
             "アナエロビックファーメンテーション",
         )
-
-        const val TASTE_MAX_VALUE: Int = 5
-        const val TASTE_MINIMUM_VALUE: Int = 1
     }
 }

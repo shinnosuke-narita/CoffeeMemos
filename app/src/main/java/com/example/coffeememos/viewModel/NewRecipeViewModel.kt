@@ -1,10 +1,6 @@
 package com.example.coffeememos.viewModel
 
-import android.app.Activity
-import android.content.Context
 import androidx.lifecycle.*
-import com.example.coffeememos.Constants
-import com.example.coffeememos.R
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.dao.TasteDao
@@ -15,10 +11,11 @@ import com.example.coffeememos.state.InputType
 import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.state.ProcessState
 import com.example.coffeememos.utilities.DateUtil
+import com.example.coffeememos.utilities.StringUtil
 import com.example.coffeememos.utilities.Util
 import com.example.coffeememos.validate.TasteValidation
-import com.example.coffeememos.validate.ValidationState
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class NewRecipeViewModel(
     private val recipeDao: RecipeDao,
@@ -88,55 +85,30 @@ class NewRecipeViewModel(
     private var _comment              : String = ""
 
 
-    // バリデートエラー時、trueを返す
-    private fun validate(context: Activity, value: String): Boolean {
-        if (value == "") return true
+    fun setSour(sour: String) {
+        if (sour.isEmpty()) return
 
-        val convertRes = Util.convertStringIntoIntIfPossible(value)
-        val message =
-            if (convertRes == 0) {
-                context.getString(R.string.taste_minimum_value_validation, Constants.TASTE_MINIMUM_VALUE)
-            } else if (convertRes > Constants.TASTE_MAX_VALUE) {
-                context.getString(R.string.taste_max_value_validation, Constants.TASTE_MAX_VALUE)
-            } else ""
-
-        if (message != "") {
-            _tasteValidation.value = TasteValidation(ValidationState.ERROR, message)
-
-            viewModelScope.launch(Dispatchers.Default) {
-                delay(VALIDATION_MESSAGE_DISPLAY_TIME)
-                _tasteValidation.postValue(TasteValidation(ValidationState.NORMAL, ""))
-            }
-            return true
-        }
-
-        return false
+        _sour = StringUtil.deleteBlank(sour).toInt()
     }
+    fun setBitter(bitter: String) {
+        if (bitter.isEmpty()) return
 
-    fun setSour(context: Activity, sour: String) {
-        if (validate(context, sour)) return
-
-        _sour = sour.toInt()
+        _bitter = StringUtil.deleteBlank(bitter).toInt()
     }
-    fun setBitter(context: Activity, bitter: String) {
-        if (validate(context, bitter)) return
+    fun setSweet(sweet: String) {
+        if (sweet.isEmpty()) return
 
-        _bitter = bitter.toInt()
+        _sweet = StringUtil.deleteBlank(sweet).toInt()
     }
-    fun setSweet(context: Activity, sweet: String) {
-        if (validate(context, sweet)) return
+    fun setFlavor(flavor: String) {
+        if (flavor.isEmpty()) return
 
-        _sweet = sweet.toInt()
+        _flavor = StringUtil.deleteBlank(flavor).toInt()
     }
-    fun setFlavor(context: Activity, flavor: String) {
-        if (validate(context, flavor)) return
+    fun setRich(rich: String) {
+        if (rich.isEmpty()) return
 
-        _flavor = flavor.toInt()
-    }
-    fun setRich(context: Activity, rich: String) {
-        if (validate(context, rich)) return
-
-        _rich = rich.toInt()
+        _rich = StringUtil.deleteBlank(rich).toInt()
     }
     fun setAmountBeans(amountBeans: String) { _amountBeans = Util.convertStringIntoIntIfPossible(amountBeans) }
     fun setTemperature(temperature: String) { _temperature = Util.convertStringIntoIntIfPossible(temperature) }

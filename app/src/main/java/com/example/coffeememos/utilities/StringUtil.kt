@@ -6,5 +6,7 @@ class StringUtil {
             val subStrLastIndex = text.lastIndexOf(separator)
             return text.substring(0, subStrLastIndex)
         }
+
+        fun deleteBlank(value: String) = value.replace(" ", "")
     }
 }
