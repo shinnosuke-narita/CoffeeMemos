@@ -17,9 +17,5 @@ class Util {
             delay(1000L)
             Log.d("sample", "hello$num")
         }
-
-
-        private fun getMinutes(timeMills: Long) = timeMills / 1000 / 60
-        private fun getSeconds(timeMills: Long) = timeMills / 1000 % 60
     }
 }

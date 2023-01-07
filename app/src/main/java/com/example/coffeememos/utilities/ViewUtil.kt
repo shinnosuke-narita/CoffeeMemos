@@ -1,5 +1,8 @@
 package com.example.coffeememos.utilities
 
+import android.app.Activity
+import android.graphics.Rect
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.coffeememos.Constants
@@ -32,6 +35,22 @@ class ViewUtil {
         fun setFavoriteIcon(imageView: ImageView, isFavorite: Boolean) {
             if (isFavorite) imageView.setImageResource(R.drawable.ic_baseline_favorite_24)
             else imageView.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+
+
+
+        // window上viewの絶対Y座標
+        fun getViewYCoordinateInWindow(view: View): Int {
+            val location = IntArray(2)
+            view.getLocationInWindow(location)
+            return location[1]
+        }
+
+        // statusBar 高さ取得
+        fun getStatusBarHeight(activity: Activity): Int {
+            val rect = Rect()
+            activity.window.decorView.getWindowVisibleDisplayFrame(rect)
+            return rect.top
         }
     }
 }

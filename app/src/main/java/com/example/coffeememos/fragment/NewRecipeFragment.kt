@@ -445,14 +445,11 @@ class NewRecipeFragment :
 
     private fun setUpValidationMessage(validationInfo: ValidationInfo, messageView: TextView, titleView: View) {
         if (validationInfo.state == ValidationState.ERROR) {
-            val location = IntArray(2)
-            titleView.getLocationInWindow(location)
-            val rect = Rect()
-            requireActivity().window.decorView.getWindowVisibleDisplayFrame(rect)
-            val statusBarHeight = rect.top
-
-            val scrollY = location[1] - binding.header.root.height - statusBarHeight
+            val titleViewYCoordinate = ViewUtil.getViewYCoordinateInWindow(titleView)
+            val statusBarHeight = ViewUtil.getStatusBarHeight(requireActivity())
+            val scrollY = titleViewYCoordinate - binding.header.root.height - statusBarHeight
             binding.scrollView.smoothScrollBy(0, scrollY)
+
             messageView.visibility = View.VISIBLE
             messageView.text = validationInfo.message
         } else {
