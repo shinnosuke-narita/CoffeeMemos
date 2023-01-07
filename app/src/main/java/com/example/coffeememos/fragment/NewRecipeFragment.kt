@@ -1,12 +1,17 @@
 package com.example.coffeememos.fragment
 
 import android.content.Context
+import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.*
 import androidx.navigation.Navigation
@@ -26,6 +31,7 @@ import com.example.coffeememos.state.ProcessState
 import com.example.coffeememos.utilities.AnimUtil
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
+import com.example.coffeememos.validate.ValidationInfo
 import com.example.coffeememos.validate.ValidationState
 import com.example.coffeememos.viewModel.MainViewModel
 import com.example.coffeememos.viewModel.NewRecipeViewModel
@@ -200,14 +206,15 @@ class NewRecipeFragment :
             }
         })
 
+        // validation message
         viewModel.tasteValidation.observe(viewLifecycleOwner) { validation ->
-            if (validation.state == ValidationState.ERROR) {
-                binding.tasteValidateMessage.visibility = View.VISIBLE
-                binding.tasteValidateMessage.text = validation.message
-            } else {
-                binding.tasteValidateMessage.visibility = View.GONE
-                binding.tasteValidateMessage.text = validation.message
-            }
+            setUpValidationMessage(validation, binding.tasteValidateMessage, binding.tasteTitle)
+        }
+        viewModel.temperatureValidation.observe(viewLifecycleOwner) { validation ->
+            setUpValidationMessage(validation, binding.temperatureValidateMessage, binding.temperatureTitle)
+        }
+        viewModel.extractionTimeValidation.observe(viewLifecycleOwner) { validation ->
+            setUpValidationMessage(validation, binding.extractionTimeValidateMessage, binding.extractionTimeTitle)
         }
 
         // 編集ダイアログ
@@ -388,6 +395,7 @@ class NewRecipeFragment :
         childFragmentManager.setFragmentResultListener("createRecipe", viewLifecycleOwner) { _, _ ->
             val beanId = mainViewModel.selectedBean.value!!.id
             viewModel.createNewRecipeAndTaste(
+                requireActivity(),
                 beanId,
                 mainViewModel.preInfusionTime.value!!,
                 mainViewModel.extractionTime.value!!
@@ -432,5 +440,24 @@ class NewRecipeFragment :
 
     private fun disableBtn(vararg views: View) {
         for (view in views) { view.isEnabled = false }
+    }
+
+
+    private fun setUpValidationMessage(validationInfo: ValidationInfo, messageView: TextView, titleView: View) {
+        if (validationInfo.state == ValidationState.ERROR) {
+            val location = IntArray(2)
+            titleView.getLocationInWindow(location)
+            val rect = Rect()
+            requireActivity().window.decorView.getWindowVisibleDisplayFrame(rect)
+            val statusBarHeight = rect.top
+
+            val scrollY = location[1] - binding.header.root.height - statusBarHeight
+            binding.scrollView.smoothScrollBy(0, scrollY)
+            messageView.visibility = View.VISIBLE
+            messageView.text = validationInfo.message
+        } else {
+            messageView.visibility = View.GONE
+            messageView.text = validationInfo.message
+        }
     }
 }

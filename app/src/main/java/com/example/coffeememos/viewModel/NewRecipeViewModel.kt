@@ -1,5 +1,7 @@
 package com.example.coffeememos.viewModel
 
+import android.content.Context
+import android.renderscript.ScriptGroup.Input
 import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
@@ -13,16 +15,17 @@ import com.example.coffeememos.state.ProcessState
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.StringUtil
 import com.example.coffeememos.utilities.Util
-import com.example.coffeememos.validate.TasteValidation
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.coffeememos.utilities.ValidationUtil
+import com.example.coffeememos.validate.ValidationInfo
+import com.example.coffeememos.validate.ValidationState
+import kotlinx.coroutines.*
 
 class NewRecipeViewModel(
     private val recipeDao: RecipeDao,
     private val beanDao: BeanDao,
     private val tasteDao: TasteDao
 ) : ViewModel() {
-    private val VALIDATION_MESSAGE_DISPLAY_TIME: Long = 1500L
+    private val VALIDATION_MESSAGE_DISPLAY_TIME: Long = 2000L
 
     // お気に入り
     private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -84,47 +87,64 @@ class NewRecipeViewModel(
     private var _tool                 : String = ""
     private var _comment              : String = ""
 
-
     fun setSour(sour: String) {
-        if (sour.isEmpty()) return
-
-        _sour = StringUtil.deleteBlank(sour).toInt()
+        _sour = if (sour.isEmpty()) 1 else sour.toInt()
     }
     fun setBitter(bitter: String) {
-        if (bitter.isEmpty()) return
-
-        _bitter = StringUtil.deleteBlank(bitter).toInt()
+        _sour = if (bitter.isEmpty()) 1 else bitter.toInt()
     }
     fun setSweet(sweet: String) {
-        if (sweet.isEmpty()) return
-
-        _sweet = StringUtil.deleteBlank(sweet).toInt()
+        _sweet = if (sweet.isEmpty()) 1 else sweet.toInt()
     }
     fun setFlavor(flavor: String) {
-        if (flavor.isEmpty()) return
-
-        _flavor = StringUtil.deleteBlank(flavor).toInt()
+        _flavor = if (flavor.isEmpty()) 1 else flavor.toInt()
     }
     fun setRich(rich: String) {
-        if (rich.isEmpty()) return
-
-        _rich = StringUtil.deleteBlank(rich).toInt()
+        _rich = if (rich.isEmpty()) 1 else rich.toInt()
     }
-    fun setAmountBeans(amountBeans: String) { _amountBeans = Util.convertStringIntoIntIfPossible(amountBeans) }
-    fun setTemperature(temperature: String) { _temperature = Util.convertStringIntoIntIfPossible(temperature) }
-    fun setPreInfusionTime(preInfusionTime: String) { _preInfusionTime = Util.convertStringIntoIntIfPossible(preInfusionTime) }
-    fun setExtractionTimeMinutes(extractionTimeMinutes: String) {_extractionTimeMinutes = Util.convertStringIntoIntIfPossible(extractionTimeMinutes) }
-    fun setExtractionTimeSeconds(extractionTimeSeconds: String) {_extractionTimeSeconds = Util.convertStringIntoIntIfPossible(extractionTimeSeconds) }
-    fun setAmountExtraction(amountExtraction: String) {_amountExtraction = Util.convertStringIntoIntIfPossible(amountExtraction) }
+    fun setAmountBeans(amountBeans: String) {
+        _amountBeans = Util.convertStringIntoIntIfPossible(amountBeans)
+    }
+    fun setTemperature(temperature: String) {
+        _temperature = Util.convertStringIntoIntIfPossible(temperature)
+    }
+    fun setPreInfusionTime(preInfusionTime: String) {
+        _preInfusionTime = Util.convertStringIntoIntIfPossible(preInfusionTime)
+    }
+    fun setExtractionTimeMinutes(extractionTimeMinutes: String) {
+        _extractionTimeMinutes = Util.convertStringIntoIntIfPossible(extractionTimeMinutes)
+    }
+    fun setExtractionTimeSeconds(extractionTimeSeconds: String) {
+        _extractionTimeSeconds = Util.convertStringIntoIntIfPossible(extractionTimeSeconds)
+    }
+    fun setAmountExtraction(amountExtraction: String) {
+        _amountExtraction = Util.convertStringIntoIntIfPossible(amountExtraction)
+    }
     fun setTool(tool: String) { _tool = tool }
     fun setComment(comment: String) { _comment = comment }
 
-    // tasteバリデーション
-    private val _tasteValidation: MutableLiveData<TasteValidation> = MutableLiveData()
-    val tasteValidation: LiveData<TasteValidation> = _tasteValidation
+    // バリデーション
+    private val _tasteValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
+    val tasteValidation: LiveData<ValidationInfo> = _tasteValidation
 
-    fun setTasteValidation(validation: TasteValidation) {
-        _tasteValidation.value = validation
+    private val _temperatureValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
+    val temperatureValidation: LiveData<ValidationInfo> = _temperatureValidation
+
+    private val _extractionTimeValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
+    val extractionTimeValidation: LiveData<ValidationInfo> = _extractionTimeValidation
+
+    private fun setValidationInfoAndResetAfterDelay(validationInfo: MutableLiveData<ValidationInfo>, message: String) {
+        setValidationMessage(validationInfo, message)
+        resetValidationState(validationInfo)
+    }
+    private fun setValidationMessage(validationInfo: MutableLiveData<ValidationInfo>, message: String) {
+        validationInfo.value = ValidationInfo(ValidationState.ERROR, message)
+    }
+    private fun resetValidationState(validationInfo: MutableLiveData<ValidationInfo>) {
+        viewModelScope.launch(Dispatchers.Default) {
+            delay(VALIDATION_MESSAGE_DISPLAY_TIME)
+            validationInfo.postValue(ValidationInfo(ValidationState.NORMAL, ""))
+        }
     }
 
     // menuの状態管理
@@ -167,9 +187,53 @@ class NewRecipeViewModel(
         setExtractionTimeInputType(extractionInputType)
     }
 
+    // validationエラーの場合、true
+    private fun validateRecipeData(context: Context): Boolean {
+        var validationMessage = ""
+
+        // taste
+        val tasteValues = listOf<Int>(_sour, _bitter, _sweet, _flavor, _rich)
+        validationMessage = ValidationUtil.validateTastes(context, tasteValues)
+        if (validationMessage.isNotEmpty()) {
+            setValidationInfoAndResetAfterDelay(_tasteValidation, validationMessage)
+            return true
+        }
+        // temperature
+        validationMessage = ValidationUtil.validateTemperature(context, _temperature)
+        if (validationMessage.isNotEmpty()) {
+            setValidationInfoAndResetAfterDelay(_temperatureValidation, validationMessage)
+            return true
+        }
+        // extractionTime
+        if (_extractionTimeInputType.value == InputType.MANUAL) {
+            validationMessage = ValidationUtil.validateExtractionTimeMinutes(context, _extractionTimeMinutes)
+            if (validationMessage.isNotEmpty()) {
+                setValidationInfoAndResetAfterDelay(_extractionTimeValidation, validationMessage)
+                return true
+            }
+            validationMessage = ValidationUtil.validateExtractionTimeSeconds(context, _extractionTimeSeconds)
+            if (validationMessage.isNotEmpty()) {
+                setValidationInfoAndResetAfterDelay(_extractionTimeValidation, validationMessage)
+                return true
+            }
+        }
+
+        return false
+    }
+
 
     // 保存処理
-    fun createNewRecipeAndTaste(beanId: Long, preInfusionTime: Long, extractionTime: Long) {
+    fun createNewRecipeAndTaste(context: Context, beanId: Long, preInfusionTime: Long, extractionTime: Long) {
+        // validation
+        if (validateRecipeData(context)) {
+            _isMenuOpened.value = MenuState.CLOSE
+            return
+        }
+
+
+
+
+
         viewModelScope.launch(Dispatchers.IO) {
             // 保存処理開始
             _processState.postValue(ProcessState.PROCESSING)
@@ -227,11 +291,6 @@ class NewRecipeViewModel(
             // 保存処理完了
             _processState.postValue(ProcessState.FINISH_PROCESSING)
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-
     }
 }
 

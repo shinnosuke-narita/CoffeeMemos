@@ -18,11 +18,11 @@
         app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/snackBarPlace"
         app:layout_constraintBottom_toBottomOf="parent">
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -109,12 +109,9 @@
 
                 <TextView
                     android:id="@+id/tasteValidateMessage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:visibility="gone"
+                    style="@style/validationMessageStyle"
                     tools:text="hello world"
-                    android:textColor="@color/validation_color"
+                    tools:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@+id/tasteAttention"
                     app:layout_constraintStart_toStartOf="@+id/tasteAttention" />
 
@@ -315,14 +312,21 @@
                     app:layout_constraintTop_toBottomOf="@+id/roastTextView"
                     app:layout_constraintStart_toStartOf="parent"/>
 
+                <TextView
+                    android:id="@+id/toolValidateMessage"
+                    style="@style/validationMessageStyle"
+                    tools:text="hello world"
+                    tools:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@+id/toolTitle"
+                    app:layout_constraintStart_toStartOf="@+id/toolTitle" />
+
                 <EditText
                     android:id="@+id/toolEditText"
                     style="@style/mEditTextStyle"
                     android:hint="@string/tool"
-
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolTitle">
+                    app:layout_constraintTop_toBottomOf="@+id/toolValidateMessage">
                 </EditText>
 
                 <TextView
@@ -337,6 +341,7 @@
                     style="@style/mEditTextStyle"
                     android:hint="@string/amount_beans"
                     android:inputType="number"
+                    android:maxLength="4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/amountBeanTitle"/>
@@ -348,14 +353,23 @@
                     app:layout_constraintTop_toBottomOf="@+id/amountBeanEditText"
                     app:layout_constraintStart_toStartOf="parent"/>
 
+                <TextView
+                    android:id="@+id/temperatureValidateMessage"
+                    style="@style/validationMessageStyle"
+                    tools:text="hello world"
+                    tools:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@+id/temperatureTitle"
+                    app:layout_constraintStart_toStartOf="@+id/temperatureTitle" />
+
                 <EditText
                     android:id="@+id/temperatureEditText"
                     style="@style/mEditTextStyle"
                     android:hint="@string/temperature"
                     android:inputType="number"
+                    android:maxLength="3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/temperatureTitle"/>
+                    app:layout_constraintTop_toBottomOf="@+id/temperatureValidateMessage"/>
 
                 <TextView
                     android:id="@+id/amountExtractionTitle"
@@ -364,11 +378,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/temperatureEditText"
                     app:layout_constraintStart_toStartOf="parent"/>
 
+
                 <EditText
                     android:id="@+id/amountExtractionEditText"
                     style="@style/mEditTextStyle"
                     android:hint="@string/amount_extraction"
                     android:inputType="number"
+                    android:maxLength="4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/amountExtractionTitle"/>
@@ -385,6 +401,7 @@
                     style="@style/mEditTextStyle"
                     android:hint="@string/pre_infusion_time"
                     android:inputType="number"
+                    android:maxLength="4"
                     app:layout_constraintEnd_toStartOf="@+id/changePreInfusionInputTypeIcon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/preInfusionTimeTitle"/>
@@ -418,12 +435,20 @@
                     app:layout_constraintTop_toBottomOf="@+id/preInfusionTimeEditText"
                     app:layout_constraintStart_toStartOf="parent"/>
 
+
+                <TextView
+                    android:id="@+id/extractionTimeValidateMessage"
+                    style="@style/validationMessageStyle"
+                    tools:text="hello world"
+                    tools:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@+id/extractionTimeTitle"
+                    app:layout_constraintStart_toStartOf="@+id/extractionTimeTitle" />
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/extractionTimeWrapper"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    app:layout_constraintTop_toBottomOf="@+id/extractionTimeTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/extractionTimeValidateMessage"
                     app:layout_constraintEnd_toEndOf="@+id/preInfusionTimeEditText"
                     app:layout_constraintStart_toStartOf="@+id/preInfusionTimeEditText">
 
@@ -435,6 +460,7 @@
                         android:layout_margin="0dp"
                         android:hint="@string/extraction_time_minutes"
                         android:inputType="number"
+                        android:maxLength="2"
                         android:nextFocusDown="@+id/extractionTimeSecondsEditText"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/unitMinute"
@@ -460,6 +486,7 @@
                         android:layout_margin="0dp"
                         android:hint="@string/extraction_time_seconds"
                         android:inputType="number"
+                        android:maxLength="2"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/unitMinute"
                         app:layout_constraintEnd_toStartOf="@+id/secondsUnit"
@@ -488,7 +515,7 @@
                     android:layout_marginTop="15dp"
                     android:visibility="gone"
                     android:background="@drawable/edit_text_background"
-                    app:layout_constraintTop_toBottomOf="@+id/extractionTimeTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/extractionTimeValidateMessage"
                     app:layout_constraintEnd_toEndOf="@+id/preInfusionTimeEditText"
                     app:layout_constraintStart_toStartOf="@+id/preInfusionTimeEditText" />
 

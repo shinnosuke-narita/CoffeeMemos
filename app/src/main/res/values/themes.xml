@@ -139,6 +139,14 @@
         <item name="android:gravity">center</item>
         <item name="android:inputType">number</item>
         <item name="android:maxLines">1</item>
+        <item name="android:maxLength">1</item>
+    </style>
+    <style name="validationMessageStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/validation_color</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:visibility">gone</item>
     </style>
 
 
