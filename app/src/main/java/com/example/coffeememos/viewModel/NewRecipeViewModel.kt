@@ -185,6 +185,7 @@ class NewRecipeViewModel(
     fun initialize(ratingManager: RatingManager, preInfusionInputType: InputType, extractionInputType: InputType) {
         if (_ratingManager != null) return
         _ratingManager = ratingManager
+        _recipeStarList.value = ratingManager.starList
 
         setPreInfusionTimeInputType(preInfusionInputType)
         setExtractionTimeInputType(extractionInputType)
