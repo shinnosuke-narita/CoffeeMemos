@@ -210,6 +210,9 @@ class NewRecipeFragment :
         viewModel.tasteValidation.observe(viewLifecycleOwner) { validation ->
             setUpValidationMessage(validation, binding.tasteValidateMessage, binding.tasteTitle)
         }
+        viewModel.toolValidation.observe(viewLifecycleOwner) { validation ->
+            setUpValidationMessage(validation, binding.toolValidateMessage, binding.toolTitle)
+        }
         viewModel.temperatureValidation.observe(viewLifecycleOwner) { validation ->
             setUpValidationMessage(validation, binding.temperatureValidateMessage, binding.temperatureTitle)
         }

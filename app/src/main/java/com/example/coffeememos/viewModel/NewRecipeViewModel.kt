@@ -133,6 +133,9 @@ class NewRecipeViewModel(
     private val _extractionTimeValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
     val extractionTimeValidation: LiveData<ValidationInfo> = _extractionTimeValidation
 
+    private val _toolValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
+    val toolValidation: LiveData<ValidationInfo> = _toolValidation
+
     private fun setValidationInfoAndResetAfterDelay(validationInfo: MutableLiveData<ValidationInfo>, message: String) {
         setValidationMessage(validationInfo, message)
         resetValidationState(validationInfo)
@@ -198,6 +201,12 @@ class NewRecipeViewModel(
             setValidationInfoAndResetAfterDelay(_tasteValidation, validationMessage)
             return true
         }
+        // tool
+        validationMessage = ValidationUtil.validateTool(context, _tool)
+        if (validationMessage.isNotEmpty()) {
+            setValidationInfoAndResetAfterDelay(_toolValidation, validationMessage)
+            return true
+        }
         // temperature
         validationMessage = ValidationUtil.validateTemperature(context, _temperature)
         if (validationMessage.isNotEmpty()) {
@@ -229,10 +238,6 @@ class NewRecipeViewModel(
             _isMenuOpened.value = MenuState.CLOSE
             return
         }
-
-
-
-
 
         viewModelScope.launch(Dispatchers.IO) {
             // 保存処理開始

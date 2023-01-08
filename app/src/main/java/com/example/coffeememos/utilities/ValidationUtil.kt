@@ -52,5 +52,13 @@ class ValidationUtil {
 
             return validateMessage
         }
+
+        fun validateTool(context: Context, value: String): String {
+            var validateMessage = ""
+            if (value.isEmpty()) {
+                validateMessage = context.getString(R.string.tool_validation_message)
+            }
+            return validateMessage
+        }
     }
 }
