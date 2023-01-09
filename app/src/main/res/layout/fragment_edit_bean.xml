@@ -71,6 +71,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/processEditText"
                 app:layout_constraintStart_toStartOf="parent"/>
 
+            <TextView
+                android:id="@+id/countryValidateMessage"
+                style="@style/validationMessageStyle"
+                tools:text="hello world"
+                tools:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/countryTitle"
+                app:layout_constraintStart_toStartOf="@+id/countryTitle" />
+
             <EditText
                 android:id="@+id/countryEditText"
                 style="@style/mEditTextStyle"
@@ -78,7 +86,7 @@
                 android:elevation="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/countryTitle">
+                app:layout_constraintTop_toBottomOf="@+id/countryValidateMessage">
             </EditText>
 
             <TextView
@@ -92,6 +100,7 @@
                 android:id="@+id/farmEditText"
                 style="@style/mEditTextStyle"
                 android:hint="@string/farm"
+                android:maxLength="4"
                 android:elevation="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -156,6 +165,7 @@
                     android:hint="@string/elevation"
                     android:elevation="20dp"
                     android:inputType="number"
+                    android:maxLength="4"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/waveLine"
                     app:layout_constraintStart_toStartOf="parent"
@@ -182,6 +192,7 @@
                     android:hint="@string/elevation"
                     android:elevation="20dp"
                     android:inputType="number"
+                    android:maxLength="4"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/waveLine"
                     app:layout_constraintEnd_toEndOf="parent"
