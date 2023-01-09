@@ -5,12 +5,11 @@ import android.graphics.Rect
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 
 class ViewUtil {
     companion object {
-        fun setRecipeTag(view: TextView, value: String) {
+        fun setCardTag(view: TextView, value: String) {
             if (value.isEmpty()) return
 
             view.text = value

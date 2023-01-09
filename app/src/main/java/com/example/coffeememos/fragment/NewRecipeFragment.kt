@@ -1,17 +1,13 @@
 package com.example.coffeememos.fragment
 
 import android.content.Context
-import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.*
 import androidx.navigation.Navigation
@@ -23,7 +19,6 @@ import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentNewRecipeBinding
 import com.example.coffeememos.dialog.BasicDialogFragment
 import com.example.coffeememos.dialog.ListDialogFragment
-import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.listener.SimpleTextWatcher
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.state.InputType
@@ -172,8 +167,8 @@ class NewRecipeFragment :
             beanContainer.rating.text      = getString(R.string.rate_decimal, bean.rating.toString())
             beanContainer.ratingWrapper.visibility = View.VISIBLE
 
-            ViewUtil.setRecipeTag(beanContainer.farm, bean.farm)
-            ViewUtil.setRecipeTag(beanContainer.district, bean.district)
+            ViewUtil.setCardTag(beanContainer.farm, bean.farm)
+            ViewUtil.setCardTag(beanContainer.district, bean.district)
             ViewUtil.setFavoriteIcon(beanContainer.favoriteIcon, bean.isFavorite)
         }
         // rating ★Viewの状態監視処理

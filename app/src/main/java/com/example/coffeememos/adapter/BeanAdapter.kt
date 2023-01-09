@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
-import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
@@ -28,8 +27,8 @@ class BeanAdapter(context: Context, data: List<CustomBean>) : BaseAdapter<Custom
         holder.processName.text = Constants.processList[data[position].process]
         holder.rate.text        = context.getString(R.string.rate_decimal, data[position].rating.toString())
         holder.createdAt.text   = DateUtil.formatEpochTimeMills(data[position].createdAt, DateUtil.pattern)
-        ViewUtil.setRecipeTag(holder.farm, data[position].farm)
-        ViewUtil.setRecipeTag(holder.district, data[position].district)
+        ViewUtil.setCardTag(holder.farm, data[position].farm)
+        ViewUtil.setCardTag(holder.district, data[position].district)
         ViewUtil.setFavoriteIcon(holder.favoriteIcon, data[position].isFavorite)
 
         // リストアイテムクリック時のコールバック

@@ -32,9 +32,9 @@ class RecipeDetailAdapter(context: Context, data: List<CustomRecipe>) : BaseAdap
         holder.flavor.text     = recipe.flavor.toString()
         holder.rich.text       = recipe.rich.toString()
         holder.rating.text     = context.getString(R.string.rate_decimal, recipe.rating.toString())
-        ViewUtil.setRecipeTag(holder.country, recipe.country)
-        ViewUtil.setRecipeTag(holder.roast, Constants.roastList[recipe.roast])
-        ViewUtil.setRecipeTag(holder.grindSize,  Constants.grindSizeList[recipe.grindSize])
+        ViewUtil.setCardTag(holder.country, recipe.country)
+        ViewUtil.setCardTag(holder.roast, Constants.roastList[recipe.roast])
+        ViewUtil.setCardTag(holder.grindSize,  Constants.grindSizeList[recipe.grindSize])
 
         // お気に入りアイコンのセット
         setTagAndFavoriteIcon(holder.favorite, recipe.isFavorite)

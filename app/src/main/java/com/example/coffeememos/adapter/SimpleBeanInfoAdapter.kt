@@ -6,16 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.SimpleBeanInfo
-import com.example.coffeememos.SimpleRecipe
-import com.example.coffeememos.entity.Bean
-
-import com.example.coffeememos.entity.RecipeWithBeans
-import com.example.coffeememos.utilities.ViewUtil.Companion.setFavoriteIcon
+import com.example.coffeememos.utilities.ViewUtil
 import com.example.coffeememos.utilities.ViewUtil.Companion.setTagAndFavoriteIcon
 
 class SimpleBeanInfoAdapter(context: Context, data: List<SimpleBeanInfo>) : BaseAdapter<SimpleBeanInfo, SimpleBeanInfoViewHolder>(context, data) {
@@ -29,9 +23,11 @@ class SimpleBeanInfoAdapter(context: Context, data: List<SimpleBeanInfo>) : Base
     override fun onBindViewHolder(holder: SimpleBeanInfoViewHolder, position: Int) {
         holder.country.text      = data[position].country
         holder.createdAt.text    = data[position].createdAt
-        holder.farm.text         = data[position].farm
-        holder.district.text     = data[position].district
         holder.rating.text       = context.getString(R.string.rate_decimal, data[position].rating)
+
+        // cardタグ セット
+        ViewUtil.setCardTag(holder.farm, data[position].farm)
+        ViewUtil.setCardTag(holder.district, data[position].district)
 
         // お気に入りアイコンのセット
         setTagAndFavoriteIcon(holder.favorite, data[position].isFavorite)
