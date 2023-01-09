@@ -70,8 +70,6 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavo
 
         // SimpleRecipeList 監視処理
         viewModel.newRecipeList.observe(viewLifecycleOwner) { list ->
-            if (list.isEmpty()) return@observe
-
             mContext?.let { context ->
                 binding.newRecipeList.adapter = RecipeAdapter(context, list).apply {
                     setOnItemClickListener(this@HomeRecipeFragment)
@@ -98,6 +96,19 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavo
                     setFavoriteListener(this@HomeRecipeFragment)
                 }
             }
+        }
+        // レシピの登録数 監視処理
+        viewModel.recipeCountIsZero.observe(viewLifecycleOwner) { countIsZero ->
+            if (countIsZero) {
+                binding.newRecipeHeader.visibility = View.GONE
+                binding.highRatingRecipeHeader.visibility = View.GONE
+                binding.favoriteRecipeHeader.visibility = View.GONE
+            } else {
+                binding.newRecipeHeader.visibility = View.VISIBLE
+                binding.highRatingRecipeHeader.visibility = View.VISIBLE
+                binding.favoriteRecipeHeader.visibility = View.VISIBLE
+            }
+
         }
 
         // レシピ新規作成画面へ遷移

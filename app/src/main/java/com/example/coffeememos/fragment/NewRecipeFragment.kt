@@ -409,8 +409,8 @@ class NewRecipeFragment :
             viewModel.setGrind(bundle.getInt("newIndex"))
         }
         // コーヒー豆未選択ダイアログからの結果を受信
-        setFragmentResultListener("beanNotRegistered") { _, _ ->
-            findNavController().navigate(R.id.newBeanFragment)
+        childFragmentManager.setFragmentResultListener("beanNotRegistered", viewLifecycleOwner) { _, _ ->
+            viewModel.setSelectBeanBtnAction(SelectBeanBtnAction.SHOW_NEW_BEAN_FRAGMENT)
         }
         // 計測画面からの結果を受信
         setFragmentResultListener("returnFromTimer") { _, _ ->
@@ -432,6 +432,17 @@ class NewRecipeFragment :
                 mainViewModel.preInfusionTime.value!!,
                 mainViewModel.extractionTime.value!!
             )
+        }
+        setFragmentResultListener("createBean") { _, _ ->
+            Snackbar.make(binding.snackBarPlace, getString(R.string.bean_finish_create_message), Snackbar.LENGTH_SHORT).apply {
+                mContext?.let {
+                    setTextColor(ContextCompat.getColor(it, R.color.snackBar_text))
+                    getView().setBackgroundColor(
+                        ContextCompat.getColor(it,
+                            R.color.white
+                        ))
+                }
+            }.show()
         }
     }
 
@@ -492,6 +503,7 @@ class NewRecipeFragment :
     private fun setUpHeader() {
         binding.header.headerTitle.text = getString(R.string.new_recipe)
         binding.header.backBtn.setOnClickListener {
+            mainViewModel.resetBean()
             findNavController().popBackStack()
         }
     }

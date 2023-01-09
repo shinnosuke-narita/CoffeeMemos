@@ -58,6 +58,11 @@ class HomeBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
         return@map simpleInfoList
     }
 
+    val beanCountIsZero: LiveData<Boolean> = Transformations.map(simpleBeanInfoList) { simpleBeanInfoList ->
+       if (simpleBeanInfoList.size == 0) return@map true
+        return@map false
+    }
+
     fun updateFavoriteIcon(clickedFavoriteIcon: View, beanId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {

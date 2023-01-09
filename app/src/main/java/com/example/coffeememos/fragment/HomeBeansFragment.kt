@@ -78,8 +78,6 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> , OnFa
 
         // 新しい順レシピ 監視処理
         viewModel.newBeanList.observe(viewLifecycleOwner) { list ->
-            if (list.isEmpty()) return@observe
-
             mContext?.let { context ->
                 binding.newBeanList.adapter = SimpleBeanInfoAdapter(context, list).apply {
                     setOnItemClickListener(this@HomeBeansFragment)
@@ -108,6 +106,20 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> , OnFa
                     setFavoriteListener(this@HomeBeansFragment)
                 }
             }
+        }
+
+        // コーヒー豆の登録数 監視処理
+        viewModel.beanCountIsZero.observe(viewLifecycleOwner) { countIsZero ->
+            if (countIsZero) {
+                binding.newBeanHeader.visibility = View.GONE
+                binding.highRatingBeanHeader.visibility = View.GONE
+                binding.favoriteBeanHeader.visibility = View.GONE
+            } else {
+                binding.newBeanHeader.visibility = View.VISIBLE
+                binding.highRatingBeanHeader.visibility = View.VISIBLE
+                binding.favoriteBeanHeader.visibility = View.VISIBLE
+            }
+
         }
 
         // 豆の新規作成画面に遷移

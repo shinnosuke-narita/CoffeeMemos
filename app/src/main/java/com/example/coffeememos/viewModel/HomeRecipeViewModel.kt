@@ -54,6 +54,11 @@ class HomeRecipeViewModel(private val beanDao: BeanDao, private val recipeDao: R
             .take(maxDisplayItemAmount)
     }
 
+    val recipeCountIsZero: LiveData<Boolean> = Transformations.map(allSimpleRecipeList) { list ->
+        if (list.isEmpty()) return@map true
+        return@map false
+    }
+
 
     // 簡易レシピリスト作成メソッド
     private fun makeSimpleRecipe(): List<SimpleRecipe> {
