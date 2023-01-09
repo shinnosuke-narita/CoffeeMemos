@@ -215,12 +215,14 @@ class NewRecipeFragment :
                     binding.wholeShadow.visibility = View.VISIBLE
                     binding.menuBtn.setImageResource(R.drawable.ic_baseline_close_24)
                     enableBtn(binding.timeBtn, binding.saveBtn)
+                    disableView()
                     AnimUtil.fadeInAnimation(binding.timeBtn, 500L)
                     AnimUtil.fadeInAnimation(binding.saveBtn, 500L)
                 }
                 MenuState.CLOSE -> {
                     binding.wholeShadow.visibility = View.GONE
                     binding.menuBtn.setImageResource(R.drawable.ic_baseline_menu_24)
+                    enableView()
                     disableBtn(binding.timeBtn, binding.saveBtn)
                     AnimUtil.fadeOutAnimation(binding.timeBtn, 500L)
                     AnimUtil.fadeOutAnimation(binding.saveBtn, 500L)
@@ -485,5 +487,62 @@ class NewRecipeFragment :
             mainViewModel.resetBean()
             findNavController().popBackStack()
         }
+    }
+
+    private fun disableView() {
+        binding.header.favoriteBtn.isEnabled = false
+        binding.selectBeanBtn.isEnabled = false
+        binding.sourValue.isEnabled = false
+        binding.bitterValue.isEnabled = false
+        binding.sweetValue.isEnabled = false
+        binding.flavorValue.isEnabled = false
+        binding.richValue.isEnabled = false
+        binding.selectGrindBtn.isEnabled = false
+        binding.selectRoastBtn.isEnabled = false
+        binding.toolEditText.isEnabled = false
+        binding.amountBeanEditText.isEnabled = false
+        binding.temperatureEditText.isEnabled = false
+        binding.amountExtractionEditText.isEnabled = false
+        binding.toolEditText.isEnabled = false
+        binding.preInfusionTimeEditText.isEnabled = false
+        binding.extractionTimeMinuteEditText.isEnabled = false
+        binding.extractionTimeSecondsEditText.isEnabled = false
+        binding.changePreInfusionInputTypeIcon.isEnabled = false
+        binding.changeExtractionInputTypeIcon.isEnabled = false
+        binding.commentEditText.isEnabled = false
+        binding.starFirst.isEnabled = false
+        binding.starSecond.isEnabled = false
+        binding.starThird.isEnabled = false
+        binding.starFourth.isEnabled = false
+        binding.starFifth.isEnabled = false
+        ViewUtil.setScrollable(binding.scrollView, true)
+    }
+    private fun enableView() {
+        binding.header.favoriteBtn.isEnabled = true
+        binding.selectBeanBtn.isEnabled = true
+        binding.sourValue.isEnabled = true
+        binding.bitterValue.isEnabled = true
+        binding.sweetValue.isEnabled = true
+        binding.flavorValue.isEnabled = true
+        binding.richValue.isEnabled = true
+        binding.selectGrindBtn.isEnabled = true
+        binding.selectRoastBtn.isEnabled = true
+        binding.toolEditText.isEnabled = true
+        binding.amountBeanEditText.isEnabled = true
+        binding.temperatureEditText.isEnabled = true
+        binding.amountExtractionEditText.isEnabled = true
+        binding.toolEditText.isEnabled = true
+        binding.preInfusionTimeEditText.isEnabled = true
+        binding.extractionTimeMinuteEditText.isEnabled = true
+        binding.extractionTimeSecondsEditText.isEnabled = true
+        binding.changePreInfusionInputTypeIcon.isEnabled = true
+        binding.changeExtractionInputTypeIcon.isEnabled = true
+        binding.commentEditText.isEnabled = true
+        binding.starFirst.isEnabled = true
+        binding.starSecond.isEnabled = true
+        binding.starThird.isEnabled = true
+        binding.starFourth.isEnabled = true
+        binding.starFifth.isEnabled = true
+        ViewUtil.setScrollable(binding.scrollView, false)
     }
 }

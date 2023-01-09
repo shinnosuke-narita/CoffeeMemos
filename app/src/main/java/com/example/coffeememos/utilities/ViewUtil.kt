@@ -2,6 +2,7 @@ package com.example.coffeememos.utilities
 
 import android.app.Activity
 import android.graphics.Rect
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.ScrollView
@@ -58,6 +59,12 @@ class ViewUtil {
             val statusBarHeight = getStatusBarHeight(activity)
             val scrollY = titleViewYCoordinate - header.height - statusBarHeight
             scrollView.smoothScrollBy(0, scrollY)
+        }
+
+        fun setScrollable(scrollView: ScrollView, flag: Boolean) {
+            scrollView.setOnTouchListener { view, event ->
+                return@setOnTouchListener flag
+            }
         }
     }
 }
