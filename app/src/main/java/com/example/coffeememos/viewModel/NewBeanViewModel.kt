@@ -5,6 +5,7 @@ import com.example.coffeememos.utilities.Util
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.manager.RatingManager
+import com.example.coffeememos.validate.ValidationInfo
 import kotlinx.coroutines.launch
 
 class NewBeanViewModel(val beanDao: BeanDao) : ViewModel() {
@@ -44,6 +45,9 @@ class NewBeanViewModel(val beanDao: BeanDao) : ViewModel() {
         _beanStarList.value      = ratingManager.starList
     }
 
+    // バリデーション
+    private val _countryValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
+    val countryValidation: LiveData<ValidationInfo> = _countryValidation
 
     // 更新されたデータを保持
     private var _elevationFrom: Int = 0

@@ -23,7 +23,7 @@ class NewRecipeViewModel(
     private val recipeDao: RecipeDao,
     private val beanDao: BeanDao,
     private val tasteDao: TasteDao
-) : ViewModel() {
+) : BaseViewModel() {
     // お気に入り
     private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
     val isFavorite: LiveData<Boolean> = _isFavorite
@@ -135,20 +135,6 @@ class NewRecipeViewModel(
 
     private val _toolValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
     val toolValidation: LiveData<ValidationInfo> = _toolValidation
-
-    private fun setValidationInfoAndResetAfterDelay(validationInfo: MutableLiveData<ValidationInfo>, message: String) {
-        setValidationMessage(validationInfo, message)
-        resetValidationState(validationInfo)
-    }
-    private fun setValidationMessage(validationInfo: MutableLiveData<ValidationInfo>, message: String) {
-        validationInfo.value = ValidationInfo(ValidationState.ERROR, message)
-    }
-    private fun resetValidationState(validationInfo: MutableLiveData<ValidationInfo>) {
-        viewModelScope.launch(Dispatchers.Default) {
-            delay(RecipeValidationLogic.VALIDATION_MESSAGE_DISPLAY_TIME)
-            validationInfo.postValue(ValidationInfo(ValidationState.NORMAL, ""))
-        }
-    }
 
     // menuの状態管理
     private var _isMenuOpened: MutableLiveData<MenuState?> = MutableLiveData(null)

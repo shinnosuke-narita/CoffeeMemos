@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class EditRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
+class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
     // 選択されたレシピ
     private val _selectedRecipe: MutableLiveData<Recipe> = MutableLiveData()
     val selectedRecipe: LiveData<Recipe> = _selectedRecipe
@@ -74,20 +74,6 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
 
     private val _toolValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
     val toolValidation: LiveData<ValidationInfo> = _toolValidation
-
-    private fun setValidationInfoAndResetAfterDelay(validationInfo: MutableLiveData<ValidationInfo>, message: String) {
-        setValidationMessage(validationInfo, message)
-        resetValidationState(validationInfo)
-    }
-    private fun setValidationMessage(validationInfo: MutableLiveData<ValidationInfo>, message: String) {
-        validationInfo.value = ValidationInfo(ValidationState.ERROR, message)
-    }
-    private fun resetValidationState(validationInfo: MutableLiveData<ValidationInfo>) {
-        viewModelScope.launch(Dispatchers.Default) {
-            delay(RecipeValidationLogic.VALIDATION_MESSAGE_DISPLAY_TIME)
-            validationInfo.postValue(ValidationInfo(ValidationState.NORMAL, ""))
-        }
-    }
 
     // validationエラーの場合、true
     fun validateRecipeData(context: Context): Boolean {
