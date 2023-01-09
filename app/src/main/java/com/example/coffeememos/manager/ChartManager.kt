@@ -48,10 +48,11 @@ class ChartManager() {
 
         // y軸（チャート内）の設定
         val yAxis = radarChart.yAxis
-        yAxis.axisMaximum = 6f
+        yAxis.axisMaximum = 5f
         yAxis.axisMinimum = 0F
-        yAxis.setLabelCount(7, true)
-        yAxis.setDrawLabels(false)
+        yAxis.setLabelCount(6, true)
+        yAxis.setDrawLabels(true)
+        yAxis.textColor = Color.GRAY
 
         // 凡例の表示無効
         radarChart.legend.isEnabled = false
@@ -89,7 +90,8 @@ class ChartManager() {
 
         val data = RadarData(sets)
         data.setValueTextSize(12f)
-        data.setDrawValues(true)
+        // value を描画したい場合、true
+        data.setDrawValues(false)
         data.setValueTextColor(Color.rgb(193,171,151))
         data.setValueFormatter(object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
