@@ -109,4 +109,5 @@
     <string name="recipeCount">%1d件</string>
 
     <string name="hint_country"><font size="15">原産地</font></string>
+    <string name="search_hint_word">country, tool, roast, and more ...</string>
 </resources>

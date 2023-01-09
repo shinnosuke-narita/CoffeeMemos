@@ -34,7 +34,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:hint="Tool, Roast, k"
+                android:hint="@string/search_hint_word"
                 android:gravity="start"
                 android:textColor="@color/black"
                 android:textSize="16sp"
