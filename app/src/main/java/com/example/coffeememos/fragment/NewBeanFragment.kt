@@ -29,7 +29,7 @@ import com.example.coffeememos.viewModel.NewRecipeViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 
-class NewBeanFragment : Fragment(), View.OnClickListener {
+class NewBeanFragment : BaseFragment(), View.OnClickListener {
     // viewBinding
     private var _binding: FragmentNewBeanBinding? = null
     private val binding get() = _binding!!
@@ -100,6 +100,10 @@ class NewBeanFragment : Fragment(), View.OnClickListener {
         // Process 関連処理
         viewModel.process.observe(viewLifecycleOwner) { process ->
             binding.processEditText.text = Constants.processList[process]
+        }
+        // country validation
+        viewModel.countryValidation.observe(viewLifecycleOwner) { validationInfo ->
+            setUpValidationMessage(validationInfo, binding.scrollView, binding.header.root, binding.countryValidateMessage, binding.countryTitle)
         }
 
         ///////////////////
@@ -187,6 +191,9 @@ class NewBeanFragment : Fragment(), View.OnClickListener {
         }
         //更新ダイアログの結果受信
         childFragmentManager.setFragmentResultListener("createBean", viewLifecycleOwner) { _, _ ->
+            // validation
+            if (viewModel.validateBeanData(requireActivity())) return@setFragmentResultListener
+
             viewModel.createNewBean()
 
             setFragmentResult("createBean", Bundle())
@@ -214,5 +221,4 @@ class NewBeanFragment : Fragment(), View.OnClickListener {
             R.id.beanStarFifth  -> viewModel.updateRatingState(5)
         }
     }
-
 }

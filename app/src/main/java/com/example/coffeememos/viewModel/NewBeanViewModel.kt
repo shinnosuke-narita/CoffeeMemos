@@ -1,14 +1,17 @@
 package com.example.coffeememos.viewModel
 
+import android.content.Context
 import androidx.lifecycle.*
 import com.example.coffeememos.utilities.Util
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.manager.RatingManager
+import com.example.coffeememos.validate.BeanValidationLogic
+import com.example.coffeememos.validate.RecipeValidationLogic
 import com.example.coffeememos.validate.ValidationInfo
 import kotlinx.coroutines.launch
 
-class NewBeanViewModel(val beanDao: BeanDao) : ViewModel() {
+class NewBeanViewModel(val beanDao: BeanDao) : BaseViewModel() {
     // Favorite
     private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
     val isFavorite: LiveData<Boolean> = _isFavorite
@@ -48,6 +51,19 @@ class NewBeanViewModel(val beanDao: BeanDao) : ViewModel() {
     // バリデーション
     private val _countryValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
     val countryValidation: LiveData<ValidationInfo> = _countryValidation
+
+    fun validateBeanData(context: Context): Boolean  {
+        var validationMessage = ""
+
+        // country
+        validationMessage = BeanValidationLogic.validateCountry(context, _country)
+        if (validationMessage.isNotEmpty()) {
+            setValidationInfoAndResetAfterDelay(_countryValidation, validationMessage)
+            return true
+        }
+
+        return false
+    }
 
     // 更新されたデータを保持
     private var _elevationFrom: Int = 0
