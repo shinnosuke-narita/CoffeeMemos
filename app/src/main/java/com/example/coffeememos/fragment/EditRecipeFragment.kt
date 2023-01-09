@@ -44,6 +44,15 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
 
     private val safeArgs: EditRecipeFragmentArgs by navArgs()
 
+    // Rating ☆画像リスト
+    lateinit var recipeStarViewList: List<ImageView> = listOf(
+        binding.beanStarFirst,
+        binding.beanStarSecond,
+        binding.beanStarThird,
+        binding.beanStarFourth,
+        binding.beanStarFifth,
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -51,7 +60,6 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
             safeArgs.recipeId,
             RatingManager()
         )
-
     }
 
     override fun onCreateView(
@@ -59,9 +67,12 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditRecipeBinding.inflate(inflater, container, false)
+
+        // ★画像リスト 初期化
+        recipeStarViewList = listOf(binding.beanStarFirst, binding.beanStarSecond, binding.beanStarThird, binding.beanStarFourth, binding.beanStarFifth)
+
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,8 +82,10 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
             findNavController().popBackStack()
         }
 
-
-        // 選択されたレシピの監視処理
+        /////////////////////
+        // observe process //
+        /////////////////////
+        // 選択されたレシピ
         viewModel.selectedRecipe.observe(viewLifecycleOwner) { recipe ->
             val preInfusionTime = DateUtil.convertSeconds(recipe.preInfusionTime)
             val extractionTimeMinutes = DateUtil.getMinutes(recipe.extractionTime)
@@ -87,18 +100,31 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
             binding.extractionTimeMinuteEditText.setText(extractionTimeMinutes.toString())
             binding.extractionTimeSecondsEditText.setText(extractionTimeSeconds.toString())
         }
-
-
         // Favorite
         viewModel.currentFavorite.observe(viewLifecycleOwner) { isFavorite ->
             if (isFavorite) binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
             else binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
-        binding.header.favoriteBtn.setOnClickListener {
-            if (viewModel.currentFavorite.value!!) viewModel.setFavorite(false)
-            else viewModel.setFavorite(true)
+        // rating ★Viewの状態監視処理
+        viewModel.recipeStarList.observe(viewLifecycleOwner) { starList ->
+            for ((index, star) in starList.withIndex()) {
+                if (star.state == RatingManager.StarState.LIGHT) recipeStarViewList[index].setImageResource(R.drawable.ic_baseline_star_beige_light_24)
+                else recipeStarViewList[index].setImageResource(R.drawable.ic_baseline_star_grey)
+            }
         }
-
+        // Ratingの値 監視処理
+        viewModel.recipeCurrentRating.observe(viewLifecycleOwner) { currentRating ->
+            binding.beanRating.text = getString(R.string.rate_decimal, currentRating.toString())
+        }
+        // 編集ダイアログ
+        // Roast
+        viewModel.currentRoast.observe(viewLifecycleOwner) { roast ->
+            binding.roastTextView.text = Constants.roastList[roast]
+        }
+        // Grind Size
+        viewModel.currentGrind.observe(viewLifecycleOwner) { grind ->
+            binding.grindTextView.text = Constants.grindSizeList[grind]
+        }
         ////////////////////////
         // validation message //
         ////////////////////////
@@ -112,26 +138,25 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
             setUpValidationMessage(validation, binding.extractionTimeValidateMessage, binding.extractionTimeTitle)
         }
 
-
-
-        // Rating
-        val recipeStarViewList: List<ImageView> = listOf(
-            binding.beanStarFirst,
-            binding.beanStarSecond,
-            binding.beanStarThird,
-            binding.beanStarFourth,
-            binding.beanStarFifth,
-        )
-        // rating ★Viewの状態監視処理
-        viewModel.recipeStarList.observe(viewLifecycleOwner) { starList ->
-            for ((index, star) in starList.withIndex()) {
-                if (star.state == RatingManager.StarState.LIGHT) recipeStarViewList[index].setImageResource(R.drawable.ic_baseline_star_beige_light_24)
-                else recipeStarViewList[index].setImageResource(R.drawable.ic_baseline_star_grey)
-            }
+        ///////////////////
+        // clickListener //
+        //////////////////
+        // お気に入りアイコン
+        binding.header.favoriteBtn.setOnClickListener {
+            if (viewModel.currentFavorite.value!!) viewModel.setFavorite(false)
+            else viewModel.setFavorite(true)
         }
-        // Ratingの値 監視処理
-        viewModel.recipeCurrentRating.observe(viewLifecycleOwner) { currentRating ->
-            binding.beanRating.text = getString(R.string.rate_decimal, currentRating.toString())
+        // 焙煎度選択アイコン
+        binding.selectRoastBtn.setOnClickListener {
+            ListDialogFragment
+                .create(viewModel.currentRoast.value!!, getString(R.string.edit_roast), "updateRoast", Constants.roastList.toTypedArray())
+                .show(childFragmentManager, ListDialogFragment::class.simpleName)
+        }
+        // 編集アイコンクリックリスナ―
+        binding.selectGrindBtn.setOnClickListener {
+            ListDialogFragment
+                .create(viewModel.currentGrind.value!!, getString(R.string.edit_grind), "updateGrind", Constants.grindSizeList.toTypedArray())
+                .show(childFragmentManager, ListDialogFragment::class.simpleName)
         }
         // ★画像のクリックリスナーセット
         binding.beanStarFirst.setOnClickListener(this)
@@ -140,8 +165,32 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
         binding.beanStarFourth.setOnClickListener(this)
         binding.beanStarFifth.setOnClickListener(this)
 
+        // 保存処理
+        binding.saveBtn.setOnClickListener {
+            BasicDialogFragment
+                .create(
+                    getString(R.string.update_recipe_title),
+                    getString(R.string.update_message),
+                    getString(R.string.update),
+                    getString(R.string.cancel),
+                    "updateRecipe")
+                .show(childFragmentManager, BasicDialogFragment::class.simpleName)
+        }
+        //更新ダイアログの結果受信
+        childFragmentManager.setFragmentResultListener("updateRecipe", viewLifecycleOwner) { _, _ ->
+            // validation
+            if (viewModel.validateRecipeData(requireActivity())) return@setFragmentResultListener
 
-        // TextChangeListener セット
+            // 保存処理
+            viewModel.updateRecipe()
+
+            setFragmentResult("recipeUpdate", Bundle().apply { putLong("recipeId", viewModel.selectedRecipe.value!!.id) })
+            findNavController().popBackStack()
+        }
+
+        ////////////////////////
+        // textChangeListener //
+        ///////////////////////
         binding.toolEditText.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
                 viewModel.setTool(editable.toString())
@@ -183,60 +232,16 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
             }
         })
 
-
-        // 編集ダイアログ
-        // Roast
-        viewModel.currentRoast.observe(viewLifecycleOwner) { roast ->
-            binding.roastTextView.text = Constants.roastList[roast]
-        }
-        // 編集アイコンクリックリスナ―
-        binding.selectRoastBtn.setOnClickListener {
-            ListDialogFragment
-                .create(viewModel.currentRoast.value!!, getString(R.string.edit_roast), "updateRoast", Constants.roastList.toTypedArray())
-                .show(childFragmentManager, ListDialogFragment::class.simpleName)
-        }
+        ////////////////////////////
+        // FragmentResultListener //
+        ///////////////////////////
         // RoastDialogからの結果を受信
         childFragmentManager.setFragmentResultListener("updateRoast", viewLifecycleOwner) {_, bundle ->
             viewModel.setRoast(bundle.getInt("newIndex"))
         }
-
-        // Grind Size
-        viewModel.currentGrind.observe(viewLifecycleOwner) { grind ->
-            binding.grindTextView.text = Constants.grindSizeList[grind]
-        }
-        // 編集アイコンクリックリスナ―
-        binding.selectGrindBtn.setOnClickListener {
-            ListDialogFragment
-                .create(viewModel.currentGrind.value!!, getString(R.string.edit_grind), "updateGrind", Constants.grindSizeList.toTypedArray())
-                .show(childFragmentManager, ListDialogFragment::class.simpleName)
-        }
         // GrindDialogからの結果を受信
         childFragmentManager.setFragmentResultListener("updateGrind", viewLifecycleOwner) {_, bundle ->
             viewModel.setGrind(bundle.getInt("newIndex"))
-        }
-
-
-        // 保存処理
-        binding.saveBtn.setOnClickListener {
-            BasicDialogFragment
-                .create(
-                    getString(R.string.update_recipe_title),
-                    getString(R.string.update_message),
-                    getString(R.string.update),
-                    getString(R.string.cancel),
-                    "updateRecipe")
-                .show(childFragmentManager, BasicDialogFragment::class.simpleName)
-        }
-        //更新ダイアログの結果受信
-        childFragmentManager.setFragmentResultListener("updateRecipe", viewLifecycleOwner) { _, _ ->
-            // validation
-            if (viewModel.validateRecipeData(requireActivity())) return@setFragmentResultListener
-
-            // 保存処理
-            viewModel.updateRecipe()
-
-            setFragmentResult("recipeUpdate", Bundle().apply { putLong("recipeId", viewModel.selectedRecipe.value!!.id) })
-            findNavController().popBackStack()
         }
     }
 
