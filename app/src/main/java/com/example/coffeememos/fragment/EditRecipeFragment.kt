@@ -31,7 +31,7 @@ import com.example.coffeememos.viewModel.EditRecipeViewModelFactory
 import java.util.*
 
 
-class EditRecipeFragment : Fragment(), View.OnClickListener {
+class EditRecipeFragment : BaseFragment(), View.OnClickListener {
     private var _binding: FragmentEditRecipeBinding? = null
     private val binding
         get() = _binding!!
@@ -45,13 +45,7 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
     private val safeArgs: EditRecipeFragmentArgs by navArgs()
 
     // Rating ☆画像リスト
-    lateinit var recipeStarViewList: List<ImageView> = listOf(
-        binding.beanStarFirst,
-        binding.beanStarSecond,
-        binding.beanStarThird,
-        binding.beanStarFourth,
-        binding.beanStarFifth,
-    )
+    private lateinit var recipeStarViewList: List<ImageView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -129,13 +123,13 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
         // validation message //
         ////////////////////////
         viewModel.toolValidation.observe(viewLifecycleOwner) { validation ->
-            setUpValidationMessage(validation, binding.toolValidateMessage, binding.toolTitle)
+            setUpValidationMessage(validation, binding.scrollView, binding.header.root, binding.toolValidateMessage, binding.toolTitle)
         }
         viewModel.temperatureValidation.observe(viewLifecycleOwner) { validation ->
-            setUpValidationMessage(validation, binding.temperatureValidateMessage, binding.temperatureTitle)
+            setUpValidationMessage(validation, binding.scrollView, binding.header.root, binding.temperatureValidateMessage, binding.temperatureTitle)
         }
         viewModel.extractionTimeValidation.observe(viewLifecycleOwner) { validation ->
-            setUpValidationMessage(validation, binding.extractionTimeValidateMessage, binding.extractionTimeTitle)
+            setUpValidationMessage(validation, binding.scrollView, binding.header.root, binding.extractionTimeValidateMessage, binding.extractionTimeTitle)
         }
 
         ///////////////////
@@ -258,22 +252,6 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
             R.id.beanStarThird  -> viewModel.updateRatingState(3)
             R.id.beanStarFourth -> viewModel.updateRatingState(4)
             R.id.beanStarFifth  -> viewModel.updateRatingState(5)
-        }
-    }
-
-    // validationメッセージ表示非表示
-    private fun setUpValidationMessage(validationInfo: ValidationInfo, messageView: TextView, titleView: View) {
-        if (validationInfo.state == ValidationState.ERROR) {
-            val titleViewYCoordinate = ViewUtil.getViewYCoordinateInWindow(titleView)
-            val statusBarHeight = ViewUtil.getStatusBarHeight(requireActivity())
-            val scrollY = titleViewYCoordinate - binding.header.root.height - statusBarHeight
-            binding.scrollView.smoothScrollBy(0, scrollY)
-
-            messageView.visibility = View.VISIBLE
-            messageView.text = validationInfo.message
-        } else {
-            messageView.visibility = View.GONE
-            messageView.text = validationInfo.message
         }
     }
 }

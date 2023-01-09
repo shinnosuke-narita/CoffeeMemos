@@ -36,7 +36,7 @@ import com.example.coffeememos.viewModel.NewRecipeViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 class NewRecipeFragment :
-    Fragment(),
+    BaseFragment(),
     View.OnClickListener {
     // viewBinding
     private  var _binding: FragmentNewRecipeBinding? = null
@@ -94,7 +94,6 @@ class NewRecipeFragment :
         /////////////
         // 監視処理 //
         ////////////
-
         // お気に入り
         viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
             if (isFavorite) binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
@@ -232,19 +231,19 @@ class NewRecipeFragment :
         // validation message //
         ////////////////////////
         viewModel.tasteValidation.observe(viewLifecycleOwner) { validation ->
-            setUpValidationMessage(validation, binding.tasteValidateMessage, binding.tasteTitle)
+            setUpValidationMessage(validation, binding.scrollView, binding.header.root, binding.tasteValidateMessage, binding.tasteTitle)
         }
         viewModel.toolValidation.observe(viewLifecycleOwner) { validation ->
-            setUpValidationMessage(validation, binding.toolValidateMessage, binding.toolTitle)
+            setUpValidationMessage(validation, binding.scrollView, binding.header.root, binding.toolValidateMessage, binding.toolTitle)
         }
         viewModel.temperatureValidation.observe(viewLifecycleOwner) { validation ->
-            setUpValidationMessage(validation, binding.temperatureValidateMessage, binding.temperatureTitle)
+            setUpValidationMessage(validation, binding.scrollView, binding.header.root, binding.temperatureValidateMessage, binding.temperatureTitle)
         }
         viewModel.extractionTimeValidation.observe(viewLifecycleOwner) { validation ->
-            setUpValidationMessage(validation, binding.extractionTimeValidateMessage, binding.extractionTimeTitle)
+            setUpValidationMessage(validation, binding.scrollView, binding.header.root, binding.extractionTimeValidateMessage, binding.extractionTimeTitle)
         }
         viewModel.beanValidation.observe(viewLifecycleOwner) { validation ->
-            setUpValidationMessage(validation, binding.beanValidateMessage, binding.beanTitle)
+            setUpValidationMessage(validation, binding.scrollView, binding.header.root, binding.beanValidateMessage, binding.beanTitle)
         }
 
         ////////////////////
@@ -477,21 +476,6 @@ class NewRecipeFragment :
 
     private fun disableBtn(vararg views: View) {
         for (view in views) { view.isEnabled = false }
-    }
-
-    private fun setUpValidationMessage(validationInfo: ValidationInfo, messageView: TextView, titleView: View) {
-        if (validationInfo.state == ValidationState.ERROR) {
-            val titleViewYCoordinate = ViewUtil.getViewYCoordinateInWindow(titleView)
-            val statusBarHeight = ViewUtil.getStatusBarHeight(requireActivity())
-            val scrollY = titleViewYCoordinate - binding.header.root.height - statusBarHeight
-            binding.scrollView.smoothScrollBy(0, scrollY)
-
-            messageView.visibility = View.VISIBLE
-            messageView.text = validationInfo.message
-        } else {
-            messageView.visibility = View.GONE
-            messageView.text = validationInfo.message
-        }
     }
 
     private fun setUpHeader() {

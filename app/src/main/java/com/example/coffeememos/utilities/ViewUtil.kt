@@ -4,6 +4,7 @@ import android.app.Activity
 import android.graphics.Rect
 import android.view.View
 import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TextView
 import com.example.coffeememos.R
 
@@ -50,6 +51,13 @@ class ViewUtil {
             val rect = Rect()
             activity.window.decorView.getWindowVisibleDisplayFrame(rect)
             return rect.top
+        }
+
+        fun scrollToTargetView(activity: Activity, scrollView: ScrollView, header: View, targetView: View) {
+            val titleViewYCoordinate = getViewYCoordinateInWindow(targetView)
+            val statusBarHeight = getStatusBarHeight(activity)
+            val scrollY = titleViewYCoordinate - header.height - statusBarHeight
+            scrollView.smoothScrollBy(0, scrollY)
         }
     }
 }

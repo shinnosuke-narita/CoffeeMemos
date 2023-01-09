@@ -44,6 +44,9 @@ class NewBeanFragment : Fragment(), View.OnClickListener {
         NewBeanViewModelFactory(db.beanDao())
     }
 
+    // Ratingの☆画像リスト
+    lateinit var beanStarViewList: List<ImageView>
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
@@ -58,40 +61,31 @@ class NewBeanFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNewBeanBinding.inflate(inflater, container, false)
+
+        // startViewList 初期化
+        beanStarViewList = listOf(binding.starFirst, binding.starSecond, binding.starThird, binding.starFourth, binding.starFifth)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // header セッティング
         binding.header.headerTitle.text = getString(R.string.new_bean)
         binding.header.backBtn.setOnClickListener {
             findNavController().popBackStack()
         }
 
+        /////////////////////
+        // observe process //
+        /////////////////////
         // お気に入り 監視処理
         viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
             if (isFavorite) binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
             else binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
-
-        binding.header.favoriteBtn.setOnClickListener {
-            if (viewModel.isFavorite.value == true) viewModel.setFavoriteFlag(false)
-            else viewModel.setFavoriteFlag(true)
-        }
-
-
-        // ★画像のリスト
-        val beanStarViewList: List<ImageView> = listOf(
-            binding.beanStarFirst,
-            binding.beanStarSecond,
-            binding.beanStarThird,
-            binding.beanStarFourth,
-            binding.beanStarFifth,
-        )
         // rating ★Viewの状態監視処理
         viewModel.beanStarList.observe(viewLifecycleOwner) { starList ->
             for ((index, star) in starList.withIndex()) {
@@ -103,15 +97,46 @@ class NewBeanFragment : Fragment(), View.OnClickListener {
         viewModel.beanCurrentRating.observe(viewLifecycleOwner) { currentRating ->
             binding.beanRating.text = getString(R.string.rate_decimal, currentRating.toString())
         }
+        // Process 関連処理
+        viewModel.process.observe(viewLifecycleOwner) { process ->
+            binding.processEditText.text = Constants.processList[process]
+        }
+
+        ///////////////////
+        // clickListener //
+        ///////////////////
+        binding.header.favoriteBtn.setOnClickListener {
+            if (viewModel.isFavorite.value == true) viewModel.setFavoriteFlag(false)
+            else viewModel.setFavoriteFlag(true)
+        }
+        // processDialog 表示
+        binding.selectProcessBtn.setOnClickListener {
+            ListDialogFragment
+                .create(viewModel.process.value!!, getString(R.string.edit_bean), "updateProcess", Constants.processList.toTypedArray())
+                .show(childFragmentManager, ListDialogFragment::class.simpleName)
+        }
         // ★画像のクリックリスナーセット
-        binding.beanStarFirst.setOnClickListener(this)
-        binding.beanStarSecond.setOnClickListener(this)
-        binding.beanStarThird.setOnClickListener(this)
-        binding.beanStarFourth.setOnClickListener(this)
-        binding.beanStarFifth.setOnClickListener(this)
+        binding.starFirst.setOnClickListener(this)
+        binding.starSecond.setOnClickListener(this)
+        binding.starThird.setOnClickListener(this)
+        binding.starFourth.setOnClickListener(this)
+        binding.starFifth.setOnClickListener(this)
 
+        // 保存処理
+        binding.saveBtn.setOnClickListener {
+            BasicDialogFragment
+                .create(
+                    getString(R.string.create_bean_title),
+                    getString(R.string.create_bean_message),
+                    getString(R.string.save),
+                    getString(R.string.cancel),
+                    "createBean")
+                .show(childFragmentManager, BasicDialogFragment::class.simpleName)
+        }
 
-        // TextChangeListener セット
+        ////////////////////////
+        // TextChangeListener //
+        ////////////////////////
         binding.countryEditText.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
                 viewModel.setCountry(editable.toString())
@@ -153,33 +178,12 @@ class NewBeanFragment : Fragment(), View.OnClickListener {
             }
         })
 
-
-        // Process 関連処理
-        viewModel.process.observe(viewLifecycleOwner) { process ->
-            binding.processEditText.text = Constants.processList[process]
-        }
-        // processDialog 表示
-        binding.selectProcessBtn.setOnClickListener {
-            ListDialogFragment
-                .create(viewModel.process.value!!, getString(R.string.edit_bean), "updateProcess", Constants.processList.toTypedArray())
-                .show(childFragmentManager, ListDialogFragment::class.simpleName)
-        }
+        ////////////////////////////
+        // FragmentResultListener //
+        ////////////////////////////
         // processDialogからの結果を受信
         childFragmentManager.setFragmentResultListener("updateProcess", viewLifecycleOwner) {_, bundle ->
             viewModel.setProcess(bundle.getInt("newIndex"))
-        }
-
-
-        // 保存処理
-        binding.saveBtn.setOnClickListener {
-            BasicDialogFragment
-                .create(
-                    getString(R.string.create_bean_title),
-                    getString(R.string.create_bean_message),
-                    getString(R.string.save),
-                    getString(R.string.cancel),
-                    "createBean")
-                .show(childFragmentManager, BasicDialogFragment::class.simpleName)
         }
         //更新ダイアログの結果受信
         childFragmentManager.setFragmentResultListener("createBean", viewLifecycleOwner) { _, _ ->
@@ -189,8 +193,6 @@ class NewBeanFragment : Fragment(), View.OnClickListener {
             findNavController().popBackStack()
         }
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
