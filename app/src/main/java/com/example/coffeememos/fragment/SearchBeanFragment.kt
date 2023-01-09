@@ -150,6 +150,8 @@ class SearchBeanFragment : Fragment() {
         return BeanAdapter(requireContext(), list).apply {
             setOnItemClickListener(object : OnItemClickListener<CustomBean> {
                 override fun onClick(view: View, bean: CustomBean) {
+                    if (viewModel.isOpened.value!!) return
+
                     val showDetailAction = SearchFragmentDirections.showBeanDetailAction().apply {
                         beanId = bean.id
                     }

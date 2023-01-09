@@ -160,6 +160,8 @@ class SearchRecipeFragment : Fragment() {
             })
             setOnItemClickListener(object : OnItemClickListener<CustomRecipe> {
                 override fun onClick(view: View, selectedItem: CustomRecipe) {
+                    if (viewModel.isOpened.value!!) return
+
                     val showDetailAction = SearchFragmentDirections.showRecipeDetailAction().apply {
                         recipeId = selectedItem.recipeId
                         beanId   = selectedItem.beanId
