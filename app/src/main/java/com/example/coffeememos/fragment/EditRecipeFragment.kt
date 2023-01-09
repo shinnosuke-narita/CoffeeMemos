@@ -205,6 +205,7 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
         binding.saveBtn.setOnClickListener {
             BasicDialogFragment
                 .create(
+                    getString(R.string.update_recipe_title),
                     getString(R.string.update_message),
                     getString(R.string.update),
                     getString(R.string.cancel),

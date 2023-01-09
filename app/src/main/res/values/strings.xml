@@ -63,19 +63,29 @@
     <!-- メッセージ関連  -->
     <string name="prompt">選択してください</string>
     <string name="cancel">キャンセル</string>
+    <string name="OK">OK</string>
     <string name="save">保存</string>
     <string name="update">更新</string>
     <string name="delete">削除</string>
+    <string name="create_recipe_title">レシピの保存</string>
     <string name="create_recipe_message">レシピを保存しますか</string>
+    <string name="update_recipe_title">レシピの更新</string>
     <string name="update_message">更新をしてよろしいですか</string>
+    <string name="delete_recipe_title">レシピの削除</string>
     <string name="delete_recipe_message">レシピを削除しますか</string>
+    <string name="delete_bean_title">コーヒー豆の削除</string>
     <string name="delete_bean_message">コーヒー豆を削除しますか</string>
+    <string name="create_bean_title">コーヒー豆の保存</string>
+    <string name="create_bean_message">コーヒー豆を保存しますか</string>
+    <string name="update_bean_title">コーヒー豆の更新</string>
     <string name="bean_finish_update_message">コーヒー豆を更新しました</string>
     <string name="recipe_finish_save_message">レシピを保存しました</string>
     <string name="recipe_finish_update_message">レシピを更新しました</string>
     <string name="recipe_finish_delete_message">レシピを削除しました</string>
     <string name="bean_finish_delete_message">コーヒー豆を削除しました</string>
     <string name="bean_finish_create_message">コーヒー豆を保存しました</string>
+    <string name="bean_not_registered_title">コーヒー豆 未登録</string>
+    <string name="bean_not_registered_message">レシピの登録にはコーヒー豆の登録が必須です。\nコーヒー豆登録画面に遷移します。</string>
 
     <!-- validation 関連    -->
     <string name="bean_required_message">コーヒー豆が選択されてません</string>

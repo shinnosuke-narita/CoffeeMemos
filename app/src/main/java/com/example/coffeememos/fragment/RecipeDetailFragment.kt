@@ -177,6 +177,7 @@ class RecipeDetailFragment : Fragment() {
         binding.deleteBtn.setOnClickListener { view ->
             BasicDialogFragment
                 .create(
+                    getString(R.string.delete_recipe_title),
                     getString(R.string.delete_recipe_message),
                     getString(R.string.delete),
                     getString(R.string.cancel),

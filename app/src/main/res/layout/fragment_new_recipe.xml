@@ -47,6 +47,14 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 
+                <TextView
+                    android:id="@+id/beanValidateMessage"
+                    style="@style/validationMessageStyle"
+                    tools:text="hello world"
+                    tools:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@+id/beanTitle"
+                    app:layout_constraintStart_toStartOf="@+id/beanTitle" />
+
                 <!--  コーヒー豆情報  -->
                 <include
                     layout="@layout/bean_item"
@@ -60,7 +68,7 @@
                     android:layout_marginBottom="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/beanTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/beanValidateMessage"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <TextView

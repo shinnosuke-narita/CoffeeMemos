@@ -45,4 +45,7 @@ interface BeanDao {
 
     @Query("SELECT bean_id, country, farm, district, store, process, species, rating, isFavorite, createdAt FROM bean;")
     fun getCustomBean(): Flow<List<CustomBean>>
+
+    @Query("SELECT COUNT(*) FROM bean")
+    fun getBeanCount(): Int
 }

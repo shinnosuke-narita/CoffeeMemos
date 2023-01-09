@@ -174,7 +174,8 @@ class NewBeanFragment : Fragment(), View.OnClickListener {
         binding.saveBtn.setOnClickListener {
             BasicDialogFragment
                 .create(
-                    getString(R.string.create_recipe_message),
+                    getString(R.string.create_bean_title),
+                    getString(R.string.create_bean_message),
                     getString(R.string.save),
                     getString(R.string.cancel),
                     "createBean")

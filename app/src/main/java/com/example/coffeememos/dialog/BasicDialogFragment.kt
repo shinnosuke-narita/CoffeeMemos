@@ -13,6 +13,7 @@ class BasicDialogFragment : DialogFragment() {
     private val binding
         get() = _binding!!
 
+    private var _title: String = ""
     private var _message: String = ""
     private var _positiveButtonText: String = ""
     private var _negativeButtonText: String = ""
@@ -20,9 +21,10 @@ class BasicDialogFragment : DialogFragment() {
 
 
     companion object {
-        fun create(message: String, positiveButtonText: String, negativeButtonText: String, requestKey: String): BasicDialogFragment =
+        fun create(title: String, message: String, positiveButtonText: String, negativeButtonText: String, requestKey: String): BasicDialogFragment =
             BasicDialogFragment().apply {
                 arguments = Bundle().apply {
+                    putString("title", title)
                     putString("message", message)
                     putString("positiveButtonText", positiveButtonText)
                     putString("negativeButtonText", negativeButtonText)
@@ -41,6 +43,7 @@ class BasicDialogFragment : DialogFragment() {
 
         // プロパティの初期化
         arguments?.let { bundle ->
+            _title              = bundle.getString("title", "")
             _message            = bundle.getString("message", "")
             _positiveButtonText = bundle.getString("positiveButtonText", "")
             _negativeButtonText = bundle.getString("negativeButtonText", "")
@@ -48,6 +51,7 @@ class BasicDialogFragment : DialogFragment() {
         }
 
         // view のセッティング
+        binding.title.text       = _title
         binding.message.text     = _message
         binding.positiveBtn.text = _positiveButtonText
         binding.negativeBtn.text = _negativeButtonText

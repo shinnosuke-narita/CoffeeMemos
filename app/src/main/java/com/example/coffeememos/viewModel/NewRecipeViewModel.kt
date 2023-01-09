@@ -1,17 +1,22 @@
 package com.example.coffeememos.viewModel
 
 import android.content.Context
+import android.os.Build.VERSION_CODES.S
 import android.renderscript.ScriptGroup.Input
+import android.view.textclassifier.SelectionEvent
 import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.dao.TasteDao
+import com.example.coffeememos.entity.Bean
+import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.state.InputType
 import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.state.ProcessState
+import com.example.coffeememos.state.SelectBeanBtnAction
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.StringUtil
 import com.example.coffeememos.utilities.Util
@@ -124,6 +129,9 @@ class NewRecipeViewModel(
     fun setComment(comment: String) { _comment = comment }
 
     // バリデーション
+    private val _beanValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
+    val beanValidation: LiveData<ValidationInfo> = _beanValidation
+
     private val _tasteValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
     val tasteValidation: LiveData<ValidationInfo> = _tasteValidation
 
@@ -192,9 +200,15 @@ class NewRecipeViewModel(
     }
 
     // validationエラーの場合、true
-    private fun validateRecipeData(context: Context): Boolean {
+    fun validateRecipeData(context: Context, selectedBean: CustomBean?): Boolean {
         var validationMessage = ""
 
+        // taste
+        validationMessage = ValidationUtil.validateSelectedBean(context, selectedBean)
+        if (validationMessage.isNotEmpty()) {
+            setValidationInfoAndResetAfterDelay(_beanValidation, validationMessage)
+            return true
+        }
         // taste
         val tasteValues = listOf<Int>(_sour, _bitter, _sweet, _flavor, _rich)
         validationMessage = ValidationUtil.validateTastes(context, tasteValues)
@@ -233,13 +247,7 @@ class NewRecipeViewModel(
 
 
     // 保存処理
-    fun createNewRecipeAndTaste(context: Context, beanId: Long, preInfusionTime: Long, extractionTime: Long) {
-        // validation
-        if (validateRecipeData(context)) {
-            _isMenuOpened.value = MenuState.CLOSE
-            return
-        }
-
+    fun createNewRecipeAndTaste(beanId: Long, preInfusionTime: Long, extractionTime: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             // 保存処理開始
             _processState.postValue(ProcessState.PROCESSING)
@@ -296,6 +304,27 @@ class NewRecipeViewModel(
 
             // 保存処理完了
             _processState.postValue(ProcessState.FINISH_PROCESSING)
+        }
+    }
+
+    private val _selectBeanBtnAction: MutableLiveData<SelectBeanBtnAction> = MutableLiveData(SelectBeanBtnAction.NOTHING)
+    val selectBeanBtnAction: LiveData<SelectBeanBtnAction> = _selectBeanBtnAction
+
+    fun setSelectBeanBtnAction(action: SelectBeanBtnAction) {
+        _selectBeanBtnAction.value = action
+    }
+
+    // beanの登録チェック
+    fun decideSelectBeanBtnAction() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val beanCount = beanDao.getBeanCount()
+
+            if (beanCount == 0) {
+                _selectBeanBtnAction.postValue(SelectBeanBtnAction.SHOW_DIALOG)
+                return@launch
+            }
+
+            _selectBeanBtnAction.postValue(SelectBeanBtnAction.SHOW_SELECT_BEAN_FRAGMENT)
         }
     }
 }

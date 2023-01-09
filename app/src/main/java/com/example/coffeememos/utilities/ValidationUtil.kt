@@ -2,6 +2,7 @@ package com.example.coffeememos.utilities
 
 import android.content.Context
 import com.example.coffeememos.R
+import com.example.coffeememos.entity.CustomBean
 
 class ValidationUtil {
     companion object {
@@ -57,6 +58,14 @@ class ValidationUtil {
             var validateMessage = ""
             if (value.isEmpty()) {
                 validateMessage = context.getString(R.string.tool_validation_message)
+            }
+            return validateMessage
+        }
+
+        fun validateSelectedBean(context: Context, value: CustomBean?): String {
+            var validateMessage = ""
+            if (value == null) {
+                validateMessage = context.getString(R.string.bean_required_message)
             }
             return validateMessage
         }
