@@ -3,12 +3,11 @@ package com.example.coffeememos.viewModel
 import android.content.Context
 import androidx.lifecycle.*
 import com.example.coffeememos.dao.RecipeDao
-import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.Util
-import com.example.coffeememos.utilities.ValidationUtil
+import com.example.coffeememos.validate.RecipeValidationLogic
 import com.example.coffeememos.validate.ValidationInfo
 import com.example.coffeememos.validate.ValidationState
 import kotlinx.coroutines.Dispatchers
@@ -85,7 +84,7 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
     }
     private fun resetValidationState(validationInfo: MutableLiveData<ValidationInfo>) {
         viewModelScope.launch(Dispatchers.Default) {
-            delay(ValidationUtil.VALIDATION_MESSAGE_DISPLAY_TIME)
+            delay(RecipeValidationLogic.VALIDATION_MESSAGE_DISPLAY_TIME)
             validationInfo.postValue(ValidationInfo(ValidationState.NORMAL, ""))
         }
     }
@@ -95,24 +94,24 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
         var validationMessage = ""
 
         // tool
-        validationMessage = ValidationUtil.validateTool(context, _tool)
+        validationMessage = RecipeValidationLogic.validateTool(context, _tool)
         if (validationMessage.isNotEmpty()) {
             setValidationInfoAndResetAfterDelay(_toolValidation, validationMessage)
             return true
         }
         // temperature
-        validationMessage = ValidationUtil.validateTemperature(context, _temperature)
+        validationMessage = RecipeValidationLogic.validateTemperature(context, _temperature)
         if (validationMessage.isNotEmpty()) {
             setValidationInfoAndResetAfterDelay(_temperatureValidation, validationMessage)
             return true
         }
         // extractionTime
-        validationMessage = ValidationUtil.validateExtractionTimeMinutes(context, _extractionTimeMinutes)
+        validationMessage = RecipeValidationLogic.validateExtractionTimeMinutes(context, _extractionTimeMinutes)
         if (validationMessage.isNotEmpty()) {
             setValidationInfoAndResetAfterDelay(_extractionTimeValidation, validationMessage)
             return true
         }
-        validationMessage = ValidationUtil.validateExtractionTimeSeconds(context, _extractionTimeSeconds)
+        validationMessage = RecipeValidationLogic.validateExtractionTimeSeconds(context, _extractionTimeSeconds)
         if (validationMessage.isNotEmpty()) {
             setValidationInfoAndResetAfterDelay(_extractionTimeValidation, validationMessage)
             return true

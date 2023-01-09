@@ -1,14 +1,10 @@
 package com.example.coffeememos.viewModel
 
 import android.content.Context
-import android.os.Build.VERSION_CODES.S
-import android.renderscript.ScriptGroup.Input
-import android.view.textclassifier.SelectionEvent
 import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.dao.TasteDao
-import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
@@ -18,9 +14,9 @@ import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.state.ProcessState
 import com.example.coffeememos.state.SelectBeanBtnAction
 import com.example.coffeememos.utilities.*
-import com.example.coffeememos.utilities.ValidationUtil.Companion.VALIDATION_MESSAGE_DISPLAY_TIME
 import com.example.coffeememos.validate.ValidationInfo
 import com.example.coffeememos.validate.ValidationState
+import com.example.coffeememos.validate.RecipeValidationLogic
 import kotlinx.coroutines.*
 
 class NewRecipeViewModel(
@@ -149,7 +145,7 @@ class NewRecipeViewModel(
     }
     private fun resetValidationState(validationInfo: MutableLiveData<ValidationInfo>) {
         viewModelScope.launch(Dispatchers.Default) {
-            delay(ValidationUtil.VALIDATION_MESSAGE_DISPLAY_TIME)
+            delay(RecipeValidationLogic.VALIDATION_MESSAGE_DISPLAY_TIME)
             validationInfo.postValue(ValidationInfo(ValidationState.NORMAL, ""))
         }
     }
@@ -203,38 +199,38 @@ class NewRecipeViewModel(
         var validationMessage = ""
 
         // taste
-        validationMessage = ValidationUtil.validateSelectedBean(context, selectedBean)
+        validationMessage = RecipeValidationLogic.validateSelectedBean(context, selectedBean)
         if (validationMessage.isNotEmpty()) {
             setValidationInfoAndResetAfterDelay(_beanValidation, validationMessage)
             return true
         }
         // taste
         val tasteValues = listOf<Int>(_sour, _bitter, _sweet, _flavor, _rich)
-        validationMessage = ValidationUtil.validateTastes(context, tasteValues)
+        validationMessage = RecipeValidationLogic.validateTastes(context, tasteValues)
         if (validationMessage.isNotEmpty()) {
             setValidationInfoAndResetAfterDelay(_tasteValidation, validationMessage)
             return true
         }
         // tool
-        validationMessage = ValidationUtil.validateTool(context, _tool)
+        validationMessage = RecipeValidationLogic.validateTool(context, _tool)
         if (validationMessage.isNotEmpty()) {
             setValidationInfoAndResetAfterDelay(_toolValidation, validationMessage)
             return true
         }
         // temperature
-        validationMessage = ValidationUtil.validateTemperature(context, _temperature)
+        validationMessage = RecipeValidationLogic.validateTemperature(context, _temperature)
         if (validationMessage.isNotEmpty()) {
             setValidationInfoAndResetAfterDelay(_temperatureValidation, validationMessage)
             return true
         }
         // extractionTime
         if (_extractionTimeInputType.value == InputType.MANUAL) {
-            validationMessage = ValidationUtil.validateExtractionTimeMinutes(context, _extractionTimeMinutes)
+            validationMessage = RecipeValidationLogic.validateExtractionTimeMinutes(context, _extractionTimeMinutes)
             if (validationMessage.isNotEmpty()) {
                 setValidationInfoAndResetAfterDelay(_extractionTimeValidation, validationMessage)
                 return true
             }
-            validationMessage = ValidationUtil.validateExtractionTimeSeconds(context, _extractionTimeSeconds)
+            validationMessage = RecipeValidationLogic.validateExtractionTimeSeconds(context, _extractionTimeSeconds)
             if (validationMessage.isNotEmpty()) {
                 setValidationInfoAndResetAfterDelay(_extractionTimeValidation, validationMessage)
                 return true

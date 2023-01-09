@@ -1,10 +1,10 @@
-package com.example.coffeememos.utilities
+package com.example.coffeememos.validate
 
 import android.content.Context
 import com.example.coffeememos.R
 import com.example.coffeememos.entity.CustomBean
 
-class ValidationUtil {
+class RecipeValidationLogic {
     companion object {
         const val VALIDATION_MESSAGE_DISPLAY_TIME = 2000L
 
