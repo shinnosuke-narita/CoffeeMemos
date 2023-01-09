@@ -320,7 +320,6 @@ class NewRecipeFragment :
                     "createRecipe")
                 .show(childFragmentManager, BasicDialogFragment::class.simpleName)
         }
-
         ////////////////////////
         // TextChangeListener //
         ////////////////////////

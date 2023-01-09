@@ -17,10 +17,8 @@ import com.example.coffeememos.state.InputType
 import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.state.ProcessState
 import com.example.coffeememos.state.SelectBeanBtnAction
-import com.example.coffeememos.utilities.DateUtil
-import com.example.coffeememos.utilities.StringUtil
-import com.example.coffeememos.utilities.Util
-import com.example.coffeememos.utilities.ValidationUtil
+import com.example.coffeememos.utilities.*
+import com.example.coffeememos.utilities.ValidationUtil.Companion.VALIDATION_MESSAGE_DISPLAY_TIME
 import com.example.coffeememos.validate.ValidationInfo
 import com.example.coffeememos.validate.ValidationState
 import kotlinx.coroutines.*
@@ -30,8 +28,6 @@ class NewRecipeViewModel(
     private val beanDao: BeanDao,
     private val tasteDao: TasteDao
 ) : ViewModel() {
-    private val VALIDATION_MESSAGE_DISPLAY_TIME: Long = 2000L
-
     // お気に入り
     private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
     val isFavorite: LiveData<Boolean> = _isFavorite
@@ -153,7 +149,7 @@ class NewRecipeViewModel(
     }
     private fun resetValidationState(validationInfo: MutableLiveData<ValidationInfo>) {
         viewModelScope.launch(Dispatchers.Default) {
-            delay(VALIDATION_MESSAGE_DISPLAY_TIME)
+            delay(ValidationUtil.VALIDATION_MESSAGE_DISPLAY_TIME)
             validationInfo.postValue(ValidationInfo(ValidationState.NORMAL, ""))
         }
     }

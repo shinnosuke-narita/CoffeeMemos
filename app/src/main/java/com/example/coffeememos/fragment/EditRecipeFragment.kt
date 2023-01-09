@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -22,6 +23,9 @@ import com.example.coffeememos.dialog.ListDialogFragment
 import com.example.coffeememos.listener.SimpleTextWatcher
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.utilities.DateUtil
+import com.example.coffeememos.utilities.ViewUtil
+import com.example.coffeememos.validate.ValidationInfo
+import com.example.coffeememos.validate.ValidationState
 import com.example.coffeememos.viewModel.EditRecipeViewModel
 import com.example.coffeememos.viewModel.EditRecipeViewModelFactory
 import java.util.*
@@ -61,8 +65,6 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         // header セッティング
         binding.header.headerTitle.text = getString(R.string.edit_recipe)
         binding.header.backBtn.setOnClickListener {
@@ -95,6 +97,19 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
         binding.header.favoriteBtn.setOnClickListener {
             if (viewModel.currentFavorite.value!!) viewModel.setFavorite(false)
             else viewModel.setFavorite(true)
+        }
+
+        ////////////////////////
+        // validation message //
+        ////////////////////////
+        viewModel.toolValidation.observe(viewLifecycleOwner) { validation ->
+            setUpValidationMessage(validation, binding.toolValidateMessage, binding.toolTitle)
+        }
+        viewModel.temperatureValidation.observe(viewLifecycleOwner) { validation ->
+            setUpValidationMessage(validation, binding.temperatureValidateMessage, binding.temperatureTitle)
+        }
+        viewModel.extractionTimeValidation.observe(viewLifecycleOwner) { validation ->
+            setUpValidationMessage(validation, binding.extractionTimeValidateMessage, binding.extractionTimeTitle)
         }
 
 
@@ -214,6 +229,10 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
         }
         //更新ダイアログの結果受信
         childFragmentManager.setFragmentResultListener("updateRecipe", viewLifecycleOwner) { _, _ ->
+            // validation
+            if (viewModel.validateRecipeData(requireActivity())) return@setFragmentResultListener
+
+            // 保存処理
             viewModel.updateRecipe()
 
             setFragmentResult("recipeUpdate", Bundle().apply { putLong("recipeId", viewModel.selectedRecipe.value!!.id) })
@@ -234,6 +253,22 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
             R.id.beanStarThird  -> viewModel.updateRatingState(3)
             R.id.beanStarFourth -> viewModel.updateRatingState(4)
             R.id.beanStarFifth  -> viewModel.updateRatingState(5)
+        }
+    }
+
+    // validationメッセージ表示非表示
+    private fun setUpValidationMessage(validationInfo: ValidationInfo, messageView: TextView, titleView: View) {
+        if (validationInfo.state == ValidationState.ERROR) {
+            val titleViewYCoordinate = ViewUtil.getViewYCoordinateInWindow(titleView)
+            val statusBarHeight = ViewUtil.getStatusBarHeight(requireActivity())
+            val scrollY = titleViewYCoordinate - binding.header.root.height - statusBarHeight
+            binding.scrollView.smoothScrollBy(0, scrollY)
+
+            messageView.visibility = View.VISIBLE
+            messageView.text = validationInfo.message
+        } else {
+            messageView.visibility = View.GONE
+            messageView.text = validationInfo.message
         }
     }
 }

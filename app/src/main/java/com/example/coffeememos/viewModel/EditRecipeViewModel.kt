@@ -1,11 +1,18 @@
 package com.example.coffeememos.viewModel
 
+import android.content.Context
 import androidx.lifecycle.*
 import com.example.coffeememos.dao.RecipeDao
+import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.Util
+import com.example.coffeememos.utilities.ValidationUtil
+import com.example.coffeememos.validate.ValidationInfo
+import com.example.coffeememos.validate.ValidationState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class EditRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
@@ -59,6 +66,60 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
         _currentGrind.value = grind
     }
 
+    // Validation
+    private val _temperatureValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
+    val temperatureValidation: LiveData<ValidationInfo> = _temperatureValidation
+
+    private val _extractionTimeValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
+    val extractionTimeValidation: LiveData<ValidationInfo> = _extractionTimeValidation
+
+    private val _toolValidation: MutableLiveData<ValidationInfo> = MutableLiveData()
+    val toolValidation: LiveData<ValidationInfo> = _toolValidation
+
+    private fun setValidationInfoAndResetAfterDelay(validationInfo: MutableLiveData<ValidationInfo>, message: String) {
+        setValidationMessage(validationInfo, message)
+        resetValidationState(validationInfo)
+    }
+    private fun setValidationMessage(validationInfo: MutableLiveData<ValidationInfo>, message: String) {
+        validationInfo.value = ValidationInfo(ValidationState.ERROR, message)
+    }
+    private fun resetValidationState(validationInfo: MutableLiveData<ValidationInfo>) {
+        viewModelScope.launch(Dispatchers.Default) {
+            delay(ValidationUtil.VALIDATION_MESSAGE_DISPLAY_TIME)
+            validationInfo.postValue(ValidationInfo(ValidationState.NORMAL, ""))
+        }
+    }
+
+    // validationエラーの場合、true
+    fun validateRecipeData(context: Context): Boolean {
+        var validationMessage = ""
+
+        // tool
+        validationMessage = ValidationUtil.validateTool(context, _tool)
+        if (validationMessage.isNotEmpty()) {
+            setValidationInfoAndResetAfterDelay(_toolValidation, validationMessage)
+            return true
+        }
+        // temperature
+        validationMessage = ValidationUtil.validateTemperature(context, _temperature)
+        if (validationMessage.isNotEmpty()) {
+            setValidationInfoAndResetAfterDelay(_temperatureValidation, validationMessage)
+            return true
+        }
+        // extractionTime
+        validationMessage = ValidationUtil.validateExtractionTimeMinutes(context, _extractionTimeMinutes)
+        if (validationMessage.isNotEmpty()) {
+            setValidationInfoAndResetAfterDelay(_extractionTimeValidation, validationMessage)
+            return true
+        }
+        validationMessage = ValidationUtil.validateExtractionTimeSeconds(context, _extractionTimeSeconds)
+        if (validationMessage.isNotEmpty()) {
+            setValidationInfoAndResetAfterDelay(_extractionTimeValidation, validationMessage)
+            return true
+        }
+
+        return false
+    }
 
     // 更新データの保持
     private var _tool                 : String = ""

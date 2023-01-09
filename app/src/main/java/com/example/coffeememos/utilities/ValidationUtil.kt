@@ -6,6 +6,8 @@ import com.example.coffeememos.entity.CustomBean
 
 class ValidationUtil {
     companion object {
+        const val VALIDATION_MESSAGE_DISPLAY_TIME = 2000L
+
         private const val TASTE_MAX_VALUE: Int = 5
         private const val TASTE_MINIMUM_VALUE: Int = 1
         private const val TEMPERATURE_MAX_VALUE = 120
