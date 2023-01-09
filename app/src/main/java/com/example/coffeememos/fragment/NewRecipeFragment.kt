@@ -224,6 +224,8 @@ class NewRecipeFragment :
                     disableBtn(binding.timeBtn, binding.saveBtn)
                     AnimUtil.fadeOutAnimation(binding.timeBtn, 500L)
                     AnimUtil.fadeOutAnimation(binding.saveBtn, 500L)
+
+                    viewModel.resetMenuState()
                 }
             }
         }
@@ -249,7 +251,6 @@ class NewRecipeFragment :
         ////////////////////
         // クリックリスナ― //
         ///////////////////
-
         // お気に入りアイコン
         binding.header.favoriteBtn.setOnClickListener {
             if (viewModel.isFavorite.value == true) viewModel.setFavoriteFlag(false)
@@ -301,7 +302,7 @@ class NewRecipeFragment :
         }
         // タイマーボタン
         binding.timeBtn.setOnClickListener { view ->
-            viewModel.resetMenuState()
+            viewModel.setMenuOpenedFlag(MenuState.CLOSE)
 
             val showTimerAction = NewRecipeFragmentDirections.showTimerAction().apply {
                 existsNewRecipeFragment = true
@@ -319,10 +320,10 @@ class NewRecipeFragment :
                     "createRecipe")
                 .show(childFragmentManager, BasicDialogFragment::class.simpleName)
         }
+
         ////////////////////////
         // TextChangeListener //
         ////////////////////////
-
         binding.sourValue.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
                 viewModel.setSour(editable.toString())

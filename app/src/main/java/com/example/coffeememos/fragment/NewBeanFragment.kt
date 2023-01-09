@@ -109,6 +109,7 @@ class NewBeanFragment : BaseFragment(), View.OnClickListener {
         ///////////////////
         // clickListener //
         ///////////////////
+        // favorite
         binding.header.favoriteBtn.setOnClickListener {
             if (viewModel.isFavorite.value == true) viewModel.setFavoriteFlag(false)
             else viewModel.setFavoriteFlag(true)
