@@ -159,11 +159,14 @@ class NewRecipeViewModel(
     }
 
     // menuの状態管理
-    private var _isMenuOpened: MutableLiveData<MenuState> = MutableLiveData(null)
-    val isMenuOpened: LiveData<MenuState> = _isMenuOpened
+    private var _isMenuOpened: MutableLiveData<MenuState?> = MutableLiveData(null)
+    val isMenuOpened: LiveData<MenuState?> = _isMenuOpened
 
     fun setMenuOpenedFlag(menuState: MenuState) {
         _isMenuOpened.value = menuState
+    }
+    fun resetMenuState() {
+        _isMenuOpened.value = null
     }
 
 

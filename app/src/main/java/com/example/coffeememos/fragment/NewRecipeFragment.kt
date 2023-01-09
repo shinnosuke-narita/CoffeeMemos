@@ -302,7 +302,7 @@ class NewRecipeFragment :
         }
         // タイマーボタン
         binding.timeBtn.setOnClickListener { view ->
-            viewModel.setMenuOpenedFlag(MenuState.CLOSE)
+            viewModel.resetMenuState()
 
             val showTimerAction = NewRecipeFragmentDirections.showTimerAction().apply {
                 existsNewRecipeFragment = true
