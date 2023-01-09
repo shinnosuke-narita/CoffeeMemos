@@ -50,4 +50,13 @@ class MainViewModel : ViewModel() {
     fun setPreInfusionTime(preInfusionTime: Long) {
         _preInfusionTime.value = preInfusionTime
     }
+
+
+    // タイマー画面が開かれた時、レシピ新規作成画面がバックスタックにあるかどうか
+    private val _newRecipeFragmentExists: MutableLiveData<Boolean> = MutableLiveData(false)
+    val newRecipeFragmentExists: LiveData<Boolean> = _newRecipeFragmentExists
+
+    fun setNewRecipeExistsFlag(flag: Boolean) {
+        _newRecipeFragmentExists.value = flag
+    }
 }

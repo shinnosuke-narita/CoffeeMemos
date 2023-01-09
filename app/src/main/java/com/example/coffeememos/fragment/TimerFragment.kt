@@ -36,7 +36,7 @@ class TimerFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.setNewRecipeExistsFlag(safeArgs.existsNewRecipeFragment)
+        mainViewModel.setNewRecipeExistsFlag(safeArgs.existsNewRecipeFragment)
     }
 
     override fun onCreateView(
@@ -109,7 +109,7 @@ class TimerFragment : Fragment() {
         }
 
         binding.showNewRecipeBtn.setOnClickListener { view ->
-            if (viewModel.newRecipeFragmentExists.value!!) {
+            if (mainViewModel.newRecipeFragmentExists.value!!) {
                 // レシピ新規作成画面から開かれた場合
                 setFragmentResult("returnFromTimer", Bundle())
                 findNavController().popBackStack()

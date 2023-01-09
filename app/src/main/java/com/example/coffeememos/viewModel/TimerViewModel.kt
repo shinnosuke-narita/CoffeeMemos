@@ -12,15 +12,6 @@ import kotlinx.coroutines.launch
 import java.sql.Time
 
 class TimerViewModel : ViewModel() {
-    // レシピ新規作成画面がバックスタックにあるかどうか
-    private val _newRecipeFragmentExists: MutableLiveData<Boolean> = MutableLiveData(false)
-    val newRecipeFragmentExists: LiveData<Boolean> = _newRecipeFragmentExists
-
-    fun setNewRecipeExistsFlag(flag: Boolean) {
-        _newRecipeFragmentExists.value = flag
-    }
-
-
     // タイマーの状態
     private var _timerState: MutableLiveData<TimerState> = MutableLiveData(TimerState.CLEAR)
     val timerState: LiveData<TimerState> = _timerState

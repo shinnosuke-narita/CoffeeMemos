@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,6 +13,7 @@ import com.example.coffeememos.Constants
 import com.example.coffeememos.databinding.ActivityMainBinding
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
+import com.example.coffeememos.viewModel.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -20,6 +22,8 @@ class MainActivity : AppCompatActivity() {
     private  lateinit var binding: ActivityMainBinding
 
     private lateinit var navController: NavController
+
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,16 +56,18 @@ class MainActivity : AppCompatActivity() {
                 R.id.timerFragment -> {
                     showBottomNav()
                 }
-                R.id.selectBeanFragment -> {
-                    hideBottomNav()
+                R.id.searchFragment -> {
+                    showBottomNav()
                 }
-                R.id.newRecipeFragment -> {
-                    hideBottomNav()
-                }
-                R.id.newBeanFragment -> {
+                else -> {
                     hideBottomNav()
                 }
             }
+        }
+
+        // timer画面のボトムナビゲーション 監視
+        viewModel.newRecipeFragmentExists.observe(this) { exists ->
+            if (exists) hideBottomNav()
         }
 
         // データベース初期化
