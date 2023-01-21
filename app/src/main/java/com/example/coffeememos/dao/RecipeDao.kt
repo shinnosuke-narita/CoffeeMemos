@@ -56,4 +56,13 @@ interface RecipeDao {
     @Transaction
     @Query("SELECT * FROM recipe")
     suspend fun getRecipeWithTaste(): List<RecipeWithTaste>
+
+    @Transaction
+    @Query("SELECT * FROM recipe where country like '%' || :keyword || '%'" +
+            "OR tool like '%' || :keyword || '%'"
+    )
+    suspend fun getRecipeWithTasteByKeyword(keyword: String): List<RecipeWithTaste>
+
+
+
 }

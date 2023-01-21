@@ -99,29 +99,13 @@ class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
         if (keyWord.type == SearchType.BEAN) return
         if (keyWord.keyWord == "") return
 
-        val result: MutableList<CustomRecipe> = mutableListOf()
-        val _keyWord: String = keyWord.keyWord
+        viewModelScope.launch {
+            val result = recipeDao.getRecipeWithTasteByKeyword(keyWord.keyWord)
 
-//        for(recipe in customRecipeList.value!!) {
-//            if (recipe.country.contains(_keyWord)) {
-//                result.add(recipe)
-//                continue
-//            }
-//            if(recipe.tool.contains(_keyWord)) {
-//                result.add(recipe)
-//                continue
-//            }
-//            if (Constants.roastList[recipe.roast].contains(_keyWord)) {
-//                result.add(recipe)
-//                continue
-//            }
-//            if (Constants.grindSizeList[recipe.grindSize].contains(_keyWord)) {
-//                result.add(recipe)
-//                continue
-//            }
-       // }
-
-        _searchResult.value = result
+            _searchResult.postValue(
+                makeCustomRecipeList(result)
+            )
+        }
     }
 
     // 並び替え処理
