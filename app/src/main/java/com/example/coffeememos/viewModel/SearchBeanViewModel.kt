@@ -1,12 +1,17 @@
 package com.example.coffeememos.viewModel
 
+import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.*
 import com.example.coffeememos.Constants
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.search.*
+import com.example.coffeememos.utilities.ViewUtil
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class SearchBeanViewModel(beanDao: BeanDao) : ViewModel() {
+class SearchBeanViewModel(val beanDao: BeanDao) : ViewModel() {
     // filter 管理
     var filterManager: BeanFilterManager = BeanFilterManager()
 
@@ -124,6 +129,26 @@ class SearchBeanViewModel(beanDao: BeanDao) : ViewModel() {
         _filteringResult.value = null
         filterManager.resetList()
         _currentSortType.value = BeanSortType.NEW
+    }
+
+   private var updateFavorite: Boolean = false
+    // お気に入りアイコン 更新
+    fun updateFavoriteIcon(clickedFavoriteIcon: View, beanId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {
+                updateFavorite = true
+                // db更新
+                beanDao.updateFavoriteByBeanId(beanId, false)
+                // view 更新
+                if (clickedFavoriteIcon is ImageView) ViewUtil.setTagAndFavoriteIcon(clickedFavoriteIcon, false)
+            } else {
+                updateFavorite = true
+                // db更新
+                beanDao.updateFavoriteByBeanId(beanId, true)
+                // view 更新
+                if (clickedFavoriteIcon is ImageView) ViewUtil.setTagAndFavoriteIcon(clickedFavoriteIcon, true)
+            }
+        }
     }
 
     class SearchBeanViewModelFactory(

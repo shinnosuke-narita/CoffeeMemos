@@ -18,6 +18,7 @@ import com.example.coffeememos.databinding.FragmentSearchBeanBinding
 import com.example.coffeememos.databinding.FragmentSearchRecipeBinding
 import com.example.coffeememos.databinding.SearchContentsBinding
 import com.example.coffeememos.entity.CustomBean
+import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.search.BeanSortType
 import com.example.coffeememos.search.RecipeSortType
@@ -148,6 +149,11 @@ class SearchBeanFragment : Fragment() {
 
     private fun setUpAdapter(list: List<CustomBean>): BeanAdapter {
         return BeanAdapter(requireContext(), list).apply {
+            setFavoriteListener(object : OnFavoriteIconClickListener {
+                override fun onClick(view: View, id: Long) {
+                    viewModel.updateFavoriteIcon(view, id)
+                }
+            })
             setOnItemClickListener(object : OnItemClickListener<CustomBean> {
                 override fun onClick(view: View, bean: CustomBean) {
                     if (viewModel.isOpened.value!!) return

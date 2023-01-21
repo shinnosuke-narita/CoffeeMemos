@@ -1,6 +1,7 @@
 package com.example.coffeememos.viewModel
 
 import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.*
 import com.example.coffeememos.*
 import com.example.coffeememos.dao.BeanDao
@@ -95,6 +96,7 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
 
     val recipeCount: MediatorLiveData<Int?> = MediatorLiveData<Int?>().apply {
         addSource(_searchResult) { list ->
+            if (_filteringResult.value != null) return@addSource
             value = list.size
         }
 
@@ -188,22 +190,17 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
     fun updateFavoriteIcon(clickedFavoriteIcon: View, recipeId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {
-                // isFavorite 更新
-                recipeDao.updateFavoriteByRecipeId(recipeId, false)
-
                 updateFavorite = true
-                for (recipe in customRecipeList.value!!) {
-                    if (recipe.recipeId == recipeId) {
-                        recipe.isFavorite = false
-                        break
-                    }
-                }
-
-
+                // db更新
+                recipeDao.updateFavoriteByRecipeId(recipeId, false)
+                // view 更新
+                if (clickedFavoriteIcon is ImageView) ViewUtil.setTagAndFavoriteIcon(clickedFavoriteIcon, false)
             } else {
-                // isFavorite 更新
-                // todo 更新処理 上記と同じループ処理とフラグ更新が必要
+                updateFavorite = true
+                // db更新
                 recipeDao.updateFavoriteByRecipeId(recipeId, true)
+                // view 更新
+                if (clickedFavoriteIcon is ImageView) ViewUtil.setTagAndFavoriteIcon(clickedFavoriteIcon, true)
             }
         }
     }
@@ -218,9 +215,11 @@ class SearchRecipeViewModel(val beanDao: BeanDao, val recipeDao: RecipeDao, val 
     }
 
     fun resetResult() {
-        _searchResult.value = customRecipeList.value
+        // 最初に filteringResult を null にする
+        // count数が正常に動作しない
         _filteringResult.value = null
         filterManager = SearchFilterManager()
+        _searchResult.value = customRecipeList.value
         _currentSortType.value = RecipeSortType.NEW
     }
 

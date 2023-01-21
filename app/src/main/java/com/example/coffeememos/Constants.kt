@@ -12,6 +12,7 @@ class Constants {
         // コーヒーアイコンのライセンスURL
         val attributeAuthorUrl = "<a href=\"https://www.flaticon.com/free-icons/coffee\" title=\"coffee icons\">Coffee icons created by srip - Flaticon</a>"
         val attribute = "<a href=\"https://www.flaticon.com/free-icons/steam\" title=\"steam icons\">Steam icons created by Freepik - Flaticon</a>"
+        val attribute1 = "<a href=\"https://www.flaticon.com/free-icons/coffee\" title=\"coffee icons\">Coffee icons created by Smashicons - Flaticon</a>"
 
         val sampleBean = Bean(
             0,

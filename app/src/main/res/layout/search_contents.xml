@@ -9,17 +9,17 @@
     <Button
         android:id="@+id/clearBtn"
         style="@style/searchHeaderBtnStyle"
-        android:layout_marginStart="3dp"
         android:layout_marginEnd="10dp"
-        android:text="条件クリア"
-        android:textColor="@color/pink_dark"
+        android:background="@drawable/filter_clear_background"
         android:drawableLeft="@drawable/ic_baseline_close_24"
         android:drawableTint="@color/pink_dark"
-        android:background="@drawable/filter_clear_background"
+        android:text="条件クリア"
+        android:textColor="@color/pink_dark"
         app:backgroundTint="@null"
-        app:layout_constraintTop_toTopOf="@+id/currentSortText"
+        app:layout_constraintBottom_toBottomOf="@+id/currentSortText"
         app:layout_constraintEnd_toStartOf="@+id/currentSortText"
-        app:layout_constraintBottom_toBottomOf="@+id/currentSortText"/>
+        app:layout_constraintTop_toTopOf="@+id/currentSortText"
+        tools:ignore="TouchTargetSizeCheck" />
 
 
     <TextView
@@ -37,17 +37,17 @@
     <Button
         android:id="@+id/currentSortText"
         style="@style/searchHeaderBtnStyle"
-        android:layout_marginStart="3dp"
-        tools:text="新しい順"
-        android:textColor="@color/grey_dark"
         android:layout_marginEnd="10dp"
+        android:background="@drawable/taste_tag_background"
         android:drawableLeft="@drawable/ic_baseline_sort_24"
         android:drawableTint="@color/grey_dark"
-        android:background="@drawable/taste_tag_background"
+        android:textColor="@color/grey_dark"
         app:backgroundTint="@null"
-        app:layout_constraintTop_toTopOf="@+id/itemCount"
         app:layout_constraintBottom_toBottomOf="@+id/itemCount"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemCount"
+        tools:ignore="TouchTargetSizeCheck"
+        tools:text="新しい順" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchResultRV"
