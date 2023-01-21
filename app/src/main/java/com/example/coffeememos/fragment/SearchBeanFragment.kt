@@ -2,29 +2,25 @@ package com.example.coffeememos.fragment
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.R
 import com.example.coffeememos.adapter.BeanAdapter
 import com.example.coffeememos.databinding.FragmentSearchBeanBinding
-import com.example.coffeememos.databinding.FragmentSearchRecipeBinding
 import com.example.coffeememos.databinding.SearchContentsBinding
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.search.BeanSortType
-import com.example.coffeememos.search.RecipeSortType
 import com.example.coffeememos.viewModel.MainSearchViewModel
 import com.example.coffeememos.viewModel.SearchBeanViewModel
-import com.example.coffeememos.viewModel.SearchRecipeViewModel
 
 class SearchBeanFragment : Fragment() {
     // viewBinding
@@ -88,7 +84,7 @@ class SearchBeanFragment : Fragment() {
         }
 
         // レシピ数 監視処理
-        viewModel.recipeCount.observe(viewLifecycleOwner) { count ->
+        viewModel.beanCount.observe(viewLifecycleOwner) { count ->
             binding.itemCount.text = requireContext().getString(R.string.recipeCount, count)
         }
 

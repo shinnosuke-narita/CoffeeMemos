@@ -1,14 +1,11 @@
 package com.example.coffeememos.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,18 +13,13 @@ import androidx.navigation.fragment.navArgs
 import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
-import com.example.coffeememos.databinding.FragmentEditBeanBinding
 import com.example.coffeememos.databinding.FragmentEditRecipeBinding
 import com.example.coffeememos.dialog.BasicDialogFragment
 import com.example.coffeememos.dialog.ListDialogFragment
 import com.example.coffeememos.listener.SimpleTextWatcher
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.utilities.DateUtil
-import com.example.coffeememos.utilities.ViewUtil
-import com.example.coffeememos.validate.ValidationInfo
-import com.example.coffeememos.validate.ValidationState
 import com.example.coffeememos.viewModel.EditRecipeViewModel
-import com.example.coffeememos.viewModel.EditRecipeViewModelFactory
 import java.util.*
 
 
@@ -39,7 +31,7 @@ class EditRecipeFragment : BaseFragment(), View.OnClickListener {
     // viewModel 初期化
     private val viewModel: EditRecipeViewModel by viewModels {
         val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        EditRecipeViewModelFactory(db.recipeDao())
+        EditRecipeViewModel.EditRecipeViewModelFactory(db.recipeDao())
     }
 
     private val safeArgs: EditRecipeFragmentArgs by navArgs()

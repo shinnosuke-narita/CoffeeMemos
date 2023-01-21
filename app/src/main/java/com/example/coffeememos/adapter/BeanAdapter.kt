@@ -12,6 +12,7 @@ import com.example.coffeememos.R
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
+import com.example.coffeememos.utilities.ViewUtil.Companion.setTagAndFavoriteIcon
 
 class BeanAdapter(context: Context, data: List<CustomBean>) : BaseAdapter<CustomBean, BeanViewHolder>(context, data) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeanViewHolder {
@@ -34,6 +35,14 @@ class BeanAdapter(context: Context, data: List<CustomBean>) : BaseAdapter<Custom
         // リストアイテムクリック時のコールバック
         holder.itemView.setOnClickListener { v ->
             mItemClickListener.onClick(v, data[position])
+        }
+
+        // お気に入りアイコンとタグのセット
+        setTagAndFavoriteIcon(holder.favoriteIcon, data[position].isFavorite)
+
+        // favoriteアイコンクリック時のコールバック
+        holder.favoriteIcon.setOnClickListener { v ->
+            mFavoriteListener.onClick(v, data[position].id)
         }
     }
 }

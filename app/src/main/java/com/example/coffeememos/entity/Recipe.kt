@@ -25,6 +25,7 @@ data class Recipe(
         index = true
     )
     var beanId: Long,
+    var country: String,
     val tool: String,
     val roast: Int,
     val extractionTime: Long,

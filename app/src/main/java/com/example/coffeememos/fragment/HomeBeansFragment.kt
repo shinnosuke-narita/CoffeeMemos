@@ -21,7 +21,6 @@ import com.example.coffeememos.adapter.SimpleBeanInfoAdapter
 import com.example.coffeememos.databinding.FragmentHomeBeansBinding
 import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.viewModel.HomeBeanViewModel
-import com.example.coffeememos.viewModel.HomeBeanViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -34,7 +33,7 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> , OnFa
 
     private val viewModel: HomeBeanViewModel by viewModels {
         val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        HomeBeanViewModelFactory(db.beanDao())
+        HomeBeanViewModel.HomeBeanViewModelFactory(db.beanDao())
     }
 
     override fun onAttach(context: Context) {

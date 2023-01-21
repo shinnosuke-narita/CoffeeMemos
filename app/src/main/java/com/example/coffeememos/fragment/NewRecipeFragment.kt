@@ -422,9 +422,8 @@ class NewRecipeFragment :
             }
 
             // 保存処理
-            val beanId = mainViewModel.selectedBean.value!!.id
             viewModel.createNewRecipeAndTaste(
-                beanId,
+                mainViewModel.selectedBean.value!!,
                 mainViewModel.preInfusionTime.value!!,
                 mainViewModel.extractionTime.value!!
             )

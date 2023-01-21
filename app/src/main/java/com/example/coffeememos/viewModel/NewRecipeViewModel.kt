@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.dao.TasteDao
+import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
@@ -228,7 +229,7 @@ class NewRecipeViewModel(
 
 
     // 保存処理
-    fun createNewRecipeAndTaste(beanId: Long, preInfusionTime: Long, extractionTime: Long) {
+    fun createNewRecipeAndTaste(bean: CustomBean, preInfusionTime: Long, extractionTime: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             // 保存処理開始
             _processState.postValue(ProcessState.PROCESSING)
@@ -253,7 +254,8 @@ class NewRecipeViewModel(
             recipeDao.insert(
                 Recipe(
                     id                    = 0,
-                    beanId                = beanId,
+                    beanId                = bean.id,
+                    country               = bean.country,
                     tool                  = _tool,
                     roast                 = _currentRoast.value ?: 2,
                     extractionTime        = resultExtractionTime,

@@ -33,7 +33,7 @@ class SearchBeanViewModel(val beanDao: BeanDao) : ViewModel() {
     private val _currentSortType: MutableLiveData<BeanSortType> = MutableLiveData(BeanSortType.NEW)
     val currentSortType: LiveData<BeanSortType> = _currentSortType
 
-    val recipeCount: MediatorLiveData<Int?> = MediatorLiveData<Int?>().apply {
+    val beanCount: MediatorLiveData<Int?> = MediatorLiveData<Int?>().apply {
         addSource(_searchResult) { list ->
             if (list == null) return@addSource
             value = list.size

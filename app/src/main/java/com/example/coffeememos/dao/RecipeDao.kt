@@ -4,6 +4,7 @@ import androidx.room.*
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.RecipeWithTaste
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecipeDao {
@@ -36,7 +37,7 @@ interface RecipeDao {
 
     @Transaction
     @Query("SELECT * FROM recipe")
-    suspend fun getRecipeWithTaste(): List<RecipeWithTaste>
+    fun getRecipeWithTaste(): Flow<List<RecipeWithTaste>>
 
     @Query("DELETE FROM recipe WHERE recipe_id = :id")
     suspend fun deleteById(id: Long)

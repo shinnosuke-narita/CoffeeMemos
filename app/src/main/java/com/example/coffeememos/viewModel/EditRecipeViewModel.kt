@@ -16,7 +16,6 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
     private val _selectedRecipe: MutableLiveData<Recipe> = MutableLiveData()
     val selectedRecipe: LiveData<Recipe> = _selectedRecipe
 
-
     // Rating 関連
     private var _ratingManager: RatingManager? = null
     val ratingManager: RatingManager
@@ -35,7 +34,6 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
         _recipeStarList.value      = ratingManager.starList
     }
 
-
     // Favorite 関連
     private val _currentFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
     val currentFavorite: LiveData<Boolean> = _currentFavorite
@@ -44,7 +42,6 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
         _currentFavorite.value = isFavorite
     }
 
-
     // Roast
     private val _currentRoast: MutableLiveData<Int> = MutableLiveData(0)
     val currentRoast: LiveData<Int> = _currentRoast
@@ -52,7 +49,6 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
     fun setRoast(roast: Int) {
         _currentRoast.value = roast
     }
-
 
     // Grind Size
     private val _currentGrind: MutableLiveData<Int> = MutableLiveData(0)
@@ -149,6 +145,7 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
                 Recipe(
                     id                    = _selectedRecipe.value!!.id,
                     beanId                = _selectedRecipe.value!!.beanId,
+                    country               = _selectedRecipe.value!!.country,
                     tool                  = _tool,
                     roast                 = _currentRoast.value!!,
                     extractionTime        = extractionTime,
@@ -166,21 +163,14 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
         }
     }
 
-
-
-
-
-
-
-}
-
-class EditRecipeViewModelFactory(
-    private val recipeDao  : RecipeDao
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(EditRecipeViewModel::class.java)) {
-            return EditRecipeViewModel(recipeDao) as T
+    class EditRecipeViewModelFactory(
+        private val recipeDao  : RecipeDao
+    ) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(EditRecipeViewModel::class.java)) {
+                return EditRecipeViewModel(recipeDao) as T
+            }
+            throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
         }
-        throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
     }
 }

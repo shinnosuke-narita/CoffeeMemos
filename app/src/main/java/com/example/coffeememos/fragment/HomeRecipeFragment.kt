@@ -20,7 +20,6 @@ import com.example.coffeememos.adapter.RecipeAdapter
 import com.example.coffeememos.databinding.FragmentHomeRecipeBinding
 import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.viewModel.HomeRecipeViewModel
-import com.example.coffeememos.viewModel.HomeRecipeViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavoriteIconClickListener {
@@ -33,7 +32,7 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavo
 
     private val viewModel: HomeRecipeViewModel by viewModels {
         val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        HomeRecipeViewModelFactory(db.beanDao(), db.recipeDao(), db.tasteDao())
+        HomeRecipeViewModel.HomeRecipeViewModelFactory(db.recipeDao())
     }
 
     override fun onAttach(context: Context) {
@@ -44,7 +43,7 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavo
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentHomeRecipeBinding.inflate(inflater, container, false)
         return binding.root

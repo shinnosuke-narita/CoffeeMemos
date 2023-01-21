@@ -7,29 +7,20 @@ import com.example.coffeememos.SimpleRecipe
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.dao.TasteDao
-import com.example.coffeememos.entity.Bean
-import com.example.coffeememos.entity.Recipe
-import com.example.coffeememos.entity.Taste
+import com.example.coffeememos.entity.RecipeWithTaste
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeRecipeViewModel(private val beanDao: BeanDao, private val recipeDao: RecipeDao, private val tasteDao: TasteDao) : ViewModel() {
+class HomeRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
     private val maxDisplayItemAmount = 10
 
-    private val beanWithRecipeList: LiveData<Map<Bean, List<Recipe>>> = beanDao.getBeanAndRecipe().asLiveData()
-
-    private val tasteList: LiveData<List<Taste>> = tasteDao.getAll().asLiveData()
+    private val recipeWithTasteList: LiveData<List<RecipeWithTaste>> = recipeDao.getRecipeWithTaste().asLiveData()
 
     // beanWithRecipeListとtasteListを監視
-    val allSimpleRecipeList = MediatorLiveData<List<SimpleRecipe>>().apply {
-        addSource(beanWithRecipeList) {
-            value = makeSimpleRecipe()
-        }
-        addSource(tasteList) {
-            value = makeSimpleRecipe()
-        }
+    val allSimpleRecipeList = recipeWithTasteList.map { recipeWithTastelist ->
+        makeSimpleRecipe(recipeWithTastelist)
     }
 
     val todayRecipeList = Transformations.map(allSimpleRecipeList) { allRecipe ->
@@ -61,37 +52,32 @@ class HomeRecipeViewModel(private val beanDao: BeanDao, private val recipeDao: R
 
 
     // 簡易レシピリスト作成メソッド
-    private fun makeSimpleRecipe(): List<SimpleRecipe> {
-        if (beanWithRecipeListOrTasteListIsEmpty()) return listOf()
+    private fun makeSimpleRecipe(recipeWithTasteList: List<RecipeWithTaste>): List<SimpleRecipe> {
+        if (recipeWithTasteList.isNullOrEmpty()) return listOf()
 
         val result = mutableListOf<SimpleRecipe>()
-        for ((bean, recipes) in beanWithRecipeList.value!!) {
-            for (recipe in recipes) {
-                for (taste in tasteList.value!!) {
-                    if (recipe.id != taste.recipeId) continue
+        for (recipeWithTaste in recipeWithTasteList) {
+            val recipe = recipeWithTaste.recipe
+            val taste =  recipeWithTaste.taste
 
-                    val item = SimpleRecipe(
-                        recipe.id,
-                        recipe.beanId,
-                        taste.id,
-                        bean.country,
-                        DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern),
-                        recipe.tool,
-                        Constants.roastList[recipe.roast],
-                        recipe.rating.toString(),
-                        recipe.isFavorite)
-                    result.add(item)
-                }
-            }
+            result.add(
+                SimpleRecipe(
+                    recipe.id,
+                    recipe.beanId,
+                    taste.id,
+                    recipe.country,
+                    DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern),
+                    recipe.tool,
+                    Constants.roastList[recipe.roast],
+                    recipe.rating.toString(),
+                    recipe.isFavorite
+                )
+            )
         }
 
         // 新しい順にソート
         result.sortByDescending { it.recipeId }
         return result
-    }
-
-    private fun beanWithRecipeListOrTasteListIsEmpty(): Boolean {
-        return beanWithRecipeList.value.isNullOrEmpty() || tasteList.value.isNullOrEmpty()
     }
 
     fun updateFavoriteIcon(clickedFavoriteIcon: View, recipeId: Long) {
@@ -105,18 +91,16 @@ class HomeRecipeViewModel(private val beanDao: BeanDao, private val recipeDao: R
             }
         }
     }
-}
 
 
-class HomeRecipeViewModelFactory(
-    private val beanDao: BeanDao,
-    private val recipeDao: RecipeDao,
-    private val tasteDao: TasteDao
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeRecipeViewModel::class.java)) {
-            return HomeRecipeViewModel(beanDao, recipeDao, tasteDao) as T
+    class HomeRecipeViewModelFactory(
+        private val recipeDao: RecipeDao
+    ) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(HomeRecipeViewModel::class.java)) {
+                return HomeRecipeViewModel(recipeDao) as T
+            }
+            throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
         }
-        throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
     }
 }

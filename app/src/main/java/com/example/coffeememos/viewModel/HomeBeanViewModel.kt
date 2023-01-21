@@ -68,30 +68,26 @@ class HomeBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
             if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {
                 // isFavorite 更新
                 beanDao.updateFavoriteByBeanId(beanId, false)
-
-                // リスト更新
-               // allBean.postValue(beanDao.getAll())
             } else {
                 // isFavorite 更新
                 beanDao.updateFavoriteByBeanId(beanId, true)
-
-                // リスト更新
-                //allBean.postValue(beanDao.getAll())
             }
         }
     }
-}
 
 
-
-
-class HomeBeanViewModelFactory(
-    private val beanDao: BeanDao
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeBeanViewModel::class.java)) {
-            return HomeBeanViewModel(beanDao) as T
+    class HomeBeanViewModelFactory(
+        private val beanDao: BeanDao
+    ) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(HomeBeanViewModel::class.java)) {
+                return HomeBeanViewModel(beanDao) as T
+            }
+            throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
         }
-        throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
     }
 }
+
+
+
+

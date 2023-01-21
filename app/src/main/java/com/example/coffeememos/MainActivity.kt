@@ -77,46 +77,48 @@ class MainActivity : AppCompatActivity() {
                 beanDao.clearTable()
                 tasteDao.clearTable()
 
-                beanDao.insert(Constants.sampleBean)
-                beanDao.insert(Constants.sampleBean2)
-                beanDao.insert(Constants.sampleBean3)
-                beanDao.insert(Constants.sampleBean4)
-                beanDao.insert(Constants.sampleBean5)
-
-                val beans = beanDao.getAll()
-                for (bean in beans) {
-                    val recipeList: MutableList<Recipe> = mutableListOf()
-                    for (i in 0 until 60) {
-                        Constants.sampleRecipe1.beanId = bean.id
-                        Constants.sampleRecipe2.beanId = bean.id
-                        recipeList.add(Constants.sampleRecipe1)
-                        recipeList.add(Constants.sampleRecipe2)
-                    }
-                    recipeDao.insertAll(recipeList)
-                }
-
-                val recipeIds: List<Long> = recipeDao.getIds()
-                for ((index, id) in recipeIds.withIndex()) {
-                    val value = (index % 5) + 1
-                    tasteDao.insert(
-                        Taste(
-                            0,
-                            id,
-                            value,
-                            value,
-                            value,
-                            value,
-                            value
-                        )
-                    )
-                }
-
-                Log.d("initializeDataProcess", "==========================================")
-                Log.d("initializeDataProcess", "finish")
-                Log.d("initializeDataProcess", "==========================================")
+//                beanDao.insert(Constants.sampleBean)
+//                beanDao.insert(Constants.sampleBean2)
+//                beanDao.insert(Constants.sampleBean3)
+//                beanDao.insert(Constants.sampleBean4)
+//                beanDao.insert(Constants.sampleBean5)
+//
+//                val beans = beanDao.getAll()
+//                for (bean in beans) {
+//                    val recipeList: MutableList<Recipe> = mutableListOf()
+//                    for (i in 0 until 60) {
+//                        Constants.sampleRecipe1.beanId = bean.id
+//                        Constants.sampleRecipe2.beanId = bean.id
+//                        Constants.sampleRecipe1.country = bean.country
+//                        Constants.sampleRecipe2.country = bean.country
+//                        recipeList.add(Constants.sampleRecipe1)
+//                        recipeList.add(Constants.sampleRecipe2)
+//                    }
+//                    recipeDao.insertAll(recipeList)
+//                }
+//
+//                val recipeIds: List<Long> = recipeDao.getIds()
+//                for ((index, id) in recipeIds.withIndex()) {
+//                    val value = (index % 5) + 1
+//                    tasteDao.insert(
+//                        Taste(
+//                            0,
+//                            id,
+//                            value,
+//                            value,
+//                            value,
+//                            value,
+//                            value
+//                        )
+//                    )
+//                }
+//
+//                Log.d("initializeDataProcess", "==========================================")
+//                Log.d("initializeDataProcess", "finish")
+//                Log.d("initializeDataProcess", "==========================================")
+//            }
             }
         }
-
     }
 
     private fun showBottomNav() {

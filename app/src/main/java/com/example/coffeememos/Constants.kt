@@ -98,6 +98,7 @@ class Constants {
         val sampleRecipe1 = Recipe(
             0,
             0,
+            "ブラジル",
             "hario",
             6,
             180000,
@@ -115,6 +116,7 @@ class Constants {
         val sampleRecipe2 = Recipe(
             0,
             0,
+            "インドネシア",
             "karita",
             6,
             150000,
