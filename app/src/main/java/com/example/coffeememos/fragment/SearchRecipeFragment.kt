@@ -55,10 +55,6 @@ class SearchRecipeFragment : Fragment() {
         // recyclerViewセットアップ
         setUpRecyclerView(requireContext(), binding.searchResultRV)
 
-        viewModel.customRecipeList.observe(viewLifecycleOwner) { list ->
-            viewModel.setSearchResult(list)
-        }
-
         // 検索結果 監視処理
         viewModel.searchResult.observe(viewLifecycleOwner) { list ->
             binding.searchResultRV.adapter = setUpAdapter(list)

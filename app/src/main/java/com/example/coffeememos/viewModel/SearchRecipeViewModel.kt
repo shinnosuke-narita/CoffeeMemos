@@ -16,18 +16,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
-    // Recipe と Taste
-    private val recipeWithTasteList: LiveData<List<RecipeWithTaste>> = recipeDao.getRecipeWithTaste().asLiveData()
-
-    // beanWithRecipeListとtasteListを監視
-    val customRecipeList = recipeWithTasteList.map { recipeWithTasteList ->
-//            if (updateFavorite) {
-//                updateFavorite = false
-//                return@map listOf()
-//            }
-
-        makeCustomRecipeList(recipeWithTasteList)
-    }
 
     // 簡易レシピリスト作成メソッド
     private fun makeCustomRecipeList(recipeWithTasteList: List<RecipeWithTaste>): List<CustomRecipe> {
@@ -95,7 +83,6 @@ class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
     private val _currentSortType: MutableLiveData<RecipeSortType> = MutableLiveData(RecipeSortType.NEW)
     val currentSortType: LiveData<RecipeSortType> = _currentSortType
 
-
     // filter 管理
     var filterManager: SearchFilterManager = SearchFilterManager()
 
@@ -115,24 +102,24 @@ class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
         val result: MutableList<CustomRecipe> = mutableListOf()
         val _keyWord: String = keyWord.keyWord
 
-        for(recipe in customRecipeList.value!!) {
-            if (recipe.country.contains(_keyWord)) {
-                result.add(recipe)
-                continue
-            }
-            if(recipe.tool.contains(_keyWord)) {
-                result.add(recipe)
-                continue
-            }
-            if (Constants.roastList[recipe.roast].contains(_keyWord)) {
-                result.add(recipe)
-                continue
-            }
-            if (Constants.grindSizeList[recipe.grindSize].contains(_keyWord)) {
-                result.add(recipe)
-                continue
-            }
-        }
+//        for(recipe in customRecipeList.value!!) {
+//            if (recipe.country.contains(_keyWord)) {
+//                result.add(recipe)
+//                continue
+//            }
+//            if(recipe.tool.contains(_keyWord)) {
+//                result.add(recipe)
+//                continue
+//            }
+//            if (Constants.roastList[recipe.roast].contains(_keyWord)) {
+//                result.add(recipe)
+//                continue
+//            }
+//            if (Constants.grindSizeList[recipe.grindSize].contains(_keyWord)) {
+//                result.add(recipe)
+//                continue
+//            }
+       // }
 
         _searchResult.value = result
     }
@@ -202,8 +189,19 @@ class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
         // count数が正常に動作しない
         _filteringResult.value = null
         filterManager = SearchFilterManager()
-        _searchResult.value = customRecipeList.value
+        //_searchResult.value = customRecipeList.value
         _currentSortType.value = RecipeSortType.NEW
+    }
+
+    init {
+       viewModelScope.launch {
+           // Recipe と Taste
+           val recipeWithTasteList: List<RecipeWithTaste> = recipeDao.getRecipeWithTaste()
+
+           _searchResult.postValue(
+               makeCustomRecipeList(recipeWithTasteList)
+           )
+       }
     }
 
 

@@ -1,25 +1,42 @@
 package com.example.coffeememos.dao
 
 import androidx.room.*
-import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.RecipeWithTaste
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecipeDao {
+    ///////////////////////
+    /////  挿入系  /////////
+    ///////////////////////
     @Insert
     suspend fun insert(recipe: Recipe)
 
     @Insert
     suspend fun insertAll(recipes: List<Recipe>)
 
+    ///////////////////////
+    /////  更新系  /////////
+    ///////////////////////
     @Update
     suspend fun update(recipe: Recipe)
 
+    @Query("UPDATE recipe SET isFavorite = :favoriteFlag WHERE recipe_id = :id")
+    suspend fun updateFavoriteByRecipeId(id: Long, favoriteFlag: Boolean)
+
+    ///////////////////////
+    /////  削除系  /////////
+    ///////////////////////
     @Query("DELETE FROM recipe")
     suspend fun clearTable()
 
+    @Query("DELETE FROM recipe WHERE recipe_id = :id")
+    suspend fun deleteById(id: Long)
+
+    ///////////////////////
+    /////  抽出系  /////////
+    ///////////////////////
     @Query("SELECT * FROM recipe")
     suspend fun getAll(): List<Recipe>
 
@@ -32,13 +49,11 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe WHERE recipe_id = :id")
     suspend fun getRecipeById(id: Long): Recipe
 
-    @Query("UPDATE recipe SET isFavorite = :favoriteFlag WHERE recipe_id = :id")
-    suspend fun updateFavoriteByRecipeId(id: Long, favoriteFlag: Boolean)
+    @Transaction
+    @Query("SELECT * FROM recipe")
+    fun getRecipeWithTasteByFlow(): Flow<List<RecipeWithTaste>>
 
     @Transaction
     @Query("SELECT * FROM recipe")
-    fun getRecipeWithTaste(): Flow<List<RecipeWithTaste>>
-
-    @Query("DELETE FROM recipe WHERE recipe_id = :id")
-    suspend fun deleteById(id: Long)
+    suspend fun getRecipeWithTaste(): List<RecipeWithTaste>
 }

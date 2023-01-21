@@ -4,9 +4,7 @@ import android.view.View
 import androidx.lifecycle.*
 import com.example.coffeememos.Constants
 import com.example.coffeememos.SimpleRecipe
-import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
-import com.example.coffeememos.dao.TasteDao
 import com.example.coffeememos.entity.RecipeWithTaste
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
@@ -16,7 +14,7 @@ import kotlinx.coroutines.launch
 class HomeRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
     private val maxDisplayItemAmount = 10
 
-    private val recipeWithTasteList: LiveData<List<RecipeWithTaste>> = recipeDao.getRecipeWithTaste().asLiveData()
+    private val recipeWithTasteList: LiveData<List<RecipeWithTaste>> = recipeDao.getRecipeWithTasteByFlow().asLiveData()
 
     // beanWithRecipeListとtasteListを監視
     val allSimpleRecipeList = recipeWithTasteList.map { recipeWithTastelist ->
