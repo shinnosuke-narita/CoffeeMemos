@@ -78,7 +78,10 @@ class SearchRecipeFragment : Fragment() {
         }
 
         sharedViewModel.searchKeyWord.observe(viewLifecycleOwner) { keyWord ->
-            viewModel.freeWordSearch(keyWord)
+            val searchIsSuccess = viewModel.freeWordSearch(keyWord)
+            if (searchIsSuccess) {
+                viewModel.resetFilterManager()
+            }
         }
 
 

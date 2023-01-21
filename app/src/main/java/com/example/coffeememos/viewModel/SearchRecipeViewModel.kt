@@ -16,54 +16,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
-
-    // 簡易レシピリスト作成メソッド
-    private fun makeCustomRecipeList(recipeWithTasteList: List<RecipeWithTaste>): List<CustomRecipe> {
-        if (recipeWithTasteList.isEmpty()) return listOf()
-
-        val result = mutableListOf<CustomRecipe>()
-        for (recipeWithTaste in recipeWithTasteList) {
-            val recipe = recipeWithTaste.recipe
-            val taste = recipeWithTaste.taste
-
-            result.add(
-                CustomRecipe(
-                    recipe.id,
-                    recipe.beanId,
-                    taste.id,
-                    recipe.country,
-                    recipe.tool,
-                    recipe.roast,
-                    recipe.grindSize,
-                    recipe.createdAt,
-                    taste.sour,
-                    taste.bitter,
-                    taste.sweet,
-                    taste.flavor,
-                    taste.rich,
-                    recipe.rating,
-                    recipe.isFavorite
-                )
-            )
-        }
-
-        // 新しい順にソート
-        result.sortByDescending { it.recipeId }
-        return result
-    }
-
     // 検索結果
     private val _searchResult: MutableLiveData<List<CustomRecipe>> = MutableLiveData(listOf())
     val searchResult: LiveData<List<CustomRecipe>> = _searchResult
 
-
     // 絞り込み結果
     private val _filteringResult: MutableLiveData<List<CustomRecipe>?> = MutableLiveData(null)
     val filteringResult: LiveData<List<CustomRecipe>?> = _filteringResult
-
-    fun setSearchResult(list: List<CustomRecipe>) {
-        _searchResult.value = list
-    }
 
     val recipeCount: MediatorLiveData<Int?> = MediatorLiveData<Int?>().apply {
         addSource(_searchResult) { list ->
@@ -78,13 +37,16 @@ class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
         }
     }
 
-
     // Sort 状態
     private val _currentSortType: MutableLiveData<RecipeSortType> = MutableLiveData(RecipeSortType.NEW)
     val currentSortType: LiveData<RecipeSortType> = _currentSortType
 
     // filter 管理
     var filterManager: SearchFilterManager = SearchFilterManager()
+
+    fun resetFilterManager() {
+        filterManager = SearchFilterManager()
+    }
 
     // BottomSheet 状態監視
     private val _isOpened: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -94,18 +56,21 @@ class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
         _isOpened.value = !(_isOpened.value!!)
     }
 
-    // キーワード検索
-    fun freeWordSearch(keyWord: SearchKeyWord) {
-        if (keyWord.type == SearchType.BEAN) return
-        if (keyWord.keyWord == "") return
+    // キーワード検索 検索処理が走れば、true
+    fun freeWordSearch(keyWord: SearchKeyWord): Boolean {
+        if (keyWord.type == SearchType.BEAN) return false
+        if (keyWord.keyWord == "") return false
 
         viewModelScope.launch {
-            val result = recipeDao.getRecipeWithTasteByKeyword(keyWord.keyWord)
+            val result: List<RecipeWithTaste> = recipeDao.getRecipeWithTasteByKeyword(keyWord.keyWord)
+            val mappedRes: List<CustomRecipe> = makeCustomRecipeList(result)
 
             _searchResult.postValue(
-                makeCustomRecipeList(result)
+                sortList(_currentSortType.value!!, mappedRes)
             )
         }
+
+        return true
     }
 
     // 並び替え処理
@@ -173,19 +138,57 @@ class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
         // count数が正常に動作しない
         _filteringResult.value = null
         filterManager = SearchFilterManager()
-        //_searchResult.value = customRecipeList.value
         _currentSortType.value = RecipeSortType.NEW
+        initSearchResult()
     }
 
     init {
-       viewModelScope.launch {
-           // Recipe と Taste
-           val recipeWithTasteList: List<RecipeWithTaste> = recipeDao.getRecipeWithTaste()
+        initSearchResult()
+    }
 
-           _searchResult.postValue(
-               makeCustomRecipeList(recipeWithTasteList)
-           )
-       }
+    private fun initSearchResult() {
+        viewModelScope.launch {
+            // Recipe と Taste
+            val recipeWithTasteList: List<RecipeWithTaste> = recipeDao.getRecipeWithTaste()
+            val mappedRes: List<CustomRecipe> = makeCustomRecipeList(recipeWithTasteList)
+
+            _searchResult.postValue(
+                sortList(_currentSortType.value!!, mappedRes)
+            )
+        }
+    }
+
+    // 簡易レシピリスト作成メソッド
+    private fun makeCustomRecipeList(recipeWithTasteList: List<RecipeWithTaste>): List<CustomRecipe> {
+        if (recipeWithTasteList.isEmpty()) return listOf()
+
+        val result = mutableListOf<CustomRecipe>()
+        for (recipeWithTaste in recipeWithTasteList) {
+            val recipe = recipeWithTaste.recipe
+            val taste = recipeWithTaste.taste
+
+            result.add(
+                CustomRecipe(
+                    recipe.id,
+                    recipe.beanId,
+                    taste.id,
+                    recipe.country,
+                    recipe.tool,
+                    recipe.roast,
+                    recipe.grindSize,
+                    recipe.createdAt,
+                    taste.sour,
+                    taste.bitter,
+                    taste.sweet,
+                    taste.flavor,
+                    taste.rich,
+                    recipe.rating,
+                    recipe.isFavorite
+                )
+            )
+        }
+
+        return result
     }
 
 
