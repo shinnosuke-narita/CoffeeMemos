@@ -63,6 +63,4 @@ interface RecipeDao {
     )
     suspend fun getRecipeWithTasteByKeyword(keyword: String): List<RecipeWithTaste>
 
-
-
 }

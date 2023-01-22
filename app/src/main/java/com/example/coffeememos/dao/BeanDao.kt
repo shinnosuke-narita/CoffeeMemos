@@ -1,29 +1,38 @@
 package com.example.coffeememos.dao
 
 import androidx.room.*
-import com.example.coffeememos.entity.Bean
-import com.example.coffeememos.entity.CustomBean
-import com.example.coffeememos.entity.Recipe
-import com.example.coffeememos.entity.RecipeWithBeans
+import com.example.coffeememos.entity.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BeanDao {
+    ///////////////////////
+    /////  挿入系  /////////
+    ///////////////////////
     @Insert
     suspend fun insert(bean: Bean)
 
+    ///////////////////////
+    /////  更新系  /////////
+    ///////////////////////
     @Update
     suspend fun update(bean: Bean)
-
-    @Query("DELETE FROM bean WHERE bean_id = :id;")
-    suspend fun deleteBeanById(id: Long)
 
     @Query("UPDATE bean SET isFavorite = :favoriteFlag WHERE bean_id = :id;")
     suspend fun updateFavoriteByBeanId(id: Long, favoriteFlag: Boolean)
 
+    ///////////////////////
+    /////  削除系  /////////
+    ///////////////////////
+    @Query("DELETE FROM bean WHERE bean_id = :id;")
+    suspend fun deleteBeanById(id: Long)
+
     @Query("DELETE FROM bean;")
     suspend fun clearTable()
 
+    ///////////////////////
+    /////  抽出系  /////////
+    ///////////////////////
     @Query("SELECT * FROM bean ORDER BY bean_id DESC LIMIT 1;")
     suspend fun getNewestBean(): Bean
 
@@ -44,8 +53,28 @@ interface BeanDao {
     fun getBeanAndRecipe(): Flow<Map<Bean, List<Recipe>>>
 
     @Query("SELECT bean_id, country, farm, district, store, process, species, rating, isFavorite, createdAt FROM bean;")
-    fun getCustomBean(): Flow<List<CustomBean>>
+    fun getCustomBeanByFlow(): Flow<List<CustomBean>>
+
+    @Query("SELECT bean_id, country, farm, district, store, process, species, rating, isFavorite, createdAt FROM bean;")
+    suspend fun getCustomBean(): List<CustomBean>
 
     @Query("SELECT COUNT(*) FROM bean")
     fun getBeanCount(): Int
+
+    @Query("SELECT * FROM bean WHERE country LIKE '%' || :keyword || '%'" +
+            "OR farm LIKE '%' || :keyword || '%'" +
+            "OR district LIKE '%' || :keyword || '%'" +
+            "OR store LIKE '%' || :keyword || '%'" +
+            "OR species LIKE '%' || :keyword || '%'"
+    )
+    suspend fun getCustomBeanByKeyword(keyword: String): List<CustomBean>
+
+
+
+
+
+
+
+
+
 }

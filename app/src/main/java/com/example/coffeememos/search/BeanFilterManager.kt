@@ -1,8 +1,35 @@
 package com.example.coffeememos.search
 
+import com.example.coffeememos.CustomRecipe
+import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.CustomBean
+import com.example.coffeememos.entity.RecipeWithTaste
 
-class BeanFilterManager : BaseSearchFilterManager<CustomBean>() {
+class BeanFilterManager(private val beanDao: BeanDao) : BaseSearchFilterManager<CustomBean>() {
+    private var _keyword: String = ""
+
+    suspend fun freeWordSearch(keyword: String): List<CustomBean> {
+        _keyword = keyword
+
+        return beanDao.getCustomBeanByKeyword(keyword)
+    }
+
+    suspend fun initSearchResult(): List<CustomBean> {
+        return beanDao.getCustomBean()
+    }
+
+    suspend fun searchAndFilter(): List<CustomBean> {
+        val customBeanList: List<CustomBean> =
+            if (_keyword.isEmpty()) {
+                beanDao.getCustomBean()
+            } else {
+                beanDao.getCustomBeanByKeyword(_keyword)
+            }
+
+
+        return makeList(customBeanList)
+    }
+
     private var _countryValues: MutableList<String> = mutableListOf()
     val countryValues: List<String> get() = _countryValues
 
@@ -87,14 +114,75 @@ class BeanFilterManager : BaseSearchFilterManager<CustomBean>() {
     }
 
     override fun filter(currentSearchResult: List<CustomBean>) {
-        for (bean in currentSearchResult) {
-            if (addItemIfPassCheck(bean, bean.country, _countryValues)) continue
-            if (addItemIfPassCheck(bean, bean.farm, _farmValues)) continue
-            if (addItemIfPassCheck(bean, bean.district, _districtValues)) continue
-            if (addItemIfPassCheck(bean, bean.store, _storeValues)) continue
-            if (addItemIfPassCheck(bean, bean.species, _speciesValues)) continue
-            if (addItemIfPassCheck(bean, bean.process, _processValues)) continue
-            addItemIfPassCheck(bean, bean.rating, _ratingValues)
+        filteredResult = currentSearchResult.toMutableList()
+
+        // 原産地
+        if (isEmptyAfterFiltering(_countryValues) { bean, res ->
+                addItemIfPossible(bean, bean.country, _countryValues, res) }
+        ) { return } // 早期リターン
+        // 農園
+        if (isEmptyAfterFiltering(_farmValues) { bean, res ->
+                addItemIfPossible(bean, bean.farm, _farmValues, res) }
+        ) { return } // 早期リターン
+        // 地区
+        if (isEmptyAfterFiltering(_districtValues) { bean, res ->
+                addItemIfPossible(bean, bean.district, _districtValues, res) }
+        ) { return } // 早期リターン
+        // 購入店
+        if (isEmptyAfterFiltering(_storeValues) { bean, res ->
+                addItemIfPossible(bean, bean.store, _storeValues, res) }
+        ) { return } // 早期リターン
+        // 品種
+        if (isEmptyAfterFiltering(_speciesValues) { bean, res ->
+                addItemIfPossible(bean, bean.species, _speciesValues, res) }
+        ) { return } // 早期リターン
+        // 評価
+        if (isEmptyAfterFiltering(_ratingValues) { bean, res ->
+                addItemIfPossible(bean, bean.rating, _ratingValues, res) }
+        ) { return } // 早期リターン
+        // 精製法
+        isEmptyAfterFiltering(_processValues) { bean, res ->
+                addItemIfPossible(bean, bean.process, _processValues, res) }
+    }
+    // 絞り込み処理後、絞り込み結果が空だったらtrue
+    private fun isEmptyAfterFiltering(
+        filteringElements: List<*>,
+        addItemProcess: (bean: CustomBean, res: MutableList<CustomBean>) -> Unit
+    ): Boolean {
+        // 絞り込み要素が無かったら、絞り込み結果が空にはなり得ない
+        if (filteringElements.isEmpty()) return false
+
+        val res = mutableListOf<CustomBean>()
+        for (bean in filteredResult) {
+            addItemProcess(bean, res)
+        }
+        filteredResult = res
+
+        if (filteredResult.isNotEmpty()) return false
+        // 絞り込み結果該当なし
+        return true
+    }
+
+    private fun addItemIfPossible(
+        bean: CustomBean,
+        beanValue: String,
+        filteringElements: List<String>,
+        res: MutableList<CustomBean>) {
+        for (filteringElement in filteringElements) {
+            if (beanValue.contains(filteringElement)) {
+                res.add(bean)
+            }
+        }
+    }
+    private fun addItemIfPossible(
+        bean: CustomBean,
+        beanValue: Int,
+        filteringElements: List<Int>,
+        res: MutableList<CustomBean>) {
+        for (filteringElement in filteringElements) {
+            if (beanValue == filteringElement) {
+                res.add(bean)
+            }
         }
     }
 }

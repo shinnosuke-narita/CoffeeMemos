@@ -38,10 +38,6 @@ class SearchBeanFragment : Fragment() {
     // 共有viewModel
     private val sharedViewModel: MainSearchViewModel by viewModels({ requireParentFragment() })
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,21 +53,8 @@ class SearchBeanFragment : Fragment() {
         setUpRecyclerView(requireContext(), binding.searchResultRV)
 
         // 検索結果 監視処理
-        viewModel.searchResult.observe(viewLifecycleOwner) { list ->
-            if (list == null) return@observe
-
+        viewModel.sortedSearchResult.observe(viewLifecycleOwner) { list ->
             binding.searchResultRV.adapter = setUpAdapter(list)
-        }
-
-        // 絞り込み結果 監視処理
-        viewModel.filteringResult.observe(viewLifecycleOwner) { list ->
-            if (list == null) return@observe
-
-            binding.searchResultRV.adapter = setUpAdapter(list)
-        }
-
-        viewModel.allCustomBean.observe(viewLifecycleOwner) { list ->
-            viewModel.setSearchResult(list)
         }
 
         // 現在のソート 監視処理
@@ -88,6 +71,7 @@ class SearchBeanFragment : Fragment() {
             binding.itemCount.text = requireContext().getString(R.string.recipeCount, count)
         }
 
+        // bottomMenu状態監視処理
         viewModel.isOpened.observe(viewLifecycleOwner) { isOpened ->
             if (isOpened) binding.wholeShadow.visibility = View.VISIBLE
             else binding.wholeShadow.visibility = View.GONE
@@ -113,7 +97,7 @@ class SearchBeanFragment : Fragment() {
             val selectedIndex: Int = bundle.getInt("selectedIndex", 0)
             val selectedSortType: BeanSortType = BeanSortType.getSortTypeByIndex(selectedIndex)
 
-            viewModel.sortSearchResult(selectedSortType)
+            viewModel.setCurrentSortType(selectedSortType)
         }
 
         binding.refineBtn.setOnClickListener { view ->

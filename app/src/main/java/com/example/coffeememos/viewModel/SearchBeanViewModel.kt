@@ -3,7 +3,6 @@ package com.example.coffeememos.viewModel
 import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.*
-import com.example.coffeememos.Constants
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.search.*
@@ -13,37 +12,45 @@ import kotlinx.coroutines.launch
 
 class SearchBeanViewModel(val beanDao: BeanDao) : ViewModel() {
     // filter 管理
-    var filterManager: BeanFilterManager = BeanFilterManager()
-
-    val allCustomBean: LiveData<List<CustomBean>> = beanDao.getCustomBean().asLiveData()
-
-    private val _searchResult: MutableLiveData<List<CustomBean>> = MutableLiveData(null)
-    val searchResult: LiveData<List<CustomBean>> = _searchResult
-
-    fun setSearchResult(list: List<CustomBean>) {
-        val result = sortList(_currentSortType.value!!, list)
-        _searchResult.value = result
-    }
-
-    // 絞り込み結果
-    private val _filteringResult: MutableLiveData<List<CustomBean>?> = MutableLiveData(null)
-    val filteringResult: LiveData<List<CustomBean>?> = _filteringResult
+    var filterManager: BeanFilterManager = BeanFilterManager(beanDao)
 
     // Sort 状態
     private val _currentSortType: MutableLiveData<BeanSortType> = MutableLiveData(BeanSortType.NEW)
     val currentSortType: LiveData<BeanSortType> = _currentSortType
 
-    val beanCount: MediatorLiveData<Int?> = MediatorLiveData<Int?>().apply {
-        addSource(_searchResult) { list ->
-            if (list == null) return@addSource
-            value = list.size
+    // 並び替え処理
+    fun setCurrentSortType(sortType: BeanSortType) {
+        // currentSortTypeの更新処理
+        _currentSortType.value = sortType
+    }
+
+    private fun sortList(sortType: BeanSortType, list: List<CustomBean>): List<CustomBean> {
+        val result = when(sortType) {
+            BeanSortType.OLD        -> list.sortedBy { bean -> bean.id }
+            BeanSortType.NEW        -> list.sortedByDescending { bean -> bean.id }
+            BeanSortType.RATING     -> list.sortedByDescending { bean -> bean.rating }
         }
 
-        addSource(_filteringResult) { list ->
-            if (list == null) return@addSource
+        return result
+    }
 
-            value = list.size
+    // 検索結果
+    private val _searchResult: MutableLiveData<List<CustomBean>> = MutableLiveData(listOf())
+    val searchResult: LiveData<List<CustomBean>> = _searchResult
+
+    val sortedSearchResult: LiveData<List<CustomBean>> = MediatorLiveData<List<CustomBean>>().apply {
+        addSource(_searchResult) { searchResult ->
+            value = sortList(currentSortType.value!!, searchResult)
         }
+
+        addSource(_currentSortType) { sortType ->
+            value = sortList(sortType, _searchResult.value!!)
+        }
+    }
+
+    // 検索結果件数
+    val beanCount: LiveData<Int> = _searchResult.map { searchResult ->
+        return@map searchResult.size
     }
 
     // BottomSheet 状態監視
@@ -58,96 +65,55 @@ class SearchBeanViewModel(val beanDao: BeanDao) : ViewModel() {
         if (keyWord.type == SearchType.RECIPE) return
         if (keyWord.keyWord == "") return
 
-        val result: MutableList<CustomBean> = mutableListOf()
-        val _keyWord: String = keyWord.keyWord
-
-        for(bean in allCustomBean.value!!) {
-            if (bean.country.contains(_keyWord)) {
-                result.add(bean)
-                continue
-            }
-            if(bean.farm.contains(_keyWord)) {
-                result.add(bean)
-                continue
-            }
-            if (bean.district.contains(_keyWord)) {
-                result.add(bean)
-                continue
-            }
-            if (bean.store.contains(_keyWord)) {
-                result.add(bean)
-                continue
-            }
-            if (bean.species.contains(_keyWord)) {
-                result.add(bean)
-                continue
-            }
-            if (Constants.processList[bean.process].contains(_keyWord)) {
-                result.add(bean)
-                continue
-            }
+        viewModelScope.launch {
+            _searchResult.postValue(
+                filterManager.freeWordSearch(keyWord.keyWord)
+            )
         }
-
-        _searchResult.value = result
-    }
-
-    // 並び替え処理
-    fun sortSearchResult(sortType: BeanSortType) {
-        // currentSortTypeの更新処理
-        _currentSortType.value = sortType
-
-        if (_filteringResult.value == null) {
-            val sortedResult: List<CustomBean> = sortList(sortType, _searchResult.value!!)
-            _searchResult.value = sortedResult
-        } else {
-            val sortedResult: List<CustomBean> = sortList(sortType, _filteringResult.value!!)
-            _filteringResult.value = sortedResult
-        }
-    }
-
-    private fun sortList(sortType: BeanSortType, list: List<CustomBean>): List<CustomBean> {
-        val result = when(sortType) {
-            BeanSortType.OLD        -> list.sortedBy { bean -> bean.id }
-            BeanSortType.NEW        -> list.sortedByDescending { bean -> bean.id }
-            BeanSortType.RATING     -> list.sortedByDescending { bean -> bean.rating }
-        }
-
-        return result
     }
 
     // filter
     fun filterSearchResult() {
-        val filteringList = filterManager.makeList(_searchResult.value!!)
-
-        val result = sortList(_currentSortType.value!!, filteringList)
-
-        _filteringResult.value = result
+        viewModelScope.launch {
+            _searchResult.postValue(
+                filterManager.searchAndFilter()
+            )
+        }
     }
 
+    // 検索条件クリア
     fun resetResult() {
-        _searchResult.value = allCustomBean.value
-        _filteringResult.value = null
-        filterManager.resetList()
+        filterManager = BeanFilterManager(beanDao)
         _currentSortType.value = BeanSortType.NEW
+        initSearchResult()
     }
 
-   private var updateFavorite: Boolean = false
     // お気に入りアイコン 更新
     fun updateFavoriteIcon(clickedFavoriteIcon: View, beanId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {
-                updateFavorite = true
                 // db更新
                 beanDao.updateFavoriteByBeanId(beanId, false)
                 // view 更新
                 if (clickedFavoriteIcon is ImageView) ViewUtil.setTagAndFavoriteIcon(clickedFavoriteIcon, false)
             } else {
-                updateFavorite = true
                 // db更新
                 beanDao.updateFavoriteByBeanId(beanId, true)
                 // view 更新
                 if (clickedFavoriteIcon is ImageView) ViewUtil.setTagAndFavoriteIcon(clickedFavoriteIcon, true)
             }
+        }
+    }
+
+    init {
+        initSearchResult()
+    }
+
+    private fun initSearchResult() {
+        viewModelScope.launch {
+            _searchResult.postValue(
+                filterManager.initSearchResult()
+            )
         }
     }
 
