@@ -1,8 +1,37 @@
 package com.example.coffeememos.search
 
 import com.example.coffeememos.CustomRecipe
+import com.example.coffeememos.dao.RecipeDao
+import com.example.coffeememos.entity.RecipeWithTaste
 
-class SearchFilterManager : BaseSearchFilterManager<CustomRecipe>() {
+class SearchFilterManager(private val recipeDao: RecipeDao, private val customRecipeMapper: CustomRecipeMapper) : BaseSearchFilterManager<CustomRecipe>() {
+    private var _keyword: String = ""
+
+    suspend fun freeWordSearch(keyword: String): List<CustomRecipe> {
+       _keyword = keyword
+
+        val recipeWithTasteList: List<RecipeWithTaste> = recipeDao.getRecipeWithTasteByKeyword(_keyword)
+        return customRecipeMapper.execute(recipeWithTasteList)
+    }
+
+    suspend fun initSearchResult(): List<CustomRecipe> {
+        val recipeWithTasteList = recipeDao.getRecipeWithTaste()
+        return customRecipeMapper.execute(recipeWithTasteList)
+    }
+
+    suspend fun searchAndFilter(): List<CustomRecipe> {
+        val recipeWithTasteList: List<RecipeWithTaste> =
+            if (_keyword.isEmpty()) {
+                recipeDao.getRecipeWithTaste()
+            } else {
+                recipeDao.getRecipeWithTasteByKeyword(_keyword)
+            }
+
+        val mappedRes = customRecipeMapper.execute(recipeWithTasteList)
+
+        return makeList(mappedRes)
+    }
+
     private var _sourValues     : MutableList<Int> = mutableListOf()
     val sourValues: List<Int> get() = _sourValues
     private var _bitterValues   : MutableList<Int> = mutableListOf()
@@ -92,6 +121,8 @@ class SearchFilterManager : BaseSearchFilterManager<CustomRecipe>() {
     }
 
     fun resetList() {
+        _countryValues = mutableListOf()
+        _toolValues = mutableListOf()
         _roastValues = mutableListOf()
         _grindSizeValues = mutableListOf()
         _ratingValues = mutableListOf()
@@ -103,17 +134,88 @@ class SearchFilterManager : BaseSearchFilterManager<CustomRecipe>() {
     }
 
     override fun filter(currentSearchResult: List<CustomRecipe>) {
-        for (recipe in currentSearchResult) {
-            if (addItemIfPassCheck(recipe, recipe.sour, _sourValues)) continue
-            if (addItemIfPassCheck(recipe, recipe.bitter, _bitterValues)) continue
-            if (addItemIfPassCheck(recipe, recipe.sweet, _sweetValues)) continue
-            if (addItemIfPassCheck(recipe, recipe.flavor, _flavorValues)) continue
-            if (addItemIfPassCheck(recipe, recipe.rich, _richValues)) continue
-            if (addItemIfPassCheck(recipe, recipe.roast, _roastValues)) continue
-            if (addItemIfPassCheck(recipe, recipe.grindSize, _grindSizeValues)) continue
-            if (addItemIfPassCheck(recipe, recipe.rating, _ratingValues)) continue
-            if (addItemIfPassCheck(recipe, recipe.country, _countryValues)) continue
-            addItemIfPassCheck(recipe, recipe.tool, _toolValues)
+        filteredResult = currentSearchResult.toMutableList()
+
+        // 原産地
+        if (isEmptyAfterFiltering(_countryValues) { recipe, res ->
+                addItemIfPossible(recipe, recipe.country, _countryValues, res) }
+        ) { return } // 早期リターン
+        // 抽出器具
+        if (isEmptyAfterFiltering(_toolValues) { recipe, res ->
+                addItemIfPossible(recipe, recipe.tool, _toolValues, res) }
+        ) { return } // 早期リターン
+        // 焙煎度
+        if (isEmptyAfterFiltering(_roastValues) { recipe, res ->
+                addItemIfPossible(recipe, recipe.roast, _roastValues, res) }
+        ) { return } // 早期リターン
+        // グラインド
+        if (isEmptyAfterFiltering(_grindSizeValues) { recipe, res ->
+                addItemIfPossible(recipe, recipe.grindSize, _grindSizeValues, res) }
+        ) { return } // 早期リターン
+        // 酸味
+        if (isEmptyAfterFiltering(_sourValues) { recipe, res ->
+                addItemIfPossible(recipe, recipe.sour, _sourValues, res) }
+        ) { return } // 早期リターン
+        // 苦味
+        if (isEmptyAfterFiltering(_bitterValues) { recipe, res ->
+                addItemIfPossible(recipe, recipe.bitter, _bitterValues, res) }
+        ) { return } // 早期リターン
+        // 甘味
+        if (isEmptyAfterFiltering(_sweetValues) { recipe, res ->
+                addItemIfPossible(recipe, recipe.sweet, _sweetValues, res) }
+        ) { return } // 早期リターン
+        // 香り
+        if (isEmptyAfterFiltering(_flavorValues) { recipe, res ->
+                addItemIfPossible(recipe, recipe.flavor, _flavorValues, res) }
+        ) { return } // 早期リターン
+        // コク
+        if (isEmptyAfterFiltering(_richValues) { recipe, res ->
+                addItemIfPossible(recipe, recipe.rich, _richValues, res) }
+        ) { return } // 早期リターン
+        // 評価
+        isEmptyAfterFiltering(_ratingValues) { recipe, res ->
+                addItemIfPossible(recipe, recipe.rating, _ratingValues, res) }
+    }
+
+    // 絞り込み処理後、絞り込み結果が空だったらtrue
+    private fun isEmptyAfterFiltering(
+        filteringElements: List<*>,
+        addItemProcess: (recipe: CustomRecipe, res: MutableList<CustomRecipe>) -> Unit
+    ): Boolean {
+        // 絞り込み要素が無かったら、絞り込み結果が空にはなり得ない
+        if (filteringElements.isEmpty()) return false
+
+        val res = mutableListOf<CustomRecipe>()
+        for (recipe in filteredResult) {
+            addItemProcess(recipe, res)
+        }
+        filteredResult = res
+
+        if (filteredResult.isNotEmpty()) return false
+        // 絞り込み結果該当なし
+        return true
+    }
+
+    private fun addItemIfPossible(
+        recipe: CustomRecipe,
+        recipeValue: String,
+        filteringElements: List<String>,
+        res: MutableList<CustomRecipe>) {
+        for (filteringElement in filteringElements) {
+            if (recipeValue.contains(filteringElement)) {
+                res.add(recipe)
+            }
+        }
+    }
+    private fun addItemIfPossible(
+        recipe: CustomRecipe,
+        recipeValue: Int,
+        filteringElements: List<Int>,
+        res: MutableList<CustomRecipe>) {
+        for (filteringElement in filteringElements) {
+            if (recipeValue == filteringElement) {
+                res.add(recipe)
+            }
         }
     }
 

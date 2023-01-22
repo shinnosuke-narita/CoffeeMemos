@@ -1,7 +1,7 @@
 package com.example.coffeememos.search
 
 abstract class BaseSearchFilterManager<T> {
-    private val filteredResult: MutableList<T> = mutableListOf()
+    protected var filteredResult: MutableList<T> = mutableListOf()
 
     protected abstract fun filteringElementsCountIsZero(): Boolean
 

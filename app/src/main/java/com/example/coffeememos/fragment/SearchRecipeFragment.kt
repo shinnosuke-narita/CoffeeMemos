@@ -56,14 +56,7 @@ class SearchRecipeFragment : Fragment() {
         setUpRecyclerView(requireContext(), binding.searchResultRV)
 
         // 検索結果 監視処理
-        viewModel.searchResult.observe(viewLifecycleOwner) { list ->
-            binding.searchResultRV.adapter = setUpAdapter(list)
-        }
-
-        // 絞り込み結果 監視処理
-        viewModel.filteringResult.observe(viewLifecycleOwner) { list ->
-            if (list == null) return@observe
-
+        viewModel.sortedSearchResult.observe(viewLifecycleOwner) { list ->
             binding.searchResultRV.adapter = setUpAdapter(list)
         }
 
@@ -78,10 +71,7 @@ class SearchRecipeFragment : Fragment() {
         }
 
         sharedViewModel.searchKeyWord.observe(viewLifecycleOwner) { keyWord ->
-            val searchIsSuccess = viewModel.freeWordSearch(keyWord)
-            if (searchIsSuccess) {
-                viewModel.resetFilterManager()
-            }
+            viewModel.freeWordSearch(keyWord)
         }
 
 
@@ -112,7 +102,7 @@ class SearchRecipeFragment : Fragment() {
             val selectedIndex: Int = bundle.getInt("selectedIndex", 0)
             val selectedSortType: RecipeSortType = RecipeSortType.getSortTypeByIndex(selectedIndex)
 
-            viewModel.sortSearchResult(selectedSortType)
+            viewModel.setCurrentSortType(selectedSortType)
         }
         // 絞り込みボタン クリックリスナ―
         binding.refineBtn.setOnClickListener { view ->
