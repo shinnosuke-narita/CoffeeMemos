@@ -162,27 +162,4 @@ class BeanFilterManager(private val beanDao: BeanDao) : BaseSearchFilterManager<
         // 絞り込み結果該当なし
         return true
     }
-
-    private fun addItemIfPossible(
-        bean: CustomBean,
-        beanValue: String,
-        filteringElements: List<String>,
-        res: MutableList<CustomBean>) {
-        for (filteringElement in filteringElements) {
-            if (beanValue.contains(filteringElement)) {
-                res.add(bean)
-            }
-        }
-    }
-    private fun addItemIfPossible(
-        bean: CustomBean,
-        beanValue: Int,
-        filteringElements: List<Int>,
-        res: MutableList<CustomBean>) {
-        for (filteringElement in filteringElements) {
-            if (beanValue == filteringElement) {
-                res.add(bean)
-            }
-        }
-    }
 }

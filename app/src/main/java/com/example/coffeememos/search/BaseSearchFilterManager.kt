@@ -1,5 +1,7 @@
 package com.example.coffeememos.search
 
+import com.example.coffeememos.CustomRecipe
+
 abstract class BaseSearchFilterManager<T> {
     protected var filteredResult: MutableList<T> = mutableListOf()
 
@@ -18,30 +20,26 @@ abstract class BaseSearchFilterManager<T> {
         return filteredResult
     }
 
-
-    // 追加したら、trueを返す
-    protected fun addItemIfPassCheck(item: T, itemValue: String, selectedValues: List<String>): Boolean {
-        if (selectedValues.isEmpty()) return false
-
-        for (selectedValue in selectedValues) {
-            if (itemValue.contains(selectedValue)) {
-                filteredResult.add(item)
-                return true
+    protected fun addItemIfPossible(
+        recipe: T,
+        recipeValue: String,
+        filteringElements: List<String>,
+        res: MutableList<T>) {
+        for (filteringElement in filteringElements) {
+            if (recipeValue.contains(filteringElement)) {
+                res.add(recipe)
             }
         }
-        return false
     }
-
-    // 追加したら、trueを返す
-    protected fun addItemIfPassCheck(item: T, itemValue: Int, selectedValues: List<Int>): Boolean {
-        if (selectedValues.isEmpty()) return false
-
-        for (selectedValue in selectedValues) {
-            if (itemValue == selectedValue) {
-                filteredResult.add(item)
-                return true
+    protected fun addItemIfPossible(
+        recipe: T,
+        recipeValue: Int,
+        filteringElements: List<Int>,
+        res: MutableList<T>) {
+        for (filteringElement in filteringElements) {
+            if (recipeValue == filteringElement) {
+                res.add(recipe)
             }
         }
-        return false
     }
 }

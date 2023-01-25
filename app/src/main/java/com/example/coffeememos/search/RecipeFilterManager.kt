@@ -196,28 +196,6 @@ class SearchFilterManager(private val recipeDao: RecipeDao, private val customRe
         return true
     }
 
-    private fun addItemIfPossible(
-        recipe: CustomRecipe,
-        recipeValue: String,
-        filteringElements: List<String>,
-        res: MutableList<CustomRecipe>) {
-        for (filteringElement in filteringElements) {
-            if (recipeValue.contains(filteringElement)) {
-                res.add(recipe)
-            }
-        }
-    }
-    private fun addItemIfPossible(
-        recipe: CustomRecipe,
-        recipeValue: Int,
-        filteringElements: List<Int>,
-        res: MutableList<CustomRecipe>) {
-        for (filteringElement in filteringElements) {
-            if (recipeValue == filteringElement) {
-                res.add(recipe)
-            }
-        }
-    }
 
     override fun filteringElementsCountIsZero(): Boolean {
         if (_sourValues.isNotEmpty()) return false
