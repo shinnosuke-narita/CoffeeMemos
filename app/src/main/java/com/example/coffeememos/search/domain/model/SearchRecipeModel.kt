@@ -1,6 +1,6 @@
-package com.example.coffeememos
+package com.example.coffeememos.search.domain.model
 
-data class CustomRecipe (
+data class SearchRecipeModel (
     val recipeId  : Long,
     val beanId    : Long,
     val tasteId   : Long,

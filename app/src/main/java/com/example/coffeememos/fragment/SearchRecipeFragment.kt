@@ -11,7 +11,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.CoffeeMemosApplication
-import com.example.coffeememos.CustomRecipe
+import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.R
 import com.example.coffeememos.adapter.RecipeDetailAdapter
 import com.example.coffeememos.databinding.FragmentSearchRecipeBinding
@@ -137,15 +137,15 @@ class SearchRecipeFragment : Fragment() {
         }
     }
 
-    private fun setUpAdapter(list: List<CustomRecipe>): RecipeDetailAdapter {
+    private fun setUpAdapter(list: List<SearchRecipeModel>): RecipeDetailAdapter {
         return RecipeDetailAdapter(requireContext(), list).apply {
             setFavoriteListener(object : OnFavoriteIconClickListener {
                 override fun onClick(view: View, id: Long) {
                     viewModel.updateFavoriteIcon(view, id)
                 }
             })
-            setOnItemClickListener(object : OnItemClickListener<CustomRecipe> {
-                override fun onClick(view: View, selectedItem: CustomRecipe) {
+            setOnItemClickListener(object : OnItemClickListener<SearchRecipeModel> {
+                override fun onClick(view: View, selectedItem: SearchRecipeModel) {
                     if (viewModel.isOpened.value!!) return
 
                     val showDetailAction = SearchFragmentDirections.showRecipeDetailAction().apply {

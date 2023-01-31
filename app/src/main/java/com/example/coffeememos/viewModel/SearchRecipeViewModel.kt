@@ -3,16 +3,21 @@ package com.example.coffeememos.viewModel
 import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.*
-import com.example.coffeememos.CustomRecipe
+import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.search.*
+import com.example.coffeememos.search.domain.interator.FreeWordSearchIterator
+import com.example.coffeememos.search.data.repository.SearchRecipeRepository
+import com.example.coffeememos.search.presentation.controller.SearchRecipeController
+import com.example.coffeememos.search.presentation.presenter.SearchRecipeModelMapper
+import com.example.coffeememos.search.presentation.presenter.SearchRecipePresenter
 import com.example.coffeememos.utilities.ViewUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
     // 検索結果
-    private val _searchResult: MutableLiveData<List<CustomRecipe>> = MutableLiveData(listOf())
+    private val _searchResult: MutableLiveData<List<SearchRecipeModel>> = MutableLiveData(listOf())
 
     val recipeCount: LiveData<Int> = _searchResult.map { list ->
         return@map list.size
@@ -22,7 +27,7 @@ class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
     private val _currentSortType: MutableLiveData<RecipeSortType> = MutableLiveData(RecipeSortType.NEW)
     val currentSortType: LiveData<RecipeSortType> = _currentSortType
 
-    val sortedSearchResult: MutableLiveData<List<CustomRecipe>> = MediatorLiveData<List<CustomRecipe>>().apply {
+    val sortedSearchResult: MutableLiveData<List<SearchRecipeModel>> = MediatorLiveData<List<SearchRecipeModel>>().apply {
         // 検索結果が更新されたら、ソート
         addSource(_searchResult) { searchResult ->
             value = sortList(_currentSortType.value!!, searchResult)
@@ -44,15 +49,18 @@ class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
         _isOpened.value = !(_isOpened.value!!)
     }
 
-    // キーワード検索 検索処理が走れば、true
+    // キーワード検索
     fun freeWordSearch(keyWord: SearchKeyWord) {
-        if (keyWord.type == SearchType.BEAN) return
-        if (keyWord.keyWord == "") return
-
         viewModelScope.launch {
-            _searchResult.postValue(
-                filterManager.freeWordSearch(keyWord.keyWord)
-            )
+            val result: List<SearchRecipeModel> =
+                SearchRecipeController(
+                    FreeWordSearchIterator(
+                        SearchRecipeRepository(recipeDao),
+                        SearchRecipePresenter(SearchRecipeModelMapper())
+                    )
+                ).freeWordSearch(keyWord) ?: return@launch
+
+            _searchResult.postValue(result)
         }
     }
 
@@ -61,7 +69,7 @@ class SearchRecipeViewModel(val recipeDao: RecipeDao) : ViewModel() {
         _currentSortType.value = sortType
     }
 
-    private fun sortList(sortType: RecipeSortType, list: List<CustomRecipe>): List<CustomRecipe> {
+    private fun sortList(sortType: RecipeSortType, list: List<SearchRecipeModel>): List<SearchRecipeModel> {
         val result = when(sortType) {
             RecipeSortType.OLD        -> list.sortedBy { recipe -> recipe.recipeId}
             RecipeSortType.NEW        -> list.sortedByDescending { recipe -> recipe.recipeId }

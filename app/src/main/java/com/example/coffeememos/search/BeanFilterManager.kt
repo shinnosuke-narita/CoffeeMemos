@@ -1,9 +1,7 @@
 package com.example.coffeememos.search
 
-import com.example.coffeememos.CustomRecipe
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.CustomBean
-import com.example.coffeememos.entity.RecipeWithTaste
 
 class BeanFilterManager(private val beanDao: BeanDao) : BaseSearchFilterManager<CustomBean>() {
     private var _keyword: String = ""

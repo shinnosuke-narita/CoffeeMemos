@@ -1,25 +1,25 @@
 package com.example.coffeememos.search
 
-import com.example.coffeememos.CustomRecipe
+import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.entity.RecipeWithTaste
 
-class SearchFilterManager(private val recipeDao: RecipeDao, private val customRecipeMapper: CustomRecipeMapper) : BaseSearchFilterManager<CustomRecipe>() {
+class SearchFilterManager(private val recipeDao: RecipeDao, private val customRecipeMapper: CustomRecipeMapper) : BaseSearchFilterManager<SearchRecipeModel>() {
     private var _keyword: String = ""
 
-    suspend fun freeWordSearch(keyword: String): List<CustomRecipe> {
+    suspend fun freeWordSearch(keyword: String): List<SearchRecipeModel> {
        _keyword = keyword
 
         val recipeWithTasteList: List<RecipeWithTaste> = recipeDao.getRecipeWithTasteByKeyword(_keyword)
         return customRecipeMapper.execute(recipeWithTasteList)
     }
 
-    suspend fun initSearchResult(): List<CustomRecipe> {
+    suspend fun initSearchResult(): List<SearchRecipeModel> {
         val recipeWithTasteList = recipeDao.getRecipeWithTaste()
         return customRecipeMapper.execute(recipeWithTasteList)
     }
 
-    suspend fun searchAndFilter(): List<CustomRecipe> {
+    suspend fun searchAndFilter(): List<SearchRecipeModel> {
         val recipeWithTasteList: List<RecipeWithTaste> =
             if (_keyword.isEmpty()) {
                 recipeDao.getRecipeWithTaste()
@@ -133,7 +133,7 @@ class SearchFilterManager(private val recipeDao: RecipeDao, private val customRe
         _richValues = mutableListOf()
     }
 
-    override fun filter(currentSearchResult: List<CustomRecipe>) {
+    override fun filter(currentSearchResult: List<SearchRecipeModel>) {
         filteredResult = currentSearchResult.toMutableList()
 
         // 原産地
@@ -180,12 +180,12 @@ class SearchFilterManager(private val recipeDao: RecipeDao, private val customRe
     // 絞り込み処理後、絞り込み結果が空だったらtrue
     private fun isEmptyAfterFiltering(
         filteringElements: List<*>,
-        addItemProcess: (recipe: CustomRecipe, res: MutableList<CustomRecipe>) -> Unit
+        addItemProcess: (recipe: SearchRecipeModel, res: MutableList<SearchRecipeModel>) -> Unit
     ): Boolean {
         // 絞り込み要素が無かったら、絞り込み結果が空にはなり得ない
         if (filteringElements.isEmpty()) return false
 
-        val res = mutableListOf<CustomRecipe>()
+        val res = mutableListOf<SearchRecipeModel>()
         for (recipe in filteredResult) {
             addItemProcess(recipe, res)
         }

@@ -1,20 +1,20 @@
 package com.example.coffeememos.search
 
-import com.example.coffeememos.CustomRecipe
+import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.entity.RecipeWithTaste
 
 class CustomRecipeMapper {
     // 簡易レシピリスト作成メソッド
-    fun execute(recipeWithTasteList: List<RecipeWithTaste>): List<CustomRecipe> {
+    fun execute(recipeWithTasteList: List<RecipeWithTaste>): List<SearchRecipeModel> {
         if (recipeWithTasteList.isEmpty()) return listOf()
 
-        val result = mutableListOf<CustomRecipe>()
+        val result = mutableListOf<SearchRecipeModel>()
         for (recipeWithTaste in recipeWithTasteList) {
             val recipe = recipeWithTaste.recipe
             val taste = recipeWithTaste.taste
 
             result.add(
-                CustomRecipe(
+                SearchRecipeModel(
                     recipe.id,
                     recipe.beanId,
                     taste.id,

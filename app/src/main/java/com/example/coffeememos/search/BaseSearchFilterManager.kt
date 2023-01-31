@@ -1,7 +1,5 @@
 package com.example.coffeememos.search
 
-import com.example.coffeememos.CustomRecipe
-
 abstract class BaseSearchFilterManager<T> {
     protected var filteredResult: MutableList<T> = mutableListOf()
 

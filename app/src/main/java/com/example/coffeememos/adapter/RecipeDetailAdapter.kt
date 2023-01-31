@@ -8,13 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.Constants
-import com.example.coffeememos.CustomRecipe
+import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.R
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
 import com.example.coffeememos.utilities.ViewUtil.Companion.setTagAndFavoriteIcon
 
-class RecipeDetailAdapter(context: Context, data: List<CustomRecipe>) : BaseAdapter<CustomRecipe, RecipeDetailViewHolder>(context, data) {
+class RecipeDetailAdapter(context: Context, data: List<SearchRecipeModel>) : BaseAdapter<SearchRecipeModel, RecipeDetailViewHolder>(context, data) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeDetailViewHolder {
         return RecipeDetailViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_width_taste, parent, false)
@@ -22,7 +22,7 @@ class RecipeDetailAdapter(context: Context, data: List<CustomRecipe>) : BaseAdap
     }
 
     override fun onBindViewHolder(holder: RecipeDetailViewHolder, position: Int) {
-        val recipe: CustomRecipe = data[position]
+        val recipe: SearchRecipeModel = data[position]
 
         holder.tool.text       = recipe.tool
         holder.createdAt.text  = DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern)
