@@ -61,6 +61,7 @@ interface BeanDao {
     @Query("SELECT COUNT(*) FROM bean")
     fun getBeanCount(): Int
 
+    @RewriteQueriesToDropUnusedColumns
     @Query("SELECT * FROM bean WHERE country LIKE '%' || :keyword || '%'" +
             "OR farm LIKE '%' || :keyword || '%'" +
             "OR district LIKE '%' || :keyword || '%'" +

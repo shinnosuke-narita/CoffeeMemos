@@ -18,11 +18,13 @@ import com.example.coffeememos.databinding.FragmentSearchRecipeBinding
 import com.example.coffeememos.databinding.SearchContentsBinding
 import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.listener.OnItemClickListener
-import com.example.coffeememos.search.RecipeSortType
+import com.example.coffeememos.search.domain.model.RecipeSortType
 import com.example.coffeememos.viewModel.MainSearchViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class SearchRecipeFragment : Fragment() {
     // viewBinding
     private var _mainBinding: FragmentSearchRecipeBinding? = null
@@ -31,11 +33,7 @@ class SearchRecipeFragment : Fragment() {
     private var _binding: SearchContentsBinding? = null
     private val binding get() = _binding!!
 
-
-    private val viewModel: SearchRecipeViewModel by viewModels {
-        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        SearchRecipeViewModel.SearchRecipeViewModelFactory(db.recipeDao())
-    }
+    private val viewModel: SearchRecipeViewModel by viewModels()
 
     // 共有viewModel
     private val sharedViewModel: MainSearchViewModel by viewModels({ requireParentFragment() })
@@ -82,7 +80,7 @@ class SearchRecipeFragment : Fragment() {
 
 
         // 並び替えボタン クリックリスナ―
-        binding.sortBtn.setOnClickListener { view ->
+        binding.sortBtn.setOnClickListener {
             viewModel.changeBottomSheetState()
 
             val originData = RecipeSortType.getNameList()
@@ -105,7 +103,7 @@ class SearchRecipeFragment : Fragment() {
             viewModel.setCurrentSortType(selectedSortType)
         }
         // 絞り込みボタン クリックリスナ―
-        binding.refineBtn.setOnClickListener { view ->
+        binding.refineBtn.setOnClickListener {
             viewModel.changeBottomSheetState()
 
             childFragmentManager.beginTransaction()
@@ -115,7 +113,7 @@ class SearchRecipeFragment : Fragment() {
                 .commit()
         }
         // 絞り込み画面 リスナー
-        childFragmentManager.setFragmentResultListener("filterResult", viewLifecycleOwner) { _, bundle ->
+        childFragmentManager.setFragmentResultListener("filterResult", viewLifecycleOwner) { _, _  ->
             viewModel.changeBottomSheetState()
 
             viewModel.filterSearchResult()

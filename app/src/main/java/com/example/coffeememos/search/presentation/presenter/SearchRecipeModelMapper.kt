@@ -2,8 +2,9 @@ package com.example.coffeememos.search.presentation.presenter
 
 import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.entity.RecipeWithTaste
+import javax.inject.Inject
 
-class SearchRecipeModelMapper {
+class SearchRecipeModelMapper @Inject constructor() {
     // 簡易レシピリスト作成メソッド
     fun execute(recipeWithTasteList: List<RecipeWithTaste>): List<SearchRecipeModel> {
         return recipeWithTasteList.map { recipeWithTaste ->

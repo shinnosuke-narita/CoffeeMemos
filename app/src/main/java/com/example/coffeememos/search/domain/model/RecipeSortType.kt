@@ -1,4 +1,4 @@
-package com.example.coffeememos.search
+package com.example.coffeememos.search.domain.model
 
 // todo コーヒーのソートタイプとレシピのソートタイプを抽出するメソッドを用意すればいけるかも？
 enum class RecipeSortType {
@@ -39,7 +39,7 @@ enum class RecipeSortType {
                 }
             }
 
-            return RecipeSortType.NEW
+            return NEW
         }
     }
 }
