@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
-import com.example.coffeememos.search.SearchFilterManager
+import com.example.coffeememos.search.presentation.controller.SearchRecipeController
 import com.example.coffeememos.state.MenuState
 
 class RecipeFilterViewModel : BaseFilterViewModel() {
@@ -101,31 +101,31 @@ class RecipeFilterViewModel : BaseFilterViewModel() {
     }
 
     // ラジオボタン状態管理
-    private val  _roastRadioBtnState: MutableLiveData<MutableList<Boolean>> =
-        MutableLiveData(MutableList(Constants.roastList.size) {false})
-    val roastBtnStateList: LiveData<MutableList<Boolean>> = _roastRadioBtnState
+    private val  _roastRadioBtnState: MutableLiveData<List<Boolean>> =
+        MutableLiveData(List(Constants.roastList.size) {false})
+    val roastBtnStateList: LiveData<List<Boolean>> = _roastRadioBtnState
 
-    private val  _grindSizeRadioBtnState: MutableLiveData<MutableList<Boolean>> =
-        MutableLiveData(MutableList(Constants.grindSizeList.size) {false})
-    val grindSizeBtnStateList: LiveData<MutableList<Boolean>> = _grindSizeRadioBtnState
+    private val  _grindSizeRadioBtnState: MutableLiveData<List<Boolean>> =
+        MutableLiveData(List(Constants.grindSizeList.size) {false})
+    val grindSizeBtnStateList: LiveData<List<Boolean>> = _grindSizeRadioBtnState
 
-    private val _ratingRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
-    val ratingRadioBtnState: LiveData<MutableList<Boolean>> = _ratingRadioBtnState
+    private val _ratingRadioBtnState: MutableLiveData<List<Boolean>> = MutableLiveData(List(5) {false})
+    val ratingRadioBtnState: LiveData<List<Boolean>> = _ratingRadioBtnState
 
-    private val _sourRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
-    val sourRadioBtnState: LiveData<MutableList<Boolean>> = _sourRadioBtnState
+    private val _sourRadioBtnState: MutableLiveData<List<Boolean>> = MutableLiveData(List(5) {false})
+    val sourRadioBtnState: LiveData<List<Boolean>> = _sourRadioBtnState
 
-    private val _bitterRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
-    val bitterRadioBtnState: LiveData<MutableList<Boolean>> = _bitterRadioBtnState
+    private val _bitterRadioBtnState: MutableLiveData<List<Boolean>> = MutableLiveData(List(5) {false})
+    val bitterRadioBtnState: LiveData<List<Boolean>> = _bitterRadioBtnState
 
-    private val _sweetRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
-    val sweetRadioBtnState: LiveData<MutableList<Boolean>> = _sweetRadioBtnState
+    private val _sweetRadioBtnState: MutableLiveData<List<Boolean>> = MutableLiveData(List(5) {false})
+    val sweetRadioBtnState: LiveData<List<Boolean>> = _sweetRadioBtnState
 
-    private val _flavorRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
-    val flavorRadioBtnState: LiveData<MutableList<Boolean>> = _flavorRadioBtnState
+    private val _flavorRadioBtnState: MutableLiveData<List<Boolean>> = MutableLiveData(List(5) {false})
+    val flavorRadioBtnState: LiveData<List<Boolean>> = _flavorRadioBtnState
 
-    private val _richRadioBtnState: MutableLiveData<MutableList<Boolean>> = MutableLiveData(MutableList(5) {false})
-    val richRadioBtnState: LiveData<MutableList<Boolean>> = _richRadioBtnState
+    private val _richRadioBtnState: MutableLiveData<List<Boolean>> = MutableLiveData(List(5) {false})
+    val richRadioBtnState: LiveData<List<Boolean>> = _richRadioBtnState
 
     fun setRoastRadioBtnState(selectedIndex: Int) {
         _roastRadioBtnState.value = updateBtnStateList(selectedIndex, _roastRadioBtnState.value!!)
@@ -211,50 +211,21 @@ class RecipeFilterViewModel : BaseFilterViewModel() {
         buildSelectedText(list) { index ->  formatIndex(index) }
     }
 
-    // filterManager セットアップ
-    fun setUpFilterManagerData(filterManager: SearchFilterManager) {
-        filterManager.resetList()
+    // viewModel 初期化
+    fun initialize(controller: SearchRecipeController) {
+        val filterData =
+            controller.getRecipeOutPutData("filterRecipeInputData")
+            ?: return
 
-        filterManager.collectRoastValue(_roastRadioBtnState.value!!)
-        filterManager.collectGrindSizeValue(_grindSizeRadioBtnState.value!!)
-        filterManager.collectRatingValue(_ratingRadioBtnState.value!!)
-        filterManager.collectSourValue(_sourRadioBtnState.value!!)
-        filterManager.collectBitterValue(_bitterRadioBtnState.value!!)
-        filterManager.collectSweetValue(_sweetRadioBtnState.value!!)
-        filterManager.collectFlavorValue(_flavorRadioBtnState.value!!)
-        filterManager.collectRichValue(_richRadioBtnState.value!!)
-        filterManager.collectCountryValue(_countryValues.value!!)
-        filterManager.collectToolValue(_toolValues.value!!)
-    }
-
-
-    fun initialize(filterManager: SearchFilterManager) {
-        _countryValues.value = filterManager.countryValues
-        _toolValues.value = filterManager.toolValues
-
-        _ratingRadioBtnState.value = initRadioBtnState(filterManager.ratingValues, _ratingRadioBtnState.value!!) {value -> value - 1}
-        _sourRadioBtnState.value = initRadioBtnState(filterManager.sourValues, _sourRadioBtnState.value!!) {value -> value - 1}
-        _bitterRadioBtnState.value = initRadioBtnState(filterManager.bitterValues, _bitterRadioBtnState.value!!) {value -> value - 1}
-        _sweetRadioBtnState.value = initRadioBtnState(filterManager.sweetValues, _sweetRadioBtnState.value!!) {value -> value - 1}
-        _flavorRadioBtnState.value = initRadioBtnState(filterManager.flavorValues, _flavorRadioBtnState.value!!) {value -> value - 1}
-        _richRadioBtnState.value = initRadioBtnState(filterManager.richValues, _richRadioBtnState.value!!) {value -> value - 1}
-        _roastRadioBtnState.value = initRadioBtnState(filterManager.roastValues, _roastRadioBtnState.value!!) {value -> value - 1}
-        _grindSizeRadioBtnState.value = initRadioBtnState(filterManager.grindSizeValues, _grindSizeRadioBtnState.value!!) {value -> value - 1}
-    }
-
-    private fun initRadioBtnState(
-        filterManagerData: List<Int>,
-        viewModelData: MutableList<Boolean>,
-        convertProcess: (value: Int) -> Int = {value -> value}
-    ): MutableList<Boolean> {
-        if (filterManagerData.isEmpty()) return viewModelData
-
-        val result = mutableListOf<Boolean>()
-        result.addAll(viewModelData)
-        for (value in filterManagerData) {
-            val index = convertProcess(value)
-            result[index] = true
-        }
-        return result
+        _countryValues.value = filterData.countries
+        _toolValues.value = filterData.tools
+        _ratingRadioBtnState.value = filterData.rating
+        _sourRadioBtnState.value = filterData.sour
+        _bitterRadioBtnState.value = filterData.bitter
+        _sweetRadioBtnState.value = filterData.sweet
+        _flavorRadioBtnState.value = filterData.flavor
+        _richRadioBtnState.value = filterData.rich
+        _roastRadioBtnState.value = filterData.roasts
+        _grindSizeRadioBtnState.value = filterData.grindSizes
     }
 }

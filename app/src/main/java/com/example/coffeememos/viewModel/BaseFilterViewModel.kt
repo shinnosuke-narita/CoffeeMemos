@@ -16,7 +16,7 @@ open class BaseFilterViewModel : ViewModel() {
         return currentOpenViewTag == null
     }
 
-    protected fun updateBtnStateList(selectedIndex: Int, currentList: MutableList<Boolean>): MutableList<Boolean> {
+    protected fun updateBtnStateList(selectedIndex: Int, currentList: List<Boolean>): MutableList<Boolean> {
         val updatedList = MutableList(currentList.size) { i -> currentList[i]}
 
         for ((i, state) in currentList.withIndex()) {
@@ -27,7 +27,7 @@ open class BaseFilterViewModel : ViewModel() {
         return updatedList
     }
 
-    protected fun buildSelectedText(list: MutableList<Boolean>, processData: (Int) -> String): String {
+    protected fun buildSelectedText(list: List<Boolean>, processData: (Int) -> String): String {
         var resultText = ""
         for ((i, isSelected) in list.withIndex()) {
             if (isSelected) {

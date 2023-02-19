@@ -196,7 +196,6 @@ class SearchFilterManager(private val recipeDao: RecipeDao, private val customRe
         return true
     }
 
-
     override fun filteringElementsCountIsZero(): Boolean {
         if (_sourValues.isNotEmpty()) return false
         if (_bitterValues.isNotEmpty()) return false

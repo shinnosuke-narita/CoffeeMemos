@@ -22,6 +22,7 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
     // 検索結果
     private val _searchResult: MutableLiveData<List<SearchRecipeModel>> = MutableLiveData(listOf())
 
+    // 検索結果件数
     val recipeCount: LiveData<Int> = _searchResult.map { list ->
         return@map list.size
     }
@@ -30,6 +31,10 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
     private val _currentSortType: MutableLiveData<RecipeSortType> = MutableLiveData(RecipeSortType.NEW)
     val currentSortType: LiveData<RecipeSortType> = _currentSortType
 
+    // 現在の検索キーワード
+    private var _currentSearchWord: String = ""
+
+    // ソートされた検索結果
     val sortedSearchResult: MutableLiveData<List<SearchRecipeModel>> = MediatorLiveData<List<SearchRecipeModel>>().apply {
         // 検索結果が更新されたら、ソート
         addSource(_searchResult) { searchResult ->
@@ -59,6 +64,7 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
                 searchRecipeController.freeWordSearch(keyWord) ?:
                 return@launch
 
+            _currentSearchWord = keyWord.keyWord
             _searchResult.postValue(result)
         }
     }
@@ -85,11 +91,33 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
     }
 
     // filter
-    fun filterSearchResult() {
+    fun filterSearchResult(
+       roastValue: List<Boolean>,
+       grindSizeValues: List<Boolean>,
+       ratingValues: List<Boolean>,
+       sourValues: List<Boolean>,
+       bitterValues: List<Boolean>,
+       sweetValues: List<Boolean>,
+       flavorValues: List<Boolean>,
+       richValues: List<Boolean>,
+       countryValues: List<String>,
+       toolValues: List<String> ) {
         viewModelScope.launch {
-            _searchResult.postValue(
-                filterManager.searchAndFilter()
+            val result = searchRecipeController.filter(
+                _currentSearchWord,
+                roastValue,
+                grindSizeValues,
+                ratingValues,
+                sourValues,
+                bitterValues,
+                sweetValues,
+                flavorValues,
+                richValues,
+                countryValues,
+                toolValues
             )
+
+            _searchResult.postValue(result)
         }
     }
 

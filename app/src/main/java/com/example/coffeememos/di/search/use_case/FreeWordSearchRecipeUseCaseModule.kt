@@ -1,6 +1,6 @@
-package com.example.coffeememos.di.search
+package com.example.coffeememos.di.search.use_case
 
-import com.example.coffeememos.search.domain.interator.FreeWordSearchIterator
+import com.example.coffeememos.search.domain.iterator.FreeWordSearchIterator
 import com.example.coffeememos.search.domain.use_case.FreeWordSearchUseCase
 import dagger.Binds
 import dagger.Module

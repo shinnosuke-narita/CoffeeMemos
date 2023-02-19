@@ -11,14 +11,12 @@ import androidx.fragment.app.viewModels
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentFilterBinding
-import com.example.coffeememos.search.SearchFilterManager
 import com.example.coffeememos.state.MenuState
-import com.example.coffeememos.utilities.AnimUtil.Companion.collapseMenu
-import com.example.coffeememos.utilities.AnimUtil.Companion.expandMenu
-import com.example.coffeememos.utilities.SystemUtil
 import com.example.coffeememos.viewModel.RecipeFilterViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FilterFragment : BaseFilterFragment() {
     private var _binding: FragmentFilterBinding? = null
     private val binding
@@ -41,7 +39,7 @@ class FilterFragment : BaseFilterFragment() {
         super.onCreate(savedInstanceState)
 
         // viewModel 初期化
-        viewModel.initialize(parentViewModel.filterManager)
+        viewModel.initialize(parentViewModel.searchRecipeController)
     }
 
     override fun onCreateView(
@@ -328,8 +326,18 @@ class FilterFragment : BaseFilterFragment() {
 
         // 閉じる処理
         binding.closeIcon.setOnClickListener {
-            // filterManagerのデータセット
-            viewModel.setUpFilterManagerData(parentViewModel.filterManager)
+            parentViewModel.filterSearchResult(
+                viewModel.roastBtnStateList.value!!,
+                viewModel.grindSizeBtnStateList.value!!,
+                viewModel.ratingRadioBtnState.value!!,
+                viewModel.sourRadioBtnState.value!!,
+                viewModel.bitterRadioBtnState.value!!,
+                viewModel.sweetRadioBtnState.value!!,
+                viewModel.flavorRadioBtnState.value!!,
+                viewModel.richRadioBtnState.value!!,
+                viewModel.countryValues.value!!,
+                viewModel.toolValues.value!!,
+            )
 
             setFragmentResult("filterResult", Bundle())
             parentFragmentManager.popBackStack()

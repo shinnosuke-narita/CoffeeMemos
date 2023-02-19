@@ -115,8 +115,6 @@ class SearchRecipeFragment : Fragment() {
         // 絞り込み画面 リスナー
         childFragmentManager.setFragmentResultListener("filterResult", viewLifecycleOwner) { _, _  ->
             viewModel.changeBottomSheetState()
-
-            viewModel.filterSearchResult()
         }
 
         binding.clearBtn.setOnClickListener {

@@ -1,4 +1,4 @@
-package com.example.coffeememos.search.domain.interator
+package com.example.coffeememos.search.domain.iterator
 
 import com.example.coffeememos.search.domain.model.RecipeSortType
 import com.example.coffeememos.search.domain.model.SearchRecipeModel

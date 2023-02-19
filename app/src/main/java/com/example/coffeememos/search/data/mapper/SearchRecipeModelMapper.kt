@@ -1,4 +1,4 @@
-package com.example.coffeememos.search.presentation.presenter
+package com.example.coffeememos.search.data.mapper
 
 import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.entity.RecipeWithTaste

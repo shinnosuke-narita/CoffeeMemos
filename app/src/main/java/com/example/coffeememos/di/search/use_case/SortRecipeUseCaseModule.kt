@@ -1,8 +1,6 @@
-package com.example.coffeememos.di.search
+package com.example.coffeememos.di.search.use_case
 
-import com.example.coffeememos.search.data.repository.SearchRecipeRepositoryImpl
-import com.example.coffeememos.search.domain.interator.SortRecipeInteractor
-import com.example.coffeememos.search.domain.repository.SearchRecipeRepository
+import com.example.coffeememos.search.domain.iterator.SortRecipeInteractor
 import com.example.coffeememos.search.domain.use_case.SortRecipeUseCase
 import dagger.Binds
 import dagger.Module

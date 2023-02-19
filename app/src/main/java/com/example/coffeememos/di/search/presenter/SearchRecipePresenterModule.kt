@@ -1,4 +1,4 @@
-package com.example.coffeememos.di.search
+package com.example.coffeememos.di.search.presenter
 
 import com.example.coffeememos.search.presentation.presenter.SearchRecipePresenterImpl
 import com.example.coffeememos.search.domain.presenter.SearchRecipePresenter
