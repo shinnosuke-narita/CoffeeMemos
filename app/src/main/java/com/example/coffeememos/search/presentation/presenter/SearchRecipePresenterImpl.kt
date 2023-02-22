@@ -96,12 +96,15 @@ class SearchRecipePresenterImpl @Inject constructor() : SearchRecipePresenter {
         inputData: List<Int>,
         outPutData: MutableList<Boolean>,
         isMatch: (index: Int, value: Int) -> Boolean) {
-        if (inputData.isNotEmpty()) {
-            for ((i, value) in inputData.withIndex()) {
-                if (isMatch(i, value)) {
+        if (inputData.isEmpty()) return
+
+        for ((i, _) in outPutData.withIndex()) {
+            for (inputValue in inputData) {
+                if (isMatch(i, inputValue)) {
                     outPutData[i] = true
                 }
             }
         }
+
     }
 }

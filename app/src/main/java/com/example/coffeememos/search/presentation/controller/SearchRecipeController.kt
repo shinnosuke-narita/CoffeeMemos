@@ -23,6 +23,8 @@ class SearchRecipeController @Inject constructor() {
     lateinit var getRecipeOutputDataUseCase: GetFilterRecipeOutputDataUseCase
     @Inject
     lateinit var getAllRecipeUseCase: GetAllRecipeUseCase
+    @Inject
+    lateinit var deleteFilterInputDataUseCase: DeleteFilterRecipeInputDataUseCase
 
     suspend fun getAllRecipe(): List<SearchRecipeModel> {
         return getAllRecipeUseCase.getAllRecipe()
@@ -115,5 +117,9 @@ class SearchRecipeController @Inject constructor() {
 
     fun getRecipeOutPutData(key: String): FilterRecipeOutputData? {
         return getRecipeOutputDataUseCase.execute(key)
+    }
+
+    fun deleteRecipeInputData(key: String) {
+        deleteFilterInputDataUseCase.handle(key)
     }
 }

@@ -46,9 +46,6 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
         }
     }
 
-    // filter 管理
-    lateinit var filterManager: SearchFilterManager
-
     // BottomSheet 状態監視
     private val _isOpened: MutableLiveData<Boolean> = MutableLiveData(false)
     val isOpened: LiveData<Boolean> = _isOpened
@@ -121,8 +118,9 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
         }
     }
 
+    // 検索結果、条件の削除
     fun resetResult() {
-        filterManager = SearchFilterManager(recipeDao, CustomRecipeMapper())
+        searchRecipeController.deleteRecipeInputData("filterRecipeInputData")
         _currentSortType.value = RecipeSortType.NEW
         initSearchResult()
     }
