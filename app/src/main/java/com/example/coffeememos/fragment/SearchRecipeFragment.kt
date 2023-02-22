@@ -131,6 +131,7 @@ class SearchRecipeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        viewModel.deleteFilteringInputData()
     }
 
     private fun setUpRecyclerView(context: Context, rv: RecyclerView) {

@@ -71,6 +71,7 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
         _currentSortType.value = sortType
     }
 
+    // お気に入り更新
     fun updateFavoriteIcon(clickedFavoriteIcon: View, recipeId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {
@@ -123,6 +124,11 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
         searchRecipeController.deleteRecipeInputData("filterRecipeInputData")
         _currentSortType.value = RecipeSortType.NEW
         initSearchResult()
+    }
+
+    // フィルタリング要素の削除
+    fun deleteFilteringInputData() {
+        searchRecipeController.deleteRecipeInputData("filterRecipeInputData")
     }
 
 
