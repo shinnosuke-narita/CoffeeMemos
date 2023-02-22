@@ -21,6 +21,12 @@ class SearchRecipeController @Inject constructor() {
     lateinit var setRecipeInputDataUseCase: SetFilterRecipeInputDataUseCase
     @Inject
     lateinit var getRecipeOutputDataUseCase: GetFilterRecipeOutputDataUseCase
+    @Inject
+    lateinit var getAllRecipeUseCase: GetAllRecipeUseCase
+
+    suspend fun getAllRecipe(): List<SearchRecipeModel> {
+        return getAllRecipeUseCase.getAllRecipe()
+    }
 
     suspend fun freeWordSearch(freeWord: SearchKeyWord): List<SearchRecipeModel>? {
         if (freeWord.keyWord.isEmpty()) return null

@@ -7,6 +7,8 @@ import javax.inject.Inject
 class SearchRecipeModelMapper @Inject constructor() {
     // 簡易レシピリスト作成メソッド
     fun execute(recipeWithTasteList: List<RecipeWithTaste>): List<SearchRecipeModel> {
+        if (recipeWithTasteList.isEmpty()) return listOf()
+
         return recipeWithTasteList.map { recipeWithTaste ->
             val recipe = recipeWithTaste.recipe
             val taste = recipeWithTaste.taste

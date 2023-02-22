@@ -13,8 +13,9 @@ import com.example.coffeememos.adapter.SearchViewPagerAdapter
 import com.example.coffeememos.databinding.FragmentSearchBinding
 import com.example.coffeememos.viewModel.MainSearchViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
     // viewBinding
     private  var _binding: FragmentSearchBinding? = null

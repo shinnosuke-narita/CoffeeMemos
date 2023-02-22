@@ -38,6 +38,12 @@ class SearchRecipeFragment : Fragment() {
     // 共有viewModel
     private val sharedViewModel: MainSearchViewModel by viewModels({ requireParentFragment() })
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.initSearchResult()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -127,16 +127,13 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
         initSearchResult()
     }
 
-    init {
-        filterManager = SearchFilterManager(recipeDao, CustomRecipeMapper())
 
-        initSearchResult()
-    }
-
-    private fun initSearchResult() {
+    // viewModelのイニシャライザから、実行するとアプリが落ちる。
+    // Hiltの仕様のよう、、
+    fun initSearchResult() {
         viewModelScope.launch {
             _searchResult.postValue(
-                filterManager.initSearchResult()
+                searchRecipeController.getAllRecipe()
             )
         }
     }

@@ -156,6 +156,7 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavo
 
     // RecipeItem クリックリスナ―
     override fun onClick(view: View, recipe: SimpleRecipe) {
+        // todo ここでtasteIdを渡す必要はない recipeIdだけ渡して、RecipeDetail側でtasteIDを取得すればよい
         val showDetailAction = HomeRecipeFragmentDirections.showRecipeDetailAction().apply {
             recipeId = recipe.recipeId
             beanId   = recipe.beanId

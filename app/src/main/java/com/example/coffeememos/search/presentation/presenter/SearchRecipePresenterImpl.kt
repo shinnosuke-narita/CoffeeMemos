@@ -7,6 +7,10 @@ import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import javax.inject.Inject
 
 class SearchRecipePresenterImpl @Inject constructor() : SearchRecipePresenter {
+    override fun presentAllRecipes(recipes: List<SearchRecipeModel>): List<SearchRecipeModel> {
+        return recipes
+    }
+
     override fun presentFreeWordSearchRes(
         recipes: List<SearchRecipeModel>
     ): List<SearchRecipeModel> {
