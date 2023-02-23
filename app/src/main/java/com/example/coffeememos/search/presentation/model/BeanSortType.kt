@@ -1,4 +1,4 @@
-package com.example.coffeememos.search
+package com.example.coffeememos.search.presentation.model
 
 enum class BeanSortType {
     NEW    { override fun getSortName(): String = "新しい順" },
@@ -31,7 +31,7 @@ enum class BeanSortType {
                 }
             }
 
-            return BeanSortType.NEW
+            return NEW
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.example.coffeememos.search.presentation.controller
 
-import com.example.coffeememos.search.SearchKeyWord
-import com.example.coffeememos.search.SearchType
+import com.example.coffeememos.search.presentation.model.SearchKeyWord
+import com.example.coffeememos.search.presentation.model.SearchType
 import com.example.coffeememos.search.domain.model.FilterRecipeInputData
 import com.example.coffeememos.search.domain.model.FilterRecipeOutputData
 import com.example.coffeememos.search.domain.model.RecipeSortType
