@@ -2,7 +2,6 @@ package com.example.coffeememos.utilities
 
 import android.app.Activity
 import android.graphics.Rect
-import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.ScrollView
@@ -18,37 +17,20 @@ class ViewUtil {
             view.setBackgroundResource(R.drawable.recipe_tag_background)
         }
 
-
-        // お気に入りアイコン用タグ名
-        const val IS_FAVORITE_TAG_NAME = "isFavoriteIcon"
-        const val NOT_FAVORITE_TAG_NAME = "notFavoriteIcon"
-        fun setTagAndFavoriteIcon(favoriteIcon: ImageView, isFavorite: Boolean) {
-            if (isFavorite) {
-                favoriteIcon.tag = IS_FAVORITE_TAG_NAME
-                favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
-            }
-            else {
-                favoriteIcon.tag = NOT_FAVORITE_TAG_NAME
-                favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-            }
-        }
-
         fun setFavoriteIcon(imageView: ImageView, isFavorite: Boolean) {
             if (isFavorite) imageView.setImageResource(R.drawable.ic_baseline_favorite_24)
             else imageView.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
 
-
-
         // window上viewの絶対Y座標
-        fun getViewYCoordinateInWindow(view: View): Int {
+        private fun getViewYCoordinateInWindow(view: View): Int {
             val location = IntArray(2)
             view.getLocationInWindow(location)
             return location[1]
         }
 
         // statusBar 高さ取得
-        fun getStatusBarHeight(activity: Activity): Int {
+        private fun getStatusBarHeight(activity: Activity): Int {
             val rect = Rect()
             activity.window.decorView.getWindowVisibleDisplayFrame(rect)
             return rect.top
@@ -62,7 +44,7 @@ class ViewUtil {
         }
 
         fun setScrollable(scrollView: ScrollView, flag: Boolean) {
-            scrollView.setOnTouchListener { view, event ->
+            scrollView.setOnTouchListener { _, _ ->
                 return@setOnTouchListener flag
             }
         }

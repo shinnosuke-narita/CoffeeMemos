@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.R
 import com.example.coffeememos.SimpleRecipe
-import com.example.coffeememos.utilities.ViewUtil.Companion.setTagAndFavoriteIcon
+import com.example.coffeememos.utilities.ViewUtil.Companion.setFavoriteIcon
 
 class RecipeAdapter(context: Context, data: List<SimpleRecipe>) : BaseAdapter<SimpleRecipe, RecipeViewHolder>(context, data) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
@@ -26,11 +26,11 @@ class RecipeAdapter(context: Context, data: List<SimpleRecipe>) : BaseAdapter<Si
         holder.rating.text       = context.getString(R.string.rate_decimal, data[position].rating)
 
         // お気に入りアイコンのセット
-        setTagAndFavoriteIcon(holder.favorite, data[position].isFavorite)
+        setFavoriteIcon(holder.favorite, data[position].isFavorite)
 
         // お気に入りアイコン コールバックセット
         holder.favorite.setOnClickListener { clickedFavoriteIcon ->
-            mFavoriteListener.onClick(clickedFavoriteIcon, data[position].recipeId)
+            mFavoriteListener.onFavoriteClick(clickedFavoriteIcon, data[position])
         }
 
         // アイテムタップ時のコールバックセット

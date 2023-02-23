@@ -72,18 +72,22 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
     }
 
     // お気に入り更新
-    fun updateFavoriteIcon(clickedFavoriteIcon: View, recipeId: Long) {
+    fun updateFavoriteIcon(clickedFavoriteIcon: View, recipe: SearchRecipeModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {
+            if (recipe.isFavorite) {
                 // db更新
-                recipeDao.updateFavoriteByRecipeId(recipeId, false)
+                recipeDao.updateFavoriteByRecipeId(recipe.recipeId, false)
                 // view 更新
-                if (clickedFavoriteIcon is ImageView) ViewUtil.setTagAndFavoriteIcon(clickedFavoriteIcon, false)
+                if (clickedFavoriteIcon is ImageView) {
+                    ViewUtil.setFavoriteIcon(clickedFavoriteIcon, false)
+                }
             } else {
                 // db更新
-                recipeDao.updateFavoriteByRecipeId(recipeId, true)
+                recipeDao.updateFavoriteByRecipeId(recipe.recipeId, true)
                 // view 更新
-                if (clickedFavoriteIcon is ImageView) ViewUtil.setTagAndFavoriteIcon(clickedFavoriteIcon, true)
+                if (clickedFavoriteIcon is ImageView) {
+                    ViewUtil.setFavoriteIcon(clickedFavoriteIcon, true)
+                }
             }
         }
     }

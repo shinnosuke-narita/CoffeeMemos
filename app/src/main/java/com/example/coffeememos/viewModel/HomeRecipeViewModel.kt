@@ -78,14 +78,14 @@ class HomeRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
         return result
     }
 
-    fun updateFavoriteIcon(clickedFavoriteIcon: View, recipeId: Long) {
+    fun updateFavoriteIcon(recipe: SimpleRecipe) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {
+            if (recipe.isFavorite) {
                 // isFavorite 更新
-                recipeDao.updateFavoriteByRecipeId(recipeId, false)
+                recipeDao.updateFavoriteByRecipeId(recipe.recipeId, false)
             } else {
                 // isFavorite 更新
-                recipeDao.updateFavoriteByRecipeId(recipeId, true)
+                recipeDao.updateFavoriteByRecipeId(recipe.recipeId, true)
             }
         }
     }

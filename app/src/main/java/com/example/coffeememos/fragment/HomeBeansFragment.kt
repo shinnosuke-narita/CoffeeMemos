@@ -24,7 +24,10 @@ import com.example.coffeememos.viewModel.HomeBeanViewModel
 import com.google.android.material.snackbar.Snackbar
 
 
-class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> , OnFavoriteIconClickListener {
+class HomeBeansFragment : Fragment(),
+    OnItemClickListener<SimpleBeanInfo>,
+    OnFavoriteIconClickListener<SimpleBeanInfo> {
+
     private var mContext: Context? = null
 
     // viewBinding
@@ -169,18 +172,18 @@ class HomeBeansFragment : Fragment(), OnItemClickListener<SimpleBeanInfo> , OnFa
         mContext = null
     }
 
+    // お気に入りアイコン クリックリスナ―
+    override fun onFavoriteClick(view: View, data: SimpleBeanInfo) {
+        viewModel.updateFavoriteIcon(data)
+    }
+
     // BeanItem クリックリスナー
-    override fun onClick(view: View, bean: SimpleBeanInfo) {
+    override fun onClick(view: View, selectedItem: SimpleBeanInfo) {
         val showDetailAction = HomeBeansFragmentDirections.showBeanDetailAction().apply {
-            beanId = bean.id
+            beanId = selectedItem.id
         }
 
         Navigation.findNavController(view).navigate(showDetailAction)
-    }
-
-    // お気に入りアイコン クリックリスナ―
-    override fun onClick(view: View, id: Long) {
-        viewModel.updateFavoriteIcon(view, id)
     }
 
     private fun setUpRecyclerView(context: Context, rv: RecyclerView) {

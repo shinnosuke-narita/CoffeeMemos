@@ -22,7 +22,9 @@ import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.viewModel.HomeRecipeViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavoriteIconClickListener {
+class HomeRecipeFragment : Fragment(),
+    OnItemClickListener<SimpleRecipe>,
+    OnFavoriteIconClickListener<SimpleRecipe> {
     private var mContext: Context? = null
 
     // viewBinding
@@ -155,20 +157,20 @@ class HomeRecipeFragment : Fragment(), OnItemClickListener<SimpleRecipe>, OnFavo
     }
 
     // RecipeItem クリックリスナ―
-    override fun onClick(view: View, recipe: SimpleRecipe) {
+    override fun onClick(view: View, selectedItem: SimpleRecipe) {
         // todo ここでtasteIdを渡す必要はない recipeIdだけ渡して、RecipeDetail側でtasteIDを取得すればよい
         val showDetailAction = HomeRecipeFragmentDirections.showRecipeDetailAction().apply {
-            recipeId = recipe.recipeId
-            beanId   = recipe.beanId
-            tasteId  = recipe.tasteId
+            recipeId = selectedItem.recipeId
+            beanId   = selectedItem.beanId
+            tasteId  = selectedItem.tasteId
         }
 
         Navigation.findNavController(view).navigate(showDetailAction)
     }
 
     // お気に入りアイコン クリックリスナ―
-    override fun onClick(view: View, id: Long) {
-        viewModel.updateFavoriteIcon(view, id)
+    override fun onFavoriteClick(view: View, data: SimpleRecipe) {
+        viewModel.updateFavoriteIcon(data)
     }
 
 

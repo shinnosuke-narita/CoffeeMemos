@@ -2,6 +2,6 @@ package com.example.coffeememos.listener
 
 import android.view.View
 
-interface OnFavoriteIconClickListener {
-    fun onClick(view: View, id: Long)
+interface OnFavoriteIconClickListener <T> {
+    fun onFavoriteClick(view: View, data: T)
 }

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.R
 import com.example.coffeememos.SimpleBeanInfo
 import com.example.coffeememos.utilities.ViewUtil
-import com.example.coffeememos.utilities.ViewUtil.Companion.setTagAndFavoriteIcon
+import com.example.coffeememos.utilities.ViewUtil.Companion.setFavoriteIcon
 
 class SimpleBeanInfoAdapter(context: Context, data: List<SimpleBeanInfo>) : BaseAdapter<SimpleBeanInfo, SimpleBeanInfoViewHolder>(context, data) {
 
@@ -30,11 +30,11 @@ class SimpleBeanInfoAdapter(context: Context, data: List<SimpleBeanInfo>) : Base
         ViewUtil.setCardTag(holder.district, data[position].district)
 
         // お気に入りアイコンのセット
-        setTagAndFavoriteIcon(holder.favorite, data[position].isFavorite)
+        setFavoriteIcon(holder.favorite, data[position].isFavorite)
 
         // お気に入りアイコン コールバックセット
         holder.favorite.setOnClickListener { view ->
-            mFavoriteListener.onClick(view, data[position].id)
+            mFavoriteListener.onFavoriteClick(view, data[position])
         }
 
         // アイテムタップ時のコールバックセット
@@ -43,7 +43,6 @@ class SimpleBeanInfoAdapter(context: Context, data: List<SimpleBeanInfo>) : Base
         }
     }
 }
-
 
 
 class SimpleBeanInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

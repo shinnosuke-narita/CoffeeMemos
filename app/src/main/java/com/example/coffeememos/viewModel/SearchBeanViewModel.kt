@@ -7,6 +7,7 @@ import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.search.*
 import com.example.coffeememos.utilities.ViewUtil
+import com.github.mikephil.charting.utils.Utils.init
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -89,18 +90,22 @@ class SearchBeanViewModel(val beanDao: BeanDao) : ViewModel() {
     }
 
     // お気に入りアイコン 更新
-    fun updateFavoriteIcon(clickedFavoriteIcon: View, beanId: Long) {
+    fun updateFavoriteIcon(clickedFavoriteIcon: View, bean: CustomBean) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {
+            if (bean.isFavorite) {
                 // db更新
-                beanDao.updateFavoriteByBeanId(beanId, false)
+                beanDao.updateFavoriteByBeanId(bean.id, false)
                 // view 更新
-                if (clickedFavoriteIcon is ImageView) ViewUtil.setTagAndFavoriteIcon(clickedFavoriteIcon, false)
+                if (clickedFavoriteIcon is ImageView) {
+                    ViewUtil.setFavoriteIcon(clickedFavoriteIcon, false)
+                }
             } else {
                 // db更新
-                beanDao.updateFavoriteByBeanId(beanId, true)
+                beanDao.updateFavoriteByBeanId(bean.id, true)
                 // view 更新
-                if (clickedFavoriteIcon is ImageView) ViewUtil.setTagAndFavoriteIcon(clickedFavoriteIcon, true)
+                if (clickedFavoriteIcon is ImageView) {
+                    ViewUtil.setFavoriteIcon(clickedFavoriteIcon, true)
+                }
             }
         }
     }

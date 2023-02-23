@@ -77,7 +77,7 @@ class SearchBeanFragment : Fragment() {
             else binding.wholeShadow.visibility = View.GONE
         }
 
-        binding.sortBtn.setOnClickListener { view ->
+        binding.sortBtn.setOnClickListener {
             viewModel.changeBottomSheetState()
 
             val originData = BeanSortType.getNameList()
@@ -100,7 +100,7 @@ class SearchBeanFragment : Fragment() {
             viewModel.setCurrentSortType(selectedSortType)
         }
 
-        binding.refineBtn.setOnClickListener { view ->
+        binding.refineBtn.setOnClickListener {
             viewModel.changeBottomSheetState()
 
             childFragmentManager.beginTransaction()
@@ -110,7 +110,7 @@ class SearchBeanFragment : Fragment() {
                 .commit()
         }
 
-        childFragmentManager.setFragmentResultListener("filterResult", viewLifecycleOwner) { _, bundle ->
+        childFragmentManager.setFragmentResultListener("filterResult", viewLifecycleOwner) { _, _ ->
             viewModel.changeBottomSheetState()
 
             viewModel.filterSearchResult()
@@ -129,18 +129,20 @@ class SearchBeanFragment : Fragment() {
 
     private fun setUpAdapter(list: List<CustomBean>): BeanAdapter {
         return BeanAdapter(requireContext(), list).apply {
-            setFavoriteListener(object : OnFavoriteIconClickListener {
-                override fun onClick(view: View, id: Long) {
-                    viewModel.updateFavoriteIcon(view, id)
+            setFavoriteListener(object : OnFavoriteIconClickListener<CustomBean> {
+                override fun onFavoriteClick(view: View, data: CustomBean) {
+                    viewModel.updateFavoriteIcon(view, data)
+
                 }
             })
             setOnItemClickListener(object : OnItemClickListener<CustomBean> {
-                override fun onClick(view: View, bean: CustomBean) {
+                override fun onClick(view: View, selectedItem: CustomBean) {
                     if (viewModel.isOpened.value!!) return
 
-                    val showDetailAction = SearchFragmentDirections.showBeanDetailAction().apply {
-                        beanId = bean.id
-                    }
+                    val showDetailAction =
+                        SearchFragmentDirections.showBeanDetailAction().apply {
+                            beanId = selectedItem.id
+                        }
 
                     Navigation.findNavController(view).navigate(showDetailAction)
                 }

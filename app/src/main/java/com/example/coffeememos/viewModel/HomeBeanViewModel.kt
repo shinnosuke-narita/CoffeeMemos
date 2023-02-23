@@ -1,12 +1,10 @@
 package com.example.coffeememos.viewModel
 
-import android.view.View
 import androidx.lifecycle.*
 import com.example.coffeememos.SimpleBeanInfo
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.Bean
 import com.example.coffeememos.utilities.DateUtil
-import com.example.coffeememos.utilities.ViewUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -63,14 +61,14 @@ class HomeBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
         return@map false
     }
 
-    fun updateFavoriteIcon(clickedFavoriteIcon: View, beanId: Long) {
+    fun updateFavoriteIcon(beanInfo: SimpleBeanInfo) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (clickedFavoriteIcon.tag.equals(ViewUtil.IS_FAVORITE_TAG_NAME)) {
+            if (beanInfo.isFavorite) {
                 // isFavorite 更新
-                beanDao.updateFavoriteByBeanId(beanId, false)
+                beanDao.updateFavoriteByBeanId(beanInfo.id, false)
             } else {
                 // isFavorite 更新
-                beanDao.updateFavoriteByBeanId(beanId, true)
+                beanDao.updateFavoriteByBeanId(beanInfo.id, true)
             }
         }
     }

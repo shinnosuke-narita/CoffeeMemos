@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.R
 import com.example.coffeememos.adapter.RecipeDetailAdapter
@@ -142,9 +141,9 @@ class SearchRecipeFragment : Fragment() {
 
     private fun setUpAdapter(list: List<SearchRecipeModel>): RecipeDetailAdapter {
         return RecipeDetailAdapter(requireContext(), list).apply {
-            setFavoriteListener(object : OnFavoriteIconClickListener {
-                override fun onClick(view: View, id: Long) {
-                    viewModel.updateFavoriteIcon(view, id)
+            setFavoriteListener(object : OnFavoriteIconClickListener<SearchRecipeModel> {
+                override fun onFavoriteClick(view: View, data: SearchRecipeModel) {
+                    viewModel.updateFavoriteIcon(view, data)
                 }
             })
             setOnItemClickListener(object : OnItemClickListener<SearchRecipeModel> {

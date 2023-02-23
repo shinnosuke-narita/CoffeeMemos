@@ -12,7 +12,7 @@ import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.R
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
-import com.example.coffeememos.utilities.ViewUtil.Companion.setTagAndFavoriteIcon
+import com.example.coffeememos.utilities.ViewUtil.Companion.setFavoriteIcon
 
 class RecipeDetailAdapter(context: Context, data: List<SearchRecipeModel>) : BaseAdapter<SearchRecipeModel, RecipeDetailViewHolder>(context, data) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeDetailViewHolder {
@@ -37,11 +37,11 @@ class RecipeDetailAdapter(context: Context, data: List<SearchRecipeModel>) : Bas
         ViewUtil.setCardTag(holder.grindSize,  Constants.grindSizeList[recipe.grindSize])
 
         // お気に入りアイコンのセット
-        setTagAndFavoriteIcon(holder.favorite, recipe.isFavorite)
+        setFavoriteIcon(holder.favorite, recipe.isFavorite)
 
         // お気に入りアイコン コールバックセット
         holder.favorite.setOnClickListener { clickedFavoriteIcon ->
-            mFavoriteListener.onClick(clickedFavoriteIcon, recipe.recipeId)
+            mFavoriteListener.onFavoriteClick(clickedFavoriteIcon, recipe)
         }
 
         // アイテムタップ時のコールバックセット
