@@ -7,17 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.R
-import com.example.coffeememos.adapter.RecipeDetailAdapter
 import com.example.coffeememos.databinding.FragmentSearchRecipeBinding
 import com.example.coffeememos.databinding.SearchContentsBinding
-import com.example.coffeememos.listener.OnFavoriteIconClickListener
-import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.search.domain.model.RecipeSortType
+import com.example.coffeememos.search.presentation.adapter.RecipeDetailAdapter
+import com.example.coffeememos.search.presentation.adapter.`interface`.OnFavoriteClickListener
+import com.example.coffeememos.search.presentation.adapter.`interface`.OnItemClickListener
 import com.example.coffeememos.viewModel.MainSearchViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -141,22 +141,33 @@ class SearchRecipeFragment : Fragment() {
 
     private fun setUpAdapter(list: List<SearchRecipeModel>): RecipeDetailAdapter {
         return RecipeDetailAdapter(requireContext(), list).apply {
-            setFavoriteListener(object : OnFavoriteIconClickListener<SearchRecipeModel> {
-                override fun onFavoriteClick(view: View, data: SearchRecipeModel) {
-                    viewModel.updateFavoriteIcon(view, data)
+            setFavoriteListener(object : OnFavoriteClickListener {
+                override fun onFavoriteClick(
+                    view: View,
+                    position: Int,
+                    recipe: SearchRecipeModel) {
+                    // 連打防止
+                    viewModel.disableFavoriteIcon(view)
+
+                    // db更新
+                    viewModel.updateFavoriteIcon(recipe.recipeId, recipe.isFavorite)
+
+                    // view 更新
+                    recipe.isFavorite = !(recipe.isFavorite)
+                    binding.searchResultRV.adapter?.notifyItemChanged(position)
                 }
             })
-            setOnItemClickListener(object : OnItemClickListener<SearchRecipeModel> {
-                override fun onClick(view: View, selectedItem: SearchRecipeModel) {
+            setOnItemClickListener(object : OnItemClickListener {
+                override fun onItemClick(recipe: SearchRecipeModel) {
                     if (viewModel.isOpened.value!!) return
 
                     val showDetailAction = SearchFragmentDirections.showRecipeDetailAction().apply {
-                        recipeId = selectedItem.recipeId
-                        beanId   = selectedItem.beanId
-                        tasteId  = selectedItem.tasteId
+                        recipeId = recipe.recipeId
+                        beanId   = recipe.beanId
+                        tasteId  = recipe.tasteId
                     }
 
-                    Navigation.findNavController(view).navigate(showDetailAction)
+                    findNavController().navigate(showDetailAction)
                 }
             })
         }

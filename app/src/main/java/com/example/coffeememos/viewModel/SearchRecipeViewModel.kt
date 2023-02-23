@@ -11,7 +11,9 @@ import com.example.coffeememos.search.presentation.controller.SearchRecipeContro
 import com.example.coffeememos.utilities.ViewUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -72,22 +74,26 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
     }
 
     // お気に入り更新
-    fun updateFavoriteIcon(clickedFavoriteIcon: View, recipe: SearchRecipeModel) {
+    fun updateFavoriteIcon(recipeId: Long, isFavorite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (recipe.isFavorite) {
+            if (isFavorite) {
                 // db更新
-                recipeDao.updateFavoriteByRecipeId(recipe.recipeId, false)
-                // view 更新
-                if (clickedFavoriteIcon is ImageView) {
-                    ViewUtil.setFavoriteIcon(clickedFavoriteIcon, false)
-                }
+                searchRecipeController.updateFavorite(recipeId, false)
             } else {
                 // db更新
-                recipeDao.updateFavoriteByRecipeId(recipe.recipeId, true)
-                // view 更新
-                if (clickedFavoriteIcon is ImageView) {
-                    ViewUtil.setFavoriteIcon(clickedFavoriteIcon, true)
-                }
+                searchRecipeController.updateFavorite(recipeId, true)
+            }
+        }
+    }
+
+    // お気に入りアイコン連打防止
+    fun disableFavoriteIcon(favoriteIcon: View) {
+        favoriteIcon.isEnabled = false
+
+        viewModelScope.launch {
+            delay(1000)
+            withContext(Dispatchers.Main) {
+                favoriteIcon.isEnabled = true
             }
         }
     }

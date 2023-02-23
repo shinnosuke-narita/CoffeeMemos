@@ -25,6 +25,8 @@ class SearchRecipeController @Inject constructor() {
     lateinit var getAllRecipeUseCase: GetAllRecipeUseCase
     @Inject
     lateinit var deleteFilterInputDataUseCase: DeleteFilterRecipeInputDataUseCase
+    @Inject
+    lateinit var updateFavoriteUseCase: UpdateFavoriteUseCase
 
     suspend fun getAllRecipe(): List<SearchRecipeModel> {
         return getAllRecipeUseCase.getAllRecipe()
@@ -122,4 +124,9 @@ class SearchRecipeController @Inject constructor() {
     fun deleteRecipeInputData(key: String) {
         deleteFilterInputDataUseCase.handle(key)
     }
+
+    suspend fun updateFavorite(recipeId: Long, isFavorite: Boolean) {
+        updateFavoriteUseCase.handle(recipeId, isFavorite)
+    }
+
 }

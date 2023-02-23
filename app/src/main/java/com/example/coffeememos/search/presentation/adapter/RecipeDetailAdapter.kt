@@ -1,4 +1,4 @@
-package com.example.coffeememos.adapter
+package com.example.coffeememos.search.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,14 +10,35 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.Constants
 import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.R
+import com.example.coffeememos.search.presentation.adapter.`interface`.OnFavoriteClickListener
+import com.example.coffeememos.search.presentation.adapter.`interface`.OnItemClickListener
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
 import com.example.coffeememos.utilities.ViewUtil.Companion.setFavoriteIcon
 
-class RecipeDetailAdapter(context: Context, data: List<SearchRecipeModel>) : BaseAdapter<SearchRecipeModel, RecipeDetailViewHolder>(context, data) {
+class RecipeDetailAdapter(val context: Context, val data: List<SearchRecipeModel>)
+    : RecyclerView.Adapter<RecipeDetailViewHolder>() {
+    private lateinit var mItemClickListener: OnItemClickListener
+    private lateinit var mFavoriteListener: OnFavoriteClickListener
+
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        mItemClickListener = listener
+    }
+
+    fun setFavoriteListener(listener: OnFavoriteClickListener) {
+        mFavoriteListener = listener
+    }
+
+    override fun getItemCount(): Int {
+        return data.size
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeDetailViewHolder {
         return RecipeDetailViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_width_taste, parent, false)
+            LayoutInflater
+                .from(parent.context)
+                .inflate(R.layout.recipe_item_width_taste, parent, false)
         )
     }
 
@@ -40,13 +61,13 @@ class RecipeDetailAdapter(context: Context, data: List<SearchRecipeModel>) : Bas
         setFavoriteIcon(holder.favorite, recipe.isFavorite)
 
         // お気に入りアイコン コールバックセット
-        holder.favorite.setOnClickListener { clickedFavoriteIcon ->
-            mFavoriteListener.onFavoriteClick(clickedFavoriteIcon, recipe)
+        holder.favorite.setOnClickListener {
+            mFavoriteListener.onFavoriteClick(holder.favorite, position, recipe)
         }
 
         // アイテムタップ時のコールバックセット
-        holder.itemView.setOnClickListener { view ->
-            mItemClickListener.onClick(view, recipe)
+        holder.itemView.setOnClickListener {
+            mItemClickListener.onItemClick(recipe)
         }
     }
 }

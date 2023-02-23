@@ -1,7 +1,6 @@
 package com.example.coffeememos.search.data.repository
 
 import com.example.coffeememos.dao.RecipeDao
-import com.example.coffeememos.entity.RecipeWithTaste
 import com.example.coffeememos.search.data.mapper.SearchRecipeModelMapper
 import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.search.domain.repository.SearchRecipeDiskRepository
@@ -22,5 +21,9 @@ class SearchRecipeDiskRepositoryImpl @Inject constructor()
     override suspend fun getAllRecipe(): List<SearchRecipeModel> {
        val recipeWithTasteList = recipeDao.getRecipeWithTaste()
        return mapper.execute(recipeWithTasteList)
+    }
+
+    override suspend fun updateFavorite(recipeId: Long, isFavorite: Boolean) {
+        recipeDao.updateFavoriteByRecipeId(recipeId, isFavorite)
     }
 }
