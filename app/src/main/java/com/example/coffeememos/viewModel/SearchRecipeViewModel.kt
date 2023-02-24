@@ -2,11 +2,11 @@ package com.example.coffeememos.viewModel
 
 import android.view.View
 import androidx.lifecycle.*
-import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.dao.RecipeDao
-import com.example.coffeememos.search.domain.model.RecipeSortType
-import com.example.coffeememos.search.presentation.controller.SearchRecipeController
-import com.example.coffeememos.search.presentation.model.SearchKeyWord
+import com.example.coffeememos.search.recipe.domain.model.RecipeSortType
+import com.example.coffeememos.search.recipe.domain.model.SearchRecipeModel
+import com.example.coffeememos.search.recipe.presentation.controller.SearchRecipeController
+import com.example.coffeememos.search.recipe.presentation.model.SearchKeyWord
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

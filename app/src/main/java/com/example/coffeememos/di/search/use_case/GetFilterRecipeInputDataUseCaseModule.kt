@@ -1,7 +1,7 @@
 package com.example.coffeememos.di.search.use_case
 
-import com.example.coffeememos.search.domain.iterator.GetFilterRecipeInputDataIterator
-import com.example.coffeememos.search.domain.use_case.GetFilterRecipeOutputDataUseCase
+import com.example.coffeememos.search.recipe.domain.iterator.GetFilterRecipeInputDataIterator
+import com.example.coffeememos.search.recipe.domain.use_case.GetFilterRecipeOutputDataUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

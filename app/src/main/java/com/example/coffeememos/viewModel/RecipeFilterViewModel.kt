@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
-import com.example.coffeememos.search.presentation.controller.SearchRecipeController
+import com.example.coffeememos.search.recipe.presentation.controller.SearchRecipeController
 import com.example.coffeememos.state.MenuState
 
 class RecipeFilterViewModel : BaseFilterViewModel() {

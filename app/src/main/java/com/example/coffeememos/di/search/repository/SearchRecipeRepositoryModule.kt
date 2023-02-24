@@ -1,7 +1,7 @@
 package com.example.coffeememos.di.search.repository
 
-import com.example.coffeememos.search.data.repository.SearchRecipeDiskRepositoryImpl
-import com.example.coffeememos.search.domain.repository.SearchRecipeDiskRepository
+import com.example.coffeememos.search.recipe.data.repository.SearchRecipeDiskRepositoryImpl
+import com.example.coffeememos.search.recipe.domain.repository.SearchRecipeDiskRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

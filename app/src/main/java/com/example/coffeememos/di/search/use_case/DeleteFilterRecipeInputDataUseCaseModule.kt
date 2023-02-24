@@ -1,9 +1,7 @@
 package com.example.coffeememos.di.search.use_case
 
-import com.example.coffeememos.search.domain.iterator.DeleteFilterRecipeInputDataIterator
-import com.example.coffeememos.search.domain.iterator.FreeWordSearchIterator
-import com.example.coffeememos.search.domain.use_case.DeleteFilterRecipeInputDataUseCase
-import com.example.coffeememos.search.domain.use_case.FreeWordSearchUseCase
+import com.example.coffeememos.search.recipe.domain.iterator.DeleteFilterRecipeInputDataIterator
+import com.example.coffeememos.search.recipe.domain.use_case.DeleteFilterRecipeInputDataUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

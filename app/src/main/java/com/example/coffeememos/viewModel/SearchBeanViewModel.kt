@@ -6,9 +6,9 @@ import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.search.*
-import com.example.coffeememos.search.presentation.model.BeanSortType
-import com.example.coffeememos.search.presentation.model.SearchKeyWord
-import com.example.coffeememos.search.presentation.model.SearchType
+import com.example.coffeememos.search.recipe.presentation.model.BeanSortType
+import com.example.coffeememos.search.recipe.presentation.model.SearchKeyWord
+import com.example.coffeememos.search.recipe.presentation.model.SearchType
 import com.example.coffeememos.utilities.ViewUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

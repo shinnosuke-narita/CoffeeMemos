@@ -1,7 +1,7 @@
 package com.example.coffeememos.di.search.serializer
 
-import com.example.coffeememos.search.domain.serialization.RecipeSerializer
-import com.example.coffeememos.search.domain.serialization.RecipeSerializerImpl
+import com.example.coffeememos.search.recipe.domain.serialization.RecipeSerializer
+import com.example.coffeememos.search.recipe.domain.serialization.RecipeSerializerImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -1,7 +1,7 @@
 package com.example.coffeememos.di.search.use_case
 
-import com.example.coffeememos.search.domain.iterator.SortRecipeInteractor
-import com.example.coffeememos.search.domain.use_case.SortRecipeUseCase
+import com.example.coffeememos.search.recipe.domain.iterator.SortRecipeInteractor
+import com.example.coffeememos.search.recipe.domain.use_case.SortRecipeUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

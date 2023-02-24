@@ -1,7 +1,7 @@
 package com.example.coffeememos.di.search.presenter
 
-import com.example.coffeememos.search.presentation.presenter.SearchRecipePresenterImpl
-import com.example.coffeememos.search.domain.presenter.SearchRecipePresenter
+import com.example.coffeememos.search.recipe.presentation.presenter.SearchRecipePresenterImpl
+import com.example.coffeememos.search.recipe.domain.presenter.SearchRecipePresenter
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

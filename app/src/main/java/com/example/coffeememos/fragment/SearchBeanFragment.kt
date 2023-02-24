@@ -18,7 +18,7 @@ import com.example.coffeememos.databinding.SearchContentsBinding
 import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.listener.OnItemClickListener
-import com.example.coffeememos.search.presentation.model.BeanSortType
+import com.example.coffeememos.search.recipe.presentation.model.BeanSortType
 import com.example.coffeememos.viewModel.MainSearchViewModel
 import com.example.coffeememos.viewModel.SearchBeanViewModel
 

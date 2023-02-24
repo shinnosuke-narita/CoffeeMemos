@@ -10,14 +10,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.coffeememos.search.domain.model.SearchRecipeModel
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentSearchRecipeBinding
 import com.example.coffeememos.databinding.SearchContentsBinding
-import com.example.coffeememos.search.domain.model.RecipeSortType
-import com.example.coffeememos.search.presentation.adapter.RecipeDetailAdapter
-import com.example.coffeememos.search.presentation.adapter.`interface`.OnFavoriteClickListener
-import com.example.coffeememos.search.presentation.adapter.`interface`.OnItemClickListener
+import com.example.coffeememos.search.recipe.domain.model.RecipeSortType
+import com.example.coffeememos.search.recipe.domain.model.SearchRecipeModel
+import com.example.coffeememos.search.recipe.presentation.adapter.RecipeDetailAdapter
+import com.example.coffeememos.search.recipe.presentation.adapter.`interface`.OnFavoriteClickListener
+import com.example.coffeememos.search.recipe.presentation.adapter.`interface`.OnItemClickListener
 import com.example.coffeememos.viewModel.MainSearchViewModel
 import com.example.coffeememos.viewModel.SearchRecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -125,6 +125,10 @@ class SearchRecipeFragment : Fragment() {
         binding.clearBtn.setOnClickListener {
             viewModel.resetResult()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun onDestroyView() {
