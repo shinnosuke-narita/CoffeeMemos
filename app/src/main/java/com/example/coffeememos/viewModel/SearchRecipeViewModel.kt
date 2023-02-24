@@ -34,6 +34,14 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
     // 現在の検索キーワード
     private var _currentSearchWord: String = ""
 
+    // 検索結果がアップデートすべきか
+    private var _shouldUpdate: Boolean = false
+
+    fun setShouldUpdate(shouldUpdate: Boolean) {
+        _shouldUpdate = shouldUpdate
+    }
+
+
     // ソートされた検索結果
     val sortedSearchResult: MutableLiveData<List<SearchRecipeModel>> = MediatorLiveData<List<SearchRecipeModel>>().apply {
         // 検索結果が更新されたら、ソート
@@ -148,6 +156,18 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
                 searchRecipeController.getAllRecipe()
             )
         }
+    }
+
+    // 検索結果更新
+    fun updateSearchResult() {
+        if (!_shouldUpdate) return
+
+        viewModelScope.launch {
+            _searchResult.postValue(
+                searchRecipeController.getAllRecipe()
+            )
+        }
+        _shouldUpdate = false
     }
 
 

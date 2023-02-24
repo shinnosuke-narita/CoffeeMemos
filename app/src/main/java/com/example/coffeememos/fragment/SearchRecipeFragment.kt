@@ -129,6 +129,7 @@ class SearchRecipeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.updateSearchResult()
     }
 
     override fun onDestroyView() {
@@ -165,12 +166,14 @@ class SearchRecipeFragment : Fragment() {
                 override fun onItemClick(recipe: SearchRecipeModel) {
                     if (viewModel.isOpened.value!!) return
 
+                    // 更新フラグの更新
+                    viewModel.setShouldUpdate(true)
+
                     val showDetailAction = SearchFragmentDirections.showRecipeDetailAction().apply {
                         recipeId = recipe.recipeId
                         beanId   = recipe.beanId
                         tasteId  = recipe.tasteId
                     }
-
                     findNavController().navigate(showDetailAction)
                 }
             })
