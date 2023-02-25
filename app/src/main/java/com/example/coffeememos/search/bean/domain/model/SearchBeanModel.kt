@@ -20,6 +20,6 @@ data class SearchBeanModel (
     @ColumnInfo(name = "rating")
     val rating: Int,
     @ColumnInfo(name = "isFavorite")
-    val isFavorite: Boolean,
+    var isFavorite: Boolean,
     @ColumnInfo(name = "createdAt")
     val createdAt: Long)

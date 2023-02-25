@@ -21,8 +21,4 @@ abstract class BaseAdapter<T, U : RecyclerView.ViewHolder>(val context: Context,
     fun setFavoriteListener(listener: OnFavoriteIconClickListener<T>) {
         mFavoriteListener = listener
     }
-
-
-
-
 }

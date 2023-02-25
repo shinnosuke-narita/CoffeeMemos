@@ -1,16 +1,16 @@
 package com.example.coffeememos.search.bean.presentation.view_model
 
 import android.view.View
-import android.widget.ImageView
 import androidx.lifecycle.*
 import com.example.coffeememos.search.bean.domain.model.BeanSortType
 import com.example.coffeememos.search.bean.domain.model.SearchBeanModel
 import com.example.coffeememos.search.bean.presentation.controller.SearchBeanController
 import com.example.coffeememos.search.recipe.presentation.model.SearchKeyWord
-import com.example.coffeememos.utilities.ViewUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -107,18 +107,23 @@ class SearchBeanViewModel @Inject constructor() : ViewModel() {
     }
 
     // お気に入りアイコン 更新
-    fun updateFavoriteIcon(clickedFavoriteIcon: View, bean: SearchBeanModel) {
+    fun updateFavoriteData(bean: SearchBeanModel) {
         viewModelScope.launch(Dispatchers.IO) {
             if (bean.isFavorite) {
-                // view 更新
-                if (clickedFavoriteIcon is ImageView) {
-                    ViewUtil.setFavoriteIcon(clickedFavoriteIcon, false)
-                }
+                controller.updateFavorite(bean.id, false)
             } else {
-                // view 更新
-                if (clickedFavoriteIcon is ImageView) {
-                    ViewUtil.setFavoriteIcon(clickedFavoriteIcon, true)
-                }
+                controller.updateFavorite(bean.id, true)
+            }
+        }
+    }
+
+    // お気に入りアイコンの連打防止
+    fun disableFavoriteIcon(favoriteIcon: View) {
+        favoriteIcon.isEnabled = false
+        viewModelScope.launch {
+            delay(1000L)
+            withContext(Dispatchers.Main) {
+                favoriteIcon.isEnabled = true
             }
         }
     }

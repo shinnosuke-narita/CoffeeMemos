@@ -7,19 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.R
-import com.example.coffeememos.adapter.BeanAdapter
 import com.example.coffeememos.databinding.FragmentSearchBeanBinding
 import com.example.coffeememos.databinding.SearchContentsBinding
 import com.example.coffeememos.search.common.presentation.fragment.SortFragment
-import com.example.coffeememos.listener.OnFavoriteIconClickListener
-import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.search.bean.domain.model.BeanSortType
 import com.example.coffeememos.search.bean.domain.model.SearchBeanModel
+import com.example.coffeememos.search.bean.presentation.adapter.BeanAdapter
+import com.example.coffeememos.search.bean.presentation.adapter.listener.OnFavoriteClickListener
+import com.example.coffeememos.search.bean.presentation.adapter.listener.OnItemClickListener
 import com.example.coffeememos.search.common.presentation.view_model.MainSearchViewModel
 import com.example.coffeememos.search.bean.presentation.view_model.SearchBeanViewModel
 import com.example.coffeememos.search.common.presentation.fragment.SearchFragmentDirections
@@ -134,22 +133,30 @@ class SearchBeanFragment : Fragment() {
 
     private fun setUpAdapter(list: List<SearchBeanModel>): BeanAdapter {
         return BeanAdapter(requireContext(), list).apply {
-            setFavoriteListener(object : OnFavoriteIconClickListener<SearchBeanModel> {
-                override fun onFavoriteClick(view: View, data: SearchBeanModel) {
-                    viewModel.updateFavoriteIcon(view, data)
-
+            setFavoriteListener(object : OnFavoriteClickListener {
+                override fun onFavoriteClick(
+                    view: View,
+                    position: Int,
+                    bean: SearchBeanModel) {
+                    // 連打防止
+                    viewModel.disableFavoriteIcon(view)
+                    // view更新
+                    bean.isFavorite = !(bean.isFavorite)
+                    binding.searchResultRV.adapter?.notifyItemChanged(position)
+                    // db 更新
+                    viewModel.updateFavoriteData(bean)
                 }
             })
-            setOnItemClickListener(object : OnItemClickListener<SearchBeanModel> {
-                override fun onClick(view: View, selectedItem: SearchBeanModel) {
+            setOnItemClickListener(object : OnItemClickListener {
+                override fun onItemClick(bean: SearchBeanModel) {
                     if (viewModel.isOpened.value!!) return
 
                     val showDetailAction =
                         SearchFragmentDirections.showBeanDetailAction().apply {
-                            beanId = selectedItem.id
+                            beanId = bean.id
                         }
 
-                    Navigation.findNavController(view).navigate(showDetailAction)
+                    findNavController().navigate(showDetailAction)
                 }
             })
         }

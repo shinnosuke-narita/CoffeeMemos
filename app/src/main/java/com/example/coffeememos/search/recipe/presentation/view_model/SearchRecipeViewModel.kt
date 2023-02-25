@@ -33,7 +33,6 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
 
     // 現在の検索キーワード
     private var _currentSearchWord: String = ""
-
     // 検索結果がアップデートすべきか
     private var _shouldUpdate: Boolean = false
 
@@ -138,6 +137,7 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
     // 検索結果、条件の削除
     fun resetResult() {
         searchRecipeController.deleteRecipeInputData("filterRecipeInputData")
+        _currentSearchWord = ""
         _currentSortType.value = RecipeSortType.NEW
         initSearchResult()
     }

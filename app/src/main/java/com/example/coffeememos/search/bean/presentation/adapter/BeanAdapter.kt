@@ -1,4 +1,4 @@
-package com.example.coffeememos.adapter
+package com.example.coffeememos.search.bean.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,11 +9,32 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
+import com.example.coffeememos.adapter.BeanViewHolder
+import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.search.bean.domain.model.SearchBeanModel
+import com.example.coffeememos.search.bean.presentation.adapter.listener.OnFavoriteClickListener
+import com.example.coffeememos.search.bean.presentation.adapter.listener.OnItemClickListener
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
 
-class BeanAdapter(context: Context, data: List<SearchBeanModel>) : BaseAdapter<SearchBeanModel, BeanViewHolder>(context, data) {
+class BeanAdapter(
+    private val context: Context,
+    private val data: List<SearchBeanModel>
+    ) : RecyclerView.Adapter<BeanViewHolder>() {
+    private lateinit var mItemClickListener: OnItemClickListener
+    private lateinit var mFavoriteListener: OnFavoriteClickListener
+
+    override fun getItemCount(): Int {
+        return data.size
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        mItemClickListener = listener
+    }
+
+    fun setFavoriteListener(listener: OnFavoriteClickListener) {
+        mFavoriteListener = listener
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeanViewHolder {
         return BeanViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.bean_item, parent, false)
@@ -32,13 +53,14 @@ class BeanAdapter(context: Context, data: List<SearchBeanModel>) : BaseAdapter<S
         ViewUtil.setFavoriteIcon(holder.favoriteIcon, data[position].isFavorite)
 
         // リストアイテムクリック時のコールバック
-        holder.itemView.setOnClickListener { v ->
-            mItemClickListener.onClick(v, data[position])
+        holder.itemView.setOnClickListener {
+            mItemClickListener.onItemClick(data[position])
         }
 
         // favoriteアイコンクリック時のコールバック
         holder.favoriteIcon.setOnClickListener { v ->
-            mFavoriteListener.onFavoriteClick(v, data[position])
+            mFavoriteListener.onFavoriteClick(
+                v, position, data[position])
         }
     }
 }
