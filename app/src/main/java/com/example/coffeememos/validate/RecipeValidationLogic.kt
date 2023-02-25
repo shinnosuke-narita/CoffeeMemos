@@ -2,7 +2,7 @@ package com.example.coffeememos.validate
 
 import android.content.Context
 import com.example.coffeememos.R
-import com.example.coffeememos.entity.CustomBean
+import com.example.coffeememos.search.bean.domain.model.SearchBeanModel
 
 class RecipeValidationLogic {
     companion object {
@@ -64,7 +64,7 @@ class RecipeValidationLogic {
             return validateMessage
         }
 
-        fun validateSelectedBean(context: Context, value: CustomBean?): String {
+        fun validateSelectedBean(context: Context, value: SearchBeanModel?): String {
             var validateMessage = ""
             if (value == null) {
                 validateMessage = context.getString(R.string.bean_required_message)

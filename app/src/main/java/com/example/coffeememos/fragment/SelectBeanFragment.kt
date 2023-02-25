@@ -15,9 +15,8 @@ import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.R
 import com.example.coffeememos.adapter.BeanAdapter
 import com.example.coffeememos.databinding.FragmentSelectBeanBinding
-import com.example.coffeememos.entity.Bean
-import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.listener.OnItemClickListener
+import com.example.coffeememos.search.bean.domain.model.SearchBeanModel
 import com.example.coffeememos.viewModel.MainViewModel
 import com.example.coffeememos.viewModel.SelectBeanViewModel
 import com.example.coffeememos.viewModel.SelectBeanViewModelFactory
@@ -73,8 +72,8 @@ class SelectBeanFragment : Fragment() {
 
             mContext?.let { context ->
                 rv.adapter = BeanAdapter(context, list).apply {
-                    setOnItemClickListener (object : OnItemClickListener<CustomBean> {
-                        override fun onClick(view: View, bean: CustomBean) {
+                    setOnItemClickListener (object : OnItemClickListener<SearchBeanModel> {
+                        override fun onClick(view: View, bean: SearchBeanModel) {
                             // MainViewModel にセット
                             mainViewModel.setBean(bean)
 

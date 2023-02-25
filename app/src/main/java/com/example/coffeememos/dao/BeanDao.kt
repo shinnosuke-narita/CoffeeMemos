@@ -2,6 +2,7 @@ package com.example.coffeememos.dao
 
 import androidx.room.*
 import com.example.coffeememos.entity.*
+import com.example.coffeememos.search.bean.domain.model.SearchBeanModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -53,10 +54,10 @@ interface BeanDao {
     fun getBeanAndRecipe(): Flow<Map<Bean, List<Recipe>>>
 
     @Query("SELECT bean_id, country, farm, district, store, process, species, rating, isFavorite, createdAt FROM bean;")
-    fun getCustomBeanByFlow(): Flow<List<CustomBean>>
+    fun getCustomBeanByFlow(): Flow<List<SearchBeanModel>>
 
     @Query("SELECT bean_id, country, farm, district, store, process, species, rating, isFavorite, createdAt FROM bean;")
-    suspend fun getCustomBean(): List<CustomBean>
+    suspend fun getSearchBeanModel(): List<SearchBeanModel>
 
     @Query("SELECT COUNT(*) FROM bean")
     fun getBeanCount(): Int
@@ -68,7 +69,7 @@ interface BeanDao {
             "OR store LIKE '%' || :keyword || '%'" +
             "OR species LIKE '%' || :keyword || '%'"
     )
-    suspend fun getCustomBeanByKeyword(keyword: String): List<CustomBean>
+    suspend fun getSearchBeanModelByKeyword(keyword: String): List<SearchBeanModel>
 
 
 

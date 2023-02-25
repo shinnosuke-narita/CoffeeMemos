@@ -10,6 +10,7 @@ import com.example.coffeememos.entity.CustomBean
 import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
 import com.example.coffeememos.manager.RatingManager
+import com.example.coffeememos.search.bean.domain.model.SearchBeanModel
 import com.example.coffeememos.state.InputType
 import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.state.ProcessState
@@ -182,7 +183,7 @@ class NewRecipeViewModel(
     }
 
     // validationエラーの場合、true
-    fun validateRecipeData(context: Context, selectedBean: CustomBean?): Boolean {
+    fun validateRecipeData(context: Context, selectedBean: SearchBeanModel?): Boolean {
         var validationMessage = ""
 
         // taste
@@ -229,7 +230,7 @@ class NewRecipeViewModel(
 
 
     // 保存処理
-    fun createNewRecipeAndTaste(bean: CustomBean, preInfusionTime: Long, extractionTime: Long) {
+    fun createNewRecipeAndTaste(bean: SearchBeanModel, preInfusionTime: Long, extractionTime: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             // 保存処理開始
             _processState.postValue(ProcessState.PROCESSING)
