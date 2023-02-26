@@ -1,9 +1,8 @@
-package com.example.coffeememos
+package com.example.coffeememos.home.recipe.presentation.model
 
-data class SimpleRecipe(
+data class HomeRecipeInfo(
     val recipeId  : Long,
     val beanId    : Long,
-    val tasteId   : Long,
     val country   : String,
     val createdAt : String,
     val tool      : String,

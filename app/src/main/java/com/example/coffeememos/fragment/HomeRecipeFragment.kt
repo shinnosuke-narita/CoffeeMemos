@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.R
-import com.example.coffeememos.SimpleRecipe
+import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeInfo
 import com.example.coffeememos.listener.OnItemClickListener
 import com.example.coffeememos.adapter.RecipeAdapter
 import com.example.coffeememos.databinding.FragmentHomeRecipeBinding
@@ -23,8 +23,8 @@ import com.example.coffeememos.viewModel.HomeRecipeViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class HomeRecipeFragment : Fragment(),
-    OnItemClickListener<SimpleRecipe>,
-    OnFavoriteIconClickListener<SimpleRecipe> {
+    OnItemClickListener<HomeRecipeInfo>,
+    OnFavoriteIconClickListener<HomeRecipeInfo> {
     private var mContext: Context? = null
 
     // viewBinding
@@ -157,7 +157,7 @@ class HomeRecipeFragment : Fragment(),
     }
 
     // RecipeItem クリックリスナ―
-    override fun onClick(view: View, selectedItem: SimpleRecipe) {
+    override fun onClick(view: View, selectedItem: HomeRecipeInfo) {
         // todo ここでtasteIdを渡す必要はない recipeIdだけ渡して、RecipeDetail側でtasteIDを取得すればよい
         val showDetailAction = HomeRecipeFragmentDirections.showRecipeDetailAction().apply {
             recipeId = selectedItem.recipeId
@@ -169,7 +169,7 @@ class HomeRecipeFragment : Fragment(),
     }
 
     // お気に入りアイコン クリックリスナ―
-    override fun onFavoriteClick(view: View, data: SimpleRecipe) {
+    override fun onFavoriteClick(view: View, data: HomeRecipeInfo) {
         viewModel.updateFavoriteIcon(data)
     }
 

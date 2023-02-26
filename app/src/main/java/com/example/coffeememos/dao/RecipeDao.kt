@@ -37,29 +37,32 @@ interface RecipeDao {
     ///////////////////////
     /////  抽出系  /////////
     ///////////////////////
-    @Query("SELECT * FROM recipe")
+    @Query("SELECT * FROM recipe;")
     suspend fun getAll(): List<Recipe>
 
     @Query("SELECT recipe_id FROM recipe;")
     suspend fun getIds(): List<Long>
 
-    @Query("SELECT recipe_id FROM recipe ORDER BY recipe_id DESC LIMIT 1")
+    @Query("SELECT recipe_id FROM recipe ORDER BY recipe_id DESC LIMIT 1;")
     suspend fun getNewestRecipeId(): Long
 
-    @Query("SELECT * FROM recipe WHERE recipe_id = :id")
+    @Query("SELECT * FROM recipe WHERE recipe_id = :id;")
     suspend fun getRecipeById(id: Long): Recipe
 
+    @Query("SELECT COUNT(*) FROM recipe;")
+    fun getTotalCount(): Int
+
     @Transaction
-    @Query("SELECT * FROM recipe")
+    @Query("SELECT * FROM recipe;")
     fun getRecipeWithTasteByFlow(): Flow<List<RecipeWithTaste>>
 
     @Transaction
-    @Query("SELECT * FROM recipe")
+    @Query("SELECT * FROM recipe;")
     suspend fun getRecipeWithTaste(): List<RecipeWithTaste>
 
     @Transaction
     @Query("SELECT * FROM recipe WHERE country LIKE '%' || :keyword || '%'" +
-            "OR tool LIKE '%' || :keyword || '%'"
+            "OR tool LIKE '%' || :keyword || '%';"
     )
     suspend fun getRecipeWithTasteByKeyword(keyword: String): List<RecipeWithTaste>
 

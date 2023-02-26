@@ -1,13 +1,11 @@
 package com.example.coffeememos.viewModel
 
-import android.view.View
 import androidx.lifecycle.*
 import com.example.coffeememos.Constants
-import com.example.coffeememos.SimpleRecipe
+import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeInfo
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.entity.RecipeWithTaste
 import com.example.coffeememos.utilities.DateUtil
-import com.example.coffeememos.utilities.ViewUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -17,27 +15,31 @@ class HomeRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
     private val recipeWithTasteList: LiveData<List<RecipeWithTaste>> = recipeDao.getRecipeWithTasteByFlow().asLiveData()
 
     // beanWithRecipeListとtasteListを監視
-    val allSimpleRecipeList = recipeWithTasteList.map { recipeWithTastelist ->
-        makeSimpleRecipe(recipeWithTastelist)
+    val allSimpleRecipeList = recipeWithTasteList.map { recipeWithTasteList ->
+        makeSimpleRecipe(recipeWithTasteList)
     }
 
+    // 今日のレシピ
     val todayRecipeList = Transformations.map(allSimpleRecipeList) { allRecipe ->
         return@map allRecipe
-            .filter { recipe: SimpleRecipe -> recipe.createdAt.contains(DateUtil.today) }
+            .filter { recipe: HomeRecipeInfo -> recipe.createdAt.contains(DateUtil.today) }
             .take(maxDisplayItemAmount)
     }
 
-    val newRecipeList: LiveData<List<SimpleRecipe>> = Transformations.map(allSimpleRecipeList) { allRecipe ->
+    // 新しい順レシピ
+    val newRecipeList: LiveData<List<HomeRecipeInfo>> = Transformations.map(allSimpleRecipeList) { allRecipe ->
         return@map allRecipe.take(maxDisplayItemAmount)
     }
 
-    val favoriteRecipeList: LiveData<List<SimpleRecipe>> = Transformations.map(allSimpleRecipeList) { allRecipe ->
+    // お気に入りレシピ
+    val favoriteRecipeList: LiveData<List<HomeRecipeInfo>> = Transformations.map(allSimpleRecipeList) { allRecipe ->
         return@map allRecipe
-            .filter { recipe: SimpleRecipe -> recipe.isFavorite }
+            .filter { recipe: HomeRecipeInfo -> recipe.isFavorite }
             .take(maxDisplayItemAmount)
     }
 
-    val highRatingRecipeList: LiveData<List<SimpleRecipe>> = Transformations.map(allSimpleRecipeList) { allRecipe ->
+    // 高評価順レシピ
+    val highRatingRecipeList: LiveData<List<HomeRecipeInfo>> = Transformations.map(allSimpleRecipeList) { allRecipe ->
         return@map allRecipe
             .sortedByDescending { it.rating }
             .take(maxDisplayItemAmount)
@@ -48,18 +50,17 @@ class HomeRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
         return@map false
     }
 
-
     // 簡易レシピリスト作成メソッド
-    private fun makeSimpleRecipe(recipeWithTasteList: List<RecipeWithTaste>): List<SimpleRecipe> {
-        if (recipeWithTasteList.isNullOrEmpty()) return listOf()
+    private fun makeSimpleRecipe(recipeWithTasteList: List<RecipeWithTaste>): List<HomeRecipeInfo> {
+        if (recipeWithTasteList.isEmpty()) return listOf()
 
-        val result = mutableListOf<SimpleRecipe>()
+        val result = mutableListOf<HomeRecipeInfo>()
         for (recipeWithTaste in recipeWithTasteList) {
             val recipe = recipeWithTaste.recipe
             val taste =  recipeWithTaste.taste
 
             result.add(
-                SimpleRecipe(
+                HomeRecipeInfo(
                     recipe.id,
                     recipe.beanId,
                     taste.id,
@@ -78,7 +79,8 @@ class HomeRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
         return result
     }
 
-    fun updateFavoriteIcon(recipe: SimpleRecipe) {
+    // お気に入り更新
+    fun updateFavoriteIcon(recipe: HomeRecipeInfo) {
         viewModelScope.launch(Dispatchers.IO) {
             if (recipe.isFavorite) {
                 // isFavorite 更新

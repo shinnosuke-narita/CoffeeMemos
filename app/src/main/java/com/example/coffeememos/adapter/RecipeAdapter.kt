@@ -8,10 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.R
-import com.example.coffeememos.SimpleRecipe
+import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeInfo
 import com.example.coffeememos.utilities.ViewUtil.Companion.setFavoriteIcon
 
-class RecipeAdapter(context: Context, data: List<SimpleRecipe>) : BaseAdapter<SimpleRecipe, RecipeViewHolder>(context, data) {
+class RecipeAdapter(context: Context, data: List<HomeRecipeInfo>) : BaseAdapter<HomeRecipeInfo, RecipeViewHolder>(context, data) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         return RecipeViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_horizontal, parent, false)
