@@ -1,106 +1,65 @@
 package com.example.coffeememos.viewModel
 
 import androidx.lifecycle.*
-import com.example.coffeememos.Constants
 import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeInfo
-import com.example.coffeememos.dao.RecipeDao
-import com.example.coffeememos.entity.RecipeWithTaste
-import com.example.coffeememos.utilities.DateUtil
-import kotlinx.coroutines.Dispatchers
+import com.example.coffeememos.home.recipe.presentation.controller.HomeRecipeController
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeRecipeViewModel(private val recipeDao: RecipeDao) : ViewModel() {
-    private val maxDisplayItemAmount = 10
-
-    private val recipeWithTasteList: LiveData<List<RecipeWithTaste>> = recipeDao.getRecipeWithTasteByFlow().asLiveData()
-
-    // beanWithRecipeListとtasteListを監視
-    val allSimpleRecipeList = recipeWithTasteList.map { recipeWithTasteList ->
-        makeSimpleRecipe(recipeWithTasteList)
-    }
-
-    // 今日のレシピ
-    val todayRecipeList = Transformations.map(allSimpleRecipeList) { allRecipe ->
-        return@map allRecipe
-            .filter { recipe: HomeRecipeInfo -> recipe.createdAt.contains(DateUtil.today) }
-            .take(maxDisplayItemAmount)
-    }
+@HiltViewModel
+class HomeRecipeViewModel @Inject constructor()
+    : ViewModel() {
+    @Inject
+    lateinit var controller: HomeRecipeController
 
     // 新しい順レシピ
-    val newRecipeList: LiveData<List<HomeRecipeInfo>> = Transformations.map(allSimpleRecipeList) { allRecipe ->
-        return@map allRecipe.take(maxDisplayItemAmount)
-    }
+    private val _newRecipes: MutableLiveData<List<HomeRecipeInfo>> = MutableLiveData(listOf())
+    val newRecipes: LiveData<List<HomeRecipeInfo>> = _newRecipes
 
     // お気に入りレシピ
-    val favoriteRecipeList: LiveData<List<HomeRecipeInfo>> = Transformations.map(allSimpleRecipeList) { allRecipe ->
-        return@map allRecipe
-            .filter { recipe: HomeRecipeInfo -> recipe.isFavorite }
-            .take(maxDisplayItemAmount)
-    }
+    private val _favoriteRecipes: MutableLiveData<List<HomeRecipeInfo>> = MutableLiveData(listOf())
+    val favoriteRecipes: LiveData<List<HomeRecipeInfo>> = _favoriteRecipes
 
     // 高評価順レシピ
-    val highRatingRecipeList: LiveData<List<HomeRecipeInfo>> = Transformations.map(allSimpleRecipeList) { allRecipe ->
-        return@map allRecipe
-            .sortedByDescending { it.rating }
-            .take(maxDisplayItemAmount)
-    }
+    private val _highRatingRecipes: MutableLiveData<List<HomeRecipeInfo>> = MutableLiveData(listOf())
+    val highRatingRecipes: LiveData<List<HomeRecipeInfo>> = _highRatingRecipes
 
-    val recipeCountIsZero: LiveData<Boolean> = Transformations.map(allSimpleRecipeList) { list ->
-        if (list.isEmpty()) return@map true
-        return@map false
-    }
+    // レシピ総数
+    private val _totalRecipeCount: MutableLiveData<Int> = MutableLiveData(0)
+    val totalRecipeCount: LiveData<Int> = _totalRecipeCount
 
-    // 簡易レシピリスト作成メソッド
-    private fun makeSimpleRecipe(recipeWithTasteList: List<RecipeWithTaste>): List<HomeRecipeInfo> {
-        if (recipeWithTasteList.isEmpty()) return listOf()
+    // 今日のレシピ数
+    private val _todayRecipeCount: MutableLiveData<Int> = MutableLiveData(0)
+    val todayRecipeCount: LiveData<Int> = _todayRecipeCount
 
-        val result = mutableListOf<HomeRecipeInfo>()
-        for (recipeWithTaste in recipeWithTasteList) {
-            val recipe = recipeWithTaste.recipe
-            val taste =  recipeWithTaste.taste
-
-            result.add(
-                HomeRecipeInfo(
-                    recipe.id,
-                    recipe.beanId,
-                    taste.id,
-                    recipe.country,
-                    DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern),
-                    recipe.tool,
-                    Constants.roastList[recipe.roast],
-                    recipe.rating.toString(),
-                    recipe.isFavorite
-                )
-            )
-        }
-
-        // 新しい順にソート
-        result.sortByDescending { it.recipeId }
-        return result
+    // お気に入りレシピ数
+    val favoriteRecipeCount: LiveData<Int> = _favoriteRecipes.map { recipes ->
+        return@map recipes.size
     }
 
     // お気に入り更新
     fun updateFavoriteIcon(recipe: HomeRecipeInfo) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (recipe.isFavorite) {
-                // isFavorite 更新
-                recipeDao.updateFavoriteByRecipeId(recipe.recipeId, false)
-            } else {
-                // isFavorite 更新
-                recipeDao.updateFavoriteByRecipeId(recipe.recipeId, true)
-            }
-        }
+//        viewModelScope.launch(Dispatchers.IO) {
+//            if (recipe.isFavorite) {
+//                // isFavorite 更新
+//                recipeDao.updateFavoriteByRecipeId(recipe.recipeId, false)
+//            } else {
+//                // isFavorite 更新
+//                recipeDao.updateFavoriteByRecipeId(recipe.recipeId, true)
+//            }
+//        }
     }
 
+    fun initialize() {
+        viewModelScope.launch {
+            val homeRecipeData = controller.getHomeRecipeData()
 
-    class HomeRecipeViewModelFactory(
-        private val recipeDao: RecipeDao
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(HomeRecipeViewModel::class.java)) {
-                return HomeRecipeViewModel(recipeDao) as T
-            }
-            throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
+            _newRecipes.value = homeRecipeData.newRecipes
+            _favoriteRecipes.value = homeRecipeData.favoriteRecipes
+            _highRatingRecipes.value = homeRecipeData.highRatingRecipes
+            _totalRecipeCount.value = homeRecipeData.totalCount
+            _todayRecipeCount.value = homeRecipeData.todayCount
         }
     }
 }

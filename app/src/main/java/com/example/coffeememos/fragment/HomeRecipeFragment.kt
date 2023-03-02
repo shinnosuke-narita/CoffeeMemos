@@ -21,7 +21,9 @@ import com.example.coffeememos.databinding.FragmentHomeRecipeBinding
 import com.example.coffeememos.listener.OnFavoriteIconClickListener
 import com.example.coffeememos.viewModel.HomeRecipeViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeRecipeFragment : Fragment(),
     OnItemClickListener<HomeRecipeInfo>,
     OnFavoriteIconClickListener<HomeRecipeInfo> {
@@ -32,9 +34,12 @@ class HomeRecipeFragment : Fragment(),
     private val binding
         get() = _binding!!
 
-    private val viewModel: HomeRecipeViewModel by viewModels {
-        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        HomeRecipeViewModel.HomeRecipeViewModelFactory(db.recipeDao())
+    private val viewModel: HomeRecipeViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // viewModel 初期化
+       // viewModel.initialize()
     }
 
     override fun onAttach(context: Context) {
@@ -61,16 +66,18 @@ class HomeRecipeFragment : Fragment(),
             setUpRecyclerView(it, binding.highRatingRecipeList)
         }
 
-        viewModel.allSimpleRecipeList.observe(viewLifecycleOwner) { list ->
-            binding.recipeTotalNum.text = list.size.toString()
+        // 今日作成レシピ数
+        viewModel.todayRecipeCount.observe(viewLifecycleOwner) { todayRecipeNum ->
+            binding.todayRecipeNum.text = todayRecipeNum.toString()
         }
 
-        viewModel.todayRecipeList.observe(viewLifecycleOwner) { todayRecipeNum ->
-            binding.todayRecipeNum.text = todayRecipeNum.size.toString()
+        // お気に入りレシピ数
+        viewModel.favoriteRecipeCount.observe(viewLifecycleOwner) { favoriteRecipeNum ->
+            binding.favoriteRecipeNum.text = favoriteRecipeNum.toString()
         }
 
         // SimpleRecipeList 監視処理
-        viewModel.newRecipeList.observe(viewLifecycleOwner) { list ->
+        viewModel.newRecipes.observe(viewLifecycleOwner) { list ->
             mContext?.let { context ->
                 binding.newRecipeList.adapter = RecipeAdapter(context, list).apply {
                     setOnItemClickListener(this@HomeRecipeFragment)
@@ -79,18 +86,17 @@ class HomeRecipeFragment : Fragment(),
             }
         }
 
-        viewModel.favoriteRecipeList.observe(viewLifecycleOwner) { favoriteList ->
-            binding.favoriteRecipeNum.text = favoriteList.size.toString()
-
+        viewModel.favoriteRecipes.observe(viewLifecycleOwner) { favoriteList ->
             mContext?.let { context ->
-                binding.favoriteRecipeList.adapter = RecipeAdapter(context, favoriteList).apply {
-                    setOnItemClickListener(this@HomeRecipeFragment)
-                    setFavoriteListener(this@HomeRecipeFragment)
+                binding.favoriteRecipeList.adapter =
+                    RecipeAdapter(context, favoriteList).apply {
+                        setOnItemClickListener(this@HomeRecipeFragment)
+                        setFavoriteListener(this@HomeRecipeFragment)
                 }
             }
         }
 
-        viewModel.highRatingRecipeList.observe(viewLifecycleOwner) { highRatingList ->
+        viewModel.highRatingRecipes.observe(viewLifecycleOwner) { highRatingList ->
             mContext?.let { context ->
                 binding.highRatingRecipeList.adapter = RecipeAdapter(context, highRatingList).apply {
                     setOnItemClickListener(this@HomeRecipeFragment)
@@ -98,9 +104,12 @@ class HomeRecipeFragment : Fragment(),
                 }
             }
         }
+
         // レシピの登録数 監視処理
-        viewModel.recipeCountIsZero.observe(viewLifecycleOwner) { countIsZero ->
-            if (countIsZero) {
+        viewModel.totalRecipeCount.observe(viewLifecycleOwner) { recipeNum ->
+            binding.recipeTotalNum.text = recipeNum.toString()
+
+            if (recipeNum == 0) {
                 binding.newRecipeHeader.visibility = View.GONE
                 binding.highRatingRecipeHeader.visibility = View.GONE
                 binding.favoriteRecipeHeader.visibility = View.GONE
@@ -109,7 +118,6 @@ class HomeRecipeFragment : Fragment(),
                 binding.highRatingRecipeHeader.visibility = View.VISIBLE
                 binding.favoriteRecipeHeader.visibility = View.VISIBLE
             }
-
         }
 
         // レシピ新規作成画面へ遷移
@@ -133,6 +141,7 @@ class HomeRecipeFragment : Fragment(),
                 }
             }.show()
         }
+
         setFragmentResultListener("createRecipe") {_, _ ->
             Snackbar.make(binding.snackBarPlace, getString(R.string.recipe_finish_save_message), Snackbar.LENGTH_SHORT).apply {
                 mContext?.let {
@@ -144,6 +153,12 @@ class HomeRecipeFragment : Fragment(),
                 }
             }.show()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.initialize()
+        // 更新処理
     }
 
     override fun onDestroyView() {
@@ -162,7 +177,6 @@ class HomeRecipeFragment : Fragment(),
         val showDetailAction = HomeRecipeFragmentDirections.showRecipeDetailAction().apply {
             recipeId = selectedItem.recipeId
             beanId   = selectedItem.beanId
-            tasteId  = selectedItem.tasteId
         }
 
         Navigation.findNavController(view).navigate(showDetailAction)

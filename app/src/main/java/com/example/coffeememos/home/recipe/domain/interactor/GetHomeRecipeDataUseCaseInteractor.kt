@@ -82,11 +82,4 @@ class GetHomeRecipeDataUseCaseInteractor @Inject constructor()
             .sortedByDescending { recipe -> recipe.rating }
             .take(maxDisplayNum)
     }
-
-
-
-
-
-
-
 }
