@@ -1,4 +1,4 @@
-package com.example.coffeememos.viewModel
+package com.example.coffeememos.home.recipe.presentation.view_model
 
 import androidx.lifecycle.*
 import com.example.coffeememos.home.recipe.domain.presentation_model.HomeRecipeOutPut

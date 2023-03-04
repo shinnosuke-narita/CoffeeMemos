@@ -1,4 +1,4 @@
-package com.example.coffeememos.fragment
+package com.example.coffeememos.home.recipe.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentHomeRecipeBinding
 import com.example.coffeememos.home.recipe.presentation.adapter.RecipeAdapter
-import com.example.coffeememos.viewModel.HomeRecipeViewModel
+import com.example.coffeememos.home.recipe.presentation.view_model.HomeRecipeViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -185,8 +185,8 @@ class HomeRecipeFragment : Fragment() {
            },
            onItemClick = { recipe ->
                val showDetailAction =
-                   HomeRecipeFragmentDirections
-                       .showRecipeDetailAction().apply {
+                   HomeRecipeFragmentDirections.showRecipeDetailAction()
+                       .apply {
                            recipeId = recipe.recipeId
                            beanId   = recipe.beanId
                        }
