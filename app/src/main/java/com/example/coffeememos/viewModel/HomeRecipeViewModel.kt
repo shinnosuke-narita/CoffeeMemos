@@ -1,9 +1,11 @@
 package com.example.coffeememos.viewModel
 
 import androidx.lifecycle.*
+import com.example.coffeememos.home.recipe.domain.presentation_model.HomeRecipeOutPut
 import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeInfo
 import com.example.coffeememos.home.recipe.presentation.controller.HomeRecipeController
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,32 +36,37 @@ class HomeRecipeViewModel @Inject constructor()
     val todayRecipeCount: LiveData<Int> = _todayRecipeCount
 
     // お気に入りレシピ数
-    val favoriteRecipeCount: LiveData<Int> = _favoriteRecipes.map { recipes ->
-        return@map recipes.size
+    val favoriteRecipeCount: LiveData<String> = _favoriteRecipes.map { recipes ->
+        return@map recipes.size.toString()
     }
 
     // お気に入り更新
-    fun updateFavoriteIcon(recipe: HomeRecipeInfo) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            if (recipe.isFavorite) {
-//                // isFavorite 更新
-//                recipeDao.updateFavoriteByRecipeId(recipe.recipeId, false)
-//            } else {
-//                // isFavorite 更新
-//                recipeDao.updateFavoriteByRecipeId(recipe.recipeId, true)
-//            }
-//        }
+    fun updateHomeData(recipeId: Long, isFavorite: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val updatedFlag: Boolean = !isFavorite
+            val homeRecipeData: HomeRecipeOutPut =
+                controller.updateRecipeData(recipeId, updatedFlag)
+
+            setRecipeData(homeRecipeData)
+        }
     }
 
-    fun initialize() {
+    // レシピデータ取得
+    fun getHomeRecipeData() {
         viewModelScope.launch {
-            val homeRecipeData = controller.getHomeRecipeData()
+            val homeRecipeData: HomeRecipeOutPut =
+                controller.getHomeRecipeData()
 
-            _newRecipes.value = homeRecipeData.newRecipes
-            _favoriteRecipes.value = homeRecipeData.favoriteRecipes
-            _highRatingRecipes.value = homeRecipeData.highRatingRecipes
-            _totalRecipeCount.value = homeRecipeData.totalCount
-            _todayRecipeCount.value = homeRecipeData.todayCount
+            setRecipeData(homeRecipeData)
         }
+    }
+
+    // LiveDataにセット
+    private fun setRecipeData(homeRecipeData: HomeRecipeOutPut) {
+        _newRecipes.postValue(homeRecipeData.newRecipes)
+        _favoriteRecipes.postValue(homeRecipeData.favoriteRecipes)
+        _highRatingRecipes.postValue(homeRecipeData.highRatingRecipes)
+        _totalRecipeCount.postValue(homeRecipeData.totalCount)
+        _todayRecipeCount.postValue(homeRecipeData.todayCount)
     }
 }

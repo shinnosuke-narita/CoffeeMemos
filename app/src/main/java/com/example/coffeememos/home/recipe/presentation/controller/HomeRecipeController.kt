@@ -4,4 +4,8 @@ import com.example.coffeememos.home.recipe.domain.presentation_model.HomeRecipeO
 
 interface HomeRecipeController {
     suspend fun getHomeRecipeData(): HomeRecipeOutPut
+    suspend fun updateRecipeData(
+        recipeId: Long,
+        isFavorite: Boolean
+    ): HomeRecipeOutPut
 }

@@ -8,5 +8,5 @@ data class HomeRecipeInfo(
     val tool      : String,
     val roast     : String,
     val rating    : String,
-    val isFavorite: Boolean
+    var isFavorite: Boolean
 )

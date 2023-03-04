@@ -22,8 +22,11 @@ interface RecipeDao {
     @Update
     suspend fun update(recipe: Recipe)
 
-    @Query("UPDATE recipe SET isFavorite = :favoriteFlag WHERE recipe_id = :id")
-    suspend fun updateFavoriteByRecipeId(id: Long, favoriteFlag: Boolean)
+    @Query("UPDATE recipe SET isFavorite = :favoriteFlag" +
+            " WHERE recipe_id = :id")
+    suspend fun updateFavoriteByRecipeId(
+        id: Long,
+        favoriteFlag: Boolean)
 
     ///////////////////////
     /////  削除系  /////////
@@ -43,7 +46,8 @@ interface RecipeDao {
     @Query("SELECT recipe_id FROM recipe;")
     suspend fun getIds(): List<Long>
 
-    @Query("SELECT recipe_id FROM recipe ORDER BY recipe_id DESC LIMIT 1;")
+    @Query("SELECT recipe_id FROM recipe" +
+            " ORDER BY recipe_id DESC LIMIT 1;")
     suspend fun getNewestRecipeId(): Long
 
     @Query("SELECT * FROM recipe WHERE recipe_id = :id;")
@@ -61,9 +65,13 @@ interface RecipeDao {
     suspend fun getRecipeWithTaste(): List<RecipeWithTaste>
 
     @Transaction
-    @Query("SELECT * FROM recipe WHERE country LIKE '%' || :keyword || '%'" +
-            "OR tool LIKE '%' || :keyword || '%';"
+    @Query("SELECT * FROM recipe" +
+            " WHERE country" +
+            " LIKE '%' || :keyword || '%'" +
+            " OR tool LIKE '%' || :keyword || '%';"
     )
-    suspend fun getRecipeWithTasteByKeyword(keyword: String): List<RecipeWithTaste>
+    suspend fun getRecipeWithTasteByKeyword(
+        keyword: String
+    ): List<RecipeWithTaste>
 
 }
