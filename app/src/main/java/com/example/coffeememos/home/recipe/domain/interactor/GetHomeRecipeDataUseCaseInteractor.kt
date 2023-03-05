@@ -2,8 +2,6 @@ package com.example.coffeememos.home.recipe.domain.interactor
 
 import com.example.coffeememos.home.recipe.domain.model.HomeRecipeData
 import com.example.coffeememos.home.recipe.domain.model.HomeRecipeModel
-import com.example.coffeememos.home.recipe.domain.presentation_model.HomeRecipeOutPut
-import com.example.coffeememos.home.recipe.domain.presenter.HomeRecipePresenter
 import com.example.coffeememos.home.recipe.domain.repository.StorageRepository
 import com.example.coffeememos.home.recipe.domain.use_case.GetHomeRecipeDataUseCase
 import java.time.LocalDate
@@ -15,10 +13,8 @@ class GetHomeRecipeDataUseCaseInteractor @Inject constructor()
 
     @Inject
     lateinit var repository: StorageRepository
-    @Inject
-    lateinit var presenter: HomeRecipePresenter
 
-    override suspend fun handle(): HomeRecipeOutPut {
+    override suspend fun handle(): HomeRecipeData {
         val recipes = repository.getHomeRecipeModel()
         val sortedRecipe =
             recipes.sortedByDescending { recipe -> recipe.recipeId }
@@ -34,15 +30,12 @@ class GetHomeRecipeDataUseCaseInteractor @Inject constructor()
         // 今日のレシピ数
         val todayRecipesCount = getTodayRecipeCount(recipes)
 
-        return presenter.presentHomeRecipeData(
-            HomeRecipeData(
+        return HomeRecipeData(
                 newRecipes,
                 highRatingRecipes,
                 favoriteRecipes,
                 totalCount,
-                todayRecipesCount
-            )
-        )
+                todayRecipesCount)
     }
 
     private fun getTodayRecipeCount(recipes: List<HomeRecipeModel>)

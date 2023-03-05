@@ -1,6 +1,4 @@
-package com.example.coffeememos.home.recipe.domain.presentation_model
-
-import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeInfo
+package com.example.coffeememos.home.recipe.presentation.model
 
 data class HomeRecipeOutPut(
     val newRecipes: List<HomeRecipeInfo>,

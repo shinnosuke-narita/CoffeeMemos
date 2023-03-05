@@ -1,9 +1,11 @@
 package com.example.coffeememos.home.recipe.presentation.view_model
 
 import androidx.lifecycle.*
-import com.example.coffeememos.home.recipe.domain.presentation_model.HomeRecipeOutPut
+import com.example.coffeememos.home.recipe.domain.model.HomeRecipeData
+import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeOutPut
 import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeInfo
 import com.example.coffeememos.home.recipe.presentation.controller.HomeRecipeController
+import com.example.coffeememos.home.recipe.presentation.presenter.HomeRecipePresenter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,29 +16,33 @@ class HomeRecipeViewModel @Inject constructor()
     : ViewModel() {
     @Inject
     lateinit var controller: HomeRecipeController
+    @Inject
+    lateinit var presenter: HomeRecipePresenter
 
     // 新しい順レシピ
-    private val _newRecipes: MutableLiveData<List<HomeRecipeInfo>> = MutableLiveData(listOf())
+    private val _newRecipes = MutableLiveData<List<HomeRecipeInfo>>(listOf())
     val newRecipes: LiveData<List<HomeRecipeInfo>> = _newRecipes
 
     // お気に入りレシピ
-    private val _favoriteRecipes: MutableLiveData<List<HomeRecipeInfo>> = MutableLiveData(listOf())
+    private val _favoriteRecipes =
+        MutableLiveData<List<HomeRecipeInfo>>(listOf())
     val favoriteRecipes: LiveData<List<HomeRecipeInfo>> = _favoriteRecipes
 
     // 高評価順レシピ
-    private val _highRatingRecipes: MutableLiveData<List<HomeRecipeInfo>> = MutableLiveData(listOf())
+    private val _highRatingRecipes = MutableLiveData<List<HomeRecipeInfo>>(listOf())
     val highRatingRecipes: LiveData<List<HomeRecipeInfo>> = _highRatingRecipes
 
     // レシピ総数
-    private val _totalRecipeCount: MutableLiveData<Int> = MutableLiveData(0)
+    private val _totalRecipeCount = MutableLiveData(0)
     val totalRecipeCount: LiveData<Int> = _totalRecipeCount
 
     // 今日のレシピ数
-    private val _todayRecipeCount: MutableLiveData<Int> = MutableLiveData(0)
+    private val _todayRecipeCount = MutableLiveData(0)
     val todayRecipeCount: LiveData<Int> = _todayRecipeCount
 
     // お気に入りレシピ数
-    val favoriteRecipeCount: LiveData<String> = _favoriteRecipes.map { recipes ->
+    val favoriteRecipeCount: LiveData<String> =
+        _favoriteRecipes.map { recipes ->
         return@map recipes.size.toString()
     }
 
@@ -44,20 +50,26 @@ class HomeRecipeViewModel @Inject constructor()
     fun updateHomeData(recipeId: Long, isFavorite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             val updatedFlag: Boolean = !isFavorite
-            val homeRecipeData: HomeRecipeOutPut =
+            val homeRecipeData: HomeRecipeData =
                 controller.updateRecipeData(recipeId, updatedFlag)
 
-            setRecipeData(homeRecipeData)
+            val homeRecipeInfo: HomeRecipeOutPut =
+                presenter.presentHomeRecipeData(homeRecipeData)
+
+            setRecipeData(homeRecipeInfo)
         }
     }
 
     // レシピデータ取得
     fun getHomeRecipeData() {
         viewModelScope.launch {
-            val homeRecipeData: HomeRecipeOutPut =
+            val homeRecipeData: HomeRecipeData =
                 controller.getHomeRecipeData()
 
-            setRecipeData(homeRecipeData)
+           val homeRecipeInfo: HomeRecipeOutPut =
+               presenter.presentHomeRecipeData(homeRecipeData)
+
+            setRecipeData(homeRecipeInfo)
         }
     }
 

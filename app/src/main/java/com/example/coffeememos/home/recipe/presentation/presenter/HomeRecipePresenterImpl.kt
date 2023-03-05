@@ -1,8 +1,7 @@
 package com.example.coffeememos.home.recipe.presentation.presenter
 
 import com.example.coffeememos.home.recipe.domain.model.HomeRecipeData
-import com.example.coffeememos.home.recipe.domain.presentation_model.HomeRecipeOutPut
-import com.example.coffeememos.home.recipe.domain.presenter.HomeRecipePresenter
+import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeOutPut
 import com.example.coffeememos.home.recipe.presentation.mapper.HomeRecipeInfoMapper
 import javax.inject.Inject
 

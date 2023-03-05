@@ -1,6 +1,6 @@
 package com.example.coffeememos.di.home.recipe.presenter
 
-import com.example.coffeememos.home.recipe.domain.presenter.HomeRecipePresenter
+import com.example.coffeememos.home.recipe.presentation.presenter.HomeRecipePresenter
 import com.example.coffeememos.home.recipe.presentation.presenter.HomeRecipePresenterImpl
 import dagger.Binds
 import dagger.Module
