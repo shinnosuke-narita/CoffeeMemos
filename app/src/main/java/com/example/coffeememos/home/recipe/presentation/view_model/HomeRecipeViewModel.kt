@@ -1,9 +1,9 @@
 package com.example.coffeememos.home.recipe.presentation.view_model
 
 import androidx.lifecycle.*
-import com.example.coffeememos.home.recipe.domain.model.HomeRecipeData
-import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeOutPut
-import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeInfo
+import com.example.coffeememos.home.recipe.domain.model.HomeRecipeSource
+import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeOutput
+import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeCardData
 import com.example.coffeememos.home.recipe.presentation.controller.HomeRecipeController
 import com.example.coffeememos.home.recipe.presentation.presenter.HomeRecipePresenter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,17 +20,17 @@ class HomeRecipeViewModel @Inject constructor()
     lateinit var presenter: HomeRecipePresenter
 
     // 新しい順レシピ
-    private val _newRecipes = MutableLiveData<List<HomeRecipeInfo>>(listOf())
-    val newRecipes: LiveData<List<HomeRecipeInfo>> = _newRecipes
+    private val _newRecipes = MutableLiveData<List<HomeRecipeCardData>>(listOf())
+    val newRecipes: LiveData<List<HomeRecipeCardData>> = _newRecipes
 
     // お気に入りレシピ
     private val _favoriteRecipes =
-        MutableLiveData<List<HomeRecipeInfo>>(listOf())
-    val favoriteRecipes: LiveData<List<HomeRecipeInfo>> = _favoriteRecipes
+        MutableLiveData<List<HomeRecipeCardData>>(listOf())
+    val favoriteRecipes: LiveData<List<HomeRecipeCardData>> = _favoriteRecipes
 
     // 高評価順レシピ
-    private val _highRatingRecipes = MutableLiveData<List<HomeRecipeInfo>>(listOf())
-    val highRatingRecipes: LiveData<List<HomeRecipeInfo>> = _highRatingRecipes
+    private val _highRatingRecipes = MutableLiveData<List<HomeRecipeCardData>>(listOf())
+    val highRatingRecipes: LiveData<List<HomeRecipeCardData>> = _highRatingRecipes
 
     // レシピ総数
     private val _totalRecipeCount = MutableLiveData(0)
@@ -50,10 +50,10 @@ class HomeRecipeViewModel @Inject constructor()
     fun updateHomeData(recipeId: Long, isFavorite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             val updatedFlag: Boolean = !isFavorite
-            val homeRecipeData: HomeRecipeData =
+            val homeRecipeData: HomeRecipeSource =
                 controller.updateRecipeData(recipeId, updatedFlag)
 
-            val homeRecipeInfo: HomeRecipeOutPut =
+            val homeRecipeInfo: HomeRecipeOutput =
                 presenter.presentHomeRecipeData(homeRecipeData)
 
             setRecipeData(homeRecipeInfo)
@@ -63,10 +63,10 @@ class HomeRecipeViewModel @Inject constructor()
     // レシピデータ取得
     fun getHomeRecipeData() {
         viewModelScope.launch {
-            val homeRecipeData: HomeRecipeData =
+            val homeRecipeData: HomeRecipeSource =
                 controller.getHomeRecipeData()
 
-           val homeRecipeInfo: HomeRecipeOutPut =
+           val homeRecipeInfo: HomeRecipeOutput =
                presenter.presentHomeRecipeData(homeRecipeData)
 
             setRecipeData(homeRecipeInfo)
@@ -74,7 +74,7 @@ class HomeRecipeViewModel @Inject constructor()
     }
 
     // LiveDataにセット
-    private fun setRecipeData(homeRecipeData: HomeRecipeOutPut) {
+    private fun setRecipeData(homeRecipeData: HomeRecipeOutput) {
         _newRecipes.postValue(homeRecipeData.newRecipes)
         _favoriteRecipes.postValue(homeRecipeData.favoriteRecipes)
         _highRatingRecipes.postValue(homeRecipeData.highRatingRecipes)

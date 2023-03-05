@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.R
-import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeInfo
+import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeCardData
 import com.example.coffeememos.utilities.ViewUtil.Companion.setFavoriteIcon
 
 class RecipeAdapter(
     private val context: Context,
-    private val onFavoriteClick: (recipe: HomeRecipeInfo) -> Unit,
-    private val onItemClick: (recipe: HomeRecipeInfo) -> Unit
+    private val onFavoriteClick: (recipe: HomeRecipeCardData) -> Unit,
+    private val onItemClick: (recipe: HomeRecipeCardData) -> Unit
 ) : ListAdapter<
-        HomeRecipeInfo,
+        HomeRecipeCardData,
         RecipeAdapter.RecipeViewHolder>(DiffRecipeCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
@@ -65,17 +65,17 @@ class RecipeAdapter(
     }
 
     class DiffRecipeCallBack
-        : DiffUtil.ItemCallback<HomeRecipeInfo>() {
+        : DiffUtil.ItemCallback<HomeRecipeCardData>() {
         override fun areItemsTheSame(
-            oldItem: HomeRecipeInfo,
-            newItem: HomeRecipeInfo
+            oldItem: HomeRecipeCardData,
+            newItem: HomeRecipeCardData
         ): Boolean {
             return oldItem.recipeId == newItem.recipeId
         }
 
         override fun areContentsTheSame(
-            oldItem: HomeRecipeInfo,
-            newItem: HomeRecipeInfo
+            oldItem: HomeRecipeCardData,
+            newItem: HomeRecipeCardData
         ): Boolean {
             return oldItem == newItem
         }

@@ -1,6 +1,6 @@
 package com.example.coffeememos.home.recipe.presentation.controller
 
-import com.example.coffeememos.home.recipe.domain.model.HomeRecipeData
+import com.example.coffeememos.home.recipe.domain.model.HomeRecipeSource
 import com.example.coffeememos.home.recipe.domain.use_case.GetHomeRecipeDataUseCase
 import com.example.coffeememos.home.recipe.domain.use_case.UpdateFavoriteUseCase
 import javax.inject.Inject
@@ -12,14 +12,14 @@ class HomeRecipeControllerImpl @Inject constructor()
     @Inject
     lateinit var updateFavoriteUseCase: UpdateFavoriteUseCase
 
-    override suspend fun getHomeRecipeData(): HomeRecipeData {
+    override suspend fun getHomeRecipeData(): HomeRecipeSource {
         return getHomeRecipeDataUseCase.handle()
     }
 
     override suspend fun updateRecipeData(
         recipeId: Long,
         isFavorite: Boolean
-    ): HomeRecipeData {
+    ): HomeRecipeSource {
         updateFavoriteUseCase.handle(recipeId, isFavorite)
         return getHomeRecipeDataUseCase.handle()
     }

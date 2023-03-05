@@ -1,7 +1,7 @@
 package com.example.coffeememos.home.recipe.presentation.presenter
 
-import com.example.coffeememos.home.recipe.domain.model.HomeRecipeData
-import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeOutPut
+import com.example.coffeememos.home.recipe.domain.model.HomeRecipeSource
+import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeOutput
 import com.example.coffeememos.home.recipe.presentation.mapper.HomeRecipeInfoMapper
 import javax.inject.Inject
 
@@ -11,8 +11,8 @@ class HomeRecipePresenterImpl @Inject constructor()
     lateinit var mapper: HomeRecipeInfoMapper
 
     override fun presentHomeRecipeData(
-        homeRecipeData: HomeRecipeData
-    ): HomeRecipeOutPut {
+        homeRecipeData: HomeRecipeSource
+    ): HomeRecipeOutput {
         val newRecipes =
             mapper.execute(homeRecipeData.newRecipes)
         val highRatingRecipes =
@@ -20,7 +20,7 @@ class HomeRecipePresenterImpl @Inject constructor()
         val favoriteRecipes =
             mapper.execute(homeRecipeData.favoriteRecipes)
 
-        return HomeRecipeOutPut(
+        return HomeRecipeOutput(
             newRecipes,
             highRatingRecipes,
             favoriteRecipes,

@@ -1,6 +1,6 @@
 package com.example.coffeememos.home.recipe.domain.interactor
 
-import com.example.coffeememos.home.recipe.domain.model.HomeRecipeData
+import com.example.coffeememos.home.recipe.domain.model.HomeRecipeSource
 import com.example.coffeememos.home.recipe.domain.model.HomeRecipeModel
 import com.example.coffeememos.home.recipe.domain.repository.StorageRepository
 import com.example.coffeememos.home.recipe.domain.use_case.GetHomeRecipeDataUseCase
@@ -14,7 +14,7 @@ class GetHomeRecipeDataUseCaseInteractor @Inject constructor()
     @Inject
     lateinit var repository: StorageRepository
 
-    override suspend fun handle(): HomeRecipeData {
+    override suspend fun handle(): HomeRecipeSource {
         val recipes = repository.getHomeRecipeModel()
         val sortedRecipe =
             recipes.sortedByDescending { recipe -> recipe.recipeId }
@@ -30,7 +30,7 @@ class GetHomeRecipeDataUseCaseInteractor @Inject constructor()
         // 今日のレシピ数
         val todayRecipesCount = getTodayRecipeCount(recipes)
 
-        return HomeRecipeData(
+        return HomeRecipeSource(
                 newRecipes,
                 highRatingRecipes,
                 favoriteRecipes,

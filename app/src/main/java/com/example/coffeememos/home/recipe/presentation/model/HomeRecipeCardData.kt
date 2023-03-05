@@ -1,6 +1,6 @@
 package com.example.coffeememos.home.recipe.presentation.model
 
-data class HomeRecipeInfo(
+data class HomeRecipeCardData(
     val recipeId  : Long,
     val beanId    : Long,
     val country   : String,
