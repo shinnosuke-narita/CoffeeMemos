@@ -1,5 +1,5 @@
 package com.example.coffeememos.search.bean.domain.use_case
 
-interface UpdateFavoriteUseCase {
+interface UpdateFavoriteBeanUseCase {
     suspend fun handle(beanId: Long, isFavorite: Boolean)
 }

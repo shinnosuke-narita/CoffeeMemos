@@ -27,7 +27,7 @@ class SearchBeanControllerImpl @Inject constructor()
     @Inject
     lateinit var deleteFilterInputDataUseCase: DeleteFilterBeanInputDataUseCase
     @Inject
-    lateinit var updateFavoriteUseCase: UpdateFavoriteUseCase
+    lateinit var updateFavoriteUseCase: UpdateFavoriteBeanUseCase
 
     override suspend fun getAllBean(): List<SearchBeanModel> {
         return getAllBeanUseCase.getAllBean()

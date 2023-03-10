@@ -2,13 +2,13 @@ package com.example.coffeememos.home.recipe.presentation.presenter
 
 import com.example.coffeememos.home.recipe.domain.model.HomeRecipeSource
 import com.example.coffeememos.home.recipe.presentation.model.HomeRecipeOutput
-import com.example.coffeememos.home.recipe.presentation.mapper.HomeRecipeInfoMapper
+import com.example.coffeememos.home.recipe.presentation.mapper.HomeRecipeCardModelMapper
 import javax.inject.Inject
 
 class HomeRecipePresenterImpl @Inject constructor()
     : HomeRecipePresenter {
     @Inject
-    lateinit var mapper: HomeRecipeInfoMapper
+    lateinit var mapper: HomeRecipeCardModelMapper
 
     override fun presentHomeRecipeData(
         homeRecipeData: HomeRecipeSource

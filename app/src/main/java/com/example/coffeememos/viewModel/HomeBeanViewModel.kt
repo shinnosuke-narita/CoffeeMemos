@@ -2,90 +2,79 @@ package com.example.coffeememos.viewModel
 
 import androidx.lifecycle.*
 import com.example.coffeememos.SimpleBeanInfo
-import com.example.coffeememos.dao.BeanDao
-import com.example.coffeememos.entity.Bean
-import com.example.coffeememos.utilities.DateUtil
+import com.example.coffeememos.home.bean.presentation.controller.HomeBeanController
+import com.example.coffeememos.home.bean.presentation.model.HomeBeanCardData
+import com.example.coffeememos.home.bean.presentation.model.HomeBeanOutput
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeBeanViewModel(private val beanDao: BeanDao) : ViewModel() {
-    private val maxDisplayItemAmount = 10
+@HiltViewModel
+class HomeBeanViewModel @Inject constructor() : ViewModel() {
+    @Inject
+    lateinit var controller: HomeBeanController
 
-    private var allBean: LiveData<List<Bean>> = beanDao.getAllByFlow().asLiveData()
+    // 新しい順コーヒー豆
+    private val _newBeans: MutableLiveData<List<HomeBeanCardData>> =
+        MutableLiveData(listOf())
+    val newBeans: LiveData<List<HomeBeanCardData>> = _newBeans
 
-    val simpleBeanInfoList: LiveData<MutableList<SimpleBeanInfo>> = Transformations.map(allBean) { allBean ->
-        val result = mutableListOf<SimpleBeanInfo>()
+    // お気に入りコーヒー豆
+    private val _favoriteBeans: MutableLiveData<List<HomeBeanCardData>> =
+        MutableLiveData(listOf())
+    val favoriteBeans: LiveData<List<HomeBeanCardData>> = _favoriteBeans
 
-        for (bean in allBean) {
-            val simpleBeanInfo = SimpleBeanInfo(
-                bean.id,
-                bean.country,
-                bean.farm,
-                bean.district,
-                bean.rating.toString(),
-                bean.isFavorite,
-                DateUtil.formatEpochTimeMills(bean.createdAt, DateUtil.pattern)
-            )
-            result.add(simpleBeanInfo)
-        }
+    // 高評価順コーヒー豆
+    private val _highRatingBeans: MutableLiveData<List<HomeBeanCardData>> =
+        MutableLiveData(listOf())
+    val highRatingBeans: LiveData<List<HomeBeanCardData>> = _highRatingBeans
 
-        // 新しい順にソート
-        result.sortByDescending { bean: SimpleBeanInfo -> bean.id }
+    // 今日のコーヒー豆数
+    private val _todayBeanCount: MutableLiveData<String> = MutableLiveData("")
+    val todayBeanCount: LiveData<String> = _todayBeanCount
 
-        return@map result
+    // 総コーヒー豆数
+    private val _totalBeanCount: MutableLiveData<String> = MutableLiveData("")
+    val totalBeanCount: LiveData<String> = _totalBeanCount
+
+    // お気に入りコーヒー豆数
+    val favoriteBeanCount: LiveData<String> = favoriteBeans.map { list ->
+        return@map list.size.toString()
     }
 
-    val todayBeanList = Transformations.map(simpleBeanInfoList) { simpleInfoList ->
-        return@map simpleInfoList
-            .filter { bean: SimpleBeanInfo -> bean.createdAt.contains(DateUtil.today) }
-            .take(maxDisplayItemAmount)
-    }
+    // コーヒー豆データがあるか
+    private val _beanExists: MutableLiveData<Boolean> = MutableLiveData(false)
+    val beanExists: LiveData<Boolean> = _beanExists
 
-    val newBeanList: LiveData<List<SimpleBeanInfo>> = Transformations.map(simpleBeanInfoList) { simpleInfoList ->
-        return@map simpleInfoList.take(maxDisplayItemAmount)
-    }
-
-    val favoriteBeanList: LiveData<List<SimpleBeanInfo>> = Transformations.map(simpleBeanInfoList) { simpleInfoList ->
-        return@map simpleInfoList
-            .filter { bean: SimpleBeanInfo -> bean.isFavorite }
-            .take(maxDisplayItemAmount)
-    }
-
-    val highRatingBeanList: LiveData<List<SimpleBeanInfo>> = Transformations.map(simpleBeanInfoList) { simpleInfoList ->
-        simpleInfoList.sortByDescending { bean: SimpleBeanInfo -> bean.rating }
-        return@map simpleInfoList
-    }
-
-    val beanCountIsZero: LiveData<Boolean> = Transformations.map(simpleBeanInfoList) { simpleBeanInfoList ->
-       if (simpleBeanInfoList.size == 0) return@map true
-        return@map false
-    }
-
-    fun updateFavoriteIcon(beanInfo: SimpleBeanInfo) {
+    fun updateHomeBeanData(beanId: Long, isFavorite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (beanInfo.isFavorite) {
-                // isFavorite 更新
-                beanDao.updateFavoriteByBeanId(beanInfo.id, false)
-            } else {
-                // isFavorite 更新
-                beanDao.updateFavoriteByBeanId(beanInfo.id, true)
-            }
+            val updatedFavoriteFlag = !isFavorite
+            val homeBeanOutput: HomeBeanOutput =
+                controller.updateBeanData(beanId, updatedFavoriteFlag)
+
+            setHomeBeanData(homeBeanOutput)
         }
     }
 
+    // データ取得
+    fun getHomeBeanData() {
+        viewModelScope.launch {
+            val homeBeanOutput: HomeBeanOutput =
+                controller.getHomeBeanData()
 
-    class HomeBeanViewModelFactory(
-        private val beanDao: BeanDao
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(HomeBeanViewModel::class.java)) {
-                return HomeBeanViewModel(beanDao) as T
-            }
-            throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
+            setHomeBeanData(homeBeanOutput)
         }
+    }
+
+    // LiveDataにデータセット
+    private fun setHomeBeanData(output: HomeBeanOutput) {
+        _newBeans.postValue(output.newBeans)
+        _favoriteBeans.postValue(output.favoriteBeans)
+        _highRatingBeans.postValue(output.highRatingBeans)
+        _totalBeanCount.postValue(output.totalCount)
+        _todayBeanCount.postValue(output.todayCount)
+        _beanExists.postValue(output.beanExists)
     }
 }
-
-
-
 

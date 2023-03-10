@@ -1,7 +1,7 @@
 package com.example.coffeememos.di.home.recipe.mapper
 
-import com.example.coffeememos.home.recipe.presentation.mapper.HomeRecipeInfoMapper
-import com.example.coffeememos.home.recipe.presentation.mapper.HomeRecipeInfoMapperImpl
+import com.example.coffeememos.home.recipe.presentation.mapper.HomeRecipeCardModelMapper
+import com.example.coffeememos.home.recipe.presentation.mapper.HomeRecipeCardModelMapperImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,6 +13,6 @@ abstract class HomeRecipeInfoMapperModule {
 
     @Binds
     abstract fun bindHomeRecipeOutPutMapper(
-        homeRecipeOutPutMapperImpl: HomeRecipeInfoMapperImpl
-    ): HomeRecipeInfoMapper
+        homeRecipeOutPutMapperImpl: HomeRecipeCardModelMapperImpl
+    ): HomeRecipeCardModelMapper
 }
