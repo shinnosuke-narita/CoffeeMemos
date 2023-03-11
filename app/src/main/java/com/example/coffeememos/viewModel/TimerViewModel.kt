@@ -1,15 +1,9 @@
 package com.example.coffeememos.viewModel
 
-import android.util.Log
-import android.view.View
 import androidx.lifecycle.*
-import androidx.navigation.Navigation
 import com.example.coffeememos.state.TimerButtonState
 import com.example.coffeememos.state.TimerState
-import kotlinx.coroutines.NonCancellable.isActive
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.sql.Time
 
 class TimerViewModel : ViewModel() {
     // タイマーの状態
@@ -19,7 +13,6 @@ class TimerViewModel : ViewModel() {
     fun setTimerState(state: TimerState) {
         _timerState.value = state
     }
-
 
     // タイマーの開始時間
     private var _timerStartedAt: Long = 0L

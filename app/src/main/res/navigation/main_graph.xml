@@ -86,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeBeansFragment"
-        android:name="com.example.coffeememos.fragment.HomeBeansFragment"
+        android:name="com.example.coffeememos.home.bean.presentation.fragment.HomeBeansFragment"
         android:label="Bean"
         tools:layout="@layout/fragment_home_beans" >
         <action

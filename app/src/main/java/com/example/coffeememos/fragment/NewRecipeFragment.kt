@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.*
-import androidx.navigation.Navigation
+import androidx.core.view.children
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.coffeememos.CoffeeMemosApplication
@@ -28,8 +30,6 @@ import com.example.coffeememos.state.SelectBeanBtnAction
 import com.example.coffeememos.utilities.AnimUtil
 import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
-import com.example.coffeememos.validate.ValidationInfo
-import com.example.coffeememos.validate.ValidationState
 import com.example.coffeememos.viewModel.MainViewModel
 import com.example.coffeememos.viewModel.NewRecipeViewModel
 import com.example.coffeememos.viewModel.NewRecipeViewModelFactory
@@ -91,9 +91,6 @@ class NewRecipeFragment :
         // header セッティング
         setUpHeader()
 
-        /////////////
-        // 監視処理 //
-        ////////////
         // お気に入り
         viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
             if (isFavorite) binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
@@ -104,11 +101,13 @@ class NewRecipeFragment :
             changeVisibility(inputType, binding.preInfusionTimeEditText, binding.preInfusionTimeTextView)
         }
         // タイマーで計測した蒸らし時間
-        mainViewModel.formattedPreInfusionTime.observe(viewLifecycleOwner) { preInfusionTime ->
+        mainViewModel.formattedPreInfusionTime
+            .observe(viewLifecycleOwner) { preInfusionTime ->
             binding.preInfusionTimeTextView.text = preInfusionTime
         }
         // 抽出時間
-        viewModel.extractionTimeInputType.observe(viewLifecycleOwner) { inputType ->
+        viewModel.extractionTimeInputType
+            .observe(viewLifecycleOwner) { inputType ->
             changeVisibility(inputType, binding.extractionTimeWrapper, binding.extractionTimeTextView)
         }
         // タイマーで計測した抽出時間
@@ -199,7 +198,9 @@ class NewRecipeFragment :
                     binding.progressBar.visibility = View.GONE
                     setFragmentResult("createRecipe", Bundle())
                     // ホームレシピ画面までもどる(タイマー画面はバックスタックから消す)
-                    findNavController().navigate(R.id.action_back_to_homeRecipeFragment)
+                    findNavController()
+                        .navigate(
+                            R.id.action_back_to_homeRecipeFragment)
                 }
                 else -> {
                     binding.progressBar.visibility = View.GONE
@@ -214,16 +215,14 @@ class NewRecipeFragment :
                 MenuState.OPEN -> {
                     binding.wholeShadow.visibility = View.VISIBLE
                     binding.menuBtn.setImageResource(R.drawable.ic_baseline_close_24)
-                    enableBtn(binding.timeBtn, binding.saveBtn)
-                    disableView()
+                    changeViewEnable(false)
                     AnimUtil.fadeInAnimation(binding.timeBtn, 500L)
                     AnimUtil.fadeInAnimation(binding.saveBtn, 500L)
                 }
                 MenuState.CLOSE -> {
                     binding.wholeShadow.visibility = View.GONE
                     binding.menuBtn.setImageResource(R.drawable.ic_baseline_menu_24)
-                    enableView()
-                    disableBtn(binding.timeBtn, binding.saveBtn)
+                    changeViewEnable(true)
                     AnimUtil.fadeOutAnimation(binding.timeBtn, 500L)
                     AnimUtil.fadeOutAnimation(binding.saveBtn, 500L)
 
@@ -231,9 +230,8 @@ class NewRecipeFragment :
                 }
             }
         }
-        ////////////////////////
-        // validation message //
-        ////////////////////////
+
+        // validate
         viewModel.tasteValidation.observe(viewLifecycleOwner) { validation ->
             setUpValidationMessage(validation, binding.scrollView, binding.header.root, binding.tasteValidateMessage, binding.tasteTitle)
         }
@@ -250,9 +248,6 @@ class NewRecipeFragment :
             setUpValidationMessage(validation, binding.scrollView, binding.header.root, binding.beanValidateMessage, binding.beanTitle)
         }
 
-        ////////////////////
-        // クリックリスナ― //
-        ///////////////////
         // お気に入りアイコン
         binding.header.favoriteBtn.setOnClickListener {
             if (viewModel.isFavorite.value == true) viewModel.setFavoriteFlag(false)
@@ -285,7 +280,7 @@ class NewRecipeFragment :
                 .show(childFragmentManager, ListDialogFragment::class.simpleName)
         }
         // コーヒー豆選択ボタン クリックリスナ―
-        binding.selectBeanBtn.setOnClickListener { v ->
+        binding.selectBeanBtn.setOnClickListener {
             viewModel.decideSelectBeanBtnAction()
         }
         // ★画像のクリックリスナーセット
@@ -303,13 +298,13 @@ class NewRecipeFragment :
             }
         }
         // タイマーボタン
-        binding.timeBtn.setOnClickListener { view ->
+        binding.timeBtn.setOnClickListener {
             viewModel.setMenuOpenedFlag(MenuState.CLOSE)
 
             val showTimerAction = NewRecipeFragmentDirections.showTimerAction().apply {
                 existsNewRecipeFragment = true
             }
-            Navigation.findNavController(view).navigate(showTimerAction)
+            findNavController().navigate(showTimerAction)
         }
         // 保存ボタン
         binding.saveBtn.setOnClickListener {
@@ -323,9 +318,7 @@ class NewRecipeFragment :
                 .show(childFragmentManager, BasicDialogFragment::class.simpleName)
         }
 
-        ////////////////////////
-        // TextChangeListener //
-        ////////////////////////
+        // TextChangeListener
         binding.sourValue.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(editable: Editable?) {
                 viewModel.setSour(editable.toString())
@@ -391,10 +384,6 @@ class NewRecipeFragment :
                 viewModel.setComment(editable.toString())
             }
         })
-
-        ////////////////////////////
-        // FragmentResultListener //
-        ////////////////////////////
 
         // RoastDialogからの結果を受信
         childFragmentManager.setFragmentResultListener("updateRoast", viewLifecycleOwner) {_, bundle ->
@@ -472,14 +461,6 @@ class NewRecipeFragment :
         }
     }
 
-    private fun enableBtn(vararg views: View) {
-        for (view in views) { view.isEnabled = true }
-    }
-
-    private fun disableBtn(vararg views: View) {
-        for (view in views) { view.isEnabled = false }
-    }
-
     private fun setUpHeader() {
         binding.header.headerTitle.text = getString(R.string.new_recipe)
         binding.header.backBtn.setOnClickListener {
@@ -488,60 +469,20 @@ class NewRecipeFragment :
         }
     }
 
-    private fun disableView() {
-        binding.header.favoriteBtn.isEnabled = false
-        binding.selectBeanBtn.isEnabled = false
-        binding.sourValue.isEnabled = false
-        binding.bitterValue.isEnabled = false
-        binding.sweetValue.isEnabled = false
-        binding.flavorValue.isEnabled = false
-        binding.richValue.isEnabled = false
-        binding.selectGrindBtn.isEnabled = false
-        binding.selectRoastBtn.isEnabled = false
-        binding.toolEditText.isEnabled = false
-        binding.amountBeanEditText.isEnabled = false
-        binding.temperatureEditText.isEnabled = false
-        binding.amountExtractionEditText.isEnabled = false
-        binding.toolEditText.isEnabled = false
-        binding.preInfusionTimeEditText.isEnabled = false
-        binding.extractionTimeMinuteEditText.isEnabled = false
-        binding.extractionTimeSecondsEditText.isEnabled = false
-        binding.changePreInfusionInputTypeIcon.isEnabled = false
-        binding.changeExtractionInputTypeIcon.isEnabled = false
-        binding.commentEditText.isEnabled = false
-        binding.starFirst.isEnabled = false
-        binding.starSecond.isEnabled = false
-        binding.starThird.isEnabled = false
-        binding.starFourth.isEnabled = false
-        binding.starFifth.isEnabled = false
-        ViewUtil.setScrollable(binding.scrollView, true)
-    }
-    private fun enableView() {
-        binding.header.favoriteBtn.isEnabled = true
-        binding.selectBeanBtn.isEnabled = true
-        binding.sourValue.isEnabled = true
-        binding.bitterValue.isEnabled = true
-        binding.sweetValue.isEnabled = true
-        binding.flavorValue.isEnabled = true
-        binding.richValue.isEnabled = true
-        binding.selectGrindBtn.isEnabled = true
-        binding.selectRoastBtn.isEnabled = true
-        binding.toolEditText.isEnabled = true
-        binding.amountBeanEditText.isEnabled = true
-        binding.temperatureEditText.isEnabled = true
-        binding.amountExtractionEditText.isEnabled = true
-        binding.toolEditText.isEnabled = true
-        binding.preInfusionTimeEditText.isEnabled = true
-        binding.extractionTimeMinuteEditText.isEnabled = true
-        binding.extractionTimeSecondsEditText.isEnabled = true
-        binding.changePreInfusionInputTypeIcon.isEnabled = true
-        binding.changeExtractionInputTypeIcon.isEnabled = true
-        binding.commentEditText.isEnabled = true
-        binding.starFirst.isEnabled = true
-        binding.starSecond.isEnabled = true
-        binding.starThird.isEnabled = true
-        binding.starFourth.isEnabled = true
-        binding.starFifth.isEnabled = true
-        ViewUtil.setScrollable(binding.scrollView, false)
+    // view の無効化
+    private fun changeViewEnable(flag: Boolean) {
+        ViewUtil.setScrollable(binding.scrollView, flag)
+
+        binding.saveBtn.isEnabled = flag
+        binding.timeBtn.isEnabled = flag
+        binding.header.favoriteBtn.isEnabled = flag
+        for (view in binding.scrollViewContainer.children) {
+            if (view.tag.equals(R.string.change_enabled_tag)) {
+                view.isEnabled = flag
+            }
+        }
+        for (view in binding.extractionTimeWrapper.children) {
+            view.isEnabled = flag
+        }
     }
 }

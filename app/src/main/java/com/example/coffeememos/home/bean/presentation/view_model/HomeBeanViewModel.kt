@@ -1,7 +1,6 @@
-package com.example.coffeememos.viewModel
+package com.example.coffeememos.home.bean.presentation.view_model
 
 import androidx.lifecycle.*
-import com.example.coffeememos.SimpleBeanInfo
 import com.example.coffeememos.home.bean.presentation.controller.HomeBeanController
 import com.example.coffeememos.home.bean.presentation.model.HomeBeanCardData
 import com.example.coffeememos.home.bean.presentation.model.HomeBeanOutput

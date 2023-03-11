@@ -1,10 +1,10 @@
 package com.example.coffeememos.viewModel
 
-import androidx.lifecycle.*
-import com.example.coffeememos.entity.Bean
-import com.example.coffeememos.entity.CustomBean
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.example.coffeememos.search.bean.domain.model.SearchBeanModel
-import com.example.coffeememos.state.InputType
 import com.example.coffeememos.utilities.DateUtil
 
 class MainViewModel : ViewModel() {
@@ -18,7 +18,6 @@ class MainViewModel : ViewModel() {
     fun resetBean() {
         _selectedBean.value = null
     }
-
 
     // 抽出時間
     private val _extractionTime: MutableLiveData<Long> = MutableLiveData(0L)

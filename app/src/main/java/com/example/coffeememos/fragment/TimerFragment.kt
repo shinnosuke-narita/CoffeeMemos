@@ -108,18 +108,20 @@ class TimerFragment : Fragment() {
             mainViewModel.setPreInfusionTime(viewModel.currentTime.value!!)
         }
 
-        binding.showNewRecipeBtn.setOnClickListener { view ->
+        binding.showNewRecipeBtn.setOnClickListener {
             if (mainViewModel.newRecipeFragmentExists.value!!) {
                 // レシピ新規作成画面から開かれた場合
                 setFragmentResult("returnFromTimer", Bundle())
                 findNavController().popBackStack()
             } else {
                 // bottomタブから開かれていた場合
-                val showNewRecipeAction = TimerFragmentDirections.showNewRecipeAction().apply {
+                val showNewRecipeAction =
+                    TimerFragmentDirections
+                        .showNewRecipeAction().apply {
                     preInfusionTimeInputType = InputType.AUTO
                     extractionTimeInputType  = InputType.AUTO
                 }
-                Navigation.findNavController(view).navigate(showNewRecipeAction)
+                findNavController().navigate(showNewRecipeAction)
             }
         }
     }

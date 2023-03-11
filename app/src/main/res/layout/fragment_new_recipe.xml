@@ -25,93 +25,84 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollViewContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="60dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/beanWrapper"
+            <TextView
+                android:id="@+id/beanTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/bean_title"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/beanValidateMessage"
+                style="@style/validationMessageStyle"
+                app:layout_constraintStart_toStartOf="@+id/beanTitle"
+                app:layout_constraintTop_toBottomOf="@+id/beanTitle"
+                tools:text="hello world"
+                tools:visibility="visible" />
+
+            <!--  コーヒー豆情報  -->
+
+            <include
+                android:id="@+id/beanContainer"
+                layout="@layout/bean_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/edit_text_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/beanValidateMessage"
+                app:layout_constraintVertical_bias="0.0" />
 
-                <TextView
-                    android:id="@+id/beanTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bean"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
-
-                <TextView
-                    android:id="@+id/beanValidateMessage"
-                    style="@style/validationMessageStyle"
-                    tools:text="hello world"
-                    tools:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@+id/beanTitle"
-                    app:layout_constraintStart_toStartOf="@+id/beanTitle" />
-
-                <!--  コーヒー豆情報  -->
-                <include
-                    layout="@layout/bean_item"
-                    android:id="@+id/beanContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_background"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="15dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/beanValidateMessage"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <TextView
-                    android:id="@+id/selectBeanBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="コーヒー豆を選択"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/home_create_button_background"
-                    app:layout_constraintBottom_toBottomOf="@+id/beanTitle"
-                    app:layout_constraintEnd_toEndOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/tasteWrapper"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/selectBeanBtn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                app:layout_constraintTop_toBottomOf="@+id/beanWrapper">
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/home_create_button_background"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/select_bean"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:tag="@string/change_enabled_tag"
+                app:layout_constraintBottom_toBottomOf="@+id/beanTitle"
+                app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
                     android:id="@+id/tasteTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Taste"
+                    android:text="@string/taste_title"
                     android:textColor="@color/black"
                     android:textSize="25sp"
                     android:layout_marginStart="15dp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintTop_toBottomOf="@id/beanContainer"
                     app:layout_constraintStart_toStartOf="parent"/>
 
                 <TextView
                     android:id="@+id/tasteAttention"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="※1~5の5段階で入力できます。"
+                    android:text="@string/taste_announce"
                     app:layout_constraintTop_toBottomOf="@+id/tasteTitle"
                     app:layout_constraintStart_toStartOf="@+id/tasteTitle" />
 
@@ -144,7 +135,10 @@
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintTop_toBottomOf="@+id/bitterTitle"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/bitterValue"/>
+                    app:layout_constraintEnd_toStartOf="@+id/bitterValue"
+                    android:tag="@string/change_enabled_tag"
+                    android:importantForAutofill="no"
+                    tools:ignore="LabelFor" />
 
                 <TextView
                     android:id="@+id/bitterTitle"
@@ -164,7 +158,10 @@
                     android:nextFocusDown="@+id/sweetValue"
                     app:layout_constraintTop_toBottomOf="@+id/bitterTitle"
                     app:layout_constraintStart_toEndOf="@+id/sourValue"
-                    app:layout_constraintEnd_toStartOf="@+id/sweetValue"/>
+                    app:layout_constraintEnd_toStartOf="@+id/sweetValue"
+                    android:tag="@string/change_enabled_tag"
+                    android:importantForAutofill="no"
+                    tools:ignore="LabelFor" />
 
                 <TextView
                     android:id="@+id/sweetTitle"
@@ -184,7 +181,10 @@
                     android:nextFocusDown="@+id/flavorValue"
                     app:layout_constraintTop_toBottomOf="@+id/sweetTitle"
                     app:layout_constraintStart_toEndOf="@+id/bitterValue"
-                    app:layout_constraintEnd_toStartOf="@+id/flavorValue"/>
+                    app:layout_constraintEnd_toStartOf="@+id/flavorValue"
+                    android:tag="@string/change_enabled_tag"
+                    android:importantForAutofill="no"
+                    tools:ignore="LabelFor" />
 
 
                 <TextView
@@ -205,9 +205,10 @@
                     android:nextFocusDown="@+id/richValue"
                     app:layout_constraintTop_toBottomOf="@+id/flavorTitle"
                     app:layout_constraintStart_toEndOf="@+id/sweetValue"
-                    app:layout_constraintEnd_toStartOf="@+id/richValue"/>
-
-
+                    app:layout_constraintEnd_toStartOf="@+id/richValue"
+                    android:tag="@string/change_enabled_tag"
+                    android:importantForAutofill="no"
+                    tools:ignore="LabelFor" />
 
                 <TextView
                     android:id="@+id/richTitle"
@@ -227,26 +228,21 @@
                     android:layout_marginEnd="10dp"
                     app:layout_constraintTop_toBottomOf="@+id/richTitle"
                     app:layout_constraintStart_toEndOf="@+id/flavorValue"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/recipeWrapper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tasteWrapper"
-                android:layout_marginTop="40dp"
-                android:padding="0dp">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:tag="@string/change_enabled_tag"
+                    android:importantForAutofill="no"
+                    tools:ignore="LabelFor" />
 
                 <TextView
                     android:id="@+id/recipeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recipe"
+                    android:text="@string/recipe_title"
                     android:textColor="@color/black"
                     android:textSize="25sp"
                     android:layout_marginStart="15dp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintTop_toBottomOf="@id/sourValue"
                     app:layout_constraintStart_toStartOf="parent"/>
 
 
@@ -264,7 +260,8 @@
                     style="@style/mEditTextStyle"
                     android:hint="@string/grind_size"
                     android:textColor="@color/black"
-                    android:gravity="center|left"
+                    android:gravity="center|start"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintEnd_toStartOf="@+id/selectGrindBtn"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/grindTitle" />
@@ -279,7 +276,9 @@
                     app:layout_constraintStart_toEndOf="@+id/grindTextView"
                     app:layout_constraintTop_toTopOf="@+id/grindTextView"
                     app:layout_constraintBottom_toBottomOf="@+id/grindTextView"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    android:tag="@string/change_enabled_tag"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/select_grind_description" />
 
 
                 <TextView
@@ -296,7 +295,7 @@
                     style="@style/mEditTextStyle"
                     android:hint="@string/roast"
                     android:textColor="@color/black"
-                    android:gravity="center|left"
+                    android:gravity="center|start"
                     app:layout_constraintEnd_toStartOf="@+id/selectRoastBtn"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/roastTitle" />
@@ -308,10 +307,12 @@
                     android:src="@drawable/ic_baseline_playlist_add_24"
                     app:tint="@color/pink_light_dark"
                     android:layout_marginEnd="15dp"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintStart_toEndOf="@+id/roastTextView"
                     app:layout_constraintTop_toTopOf="@+id/roastTextView"
                     app:layout_constraintBottom_toBottomOf="@+id/roastTextView"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/select_roast_description" />
 
                 <TextView
                     android:id="@+id/toolTitle"
@@ -334,8 +335,9 @@
                     android:hint="@string/tool"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolValidateMessage">
-                </EditText>
+                    app:layout_constraintTop_toBottomOf="@+id/toolValidateMessage"
+                    android:tag="@string/change_enabled_tag"
+                    android:importantForAutofill="no"/>
 
                 <TextView
                     android:id="@+id/amountBeanTitle"
@@ -350,9 +352,11 @@
                     android:hint="@string/amount_beans"
                     android:inputType="number"
                     android:maxLength="4"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/amountBeanTitle"/>
+                    app:layout_constraintTop_toBottomOf="@+id/amountBeanTitle"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/temperatureTitle"
@@ -375,9 +379,11 @@
                     android:hint="@string/temperature"
                     android:inputType="number"
                     android:maxLength="3"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/temperatureValidateMessage"/>
+                    app:layout_constraintTop_toBottomOf="@+id/temperatureValidateMessage"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/amountExtractionTitle"
@@ -393,9 +399,11 @@
                     android:hint="@string/amount_extraction"
                     android:inputType="number"
                     android:maxLength="4"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/amountExtractionTitle"/>
+                    app:layout_constraintTop_toBottomOf="@+id/amountExtractionTitle"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/preInfusionTimeTitle"
@@ -410,15 +418,17 @@
                     android:hint="@string/pre_infusion_time"
                     android:inputType="number"
                     android:maxLength="4"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintEnd_toStartOf="@+id/changePreInfusionInputTypeIcon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/preInfusionTimeTitle"/>
+                    app:layout_constraintTop_toBottomOf="@+id/preInfusionTimeTitle"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/preInfusionTimeTextView"
                     style="@style/mEditTextStyle"
                     android:textColor="@color/black"
-                    android:gravity="left|center"
+                    android:gravity="center|start"
                     android:visibility="gone"
                     app:layout_constraintEnd_toStartOf="@+id/changePreInfusionInputTypeIcon"
                     app:layout_constraintStart_toStartOf="parent"
@@ -431,10 +441,12 @@
                     android:src="@drawable/ic_baseline_sync_24"
                     android:layout_marginEnd="10dp"
                     app:tint="@color/pink_light_dark"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintTop_toTopOf="@+id/preInfusionTimeEditText"
                     app:layout_constraintBottom_toBottomOf="@+id/preInfusionTimeEditText"
                     app:layout_constraintStart_toEndOf="@+id/preInfusionTimeEditText"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/change_input_description" />
 
                 <TextView
                     android:id="@+id/extractionTimeTitle"
@@ -451,6 +463,7 @@
                     tools:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@+id/extractionTimeTitle"
                     app:layout_constraintStart_toStartOf="@+id/extractionTimeTitle" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/extractionTimeWrapper"
                     android:layout_width="0dp"
@@ -473,7 +486,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/unitMinute"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:importantForAutofill="no" />
 
 
                     <TextView
@@ -498,7 +512,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/unitMinute"
                         app:layout_constraintEnd_toStartOf="@+id/secondsUnit"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:importantForAutofill="no" />
 
                     <TextView
                         android:id="@+id/secondsUnit"
@@ -515,7 +530,6 @@
                     android:id="@+id/extractionTimeTextView"
                     android:layout_width="0dp"
                     android:layout_height="55dp"
-                    android:text="2m14s"
                     android:textColor="@color/black"
                     android:gravity="center|start"
                     tools:visibility="visible"
@@ -539,7 +553,8 @@
                     app:layout_constraintTop_toTopOf="@+id/extractionTimeWrapper"
                     app:layout_constraintBottom_toBottomOf="@+id/extractionTimeWrapper"
                     app:layout_constraintStart_toEndOf="@+id/extractionTimeWrapper"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/change_input_description" />
 
                 <TextView
                     android:id="@+id/commentTitle"
@@ -558,9 +573,11 @@
                     android:scrollbars="vertical"
                     android:inputType="textMultiLine"
                     android:maxLines="10"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/commentTitle"/>
+                    app:layout_constraintTop_toBottomOf="@+id/commentTitle"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/beanReviewTitle"
@@ -586,48 +603,56 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginStart="0dp"
                     android:src="@drawable/ic_baseline_star_grey"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintTop_toBottomOf="@+id/beanReviewTitle"
-                    app:layout_constraintStart_toStartOf="@+id/beanReviewTitle" />
+                    app:layout_constraintStart_toStartOf="@+id/beanReviewTitle"
+                    android:contentDescription="@string/star_first_description" />
 
                 <ImageView
                     android:id="@+id/starSecond"
                     style="@style/ratingStarLarge"
                     android:src="@drawable/ic_baseline_star_grey"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintTop_toTopOf="@+id/starFirst"
-                    app:layout_constraintStart_toEndOf="@+id/starFirst" />
+                    app:layout_constraintStart_toEndOf="@+id/starFirst"
+                    android:contentDescription="@string/star_second_description" />
 
                 <ImageView
                     android:id="@+id/starThird"
                     style="@style/ratingStarLarge"
                     android:src="@drawable/ic_baseline_star_grey"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintTop_toTopOf="@+id/starFirst"
-                    app:layout_constraintStart_toEndOf="@+id/starSecond" />
+                    app:layout_constraintStart_toEndOf="@+id/starSecond"
+                    android:contentDescription="@string/star_third_description" />
 
                 <ImageView
                     android:id="@+id/starFourth"
                     style="@style/ratingStarLarge"
                     android:src="@drawable/ic_baseline_star_grey"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintTop_toTopOf="@+id/starFirst"
-                    app:layout_constraintStart_toEndOf="@+id/starThird" />
+                    app:layout_constraintStart_toEndOf="@+id/starThird"
+                    android:contentDescription="@string/star_fourth_description" />
 
                 <ImageView
                     android:id="@+id/starFifth"
                     style="@style/ratingStarLarge"
                     android:src="@drawable/ic_baseline_star_grey"
+                    android:tag="@string/change_enabled_tag"
                     app:layout_constraintTop_toTopOf="@+id/starFirst"
-                    app:layout_constraintStart_toEndOf="@+id/starFourth" />
+                    app:layout_constraintStart_toEndOf="@+id/starFourth"
+                    android:contentDescription="@string/star_fifth_description" />
 
                 <TextView
                     android:id="@+id/beanRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
-                    android:text="3.0"
                     android:textSize="26sp"
                     android:textColor="@color/brown_light"
                     app:layout_constraintStart_toEndOf="@+id/starFifth"
                     app:layout_constraintBottom_toBottomOf="@+id/starFirst"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
@@ -642,7 +667,8 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/menu_description" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/timeBtn"
@@ -660,7 +686,8 @@
         android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toTopOf="@+id/menuBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:alpha="1"/>
+        tools:alpha="1"
+        android:contentDescription="@string/timer_description" />
 
     <View
         android:id="@+id/whole_shadow"
@@ -696,5 +723,6 @@
         android:enabled="false"
         app:layout_constraintBottom_toTopOf="@+id/timeBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:alpha="1"/>
+        tools:alpha="1"
+        android:contentDescription="@string/save_description" />
 </androidx.constraintlayout.widget.ConstraintLayout>

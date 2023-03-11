@@ -1,4 +1,4 @@
-package com.example.coffeememos.fragment
+package com.example.coffeememos.home.bean.presentation.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeememos.R
 import com.example.coffeememos.adapter.HomeBeanCardAdapter
 import com.example.coffeememos.databinding.FragmentHomeBeansBinding
-import com.example.coffeememos.viewModel.HomeBeanViewModel
+import com.example.coffeememos.home.bean.presentation.view_model.HomeBeanViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -167,7 +167,7 @@ class HomeBeansFragment : Fragment() {
                     HomeBeansFragmentDirections
                         .showBeanDetailAction()
                         .apply {
-                            beanId   = bean.id
+                            beanId  = bean.id
                         }
                 findNavController().navigate(showDetailAction)
             }

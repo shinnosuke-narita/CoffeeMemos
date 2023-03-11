@@ -5,9 +5,6 @@ import androidx.lifecycle.*
 import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.dao.TasteDao
-import com.example.coffeememos.entity.Bean
-import com.example.coffeememos.entity.CustomBean
-import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.search.bean.domain.model.SearchBeanModel
@@ -15,11 +12,12 @@ import com.example.coffeememos.state.InputType
 import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.state.ProcessState
 import com.example.coffeememos.state.SelectBeanBtnAction
-import com.example.coffeememos.utilities.*
-import com.example.coffeememos.validate.ValidationInfo
-import com.example.coffeememos.validate.ValidationState
+import com.example.coffeememos.utilities.DateUtil
+import com.example.coffeememos.utilities.Util
 import com.example.coffeememos.validate.RecipeValidationLogic
-import kotlinx.coroutines.*
+import com.example.coffeememos.validate.ValidationInfo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class NewRecipeViewModel(
     private val recipeDao: RecipeDao,
@@ -33,7 +31,6 @@ class NewRecipeViewModel(
     fun setFavoriteFlag(flag: Boolean) {
         _isFavorite.value = flag
     }
-
 
     // Rating 関連
     private var _ratingManager: RatingManager? = null
@@ -53,18 +50,16 @@ class NewRecipeViewModel(
         _recipeStarList.value      = ratingManager.starList
     }
 
-
     // Roast
-    private val _currentRoast: MutableLiveData<Int> = MutableLiveData(0)
+    private val _currentRoast: MutableLiveData<Int> = MutableLiveData(2)
     val currentRoast: LiveData<Int> = _currentRoast
 
     fun setRoast(roast: Int) {
         _currentRoast.value = roast
     }
 
-
     // Grind Size
-    private val _currentGrind: MutableLiveData<Int> = MutableLiveData(0)
+    private val _currentGrind: MutableLiveData<Int> = MutableLiveData(3)
     val currentGrind: LiveData<Int> = _currentGrind
 
     fun setGrind(grind: Int) {
@@ -184,7 +179,7 @@ class NewRecipeViewModel(
 
     // validationエラーの場合、true
     fun validateRecipeData(context: Context, selectedBean: SearchBeanModel?): Boolean {
-        var validationMessage = ""
+        var validationMessage: String
 
         // taste
         validationMessage = RecipeValidationLogic.validateSelectedBean(context, selectedBean)
@@ -193,7 +188,8 @@ class NewRecipeViewModel(
             return true
         }
         // taste
-        val tasteValues = listOf<Int>(_sour, _bitter, _sweet, _flavor, _rich)
+        val tasteValues: List<Int> =
+            listOf(_sour, _bitter, _sweet, _flavor, _rich)
         validationMessage = RecipeValidationLogic.validateTastes(context, tasteValues)
         if (validationMessage.isNotEmpty()) {
             setValidationInfoAndResetAfterDelay(_tasteValidation, validationMessage)
@@ -230,7 +226,10 @@ class NewRecipeViewModel(
 
 
     // 保存処理
-    fun createNewRecipeAndTaste(bean: SearchBeanModel, preInfusionTime: Long, extractionTime: Long) {
+    fun createNewRecipeAndTaste(
+        bean: SearchBeanModel,
+        preInfusionTime: Long,
+        extractionTime: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             // 保存処理開始
             _processState.postValue(ProcessState.PROCESSING)
@@ -238,51 +237,35 @@ class NewRecipeViewModel(
             val createdAt = System.currentTimeMillis()
 
             // 蒸らし時間
-            val resultPreInfusionTime: Long
-            if (_preInfusionTimeInputType.value!! == InputType.AUTO )
-                resultPreInfusionTime = preInfusionTime
+            val resultPreInfusionTime: Long =
+            if (_preInfusionTimeInputType.value!! == InputType.AUTO)
+                 preInfusionTime
             else
-                resultPreInfusionTime =  (_preInfusionTime * 1000).toLong()
+                (_preInfusionTime * 1000).toLong()
 
             // 抽出時間
-            val resultExtractionTime : Long
-            if (_extractionTimeInputType.value!! == InputType.AUTO)
-                resultExtractionTime = extractionTime
-            else
-                resultExtractionTime = DateUtil.convertSecondsIntoMills(_extractionTimeMinutes, _extractionTimeSeconds)
+            val resultExtractionTime : Long =
+                if (_extractionTimeInputType.value!! == InputType.AUTO)
+                    extractionTime
+                else
+                    DateUtil.convertSecondsIntoMills(
+                        _extractionTimeMinutes,
+                        _extractionTimeSeconds
+                    )
 
-            // レシピ保存
-            recipeDao.insert(
-                Recipe(
-                    id                    = 0,
-                    beanId                = bean.id,
-                    country               = bean.country,
-                    tool                  = _tool,
-                    roast                 = _currentRoast.value ?: 2,
-                    extractionTime        = resultExtractionTime,
-                    preInfusionTime       = resultPreInfusionTime,
-                    amountExtraction      = _amountExtraction,
-                    temperature           = _temperature,
-                    grindSize             = _currentGrind.value ?: 3,
-                    amountOfBeans         = _amountBeans,
-                    comment               = _comment,
-                    isFavorite            = _isFavorite.value ?: false,
-                    rating                = _recipeCurrentRating.value!!,
-                    createdAt             = createdAt
-                )
-            )
+            // レシピ保存処理
 
             // 上で保存したレシピのIDを取得
             val newestRecipeId = recipeDao.getNewestRecipeId()
             tasteDao.insert(
                 Taste(
-                    id       = 0,
+                    id = 0,
                     recipeId = newestRecipeId,
-                    sour     = _sour,
-                    bitter   = _bitter,
-                    sweet    = _sweet,
-                    rich     = _rich ,
-                    flavor   = _flavor
+                    sour = _sour,
+                    bitter = _bitter,
+                    sweet = _sweet,
+                    rich = _rich ,
+                    flavor = _flavor
                 )
             )
 
