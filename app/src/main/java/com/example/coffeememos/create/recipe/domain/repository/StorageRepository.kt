@@ -4,6 +4,7 @@ import com.example.coffeememos.entity.Recipe
 import com.example.coffeememos.entity.Taste
 
 interface StorageRepository {
-    fun createRecipe(recipe: Recipe)
-    fun createTaste(taste: Taste)
+    suspend fun createRecipe(recipe: Recipe)
+    suspend fun getNewestRecipeId(): Long
+    suspend fun createTaste(taste: Taste)
 }

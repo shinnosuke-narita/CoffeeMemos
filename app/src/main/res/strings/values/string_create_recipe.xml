@@ -1,6 +1,6 @@
 <resources>
  <string name="bean_title">Bean</string>
- <string name="select_bean">コーヒー豆を選択</string>
+ <string name="select_bean_btn">コーヒー豆を選択</string>
  <string name="taste_title">Taste</string>
  <string name="taste_announce">※1~5の5段階で入力できます。</string>
  <string name="recipe_title">Recipe</string>

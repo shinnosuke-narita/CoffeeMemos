@@ -1,29 +1,32 @@
 package com.example.coffeememos.viewModel
 
 import android.content.Context
-import androidx.lifecycle.*
-import com.example.coffeememos.dao.BeanDao
-import com.example.coffeememos.dao.RecipeDao
-import com.example.coffeememos.dao.TasteDao
-import com.example.coffeememos.entity.Taste
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.coffeememos.create.recipe.presentation.controller.CreateRecipeController
+import com.example.coffeememos.create.recipe.presentation.model.ExtractionTimeInfo
+import com.example.coffeememos.create.recipe.presentation.model.PreInfusionTimeInfo
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.search.bean.domain.model.SearchBeanModel
 import com.example.coffeememos.state.InputType
 import com.example.coffeememos.state.MenuState
 import com.example.coffeememos.state.ProcessState
 import com.example.coffeememos.state.SelectBeanBtnAction
-import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.Util
 import com.example.coffeememos.validate.RecipeValidationLogic
 import com.example.coffeememos.validate.ValidationInfo
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewRecipeViewModel(
-    private val recipeDao: RecipeDao,
-    private val beanDao: BeanDao,
-    private val tasteDao: TasteDao
-) : BaseViewModel() {
+@HiltViewModel
+class NewRecipeViewModel @Inject constructor()
+    : BaseViewModel() {
+    @Inject
+    lateinit var controller: CreateRecipeController
+
     // お気に入り
     private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
     val isFavorite: LiveData<Boolean> = _isFavorite
@@ -234,39 +237,43 @@ class NewRecipeViewModel(
             // 保存処理開始
             _processState.postValue(ProcessState.PROCESSING)
 
-            val createdAt = System.currentTimeMillis()
-
             // 蒸らし時間
-            val resultPreInfusionTime: Long =
-            if (_preInfusionTimeInputType.value!! == InputType.AUTO)
-                 preInfusionTime
-            else
-                (_preInfusionTime * 1000).toLong()
+            val preInfusionTimeInfo =
+                PreInfusionTimeInfo(
+                    inputType = _preInfusionTimeInputType.value!!,
+                    manualTime = _preInfusionTime,
+                    autoTime = preInfusionTime
+                )
 
             // 抽出時間
-            val resultExtractionTime : Long =
-                if (_extractionTimeInputType.value!! == InputType.AUTO)
-                    extractionTime
-                else
-                    DateUtil.convertSecondsIntoMills(
-                        _extractionTimeMinutes,
-                        _extractionTimeSeconds
-                    )
-
-            // レシピ保存処理
-
-            // 上で保存したレシピのIDを取得
-            val newestRecipeId = recipeDao.getNewestRecipeId()
-            tasteDao.insert(
-                Taste(
-                    id = 0,
-                    recipeId = newestRecipeId,
-                    sour = _sour,
-                    bitter = _bitter,
-                    sweet = _sweet,
-                    rich = _rich ,
-                    flavor = _flavor
+            val extractionTimeInfo =
+                ExtractionTimeInfo(
+                    inputType = _extractionTimeInputType.value!!,
+                    minutes = _extractionTimeMinutes,
+                    seconds = _extractionTimeSeconds,
+                    autoTime = extractionTime
                 )
+
+            // 保存処理
+            controller.createRecipeAntTaste(
+                beanId = bean.id,
+                country = bean.country,
+                tool = _tool,
+                roast = _currentRoast.value!!,
+                extractionTimeInfo = extractionTimeInfo,
+                preInfusionTimeInfo = preInfusionTimeInfo,
+                amountExtraction = _amountExtraction,
+                temperature = _temperature,
+                grindSize = _currentGrind.value!!,
+                amountOfBean = _amountBeans,
+                comment = _comment,
+                isFavorite = isFavorite.value!!,
+                rating = _recipeCurrentRating.value!!,
+                sour = _sour,
+                bitter = _bitter,
+                sweet = _sweet,
+                flavor = _flavor,
+                rich = _rich
             )
 
             // 保存処理完了
@@ -284,28 +291,15 @@ class NewRecipeViewModel(
     // beanの登録チェック
     fun decideSelectBeanBtnAction() {
         viewModelScope.launch(Dispatchers.IO) {
-            val beanCount = beanDao.getBeanCount()
-
-            if (beanCount == 0) {
-                _selectBeanBtnAction.postValue(SelectBeanBtnAction.SHOW_DIALOG)
-                return@launch
-            }
-
-            _selectBeanBtnAction.postValue(SelectBeanBtnAction.SHOW_SELECT_BEAN_FRAGMENT)
+//            val beanCount = beanDao.getBeanCount()
+//
+//            if (beanCount == 0) {
+//                _selectBeanBtnAction.postValue(SelectBeanBtnAction.SHOW_DIALOG)
+//                return@launch
+//            }
+//
+//            _selectBeanBtnAction.postValue(SelectBeanBtnAction.SHOW_SELECT_BEAN_FRAGMENT)
         }
     }
 }
-
-class NewRecipeViewModelFactory(
-    private val recipeDao:RecipeDao,
-    private val beanDao: BeanDao,
-    private val tasteDao: TasteDao
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(NewRecipeViewModel::class.java)) {
-                return NewRecipeViewModel(recipeDao, beanDao, tasteDao) as T
-            }
-            throw IllegalArgumentException("CANNOT_GET_NEWRECIPEVIEWMODEL")
-        }
-    }
 

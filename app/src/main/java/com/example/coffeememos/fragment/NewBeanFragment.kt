@@ -3,14 +3,10 @@ package com.example.coffeememos.fragment
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,9 +20,6 @@ import com.example.coffeememos.listener.SimpleTextWatcher
 import com.example.coffeememos.manager.RatingManager
 import com.example.coffeememos.viewModel.NewBeanViewModel
 import com.example.coffeememos.viewModel.NewBeanViewModelFactory
-import com.example.coffeememos.viewModel.NewRecipeViewModel
-import com.example.coffeememos.viewModel.NewRecipeViewModelFactory
-import com.google.android.material.snackbar.Snackbar
 
 
 class NewBeanFragment : BaseFragment(), View.OnClickListener {

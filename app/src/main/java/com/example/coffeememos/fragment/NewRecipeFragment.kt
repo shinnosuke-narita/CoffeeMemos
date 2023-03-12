@@ -1,6 +1,5 @@
 package com.example.coffeememos.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -15,7 +14,6 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.coffeememos.CoffeeMemosApplication
 import com.example.coffeememos.Constants
 import com.example.coffeememos.R
 import com.example.coffeememos.databinding.FragmentNewRecipeBinding
@@ -32,9 +30,10 @@ import com.example.coffeememos.utilities.DateUtil
 import com.example.coffeememos.utilities.ViewUtil
 import com.example.coffeememos.viewModel.MainViewModel
 import com.example.coffeememos.viewModel.NewRecipeViewModel
-import com.example.coffeememos.viewModel.NewRecipeViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewRecipeFragment :
     BaseFragment(),
     View.OnClickListener {
@@ -43,14 +42,7 @@ class NewRecipeFragment :
     private val binding
         get() = _binding!!
 
-    // アクティビティのコンテキストを保持
-    private var mContext: Context? = null
-
-    private val  viewModel: NewRecipeViewModel by viewModels {
-        // viewModelの初期化
-        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        NewRecipeViewModelFactory(db.recipeDao(), db.beanDao(), db.tasteDao())
-    }
+    private val  viewModel: NewRecipeViewModel by viewModels()
 
     // 共有viewModel
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -58,12 +50,7 @@ class NewRecipeFragment :
     private val safeArgs: NewRecipeFragmentArgs by navArgs()
 
     // Ratingの☆画像リスト
-    lateinit var recipeStarViewList: List<ImageView>
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mContext = context
-    }
+    private lateinit var recipeStarViewList: List<ImageView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -301,9 +288,11 @@ class NewRecipeFragment :
         binding.timeBtn.setOnClickListener {
             viewModel.setMenuOpenedFlag(MenuState.CLOSE)
 
-            val showTimerAction = NewRecipeFragmentDirections.showTimerAction().apply {
-                existsNewRecipeFragment = true
-            }
+            val showTimerAction =
+                NewRecipeFragmentDirections
+                    .showTimerAction().apply {
+                        existsNewRecipeFragment = true
+                }
             findNavController().navigate(showTimerAction)
         }
         // 保存ボタン
@@ -315,7 +304,10 @@ class NewRecipeFragment :
                     getString(R.string.save),
                     getString(R.string.cancel),
                     "createRecipe")
-                .show(childFragmentManager, BasicDialogFragment::class.simpleName)
+                .show(
+                    childFragmentManager,
+                    BasicDialogFragment::class.simpleName
+                )
         }
 
         // TextChangeListener
@@ -418,14 +410,23 @@ class NewRecipeFragment :
             )
         }
         setFragmentResultListener("createBean") { _, _ ->
-            Snackbar.make(binding.snackBarPlace, getString(R.string.bean_finish_create_message), Snackbar.LENGTH_SHORT).apply {
-                mContext?.let {
-                    setTextColor(ContextCompat.getColor(it, R.color.snackBar_text))
-                    getView().setBackgroundColor(
-                        ContextCompat.getColor(it,
-                            R.color.white
-                        ))
-                }
+            Snackbar.make(
+                binding.snackBarPlace,
+                getString(R.string.bean_finish_create_message),
+                Snackbar.LENGTH_SHORT
+            ).apply {
+                setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.snackBar_text
+                    )
+                )
+                getView().setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.white
+                    )
+                )
             }.show()
         }
     }
@@ -433,11 +434,6 @@ class NewRecipeFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        mContext = null
     }
 
     // ★画像の共通クリックリスナー

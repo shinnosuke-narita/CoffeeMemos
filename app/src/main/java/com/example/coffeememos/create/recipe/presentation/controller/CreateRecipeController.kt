@@ -1,13 +1,16 @@
 package com.example.coffeememos.create.recipe.presentation.controller
 
+import com.example.coffeememos.create.recipe.presentation.model.ExtractionTimeInfo
+import com.example.coffeememos.create.recipe.presentation.model.PreInfusionTimeInfo
+
 interface CreateRecipeController {
-    fun createRecipe(
+    suspend fun createRecipeAntTaste(
        beanId: Long,
        country: String,
        tool: String,
        roast: Int,
-       extractionTime: Int,
-       preInfusionTime: Int,
+       extractionTimeInfo: ExtractionTimeInfo,
+       preInfusionTimeInfo: PreInfusionTimeInfo,
        amountExtraction: Int,
        temperature: Int,
        grindSize: Int,
@@ -15,5 +18,10 @@ interface CreateRecipeController {
        comment: String,
        isFavorite: Boolean,
        rating: Int,
+       sour: Int,
+       bitter: Int,
+       sweet: Int,
+       flavor: Int,
+       rich: Int
     )
 }
