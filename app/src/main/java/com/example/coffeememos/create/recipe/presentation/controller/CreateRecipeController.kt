@@ -24,4 +24,6 @@ interface CreateRecipeController {
        flavor: Int,
        rich: Int
     )
+
+    suspend fun getBeanCount(): Int
 }

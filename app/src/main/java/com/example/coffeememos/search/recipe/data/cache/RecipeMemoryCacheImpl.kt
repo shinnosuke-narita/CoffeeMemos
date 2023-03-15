@@ -7,23 +7,25 @@ import com.example.coffeememos.search.recipe.domain.cache.RecipeMemoryCache
  * メモリキャッシュクラス
  */
 object RecipeMemoryCacheImpl : RecipeMemoryCache {
-    private val cacheData: MutableMap<String, String> = mutableMapOf()
+    private val mCache: MutableMap<String, String> = mutableMapOf()
+    val cacheData: Map<String, String>
+        get() = mCache
 
     override fun setData(key: String, value: String) {
         if (key.isEmpty()) return
 
-        cacheData[key] = value
+        mCache[key] = value
     }
 
-    override fun removeData(key: String) {
-        if (key.isEmpty()) return
+    override fun removeData(key: String): String? {
+        if (key.isEmpty()) return null
 
-        cacheData.remove(key)
+        return mCache.remove(key)
     }
 
     override fun getData(key: String): String {
         if (key.isEmpty()) return ""
 
-        return cacheData[key] ?: ""
+        return mCache[key] ?: ""
     }
 }

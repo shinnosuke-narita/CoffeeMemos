@@ -291,14 +291,19 @@ class NewRecipeViewModel @Inject constructor()
     // beanの登録チェック
     fun decideSelectBeanBtnAction() {
         viewModelScope.launch(Dispatchers.IO) {
-//            val beanCount = beanDao.getBeanCount()
-//
-//            if (beanCount == 0) {
-//                _selectBeanBtnAction.postValue(SelectBeanBtnAction.SHOW_DIALOG)
-//                return@launch
-//            }
-//
-//            _selectBeanBtnAction.postValue(SelectBeanBtnAction.SHOW_SELECT_BEAN_FRAGMENT)
+            val beanCount = controller.getBeanCount()
+
+            // コーヒー豆未登録
+            if (beanCount == 0) {
+                _selectBeanBtnAction
+                    .postValue(SelectBeanBtnAction.SHOW_DIALOG)
+                return@launch
+            }
+
+            // コーヒー豆選択画面表示
+            _selectBeanBtnAction
+                .postValue(
+                    SelectBeanBtnAction.SHOW_SELECT_BEAN_FRAGMENT)
         }
     }
 }

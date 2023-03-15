@@ -2,6 +2,7 @@ package com.example.coffeememos.create.recipe.presentation.controller
 
 import com.example.coffeememos.create.recipe.domain.model.InputData
 import com.example.coffeememos.create.recipe.domain.use_case.CreateRecipeAndTasteUseCase
+import com.example.coffeememos.create.recipe.domain.use_case.GetBeanCountUseCase
 import com.example.coffeememos.create.recipe.presentation.converter.TimeConverter
 import com.example.coffeememos.create.recipe.presentation.model.ExtractionTimeInfo
 import com.example.coffeememos.create.recipe.presentation.model.PreInfusionTimeInfo
@@ -14,6 +15,8 @@ class CreateRecipeControllerImpl @Inject constructor()
     lateinit var createRecipeAndTasteUseCase: CreateRecipeAndTasteUseCase
     @Inject
     lateinit var converter: TimeConverter
+    @Inject
+    lateinit var getBeanCountUseCase: GetBeanCountUseCase
 
     override suspend fun createRecipeAntTaste(
         beanId: Long,
@@ -81,5 +84,9 @@ class CreateRecipeControllerImpl @Inject constructor()
                 rich = rich
             )
         )
+    }
+
+    override suspend fun getBeanCount(): Int {
+        return getBeanCountUseCase.handle()
     }
 }

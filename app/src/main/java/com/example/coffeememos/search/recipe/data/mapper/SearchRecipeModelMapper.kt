@@ -6,30 +6,26 @@ import javax.inject.Inject
 
 class SearchRecipeModelMapper @Inject constructor() {
     // 簡易レシピリスト作成メソッド
-    fun execute(recipeWithTasteList: List<RecipeWithTaste>): List<SearchRecipeModel> {
-        if (recipeWithTasteList.isEmpty()) return listOf()
+    fun execute(recipeWithTaste: RecipeWithTaste): SearchRecipeModel {
+        val recipe = recipeWithTaste.recipe
+        val taste = recipeWithTaste.taste
 
-        return recipeWithTasteList.map { recipeWithTaste ->
-            val recipe = recipeWithTaste.recipe
-            val taste = recipeWithTaste.taste
-
-            SearchRecipeModel(
-                recipe.id,
-                recipe.beanId,
-                taste.id,
-                recipe.country,
-                recipe.tool,
-                recipe.roast,
-                recipe.grindSize,
-                recipe.createdAt,
-                taste.sour,
-                taste.bitter,
-                taste.sweet,
-                taste.flavor,
-                taste.rich,
-                recipe.rating,
-                recipe.isFavorite
-            )
-        }
+        return SearchRecipeModel(
+            recipe.id,
+            recipe.beanId,
+            taste.id,
+            recipe.country,
+            recipe.tool,
+            recipe.roast,
+            recipe.grindSize,
+            recipe.createdAt,
+            taste.sour,
+            taste.bitter,
+            taste.sweet,
+            taste.flavor,
+            taste.rich,
+            recipe.rating,
+            recipe.isFavorite
+        )
     }
 }

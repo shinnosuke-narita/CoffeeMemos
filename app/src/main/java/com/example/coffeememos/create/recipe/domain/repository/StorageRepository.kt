@@ -7,4 +7,5 @@ interface StorageRepository {
     suspend fun createRecipe(recipe: Recipe)
     suspend fun getNewestRecipeId(): Long
     suspend fun createTaste(taste: Taste)
+    suspend fun getBeanCount(): Int
 }

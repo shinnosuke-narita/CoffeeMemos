@@ -202,6 +202,8 @@ class NewRecipeFragment :
                 MenuState.OPEN -> {
                     binding.wholeShadow.visibility = View.VISIBLE
                     binding.menuBtn.setImageResource(R.drawable.ic_baseline_close_24)
+                    binding.saveBtn.isEnabled = true
+                    binding.timeBtn.isEnabled = true
                     changeViewEnable(false)
                     AnimUtil.fadeInAnimation(binding.timeBtn, 500L)
                     AnimUtil.fadeInAnimation(binding.saveBtn, 500L)
@@ -209,6 +211,8 @@ class NewRecipeFragment :
                 MenuState.CLOSE -> {
                     binding.wholeShadow.visibility = View.GONE
                     binding.menuBtn.setImageResource(R.drawable.ic_baseline_menu_24)
+                    binding.saveBtn.isEnabled = false
+                    binding.timeBtn.isEnabled = false
                     changeViewEnable(true)
                     AnimUtil.fadeOutAnimation(binding.timeBtn, 500L)
                     AnimUtil.fadeOutAnimation(binding.saveBtn, 500L)
@@ -467,13 +471,16 @@ class NewRecipeFragment :
 
     // view の無効化
     private fun changeViewEnable(flag: Boolean) {
+        // scroll有効無効
         ViewUtil.setScrollable(binding.scrollView, flag)
 
-        binding.saveBtn.isEnabled = flag
-        binding.timeBtn.isEnabled = flag
         binding.header.favoriteBtn.isEnabled = flag
+
         for (view in binding.scrollViewContainer.children) {
-            if (view.tag.equals(R.string.change_enabled_tag)) {
+            val tag: String = (view.tag ?: "") as String
+            if (tag.isEmpty()) continue
+
+            if (tag == getString(R.string.change_enabled_tag)) {
                 view.isEnabled = flag
             }
         }

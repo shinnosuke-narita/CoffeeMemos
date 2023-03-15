@@ -1,6 +1,7 @@
 package com.example.coffeememos.create.recipe.data.repository
 
 import com.example.coffeememos.create.recipe.domain.repository.StorageRepository
+import com.example.coffeememos.dao.BeanDao
 import com.example.coffeememos.dao.RecipeDao
 import com.example.coffeememos.dao.TasteDao
 import com.example.coffeememos.entity.Recipe
@@ -13,6 +14,8 @@ class StorageRepositoryImpl @Inject constructor()
     lateinit var recipeDao: RecipeDao
     @Inject
     lateinit var tasteDao: TasteDao
+    @Inject
+    lateinit var beanDao: BeanDao
 
     override suspend fun createRecipe(recipe: Recipe) {
         recipeDao.insert(recipe)
@@ -24,5 +27,9 @@ class StorageRepositoryImpl @Inject constructor()
 
     override suspend fun createTaste(taste: Taste) {
         tasteDao.insert(taste)
+    }
+
+    override suspend fun getBeanCount(): Int {
+        return beanDao.getBeanCount()
     }
 }

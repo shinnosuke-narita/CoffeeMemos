@@ -1,5 +1,6 @@
 package com.example.coffeememos.utilities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.Rect
 import android.view.View
@@ -43,10 +44,16 @@ class ViewUtil {
             scrollView.smoothScrollBy(0, scrollY)
         }
 
-        fun setScrollable(scrollView: ScrollView, flag: Boolean) {
-            scrollView.setOnTouchListener { _, _ ->
-                return@setOnTouchListener flag
+        @SuppressLint("ClickableViewAccessibility")
+        fun setScrollable(scrollView: ScrollView, isScrollable: Boolean) {
+            if (isScrollable) {
+                scrollView.setOnTouchListener(null)
+                return
             }
+            scrollView.setOnTouchListener { _, _ ->
+                return@setOnTouchListener true
+            }
+
         }
     }
 }
