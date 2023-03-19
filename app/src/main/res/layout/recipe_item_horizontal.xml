@@ -62,7 +62,7 @@
             android:id="@+id/roast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/brown_light"
             android:textStyle="bold"
             android:textSize="11sp"
@@ -71,8 +71,8 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:background="@drawable/recipe_tag_background"
-            app:layout_constraintTop_toTopOf="@+id/tool"
-            app:layout_constraintStart_toEndOf="@+id/tool"
+            app:layout_constraintTop_toBottomOf="@+id/tool"
+            app:layout_constraintStart_toStartOf="@+id/tool"
             tools:text="フルシティロースト"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,7 +85,7 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:background="@drawable/rating_background"
-            app:layout_constraintTop_toBottomOf="@+id/tool"
+            app:layout_constraintTop_toBottomOf="@+id/roast"
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
@@ -94,9 +94,9 @@
                 android:layout_height="wrap_content"
                 android:text="Review"
                 android:textStyle="bold"
-                android:fontFamily="cursive"
                 android:textColor="@color/brown_light"
                 android:textSize="12sp"
+                app:layout_constraintTop_toTopOf="@id/rating"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/rating"/>
 
