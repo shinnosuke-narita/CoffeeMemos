@@ -208,11 +208,11 @@ class NewBeanFragment : BaseFragment(), View.OnClickListener {
     // ★画像の共通クリックリスナー
     override fun onClick(starView: View) {
         when(starView.id) {
-            R.id.beanStarFirst  -> viewModel.updateRatingState(1)
-            R.id.beanStarSecond -> viewModel.updateRatingState(2)
-            R.id.beanStarThird  -> viewModel.updateRatingState(3)
-            R.id.beanStarFourth -> viewModel.updateRatingState(4)
-            R.id.beanStarFifth  -> viewModel.updateRatingState(5)
+            R.id.starFirst  -> viewModel.updateRatingState(1)
+            R.id.starSecond -> viewModel.updateRatingState(2)
+            R.id.starThird  -> viewModel.updateRatingState(3)
+            R.id.starFourth -> viewModel.updateRatingState(4)
+            R.id.starFifth  -> viewModel.updateRatingState(5)
         }
     }
 }
