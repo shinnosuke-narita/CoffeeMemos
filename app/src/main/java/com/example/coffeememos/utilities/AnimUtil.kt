@@ -30,17 +30,35 @@ class AnimUtil {
 
         fun expandMenu(containerView: ViewGroup) {
             // viewの大きさを計測
-            containerView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+            containerView.measure(
+                View.MeasureSpec.makeMeasureSpec(
+                    0,
+                    View.MeasureSpec.UNSPECIFIED
+                ),
+                View.MeasureSpec.makeMeasureSpec(
+                    0,
+                    View.MeasureSpec.UNSPECIFIED
+                )
+            )
             val containerHeight: Int = containerView.measuredHeight
 
             containerView.layoutParams.height = 0
-            val anim = ValueAnimator.ofInt(0, containerHeight).apply {
+            val anim = ValueAnimator
+                .ofInt(0, containerHeight)
+                .apply {
                 addUpdateListener {
                     val updateValue = it.animatedValue as Int
                     when (updateValue) {
-                        0               -> containerView.visibility = View.VISIBLE
-                        containerHeight -> containerView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                        else            -> containerView.layoutParams.height = updateValue
+                        0 ->  {
+                            containerView.visibility = View.VISIBLE
+                        }
+                        containerHeight -> {
+                            containerView.layoutParams.height =
+                                ViewGroup.LayoutParams.WRAP_CONTENT
+                        }
+                        else -> {
+                          containerView.layoutParams.height = updateValue
+                        }
                     }
 
                     containerView.requestLayout()

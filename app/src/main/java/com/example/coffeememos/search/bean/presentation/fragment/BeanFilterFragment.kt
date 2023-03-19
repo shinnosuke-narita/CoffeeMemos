@@ -46,7 +46,7 @@ class BeanFilterFragment : BaseFilterFragment() {
         setUpView()
 
         viewModel.countryMenuState.observe(viewLifecycleOwner) { state ->
-           openOrCollapse(
+           expandOrCollapse(
                state,
                binding.countryContainer.root,
                binding.countryContainer.inputtedFilterElements,
@@ -68,7 +68,7 @@ class BeanFilterFragment : BaseFilterFragment() {
         }
 
         viewModel.farmMenuState.observe(viewLifecycleOwner) { state ->
-            openOrCollapse(
+            expandOrCollapse(
                state,
                binding.farmContainer.root,
                binding.farmContainer.inputtedFilterElements,
@@ -89,7 +89,7 @@ class BeanFilterFragment : BaseFilterFragment() {
         }
 
         viewModel.districtMenuState.observe(viewLifecycleOwner) { state ->
-            openOrCollapse(
+            expandOrCollapse(
                state,
                binding.districtContainer.root,
                binding.districtContainer.inputtedFilterElements,
@@ -111,7 +111,7 @@ class BeanFilterFragment : BaseFilterFragment() {
         }
 
         viewModel.storeMenuState.observe(viewLifecycleOwner) { state ->
-           openOrCollapse(
+           expandOrCollapse(
                state,
                binding.storeContainer.root,
                binding.storeContainer.inputtedFilterElements,
@@ -134,7 +134,7 @@ class BeanFilterFragment : BaseFilterFragment() {
         }
 
         viewModel.speciesMenuState.observe(viewLifecycleOwner) { state ->
-           openOrCollapse(
+           expandOrCollapse(
                state,
                binding.speciesContainer.root,
                binding.speciesContainer.inputtedFilterElements,

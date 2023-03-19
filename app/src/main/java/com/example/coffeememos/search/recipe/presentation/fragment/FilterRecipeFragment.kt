@@ -146,7 +146,7 @@ class FilterRecipeFragment : BaseFilterFragment() {
             expandOrCollapse(state, binding.grindSizeContainer)
         }
         viewModel.countryMenuState.observe(viewLifecycleOwner) { state ->
-            openOrCollapse(
+            expandOrCollapse(
                 state,
                 binding.countryContainer,
                 binding.countryFilterElements,
@@ -155,7 +155,7 @@ class FilterRecipeFragment : BaseFilterFragment() {
             ) { viewModel.removeCountryValue(it) }
         }
         viewModel.toolMenuState.observe(viewLifecycleOwner) { state ->
-            openOrCollapse(
+            expandOrCollapse(
                 state,
                 binding.toolContainer,
                 binding.toolFilterElements,

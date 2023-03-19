@@ -13,7 +13,7 @@ import com.example.coffeememos.utilities.SystemUtil
 
 open class BaseFilterFragment : Fragment() {
 
-    protected fun addFilterElementView(elementTxt: String, filterContainer: ViewGroup, deleteValueProcess: (String) -> Unit) {
+    private fun addFilterElementView(elementTxt: String, filterContainer: ViewGroup, deleteValueProcess: (String) -> Unit) {
         val itemView = layoutInflater.inflate(R.layout.filtered_element_text, null)
         itemView.findViewById<TextView>(R.id.valueText).text = elementTxt
         itemView.findViewById<ImageView>(R.id.deleteBtn).setOnClickListener {
@@ -47,7 +47,7 @@ open class BaseFilterFragment : Fragment() {
         }
     }
 
-    protected fun setUpEditTextContainer(filterContainer: ViewGroup, dataList: List<String>, deleteValueProcess: (String) -> Unit) {
+    private fun setUpEditTextContainer(filterContainer: ViewGroup, dataList: List<String>, deleteValueProcess: (String) -> Unit) {
         if (dataList.isEmpty()) return
 
         for (text in dataList) {
@@ -65,19 +65,19 @@ open class BaseFilterFragment : Fragment() {
         }
     }
 
-    protected fun getWrapContentWidth(view: View): Int {
+    private fun getWrapContentWidth(view: View): Int {
         view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
         return view.measuredWidth
     }
 
-    protected fun getMatchParentWidth(view: View): Int {
+    private fun getMatchParentWidth(view: View): Int {
         val parentWidth = (view.parent as View).width
 
         view.measure(View.MeasureSpec.makeMeasureSpec(parentWidth, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
         return view.measuredWidth
     }
 
-    protected fun setUpLinearLayout(): ViewGroup {
+    private fun setUpLinearLayout(): ViewGroup {
         val newLinearLayout = LinearLayout(requireContext())
         newLinearLayout.orientation = LinearLayout.HORIZONTAL
         newLinearLayout.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -122,7 +122,7 @@ open class BaseFilterFragment : Fragment() {
         else AnimUtil.collapseMenu(containerView)
     }
 
-    protected fun openOrCollapse(
+    protected fun expandOrCollapse(
         state: MenuState?,
         parentContainer: ViewGroup,
         elementsContainer: ViewGroup,
