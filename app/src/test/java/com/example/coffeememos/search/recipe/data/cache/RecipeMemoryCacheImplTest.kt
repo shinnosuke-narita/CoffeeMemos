@@ -1,4 +1,4 @@
-package com.example.coffeememos.search.recipe.data.cache
+package com.withapp.coffeememo.search.recipe.data.cache
 
 import com.google.common.truth.Truth
 import org.junit.Before

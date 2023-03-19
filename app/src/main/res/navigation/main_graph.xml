@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/timerFragment"
-        android:name="com.example.coffeememos.fragment.TimerFragment"
+        android:name="com.withapp.coffeememo.fragment.TimerFragment"
         android:label="Timer"
         tools:layout="@layout/fragment_timer" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/newRecipeFragment"
-        android:name="com.example.coffeememos.fragment.NewRecipeFragment"
+        android:name="com.withapp.coffeememo.fragment.NewRecipeFragment"
         android:label="New Recipe"
         tools:layout="@layout/fragment_new_recipe" >
         <action
@@ -46,12 +46,12 @@
     </fragment>
     <fragment
         android:id="@+id/newBeanFragment"
-        android:name="com.example.coffeememos.fragment.NewBeanFragment"
+        android:name="com.withapp.coffeememo.fragment.NewBeanFragment"
         android:label="fragment_new_bean"
         tools:layout="@layout/fragment_new_bean" />
     <fragment
         android:id="@+id/selectBeanFragment"
-        android:name="com.example.coffeememos.fragment.SelectBeanFragment"
+        android:name="com.withapp.coffeememo.fragment.SelectBeanFragment"
         android:label="コーヒー豆を選択してください"
         tools:layout="@layout/fragment_select_bean" >
         <action
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.coffeememos.search.common.presentation.fragment.SearchFragment"
+        android:name="com.withapp.coffeememo.search.common.presentation.fragment.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -72,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeRecipeFragment"
-        android:name="com.example.coffeememos.home.recipe.presentation.fragment.HomeRecipeFragment"
+        android:name="com.withapp.coffeememo.home.recipe.presentation.fragment.HomeRecipeFragment"
         android:label="Recipe" >
         <action
             android:id="@+id/action_homeRecipeFragment_to_newRecipeFragment"
@@ -86,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeBeansFragment"
-        android:name="com.example.coffeememos.home.bean.presentation.fragment.HomeBeansFragment"
+        android:name="com.withapp.coffeememo.home.bean.presentation.fragment.HomeBeansFragment"
         android:label="Bean"
         tools:layout="@layout/fragment_home_beans" >
         <action
@@ -98,7 +98,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
-        android:name="com.example.coffeememos.fragment.RecipeDetailFragment"
+        android:name="com.withapp.coffeememo.fragment.RecipeDetailFragment"
         android:label="Recipe Detail"
         tools:layout="@layout/fragment_recipe_detail" >
         <argument
@@ -123,7 +123,7 @@
     </fragment>
     <fragment
         android:id="@+id/beanDetailFragment"
-        android:name="com.example.coffeememos.fragment.BeanDetailFragment"
+        android:name="com.withapp.coffeememo.fragment.BeanDetailFragment"
         android:label="Bean Detail"
         tools:layout="@layout/fragment_bean_detail" >
         <argument
@@ -136,7 +136,7 @@
     </fragment>
     <fragment
         android:id="@+id/editBeanFragment"
-        android:name="com.example.coffeememos.fragment.EditBeanFragment"
+        android:name="com.withapp.coffeememo.fragment.EditBeanFragment"
         android:label="EditBeanFragment">
         <argument
             android:name="beanId"
@@ -145,7 +145,7 @@
     </fragment>
     <fragment
         android:id="@+id/editRecipeFragment"
-        android:name="com.example.coffeememos.fragment.EditRecipeFragment"
+        android:name="com.withapp.coffeememo.fragment.EditRecipeFragment"
         android:label="fragment_edit_recipe"
         tools:layout="@layout/fragment_edit_recipe" >
         <argument

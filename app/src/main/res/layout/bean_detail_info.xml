@@ -60,7 +60,7 @@
             app:layout_constraintTop_toTopOf="@+id/countryTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.example.coffeememos.view.DottedLineView
+        <com.withapp.coffeememo.view.DottedLineView
             android:layout_width="0dp"
             android:layout_height="5dp"
             app:layout_constraintTop_toBottomOf="@+id/countryTitle"
@@ -80,7 +80,7 @@
             app:layout_constraintTop_toTopOf="@+id/farmTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.example.coffeememos.view.DottedLineView
+        <com.withapp.coffeememo.view.DottedLineView
             android:layout_width="0dp"
             android:layout_height="5dp"
             app:layout_constraintTop_toBottomOf="@+id/farmTitle"
@@ -100,7 +100,7 @@
             app:layout_constraintTop_toTopOf="@+id/districtTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.example.coffeememos.view.DottedLineView
+        <com.withapp.coffeememo.view.DottedLineView
             android:layout_width="0dp"
             android:layout_height="5dp"
             app:layout_constraintTop_toBottomOf="@+id/districtTitle"
@@ -120,7 +120,7 @@
             app:layout_constraintTop_toTopOf="@+id/speciesTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.example.coffeememos.view.DottedLineView
+        <com.withapp.coffeememo.view.DottedLineView
             android:layout_width="0dp"
             android:layout_height="5dp"
             app:layout_constraintTop_toBottomOf="@+id/speciesTitle"
@@ -140,7 +140,7 @@
             app:layout_constraintTop_toTopOf="@+id/processTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.example.coffeememos.view.DottedLineView
+        <com.withapp.coffeememo.view.DottedLineView
             android:layout_width="0dp"
             android:layout_height="5dp"
             app:layout_constraintTop_toBottomOf="@+id/processTitle"
@@ -160,7 +160,7 @@
             app:layout_constraintTop_toTopOf="@+id/elevationTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.example.coffeememos.view.DottedLineView
+        <com.withapp.coffeememo.view.DottedLineView
             android:layout_width="0dp"
             android:layout_height="5dp"
             app:layout_constraintTop_toBottomOf="@+id/elevationTitle"
@@ -180,7 +180,7 @@
             app:layout_constraintTop_toTopOf="@+id/storeTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.example.coffeememos.view.DottedLineView
+        <com.withapp.coffeememo.view.DottedLineView
             android:layout_width="0dp"
             android:layout_height="5dp"
             app:layout_constraintTop_toBottomOf="@+id/storeTitle"

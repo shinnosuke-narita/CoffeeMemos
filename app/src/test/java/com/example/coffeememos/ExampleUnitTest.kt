@@ -1,4 +1,4 @@
-package com.example.coffeememos
+package com.withapp.coffeememo
 
 import org.junit.Test
 
