@@ -63,7 +63,7 @@ class SearchBeanFragment : Fragment() {
 
         // 現在のソート 監視処理
         viewModel.currentSortType.observe(viewLifecycleOwner) { type ->
-            binding.currentSortText.text = type.getSortName()
+            binding.sortBtn.text = type.getSortName()
         }
 
         sharedViewModel.searchKeyWord.observe(viewLifecycleOwner) { keyWord ->

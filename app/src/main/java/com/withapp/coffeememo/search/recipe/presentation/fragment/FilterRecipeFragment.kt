@@ -1,11 +1,15 @@
 package com.withapp.coffeememo.search.recipe.presentation.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ImageView
 import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import com.withapp.coffeememo.Constants
@@ -116,10 +120,14 @@ class FilterRecipeFragment : BaseFilterFragment() {
            setRadioBtnResource(list) { index -> roastViewList[index].findViewById(R.id.radioBtn) }
         }
         viewModel.grindSizeBtnStateList.observe(viewLifecycleOwner) { list ->
-            setRadioBtnResource(list) { index -> grindSizeViewList[index].findViewById<ImageView>(R.id.radioBtn) }
+            setRadioBtnResource(list) { index ->
+                grindSizeViewList[index].findViewById(R.id.radioBtn)
+            }
         }
         viewModel.ratingRadioBtnState.observe(viewLifecycleOwner) { stateList ->
-            setRadioBtnResource(stateList) { index -> ratingRadioBtnList[index] }
+            setRadioBtnResource(stateList) { index ->
+                ratingRadioBtnList[index]
+            }
         }
         viewModel.sourRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> sourRadioBtnList[index] }
@@ -140,10 +148,18 @@ class FilterRecipeFragment : BaseFilterFragment() {
 
         // Menu開閉状態 監視処理
         viewModel.roastMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.roastContainer)
+            expandOrCollapse(
+                state,
+                binding.roastContainer,
+                binding.roastAddIcon
+            )
         }
         viewModel.grindSizeMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.grindSizeContainer)
+            expandOrCollapse(
+                state,
+                binding.grindSizeContainer,
+                binding.grindSizeAddIcon
+            )
         }
         viewModel.countryMenuState.observe(viewLifecycleOwner) { state ->
             expandOrCollapse(
@@ -151,6 +167,7 @@ class FilterRecipeFragment : BaseFilterFragment() {
                 binding.countryContainer,
                 binding.countryFilterElements,
                 binding.root,
+                binding.countryAddIcon,
                 viewModel.countryValues.value!!,
             ) { viewModel.removeCountryValue(it) }
         }
@@ -160,26 +177,50 @@ class FilterRecipeFragment : BaseFilterFragment() {
                 binding.toolContainer,
                 binding.toolFilterElements,
                 binding.root,
+                binding.toolAddIcon,
                 viewModel.toolValues.value!!,
             ) { viewModel.removeToolValue(it) }
         }
         viewModel.ratingMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.ratingContainer.root)
+            expandOrCollapse(
+                state,
+                binding.ratingContainer.root,
+                binding.ratingAddIcon
+            )
         }
         viewModel.sourMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.sourContainer.root)
+            expandOrCollapse(
+                state,
+                binding.sourContainer.root,
+                binding.sourAddIcon
+            )
         }
         viewModel.bitterMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.bitterContainer.root)
+            expandOrCollapse(
+                state,
+                binding.bitterContainer.root,
+                binding.bitterAddIcon
+            )
         }
         viewModel.flavorMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.flavorContainer.root)
+            expandOrCollapse(
+                state,
+                binding.flavorContainer.root,
+                binding.flavorAddIcon)
         }
         viewModel.sweetMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.sweetContainer.root)
+            expandOrCollapse(
+                state,
+                binding.sweetContainer.root,
+                binding.sweetAddIcon
+            )
         }
         viewModel.richMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.richContainer.root)
+            expandOrCollapse(
+                state,
+                binding.richContainer.root,
+                binding.richAddIcon
+            )
         }
 
         // 絞り込みデータ監視処理

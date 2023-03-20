@@ -51,6 +51,7 @@ class BeanFilterFragment : BaseFilterFragment() {
                binding.countryContainer.root,
                binding.countryContainer.inputtedFilterElements,
                binding.root,
+               binding.countryTitleWrapper.icon,
                viewModel.countryValues.value!!
            ) { viewModel.removeCountryValue(it) }
         }
@@ -69,11 +70,12 @@ class BeanFilterFragment : BaseFilterFragment() {
 
         viewModel.farmMenuState.observe(viewLifecycleOwner) { state ->
             expandOrCollapse(
-               state,
-               binding.farmContainer.root,
-               binding.farmContainer.inputtedFilterElements,
+                state,
+                binding.farmContainer.root,
+                binding.farmContainer.inputtedFilterElements,
                 binding.root,
-               viewModel.farmValues.value!!
+                binding.farmTitleWrapper.icon,
+                viewModel.farmValues.value!!
            ) { viewModel.removeFarmValue(it) }
         }
         viewModel.farmValues.observe(viewLifecycleOwner) { list ->
@@ -94,6 +96,7 @@ class BeanFilterFragment : BaseFilterFragment() {
                binding.districtContainer.root,
                binding.districtContainer.inputtedFilterElements,
                 binding.root,
+                binding.districtTitleWrapper.icon,
                viewModel.districtValues.value!!
            ) { viewModel.removeDistrictValue(it) }
         }
@@ -116,6 +119,7 @@ class BeanFilterFragment : BaseFilterFragment() {
                binding.storeContainer.root,
                binding.storeContainer.inputtedFilterElements,
                binding.root,
+               binding.storeTitleWrapper.icon,
                viewModel.storeValues.value!!
            ) { viewModel.removeStoreValue(it) }
         }
@@ -139,6 +143,7 @@ class BeanFilterFragment : BaseFilterFragment() {
                binding.speciesContainer.root,
                binding.speciesContainer.inputtedFilterElements,
                binding.root,
+               binding.speciesTitleWrapper.icon,
                viewModel.speciesValues.value!!
            ) { viewModel.removeSpeciesValue(it) }
         }
@@ -156,7 +161,11 @@ class BeanFilterFragment : BaseFilterFragment() {
         }
 
         viewModel.ratingMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.ratingContainer.root)
+            expandOrCollapse(
+                state,
+                binding.ratingContainer.root,
+                binding.ratingTitleWrapper.icon
+            )
         }
         viewModel.ratingRadioBtnState.observe(viewLifecycleOwner) { stateList ->
             setRadioBtnResource(stateList) { index -> ratingRadioBtnList[index] }
@@ -166,7 +175,11 @@ class BeanFilterFragment : BaseFilterFragment() {
         }
 
         viewModel.processMenuState.observe(viewLifecycleOwner) { state ->
-            expandOrCollapse(state, binding.processContainer)
+            expandOrCollapse(
+                state,
+                binding.processContainer,
+                binding.processTitleWrapper.icon
+            )
         }
 
         viewModel.processBtnStateList.observe(viewLifecycleOwner) { list ->

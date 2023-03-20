@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -72,7 +73,7 @@ class SearchRecipeFragment : Fragment() {
 
         // 現在のソート 監視処理
         viewModel.currentSortType.observe(viewLifecycleOwner) { sortType ->
-            binding.currentSortText.text = sortType.getSortName()
+            binding.sortBtn.text = sortType.getSortName()
         }
 
         sharedViewModel.searchKeyWord.observe(viewLifecycleOwner) { keyWord ->

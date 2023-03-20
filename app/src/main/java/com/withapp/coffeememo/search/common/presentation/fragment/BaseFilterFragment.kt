@@ -115,11 +115,24 @@ open class BaseFilterFragment : Fragment() {
         }
     }
 
-    protected fun expandOrCollapse(state: MenuState?, containerView: ViewGroup) {
+    protected fun expandOrCollapse(
+        state: MenuState?,
+        containerView: ViewGroup,
+        toggleView: ImageView) {
         if (state == null) return
 
-        if (state == MenuState.OPEN) AnimUtil.expandMenu(containerView)
-        else AnimUtil.collapseMenu(containerView)
+        if (state == MenuState.OPEN) {
+            AnimUtil.expandMenu(containerView)
+            toggleView.setImageResource(
+                R.drawable.ic_baseline_horizontal_rule_24
+            )
+        }
+        else {
+            AnimUtil.collapseMenu(containerView)
+            toggleView.setImageResource(
+                R.drawable.ic_baseline_add_24
+            )
+        }
     }
 
     protected fun expandOrCollapse(
@@ -127,6 +140,7 @@ open class BaseFilterFragment : Fragment() {
         parentContainer: ViewGroup,
         elementsContainer: ViewGroup,
         rootView: ViewGroup,
+        toggleView: ImageView,
         data: List<String>,
         removeProcess: (element: String) -> Unit
     ) {
@@ -137,11 +151,17 @@ open class BaseFilterFragment : Fragment() {
                 removeProcess(it)
             }
             AnimUtil.expandMenu(parentContainer)
+            toggleView.setImageResource(
+                R.drawable.ic_baseline_horizontal_rule_24
+            )
         }
         else {
             // キーボード非表示
             SystemUtil.hideKeyBoard(requireContext(), rootView)
             AnimUtil.collapseMenu(parentContainer, elementsContainer)
+            toggleView.setImageResource(
+                R.drawable.ic_baseline_add_24
+            )
         }
     }
 }
