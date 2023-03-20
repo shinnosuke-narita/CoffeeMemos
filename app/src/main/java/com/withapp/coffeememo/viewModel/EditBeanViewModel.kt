@@ -3,14 +3,19 @@ package com.withapp.coffeememo.viewModel
 import android.content.Context
 import androidx.lifecycle.*
 import com.withapp.coffeememo.dao.BeanDao
+import com.withapp.coffeememo.dao.RecipeDao
 import com.withapp.coffeememo.entity.Bean
 import com.withapp.coffeememo.manager.RatingManager
+import com.withapp.coffeememo.state.ProcessState
 import com.withapp.coffeememo.utilities.Util
 import com.withapp.coffeememo.validate.BeanValidationLogic
 import com.withapp.coffeememo.validate.ValidationInfo
 import kotlinx.coroutines.launch
 
-class EditBeanViewModel(private val beanDao: BeanDao) : BaseViewModel() {
+class EditBeanViewModel(
+    private val beanDao: BeanDao,
+    private val recipeDao: RecipeDao
+) : BaseViewModel() {
     // 選択された豆
     private val _selectedBean: MutableLiveData<Bean> = MutableLiveData()
     val selectedBean: LiveData<Bean> = _selectedBean
@@ -69,6 +74,11 @@ class EditBeanViewModel(private val beanDao: BeanDao) : BaseViewModel() {
         return false
     }
 
+    // 更新処理状態
+    private val _processState: MutableLiveData<ProcessState> =
+        MutableLiveData(ProcessState.BEFORE_PROCESSING)
+    val processState: LiveData<ProcessState> = _processState
+
     // 更新されたデータを保持
     private var _elevationFrom: Int = 0
     private var _elevationTo  : Int = 0
@@ -109,10 +119,13 @@ class EditBeanViewModel(private val beanDao: BeanDao) : BaseViewModel() {
 
     // コーヒー豆更新処理
     fun updateBean() {
+        // 更新処理開始
+        _processState.value = ProcessState.PROCESSING
         viewModelScope.launch {
+            val selectedBean = _selectedBean.value!!
             beanDao.update(
                 Bean(
-                    id            = _selectedBean.value!!.id,
+                    id            = selectedBean.id,
                     country       = _country,
                     farm          = _farm,
                     district      = _district,
@@ -124,19 +137,34 @@ class EditBeanViewModel(private val beanDao: BeanDao) : BaseViewModel() {
                     comment       = _comment,
                     rating        = ratingManager.currentRating,
                     isFavorite    = _currentFavorite.value!!,
-                    createdAt     = _selectedBean.value!!.createdAt
+                    createdAt     = selectedBean.createdAt
                 )
             )
+
+            if (_country == _selectedBean.value!!.country) return@launch
+
+            // recipe テーブル更新処理
+            val recipeIds: List<Long> =
+                recipeDao.getRecipeIdsByBeanId(selectedBean.id)
+            if (recipeIds.isEmpty()) return@launch
+
+            recipeIds.forEach { id ->
+                recipeDao.updateCountryById(id, _country)
+            }
+
+            // 更新処理完了
+            _processState.postValue(ProcessState.FINISH_PROCESSING)
         }
     }
 }
 
 class EditBeanViewModelFactory(
-    private val beanDao  : BeanDao
+    private val beanDao: BeanDao,
+    private val recipeDao: RecipeDao
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EditBeanViewModel::class.java)) {
-            return EditBeanViewModel(beanDao) as T
+            return EditBeanViewModel(beanDao, recipeDao) as T
         }
         throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
     }

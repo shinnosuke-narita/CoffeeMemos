@@ -23,10 +23,16 @@ interface RecipeDao {
     suspend fun update(recipe: Recipe)
 
     @Query("UPDATE recipe SET isFavorite = :favoriteFlag" +
-            " WHERE recipe_id = :id")
+            " WHERE recipe_id = :id;")
     suspend fun updateFavoriteByRecipeId(
         id: Long,
         favoriteFlag: Boolean)
+
+    @Query("UPDATE recipe SET country = :country" +
+            " WHERE recipe_id = :id;")
+    suspend fun updateCountryById(
+        id: Long,
+        country: String)
 
     ///////////////////////
     /////  削除系  /////////
@@ -52,6 +58,9 @@ interface RecipeDao {
 
     @Query("SELECT * FROM recipe WHERE recipe_id = :id;")
     suspend fun getRecipeById(id: Long): Recipe
+
+    @Query("SELECT recipe_id FROM recipe WHERE recipe_bean_id = :beanId;")
+    suspend fun getRecipeIdsByBeanId(beanId: Long): List<Long>
 
     @Query("SELECT COUNT(*) FROM recipe;")
     fun getTotalCount(): Int
