@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoffeeMemos"
         tools:targetApi="33">
+
+        <!--  AdMobの設定      -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7093807169305333~6104449129"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

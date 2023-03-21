@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.ads.AdRequest
 import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.databinding.ActivityMainBinding
 import com.withapp.coffeememo.entity.Recipe
@@ -33,13 +34,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
         val database = (application as CoffeeMemosApplication).database
         val recipeDao = database.recipeDao()
         val beanDao = database.beanDao()
         val tasteDao = database.tasteDao()
 
-
+        // 広告読み込み
+        loadAd()
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         navController = navHostFragment.navController
@@ -129,5 +130,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideBottomNav() {
         binding.bottomNavBar.visibility = View.GONE
+    }
+
+    private fun loadAd() {
+        val adRequest: AdRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
     }
 }
