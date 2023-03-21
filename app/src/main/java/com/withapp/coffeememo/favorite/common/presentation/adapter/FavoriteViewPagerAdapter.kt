@@ -1,9 +1,13 @@
-package com.withapp.coffeememo.adapter
+package com.withapp.coffeememo.favorite.common.presentation.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class SearchViewPagerAdapter(parent: Fragment, private val fragmentList: List<Fragment>) : FragmentStateAdapter(parent){
+class FavoriteViewPagerAdapter(
+    parent: Fragment,
+    private val fragmentList: List<Fragment>
+) : FragmentStateAdapter(parent) {
+
     override fun getItemCount(): Int {
         return fragmentList.size
     }

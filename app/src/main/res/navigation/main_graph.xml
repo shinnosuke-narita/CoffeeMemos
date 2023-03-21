@@ -191,4 +191,9 @@
         android:name="com.withapp.coffeememo.copyright.presentation.view.CopyRightFragment"
         android:label="fragment_copy_right"
         tools:layout="@layout/fragment_copy_right" />
+    <fragment
+        android:id="@+id/baseFavoriteFragment"
+        android:name="com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragment"
+        android:label="fragment_base_favorite"
+        tools:layout="@layout/fragment_base_favorite" />
 </navigation>

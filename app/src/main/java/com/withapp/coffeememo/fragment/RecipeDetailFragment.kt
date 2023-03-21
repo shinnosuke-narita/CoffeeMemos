@@ -76,11 +76,11 @@ class RecipeDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recipeStarViewList: List<ImageView> = listOf(
-            binding.recipeStarFirst,
-            binding.recipeStarSecond,
-            binding.recipeStarThird,
-            binding.recipeStarFourth,
-            binding.recipeStarFifth,
+            binding.recipeCardView.recipeStarFirst,
+            binding.recipeCardView.recipeStarSecond,
+            binding.recipeCardView.recipeStarThird,
+            binding.recipeCardView.recipeStarFourth,
+            binding.recipeCardView.recipeStarFifth,
         )
 
         val beanStarViewList: List<ImageView> = listOf(
@@ -119,20 +119,20 @@ class RecipeDetailFragment : Fragment() {
         }
 
         viewModel.selectedRecipe.observe(viewLifecycleOwner) { recipe ->
-            binding.toolText.text             = recipe.tool
-            binding.recipeCommentText.text    = recipe.comment
-            binding.amountBeanText.text       = recipe.amountOfBeans.toString()
-            binding.temperatureText.text      = recipe.temperature.toString()
-            binding.amountExtractionText.text = recipe.amountExtraction.toString()
-            binding.roastText.text            = Constants.roastList[recipe.roast]
-            binding.grindText.text            = Constants.grindSizeList[recipe.grindSize]
-            binding.preInfusionTimeText.text  = DateUtil.formatPreInfusionTime(recipe.preInfusionTime)
-            binding.extractionTimeText.text   = DateUtil.formatExtractionTime(recipe.extractionTime)
-            binding.createdDateText.text      = DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern)
+            binding.recipeCardView.toolText.text = recipe.tool
+            binding.recipeCardView.recipeCommentText.text = recipe.comment
+            binding.recipeCardView.amountBeanText.text       = recipe.amountOfBeans.toString()
+            binding.recipeCardView.temperatureText.text      = recipe.temperature.toString()
+            binding.recipeCardView.amountExtractionText.text = recipe.amountExtraction.toString()
+            binding.recipeCardView.roastText.text            = Constants.roastList[recipe.roast]
+            binding.recipeCardView.grindText.text            = Constants.grindSizeList[recipe.grindSize]
+            binding.recipeCardView.preInfusionTimeText.text  = DateUtil.formatPreInfusionTime(recipe.preInfusionTime)
+            binding.recipeCardView.extractionTimeText.text   = DateUtil.formatExtractionTime(recipe.extractionTime)
+            binding.recipeCardView.createdDateText.text      = DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern)
 
 
-            if (recipe.isFavorite) binding.recipeFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
-            else binding.recipeFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            if (recipe.isFavorite) binding.recipeCardView.recipeFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
+            else binding.recipeCardView.recipeFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
 
         viewModel.selectedBean.observe(viewLifecycleOwner) { bean ->
@@ -166,7 +166,7 @@ class RecipeDetailFragment : Fragment() {
 
         // Ratingの値 監視処理
         viewModel.recipeCurrentRating.observe(viewLifecycleOwner) { currentRating ->
-            binding.recipeRating.text = getString(R.string.rate_decimal, currentRating.toString())
+            binding.recipeCardView.recipeRating.text = getString(R.string.rate_decimal, currentRating.toString())
         }
         viewModel.beanCurrentRating.observe(viewLifecycleOwner) { currentRating ->
             binding.beanCardView.beanRating.text = getString(R.string.rate_decimal, currentRating.toString())
@@ -212,7 +212,7 @@ class RecipeDetailFragment : Fragment() {
 
 
         // コーヒー豆編集画面へ遷移
-        binding.beanCardView.beanEditIcon.setOnClickListener { v ->
+        binding.beanEditIcon.setOnClickListener { v ->
             val showEditBeanAction = RecipeDetailFragmentDirections.showEditBeanAction().apply {
                 beanId = viewModel.selectedBean.value!!.id
             }

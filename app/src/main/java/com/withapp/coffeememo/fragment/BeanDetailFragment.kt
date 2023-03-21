@@ -110,7 +110,7 @@ class BeanDetailFragment : Fragment() {
 
 
         // コーヒー豆編集画面 遷移
-        binding.beanCardView.beanEditIcon.setOnClickListener { v ->
+        binding.beanEditIcon.setOnClickListener { v ->
             val showEditBeanAction = BeanDetailFragmentDirections.showEditBeanAction().apply {
                 beanId = viewModel.selectedBean.value!!.id
             }

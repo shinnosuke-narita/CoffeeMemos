@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.withapp.coffeememo.search.recipe.presentation.model.SearchKeyWord
 import com.withapp.coffeememo.search.recipe.presentation.model.SearchType
-import com.withapp.coffeememo.adapter.SearchViewPagerAdapter
+import com.withapp.coffeememo.search.common.presentation.adapter.SearchViewPagerAdapter
 import com.withapp.coffeememo.databinding.FragmentSearchBinding
 import com.withapp.coffeememo.search.recipe.presentation.fragment.SearchRecipeFragment
 import com.withapp.coffeememo.search.bean.presentation.fragment.SearchBeanFragment
