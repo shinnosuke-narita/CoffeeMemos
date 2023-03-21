@@ -19,7 +19,7 @@
 
 
         <TextView
-            android:id="@+id/country"
+            android:id="@+id/tool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -28,7 +28,7 @@
             android:fontFamily="sans-serif-medium"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="ブラジル" />
+            tools:text="hario" />
 
         <TextView
             android:id="@+id/createdAt"
@@ -36,13 +36,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textColor="#D8D3CE"
-            app:layout_constraintTop_toBottomOf="@+id/country"
-            app:layout_constraintStart_toStartOf="@+id/country"
+            app:layout_constraintTop_toBottomOf="@+id/tool"
+            app:layout_constraintStart_toStartOf="@+id/tool"
             tools:text="2022/10/10 20:20"/>
 
 
         <TextView
-            android:id="@+id/tool"
+            android:id="@+id/country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -55,8 +55,8 @@
             android:paddingEnd="8dp"
             android:background="@drawable/recipe_tag_background"
             app:layout_constraintTop_toBottomOf="@+id/createdAt"
-            app:layout_constraintStart_toStartOf="@+id/country"
-            tools:text="ハリオ"/>
+            app:layout_constraintStart_toStartOf="@+id/tool"
+            tools:text="ブラジル"/>
 
         <TextView
             android:id="@+id/roast"
@@ -71,7 +71,7 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:background="@drawable/recipe_tag_background"
-            app:layout_constraintTop_toBottomOf="@+id/tool"
+            app:layout_constraintTop_toBottomOf="@+id/country"
             app:layout_constraintStart_toStartOf="@+id/tool"
             tools:text="フルシティロースト"/>
 

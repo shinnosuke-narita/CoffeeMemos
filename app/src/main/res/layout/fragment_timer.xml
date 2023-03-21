@@ -7,7 +7,7 @@
     tools:context=".fragment.TimerFragment">
 
     <include
-        layout="@layout/normal_header"
+        layout="@layout/header_with_back_key"
         android:id="@+id/header"
         app:layout_constraintTop_toTopOf="parent"/>
 

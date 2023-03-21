@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.withapp.coffeememo">
 
+    <!-- パーミッション  -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".CoffeeMemosApplication"
         android:allowBackup="true"
@@ -23,6 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+         <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/licenseTheme" />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/licenseTheme" />
     </application>
 
 </manifest>

@@ -7,7 +7,7 @@
     tools:context=".fragment.NewRecipeFragment">
 
     <include
-        layout="@layout/favorite_header"
+        layout="@layout/header_with_favorite_btn"
         android:id="@+id/header"
         app:layout_constraintTop_toTopOf="parent"/>
 

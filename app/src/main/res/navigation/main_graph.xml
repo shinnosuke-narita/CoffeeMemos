@@ -83,6 +83,14 @@
         <action
             android:id="@+id/show_recipe_detail_action"
             app:destination="@id/recipeDetailFragment" />
+        <action
+            android:id="@+id/action_homeRecipeFragment_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right"/>
+
     </fragment>
     <fragment
         android:id="@+id/homeBeansFragment"
@@ -95,6 +103,13 @@
         <action
             android:id="@+id/show_bean_detail_action"
             app:destination="@id/beanDetailFragment" />
+        <action
+            android:id="@+id/action_homeBeansFragment_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right"/>
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
@@ -154,4 +169,26 @@
             android:defaultValue="1L" />
 
     </fragment>
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.withapp.coffeememo.menu.presentation.view.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_copyRightFragment"
+            app:destination="@id/copyRightFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.withapp.coffeememo.privacy_policy.presentation.view.PrivacyPolicyFragment"
+        android:label="fragment_privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
+    <fragment
+        android:id="@+id/copyRightFragment"
+        android:name="com.withapp.coffeememo.copyright.presentation.view.CopyRightFragment"
+        android:label="fragment_copy_right"
+        tools:layout="@layout/fragment_copy_right" />
 </navigation>

@@ -8,6 +8,7 @@ plugins {
 }
 
 apply plugin: "kotlin-kapt"
+apply plugin: "com.google.android.gms.oss-licenses-plugin"
 
 android {
     compileSdk 33
@@ -98,6 +99,9 @@ dependencies {
     testImplementation 'com.google.truth:truth:1.1.3'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // ライセンス表記
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 }
 
 kapt {

@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.searchFragment -> {
                     showBottomNav()
-                    this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
                 }
                 else -> {
                     hideBottomNav()

@@ -1,5 +1,6 @@
 package com.withapp.coffeememo.home.recipe.presentation.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentHomeRecipeBinding
 import com.withapp.coffeememo.home.recipe.presentation.adapter.RecipeAdapter
@@ -101,6 +103,12 @@ class HomeRecipeFragment : Fragment() {
         // 豆ホーム画面へ遷移
         binding.goToBeanBtn.setOnClickListener {
             findNavController().navigate(R.id.homeBeansFragment)
+        }
+
+        // メニュー画面へ遷移
+        binding.menuBtn.setOnClickListener {
+            findNavController()
+                .navigate(R.id.action_homeRecipeFragment_to_menuFragment)
         }
 
         setFragmentResultListener("deleteRecipe") { _, _ ->
