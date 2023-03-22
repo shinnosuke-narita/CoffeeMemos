@@ -174,11 +174,12 @@ class SearchRecipeFragment : Fragment() {
                     // 更新フラグの更新
                     viewModel.setShouldUpdate(true)
 
-                    val showDetailAction = SearchFragmentDirections.showRecipeDetailAction().apply {
-                        recipeId = recipe.recipeId
-                        beanId   = recipe.beanId
-                        tasteId  = recipe.tasteId
-                    }
+                    val showDetailAction =
+                        SearchFragmentDirections
+                            .showRecipeDetailAction().apply {
+                                recipeId = recipe.recipeId
+                                beanId   = recipe.beanId
+                            }
                     findNavController().navigate(showDetailAction)
                 }
             })

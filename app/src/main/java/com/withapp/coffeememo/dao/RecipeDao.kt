@@ -46,12 +46,6 @@ interface RecipeDao {
     ///////////////////////
     /////  抽出系  /////////
     ///////////////////////
-    @Query("SELECT * FROM recipe;")
-    suspend fun getAll(): List<Recipe>
-
-    @Query("SELECT recipe_id FROM recipe;")
-    suspend fun getIds(): List<Long>
-
     @Query("SELECT recipe_id FROM recipe" +
             " ORDER BY recipe_id DESC LIMIT 1;")
     suspend fun getNewestRecipeId(): Long
@@ -83,4 +77,6 @@ interface RecipeDao {
         keyword: String
     ): List<RecipeWithTaste>
 
+    @Query("SELECT * FROM recipe WHERE isFavorite = 1;")
+    suspend fun getFavoriteRecipe(): List<Recipe>
 }

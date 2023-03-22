@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="favorite_header">Favorite</string>
+    <string name="favorite_sort_icon_description">ソートアイコン</string>
+    <string name="favorite_delete_message">お気に入りを解除します</string>
+    <string name="favorite_snack_bar_btn_message">OK</string>
 </resources>

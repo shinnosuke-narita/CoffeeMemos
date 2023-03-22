@@ -37,8 +37,6 @@ class DateUtil {
 
         fun getMinutes(millsTime: Long): Long = millsTime / 1000 / 60
         fun getSeconds(millsTime: Long): Long = millsTime / 1000 % 60
-        fun getMinutesStr(millsTime: Long): String = (millsTime / 1000 / 60).toString()
-        fun getSecondsStr(millsTime: Long): String = (millsTime / 1000 % 60).toString()
         fun convertSeconds(millsTime: Long): Long  {
             val minutes = getMinutes(millsTime)
             val seconds = getSeconds(millsTime)

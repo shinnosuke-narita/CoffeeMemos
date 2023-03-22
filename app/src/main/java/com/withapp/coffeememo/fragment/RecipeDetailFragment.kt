@@ -57,7 +57,6 @@ class RecipeDetailFragment : Fragment() {
         viewModel.initialize(
             safeArgs.recipeId,
             safeArgs.beanId,
-            safeArgs.tasteId,
             RatingManager(),
             RatingManager()
         )
@@ -174,7 +173,7 @@ class RecipeDetailFragment : Fragment() {
 
 
         // 削除処理
-        binding.deleteBtn.setOnClickListener { view ->
+        binding.deleteBtn.setOnClickListener {
             BasicDialogFragment
                 .create(
                     getString(R.string.delete_recipe_title),

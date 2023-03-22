@@ -12,7 +12,9 @@ import com.withapp.coffeememo.databinding.FragmentBaseFavoriteBinding
 import com.withapp.coffeememo.favorite.bean.presentation.view.FavoriteBeanFragment
 import com.withapp.coffeememo.favorite.common.presentation.adapter.FavoriteViewPagerAdapter
 import com.withapp.coffeememo.favorite.recipe.presentation.view.FavoriteRecipeFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BaseFavoriteFragment : Fragment() {
     // viewBinding
     private  var _binding: FragmentBaseFavoriteBinding? = null

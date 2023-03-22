@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.domain.model
+package com.withapp.coffeememo.favorite.recipe.domain.model
 
 enum class RecipeSortType {
     NEW        { override fun getSortName(): String = "新しい順"},

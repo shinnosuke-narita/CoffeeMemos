@@ -1,6 +1,5 @@
 package com.withapp.coffeememo.viewModel
 
-import android.media.Rating
 import androidx.lifecycle.*
 import com.withapp.coffeememo.dao.BeanDao
 import com.withapp.coffeememo.dao.RecipeDao
@@ -9,7 +8,7 @@ import com.withapp.coffeememo.entity.Bean
 import com.withapp.coffeememo.entity.Recipe
 import com.withapp.coffeememo.entity.Taste
 import com.withapp.coffeememo.manager.RatingManager
-import com.withapp.coffeememo.manager.RatingManager.*
+import com.withapp.coffeememo.manager.RatingManager.Star
 import kotlinx.coroutines.launch
 
 class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao: RecipeDao, private val tasteDao: TasteDao) : ViewModel() {
@@ -49,7 +48,13 @@ class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao:
     private var _beanCurrentRating: MutableLiveData<Int> = MutableLiveData(1)
     val beanCurrentRating: LiveData<Int> = _beanCurrentRating
 
-    fun initialize(recipeId: Long, beanId: Long, tasteId: Long, recipeRatingManager: RatingManager, beanRatingManager: RatingManager) {
+    fun initialize(
+        recipeId: Long,
+        beanId: Long,
+        recipeRatingManager:
+        RatingManager,
+        beanRatingManager: RatingManager
+    ) {
         // RatingManagerを先に初期化する！（アプリ落ちる）
         _recipeRatingManager  = recipeRatingManager
         _beanRatingManager    = beanRatingManager
@@ -57,7 +62,7 @@ class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao:
         viewModelScope.launch {
             _selectedRecipe.postValue(recipeDao.getRecipeById(recipeId))
             _selectedBean.postValue(beanDao.getBeanById(beanId))
-            _selectedTaste.postValue(tasteDao.getTasteById(tasteId))
+            _selectedTaste.postValue(tasteDao.getTasteByRecipeId(recipeId))
         }
 
     }

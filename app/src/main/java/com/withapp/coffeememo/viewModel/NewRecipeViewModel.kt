@@ -88,7 +88,7 @@ class NewRecipeViewModel @Inject constructor()
         _sour = if (sour.isEmpty()) 1 else sour.toInt()
     }
     fun setBitter(bitter: String) {
-        _sour = if (bitter.isEmpty()) 1 else bitter.toInt()
+        _bitter = if (bitter.isEmpty()) 1 else bitter.toInt()
     }
     fun setSweet(sweet: String) {
         _sweet = if (sweet.isEmpty()) 1 else sweet.toInt()

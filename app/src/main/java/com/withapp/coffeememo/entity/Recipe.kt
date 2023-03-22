@@ -25,7 +25,6 @@ data class Recipe(
         index = true
     )
     var beanId: Long,
-    // TODO countryカラムは削除する(更新時の不整合につながる)
     var country: String,
     val tool: String,
     val roast: Int,
