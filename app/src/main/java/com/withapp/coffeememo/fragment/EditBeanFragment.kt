@@ -110,10 +110,10 @@ class EditBeanFragment : BaseFragment(), View.OnClickListener {
         }
         // Favorite
         viewModel.currentFavorite.observe(viewLifecycleOwner) { isFavorite ->
-            if (isFavorite) binding.header.favoriteBtn.setImageResource(
+            if (isFavorite) binding.header.actionBtn.setImageResource(
                 R.drawable.ic_baseline_favorite_24
             )
-            else binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            else binding.header.actionBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
         // Process
         viewModel.process.observe(viewLifecycleOwner) { process ->
@@ -159,7 +159,7 @@ class EditBeanFragment : BaseFragment(), View.OnClickListener {
             binding.beanStarFourth.setOnClickListener(this)
             binding.beanStarFifth.setOnClickListener(this)
             // favorite
-            binding.header.favoriteBtn.setOnClickListener {
+            binding.header.actionBtn.setOnClickListener {
                 if (viewModel.currentFavorite.value!!) viewModel.setFavorite(
                     false
                 )

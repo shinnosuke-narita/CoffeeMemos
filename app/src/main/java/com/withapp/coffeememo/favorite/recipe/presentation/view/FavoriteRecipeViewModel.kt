@@ -24,9 +24,9 @@ class FavoriteRecipeViewModel @Inject constructor()
     val favoriteRecipes: LiveData<List<FavoriteRecipeModel>> = _favoriteRecipes
 
     // お気に入り登録数
-    val favoriteRecipeCount: LiveData<Int> =
+    val favoriteRecipeCount: LiveData<String> =
         _favoriteRecipes.map { recipes ->
-            return@map recipes.count()
+            return@map String.format("%d件", recipes.count())
         }
 
     // 現在のソート

@@ -88,8 +88,8 @@ class EditRecipeFragment : BaseFragment(), View.OnClickListener {
         }
         // Favorite
         viewModel.currentFavorite.observe(viewLifecycleOwner) { isFavorite ->
-            if (isFavorite) binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
-            else binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            if (isFavorite) binding.header.actionBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
+            else binding.header.actionBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
         // rating ★Viewの状態監視処理
         viewModel.recipeStarList.observe(viewLifecycleOwner) { starList ->
@@ -128,7 +128,7 @@ class EditRecipeFragment : BaseFragment(), View.OnClickListener {
         // clickListener //
         //////////////////
         // お気に入りアイコン
-        binding.header.favoriteBtn.setOnClickListener {
+        binding.header.actionBtn.setOnClickListener {
             if (viewModel.currentFavorite.value!!) viewModel.setFavorite(false)
             else viewModel.setFavorite(true)
         }

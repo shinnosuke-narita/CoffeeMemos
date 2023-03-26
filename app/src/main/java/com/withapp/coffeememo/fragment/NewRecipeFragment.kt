@@ -80,8 +80,8 @@ class NewRecipeFragment :
 
         // お気に入り
         viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
-            if (isFavorite) binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
-            else binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            if (isFavorite) binding.header.actionBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
+            else binding.header.actionBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
         // 蒸らし時間
         viewModel.preInfusionTimeInputType.observe(viewLifecycleOwner) { inputType ->
@@ -240,7 +240,7 @@ class NewRecipeFragment :
         }
 
         // お気に入りアイコン
-        binding.header.favoriteBtn.setOnClickListener {
+        binding.header.actionBtn.setOnClickListener {
             if (viewModel.isFavorite.value == true) viewModel.setFavoriteFlag(false)
             else viewModel.setFavoriteFlag(true)
         }
@@ -474,7 +474,7 @@ class NewRecipeFragment :
         // scroll有効無効
         ViewUtil.setScrollable(binding.scrollView, flag)
 
-        binding.header.favoriteBtn.isEnabled = flag
+        binding.header.actionBtn.isEnabled = flag
 
         for (view in binding.scrollViewContainer.children) {
             val tag: String = (view.tag ?: "") as String

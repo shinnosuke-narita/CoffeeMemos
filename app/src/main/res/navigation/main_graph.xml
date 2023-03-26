@@ -195,5 +195,12 @@
         android:id="@+id/baseFavoriteFragment"
         android:name="com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragment"
         android:label="fragment_base_favorite"
-        tools:layout="@layout/fragment_base_favorite" />
+        tools:layout="@layout/fragment_base_favorite" >
+        <action
+            android:id="@+id/action_baseFavoriteFragment_to_beanDetailFragment"
+            app:destination="@id/beanDetailFragment" />
+        <action
+            android:id="@+id/action_baseFavoriteFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
 </navigation>

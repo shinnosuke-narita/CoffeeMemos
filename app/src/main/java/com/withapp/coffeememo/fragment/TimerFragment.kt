@@ -51,6 +51,7 @@ class TimerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // header セッティング
+        binding.header.actionBtn.setImageResource(R.drawable.ic_baseline_create_24)
         binding.header.headerTitle.text = getString(R.string.timer)
         binding.header.backBtn.setOnClickListener {
             findNavController().popBackStack()
@@ -108,7 +109,7 @@ class TimerFragment : Fragment() {
             mainViewModel.setPreInfusionTime(viewModel.currentTime.value!!)
         }
 
-        binding.showNewRecipeBtn.setOnClickListener {
+        binding.header.actionBtn.setOnClickListener {
             if (mainViewModel.newRecipeFragmentExists.value!!) {
                 // レシピ新規作成画面から開かれた場合
                 setFragmentResult("returnFromTimer", Bundle())

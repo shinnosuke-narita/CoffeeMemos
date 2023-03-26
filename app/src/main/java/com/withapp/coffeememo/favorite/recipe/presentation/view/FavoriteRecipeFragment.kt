@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentFavoriteRecipeBinding
+import com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragmentDirections
 import com.withapp.coffeememo.favorite.recipe.presentation.adapter.FavoriteRecipeAdapter
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
-import com.withapp.coffeememo.home.recipe.presentation.fragment.HomeRecipeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -61,8 +61,8 @@ class FavoriteRecipeFragment : Fragment() {
 
         // お気に入りレシピ数
         viewModel.favoriteRecipeCount.observe(
-            viewLifecycleOwner) { count ->
-            binding.itemCount.text = count.toString()
+            viewLifecycleOwner) { countStr ->
+            binding.itemCount.text = countStr
         }
 
         // 現在のソート
@@ -97,7 +97,8 @@ class FavoriteRecipeFragment : Fragment() {
             },
             onItemClick = { recipe ->
                 val showDetailAction =
-                    HomeRecipeFragmentDirections.showRecipeDetailAction()
+                    BaseFavoriteFragmentDirections
+                        .actionBaseFavoriteFragmentToRecipeDetailFragment()
                         .apply {
                             recipeId = recipe.id
                             beanId   = recipe.beanId

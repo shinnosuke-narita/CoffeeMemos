@@ -76,8 +76,8 @@ class NewBeanFragment : BaseFragment(), View.OnClickListener {
         /////////////////////
         // お気に入り 監視処理
         viewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
-            if (isFavorite) binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
-            else binding.header.favoriteBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            if (isFavorite) binding.header.actionBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
+            else binding.header.actionBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
         // rating ★Viewの状態監視処理
         viewModel.beanStarList.observe(viewLifecycleOwner) { starList ->
@@ -103,7 +103,7 @@ class NewBeanFragment : BaseFragment(), View.OnClickListener {
         // clickListener //
         ///////////////////
         // favorite
-        binding.header.favoriteBtn.setOnClickListener {
+        binding.header.actionBtn.setOnClickListener {
             if (viewModel.isFavorite.value == true) viewModel.setFavoriteFlag(false)
             else viewModel.setFavoriteFlag(true)
         }

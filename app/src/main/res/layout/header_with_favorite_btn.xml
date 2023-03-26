@@ -38,7 +38,7 @@
             app:layout_constraintStart_toEndOf="@+id/backBtn" />
 
         <ImageView
-            android:id="@+id/favoriteBtn"
+            android:id="@+id/actionBtn"
             android:layout_width="27dp"
             android:layout_height="27dp"
             android:src="@drawable/ic_baseline_favorite_border_24"
@@ -48,6 +48,4 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.cardview.widget.CardView>
