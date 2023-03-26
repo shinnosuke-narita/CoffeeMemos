@@ -169,16 +169,4 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
         }
         _shouldUpdate = false
     }
-
-
-    class SearchRecipeViewModelFactory(
-        private val recipeDao: RecipeDao
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SearchRecipeViewModel::class.java)) {
-                return SearchRecipeViewModel(recipeDao) as T
-            }
-            throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
-        }
-    }
 }
