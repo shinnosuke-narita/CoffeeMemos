@@ -24,6 +24,7 @@ import com.withapp.coffeememo.manager.RatingManager.*
 import com.withapp.coffeememo.viewModel.BeanDetailViewModel
 import com.withapp.coffeememo.viewModel.BeanDetailViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import com.withapp.coffeememo.utilities.DateUtil
 
 class BeanDetailFragment : Fragment() {
     private var mContext: Context? = null
@@ -103,6 +104,7 @@ class BeanDetailFragment : Fragment() {
             binding.beanCardView.elevationText.text   = getString(R.string.elevation_from_to, bean.elevationFrom.toString(), bean.elevationTo.toString())
             binding.beanCardView.storeText.text       = bean.store
             binding.beanCardView.beanCommentText.text = bean.comment
+            binding.beanCardView.createdAtText.text   = DateUtil.formatEpochTimeMills(bean.createdAt, DateUtil.pattern)
 
             if (bean.isFavorite) binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
             else binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)

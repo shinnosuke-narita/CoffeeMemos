@@ -1,38 +1,37 @@
 package com.withapp.coffeememo.favorite.recipe.presentation.view
 
-import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.databinding.FavoriteContentsBinding
 import com.withapp.coffeememo.databinding.FragmentFavoriteRecipeBinding
 import com.withapp.coffeememo.dialog.ListDialogFragment
 import com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragmentDirections
-import com.withapp.coffeememo.favorite.recipe.domain.model.RecipeSortType
 import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
-import com.withapp.coffeememo.favorite.recipe.presentation.adapter.FavoriteRecipeAdapter
+import com.withapp.coffeememo.favorite.recipe.presentation.adapter.FavoriteBeanAdapter
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavoriteRecipeFragment : Fragment() {
     // viewBinding
-    private var _binding: FragmentFavoriteRecipeBinding? = null
-    private val binding
-        get() = _binding!!
+    private var _mainBinding: FragmentFavoriteRecipeBinding? = null
+    private val mainBinding get() = _mainBinding!!
+    // merge tag 使用
+    private var _binding: FavoriteContentsBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: FavoriteRecipeViewModel by viewModels()
 
-    private lateinit var favoriteRecipeAdapter: FavoriteRecipeAdapter
+    private lateinit var favoriteRecipeAdapter: FavoriteBeanAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,10 +43,10 @@ class FavoriteRecipeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentFavoriteRecipeBinding
+        _mainBinding = FragmentFavoriteRecipeBinding
             .inflate(inflater, container, false)
-        return binding.root
+        _binding = FavoriteContentsBinding.bind(mainBinding.root)
+        return mainBinding.root
     }
 
     override fun onViewCreated(
@@ -121,8 +120,8 @@ class FavoriteRecipeFragment : Fragment() {
             }
     }
 
-    private fun getFavoriteRecipeAdapter(): FavoriteRecipeAdapter {
-        return FavoriteRecipeAdapter(
+    private fun getFavoriteRecipeAdapter(): FavoriteBeanAdapter {
+        return FavoriteBeanAdapter(
             onFavoriteClick = { recipe, view ->
                 // 連打防止
                 viewModel.disableFavoriteBtn(view)

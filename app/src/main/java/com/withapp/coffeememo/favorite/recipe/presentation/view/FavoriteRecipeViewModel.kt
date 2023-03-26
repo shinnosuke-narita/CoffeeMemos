@@ -6,8 +6,6 @@ import com.withapp.coffeememo.favorite.recipe.domain.model.RecipeSortType
 import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
 import com.withapp.coffeememo.favorite.recipe.presentation.controller.FavoriteRecipeController
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
-import com.withapp.coffeememo.favorite.recipe.presentation.presenter.FavoriteRecipePresenter
-import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -20,8 +18,6 @@ class FavoriteRecipeViewModel @Inject constructor()
     : ViewModel() {
     @Inject
     lateinit var controller: FavoriteRecipeController
-    @Inject
-    lateinit var presenter: FavoriteRecipePresenter
 
     // お気に入りレシピリスト
     private val _favoriteRecipes: MutableLiveData<List<FavoriteRecipeModel>> =
@@ -37,11 +33,6 @@ class FavoriteRecipeViewModel @Inject constructor()
     private val _currentSort: MutableLiveData<RecipeSortType> =
         MutableLiveData(RecipeSortType.NEW)
     val currentSort: LiveData<RecipeSortType> = _currentSort
-
-    fun setSortType(type: RecipeSortType) {
-        _currentSort.value = type
-    }
-
 
     // ソートされた検索結果
     val sortedFavoriteRecipes: LiveData<List<FavoriteRecipeModel>> =

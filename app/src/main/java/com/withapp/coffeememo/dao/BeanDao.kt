@@ -45,9 +45,6 @@ interface BeanDao {
     @Query("SELECT * FROM bean;")
     fun getAllByFlow(): Flow<List<Bean>>
 
-    @Query("SELECT * FROM bean;")
-    suspend fun getAll(): List<Bean>
-
     @Query("SELECT * FROM bean WHERE bean_id = :beanId;")
     suspend fun getBeanById(beanId: Long): Bean
 
@@ -66,6 +63,9 @@ interface BeanDao {
     @Query("SELECT COUNT(*) FROM bean")
     fun getBeanCount(): Int
 
+    @Query("SELECT * FROM bean WHERE isFavorite = 1;")
+    suspend fun getFavoriteBean(): List<Bean>
+
     @RewriteQueriesToDropUnusedColumns
     @Query("SELECT * FROM bean WHERE country LIKE '%' || :keyword || '%'" +
             "OR farm LIKE '%' || :keyword || '%'" +
@@ -74,13 +74,4 @@ interface BeanDao {
             "OR species LIKE '%' || :keyword || '%'"
     )
     suspend fun getSearchBeanModelByKeyword(keyword: String): List<SearchBeanModel>
-
-
-
-
-
-
-
-
-
 }

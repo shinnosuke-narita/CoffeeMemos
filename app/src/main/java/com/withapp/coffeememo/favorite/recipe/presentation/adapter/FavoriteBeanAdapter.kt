@@ -12,7 +12,7 @@ import com.withapp.coffeememo.R
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
 import com.withapp.coffeememo.utilities.ViewUtil
 
-class FavoriteRecipeAdapter(
+class FavoriteBeanAdapter(
     private val onFavoriteClick: (
         recipe: FavoriteRecipeModel,
         favoriteIcon: View
@@ -20,7 +20,7 @@ class FavoriteRecipeAdapter(
     private val onItemClick: (recipe: FavoriteRecipeModel) -> Unit
 ) : ListAdapter<
         FavoriteRecipeModel,
-        FavoriteRecipeAdapter.RecipeViewHolder>(DiffRecipeCallBack()) {
+        FavoriteBeanAdapter.RecipeViewHolder>(DiffRecipeCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         return RecipeViewHolder(

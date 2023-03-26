@@ -143,6 +143,7 @@ class RecipeDetailFragment : Fragment() {
             binding.beanCardView.storeText.text       = bean.store
             binding.beanCardView.processText.text     = Constants.processList[bean.process]
             binding.beanCardView.beanCommentText.text = bean.comment
+            binding.beanCardView.createdAtText.text   = DateUtil.formatEpochTimeMills(bean.createdAt, DateUtil.pattern)
 
             if (bean.isFavorite) binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
             else binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
