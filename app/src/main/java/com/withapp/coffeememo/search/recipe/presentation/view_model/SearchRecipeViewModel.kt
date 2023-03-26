@@ -42,7 +42,7 @@ class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : View
 
 
     // ソートされた検索結果
-    val sortedSearchResult: MutableLiveData<List<SearchRecipeModel>> = MediatorLiveData<List<SearchRecipeModel>>().apply {
+    val sortedSearchResult: LiveData<List<SearchRecipeModel>> = MediatorLiveData<List<SearchRecipeModel>>().apply {
         // 検索結果が更新されたら、ソート
         addSource(_searchResult) { searchResult ->
             value = searchRecipeController.sortRecipe(_currentSortType.value!!, searchResult)

@@ -1,18 +1,24 @@
 package com.withapp.coffeememo.favorite.recipe.presentation.view
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentFavoriteRecipeBinding
+import com.withapp.coffeememo.dialog.ListDialogFragment
 import com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragmentDirections
+import com.withapp.coffeememo.favorite.recipe.domain.model.RecipeSortType
+import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
 import com.withapp.coffeememo.favorite.recipe.presentation.adapter.FavoriteRecipeAdapter
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,7 +59,7 @@ class FavoriteRecipeFragment : Fragment() {
         setUpAdapter()
 
         // お気に入りレシピ一覧
-        viewModel.favoriteRecipes.observe(
+        viewModel.sortedFavoriteRecipes.observe(
             viewLifecycleOwner
         ) { recipes ->
            favoriteRecipeAdapter.submitList(recipes)
@@ -69,6 +75,34 @@ class FavoriteRecipeFragment : Fragment() {
         viewModel.currentSort.observe(
             viewLifecycleOwner) { sortType ->
             binding.currentSort.text = sortType.getSortName()
+        }
+
+        // sort
+        binding.sortBtnWrapper.setOnClickListener {
+            // dialogデータ取得
+            val data: SortDialogOutput = viewModel.getSortDialogData()
+
+            ListDialogFragment
+                .create(
+                    data.index,
+                    getString(R.string.favorite_sort_dialog_title),
+                    "changeSort",
+                    data.list.toTypedArray()
+                )
+                .show(
+                    childFragmentManager,
+                    ListDialogFragment::class.simpleName
+                )
+        }
+
+        // GrindDialogからの結果を受信
+        childFragmentManager.setFragmentResultListener(
+            "changeSort",
+            viewLifecycleOwner
+        ) {_, bundle ->
+            viewModel.updateSortType(
+                bundle.getInt("newIndex", 0)
+            )
         }
     }
 

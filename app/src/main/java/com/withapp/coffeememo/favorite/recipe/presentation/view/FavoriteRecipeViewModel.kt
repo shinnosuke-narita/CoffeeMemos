@@ -3,8 +3,11 @@ package com.withapp.coffeememo.favorite.recipe.presentation.view
 import android.view.View
 import androidx.lifecycle.*
 import com.withapp.coffeememo.favorite.recipe.domain.model.RecipeSortType
+import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
 import com.withapp.coffeememo.favorite.recipe.presentation.controller.FavoriteRecipeController
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
+import com.withapp.coffeememo.favorite.recipe.presentation.presenter.FavoriteRecipePresenter
+import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -17,11 +20,12 @@ class FavoriteRecipeViewModel @Inject constructor()
     : ViewModel() {
     @Inject
     lateinit var controller: FavoriteRecipeController
+    @Inject
+    lateinit var presenter: FavoriteRecipePresenter
 
     // お気に入りレシピリスト
     private val _favoriteRecipes: MutableLiveData<List<FavoriteRecipeModel>> =
         MutableLiveData(listOf())
-    val favoriteRecipes: LiveData<List<FavoriteRecipeModel>> = _favoriteRecipes
 
     // お気に入り登録数
     val favoriteRecipeCount: LiveData<String> =
@@ -33,6 +37,30 @@ class FavoriteRecipeViewModel @Inject constructor()
     private val _currentSort: MutableLiveData<RecipeSortType> =
         MutableLiveData(RecipeSortType.NEW)
     val currentSort: LiveData<RecipeSortType> = _currentSort
+
+    fun setSortType(type: RecipeSortType) {
+        _currentSort.value = type
+    }
+
+
+    // ソートされた検索結果
+    val sortedFavoriteRecipes: LiveData<List<FavoriteRecipeModel>> =
+        MediatorLiveData<List<FavoriteRecipeModel>>().apply {
+        // お気に入りリストが更新されたら、ソート
+        addSource(_favoriteRecipes) { favoriteRecipes ->
+             value = controller.sortRecipe(
+                _currentSort.value!!,
+                favoriteRecipes
+            )
+        }
+        // 現在のソートが更新されたら、ソート
+        addSource(_currentSort) { sortType ->
+            value = controller.sortRecipe(
+                sortType,
+                _favoriteRecipes.value!!
+            )
+        }
+    }
 
 
     // 連打防止
@@ -56,6 +84,16 @@ class FavoriteRecipeViewModel @Inject constructor()
         viewModelScope.launch {
             controller.deleteFavorite(recipe.id)
         }
+    }
+
+    fun getSortDialogData(): SortDialogOutput {
+        return controller.getSortDialogData(_currentSort.value!!)
+    }
+
+    fun updateSortType(index: Int) {
+        val sortType: RecipeSortType = controller.getSortType(index)
+
+        _currentSort.value = sortType
     }
 
     // 初期化処理

@@ -4,4 +4,5 @@
     <string name="favorite_sort_icon_description">ソートアイコン</string>
     <string name="favorite_delete_message">お気に入りを解除します</string>
     <string name="favorite_snack_bar_btn_message">OK</string>
+    <string name="favorite_sort_dialog_title">ソート</string>
 </resources>
