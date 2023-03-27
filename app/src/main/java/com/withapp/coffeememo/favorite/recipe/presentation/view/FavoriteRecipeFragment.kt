@@ -1,5 +1,6 @@
 package com.withapp.coffeememo.favorite.recipe.presentation.view
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.withapp.coffeememo.databinding.FavoriteContentsBinding
 import com.withapp.coffeememo.databinding.FragmentFavoriteRecipeBinding
 import com.withapp.coffeememo.dialog.ListDialogFragment
 import com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragmentDirections
+import com.withapp.coffeememo.favorite.common.presentation.view.DeleteFavoriteSnackBar
 import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
 import com.withapp.coffeememo.favorite.recipe.presentation.adapter.FavoriteBeanAdapter
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
@@ -126,7 +128,14 @@ class FavoriteRecipeFragment : Fragment() {
                 // 連打防止
                 viewModel.disableFavoriteBtn(view)
                 // snackbar 表示
-                showSnackBar(recipe)
+                DeleteFavoriteSnackBar<FavoriteRecipeModel>()
+                    .show(
+                        requireContext(),
+                        binding.snackBarPlace,
+                        recipe
+                    ) { model ->
+                        viewModel.deleteFavoriteRecipe(model)
+                    }
             },
             onItemClick = { recipe ->
                 val showDetailAction =
@@ -139,39 +148,5 @@ class FavoriteRecipeFragment : Fragment() {
                 findNavController().navigate(showDetailAction)
             }
         )
-    }
-
-    private fun showSnackBar(recipe: FavoriteRecipeModel) {
-        Snackbar.make(
-            binding.snackBarPlace,
-            getString(R.string.favorite_delete_message),
-            Snackbar.LENGTH_LONG
-        ).apply {
-            setAction(
-                getString(R.string.favorite_snack_bar_btn_message)
-            ) {
-                // db 更新
-                viewModel.deleteFavoriteRecipe(recipe)
-            }
-            setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.shadow_color
-                )
-            )
-            setActionTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.link_color
-                )
-            )
-            view.setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.white
-                )
-            )
-        }.show()
-
     }
 }

@@ -4,4 +4,5 @@ import com.withapp.coffeememo.entity.Bean
 
 interface StorageRepository {
     suspend fun getFavoriteBeans(): List<Bean>
+    suspend fun deleteFavoriteBean(id: Long)
 }

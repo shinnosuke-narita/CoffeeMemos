@@ -23,6 +23,9 @@ interface BeanDao {
     @Query("UPDATE bean SET isFavorite = :favoriteFlag WHERE bean_id = :id;")
     suspend fun updateFavoriteByBeanId(id: Long, favoriteFlag: Boolean)
 
+    @Query("UPDATE bean SET isFavorite = 0 WHERE bean_id = :id;")
+    suspend fun deleteFavoriteBean(id: Long)
+
     ///////////////////////
     /////  削除系  /////////
     ///////////////////////

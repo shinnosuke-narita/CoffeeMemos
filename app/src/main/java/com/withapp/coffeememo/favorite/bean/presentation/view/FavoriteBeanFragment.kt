@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.withapp.coffeememo.databinding.FavoriteContentsBinding
 import com.withapp.coffeememo.databinding.FragmentFavoriteBeanBinding
+import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
 import com.withapp.coffeememo.favorite.bean.presentation.adapter.FavoriteBeanAdapter
 import com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragmentDirections
+import com.withapp.coffeememo.favorite.common.presentation.view.DeleteFavoriteSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,6 +55,18 @@ class FavoriteBeanFragment : Fragment() {
         viewModel.favoriteBeans.observe(viewLifecycleOwner) { beans ->
             favoriteBeanAdapter.submitList(beans)
         }
+
+        // お気に入りコーヒー豆数
+        viewModel.favoriteBeanCount.observe(
+            viewLifecycleOwner) { countStr ->
+            binding.itemCount.text = countStr
+        }
+
+        // 現在のソート
+        viewModel.currentSort.observe(
+            viewLifecycleOwner) { sortType ->
+            binding.currentSort.text = sortType.getSortName()
+        }
     }
 
     override fun onDestroyView() {
@@ -71,21 +86,27 @@ class FavoriteBeanFragment : Fragment() {
 
     private fun getFavoriteBeanAdapter(): FavoriteBeanAdapter {
         return FavoriteBeanAdapter(
-            onFavoriteClick = { recipe, view ->
+            onFavoriteClick = { bean, view ->
                 // 連打防止
-//                viewModel.disableFavoriteBtn(view)
-//                // snackbar 表示
-//                showSnackBar(recipe)
+                viewModel.disableFavoriteBtn(view)
+                // snackbar 表示
+                DeleteFavoriteSnackBar<FavoriteBeanModel>()
+                    .show(
+                        requireContext(),
+                        binding.snackBarPlace,
+                        bean
+                    ) { model ->
+                        viewModel.deleteFavoriteBean(model)
+                    }
             },
-            onItemClick = { recipe ->
-//                val showDetailAction =
-//                    BaseFavoriteFragmentDirections
-//                        .actionBaseFavoriteFragmentToRecipeDetailFragment()
-//                        .apply {
-//                            recipeId = recipe.id
-//                            beanId   = recipe.beanId
-//                        }
-//                findNavController().navigate(showDetailAction)
+            onItemClick = { bean ->
+                val showDetailAction =
+                    BaseFavoriteFragmentDirections
+                        .actionBaseFavoriteFragmentToBeanDetailFragment()
+                        .apply {
+                            beanId = bean.id
+                        }
+                findNavController().navigate(showDetailAction)
             }
         )
     }

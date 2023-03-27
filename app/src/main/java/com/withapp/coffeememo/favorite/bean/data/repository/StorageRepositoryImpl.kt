@@ -13,4 +13,8 @@ class StorageRepositoryImpl @Inject constructor()
     override suspend fun getFavoriteBeans(): List<Bean> {
         return beanDao.getFavoriteBean()
     }
+
+    override suspend fun deleteFavoriteBean(id: Long) {
+        beanDao.deleteFavoriteBean(id)
+    }
 }
