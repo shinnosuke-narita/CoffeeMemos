@@ -78,7 +78,7 @@ class FavoriteRecipeFragment : Fragment() {
             binding.currentSort.text = sortType.getSortName()
         }
 
-        // sort
+        // sortボタン
         binding.sortBtnWrapper.setOnClickListener {
             // dialogデータ取得
             val data: SortDialogOutput = viewModel.getSortDialogData()
@@ -96,7 +96,7 @@ class FavoriteRecipeFragment : Fragment() {
                 )
         }
 
-        // GrindDialogからの結果を受信
+        // SortDialogからの結果を受信
         childFragmentManager.setFragmentResultListener(
             "changeSort",
             viewLifecycleOwner

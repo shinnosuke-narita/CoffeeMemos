@@ -53,7 +53,6 @@ class FavoriteRecipeViewModel @Inject constructor()
         }
     }
 
-
     // 連打防止
     fun disableFavoriteBtn(favoriteIcon: View) {
         favoriteIcon.isEnabled = false

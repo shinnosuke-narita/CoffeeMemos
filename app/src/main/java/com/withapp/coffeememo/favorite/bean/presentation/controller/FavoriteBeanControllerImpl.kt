@@ -1,10 +1,11 @@
 package com.withapp.coffeememo.favorite.bean.presentation.controller
 
 import com.withapp.coffeememo.entity.Bean
+import com.withapp.coffeememo.favorite.bean.domain.model.BeanSortType
 import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
-import com.withapp.coffeememo.favorite.bean.domain.use_case.DeleteFavoriteUseCase
-import com.withapp.coffeememo.favorite.bean.domain.use_case.GetFavoriteBeanUseCase
+import com.withapp.coffeememo.favorite.bean.domain.use_case.*
 import com.withapp.coffeememo.favorite.bean.presentation.presenter.FavoriteBeanPresenter
+import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
 import javax.inject.Inject
 
 class FavoriteBeanControllerImpl @Inject constructor()
@@ -15,6 +16,12 @@ class FavoriteBeanControllerImpl @Inject constructor()
     lateinit var getFavoriteBeanUseCase: GetFavoriteBeanUseCase
     @Inject
     lateinit var deleteFavoriteUseCase: DeleteFavoriteUseCase
+    @Inject
+    lateinit var sortBeanUseCase: SortBeanUseCase
+    @Inject
+    lateinit var getSortDialogDataUseCase: GetSortDialogDataUseCase
+    @Inject
+    lateinit var getSortTypeUseCase: GetSortTypeUseCase
 
     override suspend fun getFavoriteBean(): List<FavoriteBeanModel> {
         val beanList: List<Bean> = getFavoriteBeanUseCase.handle()
@@ -23,5 +30,22 @@ class FavoriteBeanControllerImpl @Inject constructor()
 
     override suspend fun deleteFavorite(id: Long) {
         deleteFavoriteUseCase.handle(id)
+    }
+
+    override fun sortBean(
+        sortType: BeanSortType,
+        list: List<FavoriteBeanModel>
+    ): List<FavoriteBeanModel> {
+       return sortBeanUseCase.handle(sortType, list)
+    }
+
+    override fun getSortDialogData(
+        sortType: BeanSortType
+    ): SortDialogOutput {
+       return getSortDialogDataUseCase.handle(sortType)
+    }
+
+    override fun getSortType(index: Int): BeanSortType {
+        return getSortTypeUseCase.handle(index)
     }
 }

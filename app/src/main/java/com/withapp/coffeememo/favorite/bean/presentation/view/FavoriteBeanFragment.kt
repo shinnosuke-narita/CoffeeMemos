@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FavoriteContentsBinding
 import com.withapp.coffeememo.databinding.FragmentFavoriteBeanBinding
+import com.withapp.coffeememo.dialog.ListDialogFragment
 import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
 import com.withapp.coffeememo.favorite.bean.presentation.adapter.FavoriteBeanAdapter
 import com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragmentDirections
 import com.withapp.coffeememo.favorite.common.presentation.view.DeleteFavoriteSnackBar
+import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,7 +55,7 @@ class FavoriteBeanFragment : Fragment() {
 
         setUpAdapter()
 
-        viewModel.favoriteBeans.observe(viewLifecycleOwner) { beans ->
+        viewModel.sortedFavoriteBeans.observe(viewLifecycleOwner) { beans ->
             favoriteBeanAdapter.submitList(beans)
         }
 
@@ -66,6 +69,34 @@ class FavoriteBeanFragment : Fragment() {
         viewModel.currentSort.observe(
             viewLifecycleOwner) { sortType ->
             binding.currentSort.text = sortType.getSortName()
+        }
+
+        // ソートボタン
+        binding.sortBtnWrapper.setOnClickListener {
+            val dialogData: SortDialogOutput =
+                viewModel.getSortDialogData()
+
+            ListDialogFragment
+                .create(
+                    dialogData.index,
+                    getString(R.string.favorite_sort_dialog_title),
+                    "changeSort",
+                    dialogData.list.toTypedArray()
+                )
+                .show(
+                    childFragmentManager,
+                    ListDialogFragment::class.simpleName
+                )
+        }
+
+        // SortDialogからの結果を受信
+        childFragmentManager.setFragmentResultListener(
+            "changeSort",
+            viewLifecycleOwner
+        ) {_, bundle ->
+            viewModel.updateCurrentSort(
+                bundle.getInt("newIndex", 0)
+            )
         }
     }
 

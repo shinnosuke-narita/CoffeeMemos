@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.withapp.coffeememo.favorite.bean.domain.model.BeanSortType
 import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
 import com.withapp.coffeememo.favorite.bean.presentation.controller.FavoriteBeanController
+import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +23,6 @@ class FavoriteBeanViewModel @Inject constructor()
     // お気に入りコーヒー豆 リスト
     private val _favoriteBeans: MutableLiveData<List<FavoriteBeanModel>> =
         MutableLiveData(listOf())
-    val favoriteBeans: LiveData<List<FavoriteBeanModel>> = _favoriteBeans
 
     // お気に入り登録数
     val favoriteBeanCount: LiveData<String> =
@@ -34,6 +34,25 @@ class FavoriteBeanViewModel @Inject constructor()
     private val _currentSort: MutableLiveData<BeanSortType> =
         MutableLiveData(BeanSortType.NEW)
     val currentSort: LiveData<BeanSortType> = _currentSort
+
+    // ソートされたお気に入りリスト
+    val sortedFavoriteBeans: LiveData<List<FavoriteBeanModel>> =
+        MediatorLiveData<List<FavoriteBeanModel>>().apply {
+            // お気に入りリストが更新されたら、ソート
+            addSource(_favoriteBeans) { favoriteBeans ->
+                value = controller.sortBean(
+                    _currentSort.value!!,
+                    favoriteBeans
+                )
+            }
+            // 現在のソートが更新されたら、ソート
+            addSource(_currentSort) { sortType ->
+                value = controller.sortBean(
+                    sortType,
+                    _favoriteBeans.value!!
+                )
+            }
+        }
 
     // 連打防止
     fun disableFavoriteBtn(favoriteIcon: View) {
@@ -57,6 +76,19 @@ class FavoriteBeanViewModel @Inject constructor()
             controller.deleteFavorite(bean.id)
         }
     }
+
+    // ダイアログに必要なデータ取得
+    fun getSortDialogData(): SortDialogOutput {
+        return controller.getSortDialogData(_currentSort.value!!)
+    }
+
+    // sort更新
+    fun updateCurrentSort(index: Int) {
+        val sortType: BeanSortType = controller.getSortType(index)
+
+        _currentSort.value = sortType
+    }
+
 
     // 初期化処理
     fun initialize() {
