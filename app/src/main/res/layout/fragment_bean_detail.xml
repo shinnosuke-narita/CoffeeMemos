@@ -11,7 +11,6 @@
         layout="@layout/header_with_back_key"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/snackBarPlace"
         android:layout_width="match_parent"
@@ -19,40 +18,56 @@
         android:background="@color/snackBar_background"
         app:layout_constraintTop_toBottomOf="@+id/header" />
 
-    <TextView
-        android:id="@+id/beanTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:text="@string/recipe_detail_bean_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/snackBarPlace"/>
-
-    <ImageView
-        android:id="@+id/beanEditIcon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="15dp"
-        android:src="@drawable/ic_baseline_create_24"
-        app:tint="@color/pink_light_dark"
-        app:layout_constraintBottom_toBottomOf="@+id/beanTitle"
-        app:layout_constraintStart_toEndOf="@+id/beanTitle"
-        app:layout_constraintTop_toTopOf="@+id/beanTitle" />
-
-    <include
-        layout="@layout/bean_detail_info"
-        android:id="@+id/beanCardView"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/beanTitle"/>
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/snackBarPlace">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="70dp">
+
+            <TextView
+                android:id="@+id/beanTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:text="@string/recipe_detail_bean_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/beanEditIcon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/ic_baseline_create_24"
+                app:tint="@color/pink_light_dark"
+                app:layout_constraintBottom_toBottomOf="@+id/beanTitle"
+                app:layout_constraintStart_toEndOf="@+id/beanTitle"
+                app:layout_constraintTop_toTopOf="@+id/beanTitle" />
+
+            <include
+                layout="@layout/bean_detail_info"
+                android:id="@+id/beanCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="15dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/beanTitle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/deleteBtn"
@@ -64,5 +79,6 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="hello" />
 </androidx.constraintlayout.widget.ConstraintLayout>

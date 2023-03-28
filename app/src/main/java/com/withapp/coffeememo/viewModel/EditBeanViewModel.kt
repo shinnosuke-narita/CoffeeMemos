@@ -141,12 +141,19 @@ class EditBeanViewModel(
                 )
             )
 
-            if (_country == _selectedBean.value!!.country) return@launch
+            if (_country == _selectedBean.value!!.country)  {
+                _processState.postValue(ProcessState.FINISH_PROCESSING)
+                return@launch
+            }
 
             // recipe テーブル更新処理
             val recipeIds: List<Long> =
                 recipeDao.getRecipeIdsByBeanId(selectedBean.id)
-            if (recipeIds.isEmpty()) return@launch
+            if (recipeIds.isEmpty()) {
+                // 更新処理完了
+                _processState.postValue(ProcessState.FINISH_PROCESSING)
+                return@launch
+            }
 
             recipeIds.forEach { id ->
                 recipeDao.updateCountryById(id, _country)
