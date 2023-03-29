@@ -215,7 +215,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:padding="15dp"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             android:background="@drawable/comment_text_background"
             app:layout_constraintTop_toBottomOf="@+id/commentTitle"
             app:layout_constraintStart_toStartOf="@+id/commentTitle"

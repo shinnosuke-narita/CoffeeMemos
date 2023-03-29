@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="@color/black"
+                android:textColor="@color/normal_text_color"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/recipe_detail_taste_title"
@@ -84,7 +84,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="Recipe"
-                android:textColor="@color/black"
+                android:textColor="@color/normal_text_color"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chartCardView"/>
@@ -118,7 +118,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:textSize="20sp"
-                android:textColor="@color/black"
+                android:textColor="@color/normal_text_color"
                 android:text="@string/recipe_detail_bean_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipeCardView"/>

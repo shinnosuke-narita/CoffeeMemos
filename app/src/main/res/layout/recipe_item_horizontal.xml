@@ -22,7 +22,7 @@
             android:id="@+id/tool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             android:textSize="17sp"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium"

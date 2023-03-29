@@ -46,7 +46,7 @@
                 android:id="@+id/processEditText"
                 style="@style/mEditTextStyle"
                 android:hint="@string/process"
-                android:textColor="@color/black"
+                android:textColor="@color/normal_text_color"
                 android:gravity="center|left"
                 app:layout_constraintEnd_toStartOf="@+id/selectProcessBtn"
                 app:layout_constraintStart_toStartOf="parent"

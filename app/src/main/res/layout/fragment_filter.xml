@@ -16,7 +16,7 @@
         android:text="Filter"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/normal_text_color"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/roast"
-                    android:textColor="@color/black"
+                    android:textColor="@color/normal_text_color"
                     android:textSize="14sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -80,6 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_add_24"
+                    app:tint="@color/normal_icon_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/roastTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/roastTitle" />
@@ -109,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/grind_size"
-                    android:textColor="@color/black"
+                    android:textColor="@color/normal_text_color"
                     android:textSize="14sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -131,6 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_add_24"
+                    app:tint="@color/normal_icon_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/grindSizeTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/grindSizeTitle" />
@@ -152,7 +154,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:tag="editText"
-                android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/roastWrapper"
                 app:layout_constraintStart_toStartOf="@+id/roastWrapper"
                 app:layout_constraintTop_toBottomOf="@+id/grindSizeContainer">
@@ -162,7 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/country"
-                    android:textColor="@color/black"
+                    android:textColor="@color/normal_text_color"
                     android:textSize="14sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -172,6 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_add_24"
+                    app:tint="@color/normal_icon_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/countryTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/countryTitle" />
@@ -251,7 +253,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tool"
-                    android:textColor="@color/black"
+                    android:textColor="@color/normal_text_color"
                     android:textSize="14sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -261,6 +263,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_add_24"
+                    app:tint="@color/normal_icon_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/toolTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/toolTitle" />
@@ -340,7 +343,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="評価"
-                    android:textColor="@color/black"
+                    android:textColor="@color/normal_text_color"
                     android:textSize="14sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -360,6 +363,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_add_24"
+                    app:tint="@color/normal_icon_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/ratingTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/ratingTitle" />
@@ -389,7 +393,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sour"
-                    android:textColor="@color/black"
+                    android:textColor="@color/normal_text_color"
                     android:textSize="14sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -409,6 +413,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_add_24"
+                    app:tint="@color/normal_icon_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/sourTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/sourTitle" />
@@ -438,7 +443,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/bitter"
-                    android:textColor="@color/black"
+                    android:textColor="@color/normal_text_color"
                     android:textSize="14sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -458,6 +463,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_add_24"
+                    app:tint="@color/normal_icon_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/bitterTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/bitterTitle" />
@@ -487,7 +493,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sweet"
-                    android:textColor="@color/black"
+                    android:textColor="@color/normal_text_color"
                     android:textSize="14sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -507,6 +513,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_add_24"
+                    app:tint="@color/normal_icon_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/sweetTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/sweetTitle" />
@@ -535,7 +542,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/flavor"
-                    android:textColor="@color/black"
+                    android:textColor="@color/normal_text_color"
                     android:textSize="14sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -555,6 +562,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_add_24"
+                    app:tint="@color/normal_icon_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/flavorTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/flavorTitle" />
@@ -583,7 +591,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rich"
-                    android:textColor="@color/black"
+                    android:textColor="@color/normal_text_color"
                     android:textSize="14sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -603,6 +611,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_add_24"
+                    app:tint="@color/normal_icon_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/richTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/richTitle" />

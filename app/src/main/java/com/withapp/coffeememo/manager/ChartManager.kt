@@ -2,6 +2,7 @@ package com.withapp.coffeememo.manager
 
 import android.content.Context
 import android.graphics.Color
+import androidx.core.content.ContextCompat
 import com.withapp.coffeememo.R
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.RadarChart
@@ -11,8 +12,8 @@ import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet
 
-class ChartManager() {
-    fun createRadarChart(radarChart: RadarChart) {
+class ChartManager {
+    fun createRadarChart(context: Context, radarChart: RadarChart) {
         // チャートのタイトルの非表示
         radarChart.description.isEnabled = false
 
@@ -20,7 +21,12 @@ class ChartManager() {
         radarChart.isRotationEnabled = false
 
         // チャート領域のバックグラウンドカラー
-        radarChart.setBackgroundColor(Color.WHITE)
+        radarChart.setBackgroundColor(
+            ContextCompat.getColor(
+                context,
+                R.color.radar_chart_background
+            )
+        )
 
         //チャートの線
         radarChart.webLineWidth = 1.5f
@@ -35,7 +41,9 @@ class ChartManager() {
         // x軸の設定
         val xAxis = radarChart.xAxis
         xAxis.textSize = 13F
-        xAxis.textColor = Color.BLACK
+        xAxis.textColor = ContextCompat.getColor(
+            context, R.color.normal_text_color
+        )
 
         // x軸（チャート外）のラベルの設定
         xAxis.valueFormatter = object : ValueFormatter() {

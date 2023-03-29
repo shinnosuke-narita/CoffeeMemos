@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/edit_process"
         android:textSize="20sp"
-        android:textColor="@color/black"
+        android:textColor="@color/normal_text_color"
         android:layout_marginTop="20dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"

@@ -93,7 +93,10 @@ class RecipeDetailFragment : Fragment() {
         chartManager = ChartManager()
 
         // レーダーチャート作成(データのセットはしない)
-        chartManager.createRadarChart(binding.radarChart)
+        chartManager.createRadarChart(
+            requireContext(),
+            binding.radarChart
+        )
 
         // header セッティング
         binding.header.headerTitle.text = getString(R.string.recipe_detail)
