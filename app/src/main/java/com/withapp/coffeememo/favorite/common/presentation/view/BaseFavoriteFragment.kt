@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentBaseFavoriteBinding
 import com.withapp.coffeememo.favorite.bean.presentation.view.FavoriteBeanFragment
 import com.withapp.coffeememo.favorite.common.presentation.adapter.FavoriteViewPagerAdapter
 import com.withapp.coffeememo.favorite.recipe.presentation.view.FavoriteRecipeFragment
+import com.withapp.coffeememo.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,6 +48,23 @@ class BaseFavoriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpHeader()
         setUpViewPager()
+
+        // コーヒー豆削除処理のリスナー
+        setFragmentResultListener("deleteBean") { _, _ ->
+            SnackBarUtil.showFinishDeleteSnackBar(
+                requireContext(),
+                binding.snackBarPlace,
+                getString(R.string.bean_finish_delete_message),
+            )
+        }
+        // レシピ削除処理のリスナー
+        setFragmentResultListener("deleteRecipe") { _, _ ->
+            SnackBarUtil.showFinishDeleteSnackBar(
+                requireContext(),
+                binding.snackBarPlace,
+                getString(R.string.recipe_finish_delete_message),
+            )
+        }
     }
 
     override fun onDestroyView() {

@@ -52,9 +52,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeRecipeFragment -> {
                     showBottomNav()
                 }
-                R.id.homeBeansFragment -> {
-                    showBottomNav()
-                }
                 R.id.timerFragment -> {
                     showBottomNav()
                 }

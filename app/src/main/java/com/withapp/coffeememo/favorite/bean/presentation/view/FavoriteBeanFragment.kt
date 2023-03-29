@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FavoriteContentsBinding
 import com.withapp.coffeememo.databinding.FragmentFavoriteBeanBinding
@@ -31,11 +35,6 @@ class FavoriteBeanFragment : Fragment() {
     private val viewModel: FavoriteBeanViewModel by viewModels()
 
     private lateinit var favoriteBeanAdapter: FavoriteBeanAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.initialize()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,6 +97,12 @@ class FavoriteBeanFragment : Fragment() {
                 bundle.getInt("newIndex", 0)
             )
         }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.initialize()
     }
 
     override fun onDestroyView() {

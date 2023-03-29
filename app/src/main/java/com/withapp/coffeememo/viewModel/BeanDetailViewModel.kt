@@ -1,11 +1,10 @@
 package com.withapp.coffeememo.viewModel
 
-import android.widget.MultiAutoCompleteTextView
 import androidx.lifecycle.*
 import com.withapp.coffeememo.dao.BeanDao
 import com.withapp.coffeememo.entity.Bean
 import com.withapp.coffeememo.manager.RatingManager
-import com.withapp.coffeememo.manager.RatingManager.*
+import com.withapp.coffeememo.manager.RatingManager.Star
 import kotlinx.coroutines.launch
 
 class BeanDetailViewModel(private val beanDao: BeanDao) : ViewModel() {

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.withapp.coffeememo.search.recipe.presentation.model.SearchKeyWord
@@ -15,6 +16,8 @@ import com.withapp.coffeememo.search.recipe.presentation.fragment.SearchRecipeFr
 import com.withapp.coffeememo.search.bean.presentation.fragment.SearchBeanFragment
 import com.withapp.coffeememo.search.common.presentation.view_model.MainSearchViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import com.withapp.coffeememo.R
+import com.withapp.coffeememo.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -61,6 +64,23 @@ class SearchFragment : Fragment() {
 
         binding.backBtn.setOnClickListener{
             findNavController().popBackStack()
+        }
+
+        // コーヒー豆削除処理のリスナー
+        setFragmentResultListener("deleteBean") { _, _ ->
+            SnackBarUtil.showFinishDeleteSnackBar(
+                requireContext(),
+                binding.snackBarPlace,
+                getString(R.string.bean_finish_delete_message),
+            )
+        }
+        // レシピ削除処理のリスナー
+        setFragmentResultListener("deleteRecipe") { _, _ ->
+            SnackBarUtil.showFinishDeleteSnackBar(
+                requireContext(),
+                binding.snackBarPlace,
+                getString(R.string.recipe_finish_delete_message),
+            )
         }
     }
 

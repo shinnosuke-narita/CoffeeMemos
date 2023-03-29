@@ -96,6 +96,8 @@ class BeanDetailFragment : Fragment() {
         }
 
         viewModel.selectedBean.observe(viewLifecycleOwner) { bean ->
+            if (bean == null) return@observe
+
             binding.beanCardView.countryText.text     = bean.country
             binding.beanCardView.farmText.text        = bean.farm
             binding.beanCardView.districtText.text    = bean.district
@@ -135,7 +137,7 @@ class BeanDetailFragment : Fragment() {
 
 
         // 削除処理
-        binding.deleteBtn.setOnClickListener { view ->
+        binding.deleteBtn.setOnClickListener {
             BasicDialogFragment
                 .create(
                     getString(R.string.delete_bean_title),
