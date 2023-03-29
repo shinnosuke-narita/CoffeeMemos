@@ -43,14 +43,14 @@ class MainViewModel : ViewModel() {
         String.format("%d秒", DateUtil.convertSeconds(preInfusionTime))
     }
 
-    val preInfusionTimeSeconds: LiveData<String> = _preInfusionTime.map { preInfusionTime ->
-        (preInfusionTime / 1000).toString()
-    }
-
     fun setPreInfusionTime(preInfusionTime: Long) {
         _preInfusionTime.value = preInfusionTime
     }
 
+    fun resetTime() {
+        _preInfusionTime.value = 0L
+        _extractionTime.value = 0L
+    }
 
     // タイマー画面が開かれた時、レシピ新規作成画面がバックスタックにあるかどうか
     private val _newRecipeFragmentExists: MutableLiveData<Boolean> = MutableLiveData(false)

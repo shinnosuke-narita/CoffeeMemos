@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
@@ -26,7 +25,7 @@ import com.withapp.coffeememo.manager.RatingManager.StarState
 import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.viewModel.RecipeDetailViewModel
 import com.withapp.coffeememo.viewModel.RecipeDetailViewModelFactory
-import com.google.android.material.snackbar.Snackbar
+import com.withapp.coffeememo.utilities.SnackBarUtil
 
 class RecipeDetailFragment : Fragment() {
     private var mContext: Context? = null
@@ -222,15 +221,11 @@ class RecipeDetailFragment : Fragment() {
         setFragmentResultListener("beanUpdate") { _, bundle ->
             viewModel.updateBean(bundle.getLong("beanId"))
 
-            Snackbar.make(binding.snackBarPlace, getString(R.string.bean_finish_update_message), Snackbar.LENGTH_SHORT).apply {
-                mContext?.let {
-                    setTextColor(ContextCompat.getColor(it, R.color.snackBar_text))
-                    getView().setBackgroundColor(
-                        ContextCompat.getColor(it,
-                        R.color.white
-                    ))
-                }
-            }.show()
+            SnackBarUtil.showSimpleSnackBar(
+                requireContext(),
+                binding.snackBarPlace,
+                getString(R.string.bean_finish_update_message)
+            )
         }
 
 
@@ -245,15 +240,11 @@ class RecipeDetailFragment : Fragment() {
         setFragmentResultListener("recipeUpdate") { _, bundle ->
             viewModel.updateRecipe(bundle.getLong("recipeId"))
 
-            Snackbar.make(binding.snackBarPlace, getString(R.string.recipe_finish_update_message), Snackbar.LENGTH_SHORT).apply {
-                mContext?.let {
-                    setTextColor(ContextCompat.getColor(it, R.color.snackBar_text))
-                    getView().setBackgroundColor(
-                        ContextCompat.getColor(it,
-                            R.color.white
-                        ))
-                }
-            }.show()
+            SnackBarUtil.showSimpleSnackBar(
+                requireContext(),
+                binding.snackBarPlace,
+                getString(R.string.recipe_finish_update_message)
+            )
         }
     }
 

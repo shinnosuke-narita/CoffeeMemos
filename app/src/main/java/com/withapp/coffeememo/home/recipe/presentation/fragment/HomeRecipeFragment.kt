@@ -1,23 +1,19 @@
 package com.withapp.coffeememo.home.recipe.presentation.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentHomeRecipeBinding
 import com.withapp.coffeememo.home.recipe.presentation.adapter.RecipeAdapter
 import com.withapp.coffeememo.home.recipe.presentation.view_model.HomeRecipeViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.withapp.coffeememo.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -121,7 +117,7 @@ class HomeRecipeFragment : Fragment() {
         }
 
         setFragmentResultListener("createRecipe") {_, _ ->
-            SnackBarUtil.showFinishSaveSnackBar(
+            SnackBarUtil.showSimpleSnackBar(
                 requireContext(),
                 binding.snackBarPlace,
                 getString(R.string.recipe_finish_save_message)

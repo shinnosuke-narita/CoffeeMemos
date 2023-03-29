@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,7 +14,6 @@ import com.withapp.coffeememo.R
 import com.withapp.coffeememo.adapter.HomeBeanCardAdapter
 import com.withapp.coffeememo.databinding.FragmentHomeBeansBinding
 import com.withapp.coffeememo.home.bean.presentation.view_model.HomeBeanViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.withapp.coffeememo.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -114,7 +112,7 @@ class HomeBeansFragment : Fragment() {
 
         // 新規保存のリスナー
         setFragmentResultListener("createBean") { _, _ ->
-            SnackBarUtil.showFinishSaveSnackBar(
+            SnackBarUtil.showSimpleSnackBar(
                 requireContext(),
                 binding.snackBarPlace,
                 getString(R.string.bean_finish_create_message)

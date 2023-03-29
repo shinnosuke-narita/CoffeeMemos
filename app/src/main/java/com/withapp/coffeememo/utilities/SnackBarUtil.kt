@@ -2,7 +2,6 @@ package com.withapp.coffeememo.utilities
 
 import android.content.Context
 import android.view.View
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.withapp.coffeememo.R
@@ -33,8 +32,8 @@ class SnackBarUtil {
             }.show()
         }
 
-        // 保存完了
-        fun showFinishSaveSnackBar(
+        // 保存完了時や、更新完了時表示
+        fun showSimpleSnackBar(
             context: Context,
             snackBarPlace: View,
             message: String

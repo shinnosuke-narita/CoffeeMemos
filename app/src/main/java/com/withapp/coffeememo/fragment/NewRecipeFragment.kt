@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
@@ -30,7 +29,7 @@ import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.utilities.ViewUtil
 import com.withapp.coffeememo.viewModel.MainViewModel
 import com.withapp.coffeememo.viewModel.NewRecipeViewModel
-import com.google.android.material.snackbar.Snackbar
+import com.withapp.coffeememo.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -179,8 +178,7 @@ class NewRecipeFragment :
                 ProcessState.FINISH_PROCESSING -> {
                     // mainViewModel データをリセット
                     mainViewModel.resetBean()
-                    mainViewModel.setPreInfusionTime(0L)
-                    mainViewModel.setExtractionTime(0L)
+                    mainViewModel.resetTime()
 
                     binding.progressBar.visibility = View.GONE
                     setFragmentResult("createRecipe", Bundle())
@@ -413,25 +411,13 @@ class NewRecipeFragment :
                 mainViewModel.extractionTime.value!!
             )
         }
+        // コーヒー豆新規保存結果を受信
         setFragmentResultListener("createBean") { _, _ ->
-            Snackbar.make(
+            SnackBarUtil.showSimpleSnackBar(
+                requireContext(),
                 binding.snackBarPlace,
-                getString(R.string.bean_finish_create_message),
-                Snackbar.LENGTH_SHORT
-            ).apply {
-                setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.snackBar_text
-                    )
-                )
-                getView().setBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.white
-                    )
-                )
-            }.show()
+                getString(R.string.bean_finish_create_message)
+            )
         }
     }
 
