@@ -18,6 +18,7 @@ import com.withapp.coffeememo.databinding.FragmentHomeRecipeBinding
 import com.withapp.coffeememo.home.recipe.presentation.adapter.RecipeAdapter
 import com.withapp.coffeememo.home.recipe.presentation.view_model.HomeRecipeViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.withapp.coffeememo.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -112,44 +113,19 @@ class HomeRecipeFragment : Fragment() {
         }
 
         setFragmentResultListener("deleteRecipe") { _, _ ->
-            Snackbar.make(
+            SnackBarUtil.showFinishDeleteSnackBar(
+                requireContext(),
                 binding.snackBarPlace,
-                getString(R.string.recipe_finish_delete_message),
-                Snackbar.LENGTH_SHORT
-            ).apply {
-                setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.delete_color)
-                )
-                getView().setBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.white
-                    )
-                )
-            }.show()
+                getString(R.string.recipe_finish_delete_message)
+            )
         }
 
         setFragmentResultListener("createRecipe") {_, _ ->
-            Snackbar.make(
+            SnackBarUtil.showFinishSaveSnackBar(
+                requireContext(),
                 binding.snackBarPlace,
-                getString(R.string.recipe_finish_save_message),
-                Snackbar.LENGTH_SHORT
-            ).apply {
-                setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.snackBar_text
-                    )
-                )
-                getView().setBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.white
-                    )
-                )
-            }.show()
+                getString(R.string.recipe_finish_save_message)
+            )
         }
     }
 

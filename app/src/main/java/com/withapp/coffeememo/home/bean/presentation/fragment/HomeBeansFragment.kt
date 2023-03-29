@@ -16,6 +16,7 @@ import com.withapp.coffeememo.adapter.HomeBeanCardAdapter
 import com.withapp.coffeememo.databinding.FragmentHomeBeansBinding
 import com.withapp.coffeememo.home.bean.presentation.view_model.HomeBeanViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.withapp.coffeememo.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -104,24 +105,20 @@ class HomeBeansFragment : Fragment() {
 
         // 削除処理のリスナー
         setFragmentResultListener("deleteBean") { _, _ ->
-            Snackbar.make(binding.snackBarPlace, getString(R.string.bean_finish_delete_message), Snackbar.LENGTH_SHORT).apply {
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.delete_color))
-                getView().setBackgroundColor(
-                    ContextCompat.getColor(requireContext(),
-                        R.color.white
-                    ))
-            }.show()
+            SnackBarUtil.showFinishDeleteSnackBar(
+                requireContext(),
+                binding.snackBarPlace,
+                getString(R.string.bean_finish_delete_message)
+            )
         }
 
         // 新規保存のリスナー
         setFragmentResultListener("createBean") { _, _ ->
-            Snackbar.make(binding.snackBarPlace, getString(R.string.bean_finish_create_message), Snackbar.LENGTH_SHORT).apply {
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.pink_dark))
-                getView().setBackgroundColor(
-                    ContextCompat.getColor(requireContext(),
-                        R.color.white
-                    ))
-            }.show()
+            SnackBarUtil.showFinishSaveSnackBar(
+                requireContext(),
+                binding.snackBarPlace,
+                getString(R.string.bean_finish_create_message)
+            )
         }
     }
 
