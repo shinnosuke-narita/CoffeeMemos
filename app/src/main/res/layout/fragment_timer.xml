@@ -117,6 +117,7 @@
                 android:id="@+id/circleProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:progressbarColor="@color/progress_bar_color"
                 app:progress="0"
                 app:progressBarThickness="2dp"
                 app:layout_constraintVertical_chainStyle="packed"

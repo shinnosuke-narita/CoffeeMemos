@@ -23,6 +23,7 @@
     <color name="menu_background">#FFFFFF</color>
     <color name="bottom_sheet_background">#FFFFFF</color>
     <color name="list_dialog_background">#FFFFFF</color>
+    <color name="progress_bar_color">#686868</color>
 
     <color name="beige_light">#F9ECDE</color>
     <color name="beige_dark">#F6E1CB</color>

@@ -28,7 +28,7 @@ class HomeBeanCardAdapter(
             LayoutInflater
                 .from(parent.context)
                 .inflate(
-                    R.layout.bean_item_horizontal,
+                    R.layout.home_card_item,
                     parent,
                     false)
         )
@@ -63,10 +63,10 @@ class HomeBeanCardAdapter(
 
     class HomeBeanCardViewHolder(card: View)
         : RecyclerView.ViewHolder(card) {
-        val country: TextView = card.findViewById(R.id.country)
+        val country: TextView = card.findViewById(R.id.title)
         val createdAt: TextView = card.findViewById(R.id.createdAt)
-        val farm: TextView = card.findViewById(R.id.farm)
-        val district: TextView = card.findViewById(R.id.district)
+        val farm: TextView = card.findViewById(R.id.tagFirst)
+        val district: TextView = card.findViewById(R.id.tagSecond)
         val rating: TextView  = card.findViewById(R.id.rating)
         val favorite: ImageView = card.findViewById(R.id.favoriteIcon)
     }

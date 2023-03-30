@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeCardData
+import com.withapp.coffeememo.utilities.ViewUtil
 import com.withapp.coffeememo.utilities.ViewUtil.Companion.setFavoriteIcon
 
 class RecipeAdapter(
@@ -26,7 +27,7 @@ class RecipeAdapter(
             LayoutInflater
                 .from(parent.context)
                 .inflate(
-                    R.layout.recipe_item_horizontal,
+                    R.layout.home_card_item,
                     parent,
                     false)
         )
@@ -36,10 +37,10 @@ class RecipeAdapter(
         val recipe = getItem(position)
         holder.country.text = recipe.country
         holder.createdAt.text = recipe.createdAt
-        holder.tool.text = recipe.tool
-        holder.roast.text = recipe.roast
         holder.rating.text =
             context.getString(R.string.rate_decimal, recipe.rating)
+        ViewUtil.setCardTag(holder.tool, recipe.tool)
+        ViewUtil.setCardTag(holder.roast, recipe.roast)
 
         // お気に入りアイコンのセット
         setFavoriteIcon(holder.favorite, recipe.isFavorite)
@@ -55,13 +56,14 @@ class RecipeAdapter(
         }
     }
 
-    class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val country  : TextView  = itemView.findViewById(R.id.country)
-        val createdAt: TextView  = itemView.findViewById(R.id.createdAt)
-        val tool     : TextView  = itemView.findViewById(R.id.tool)
-        val roast    : TextView  = itemView.findViewById(R.id.roast)
-        val rating   : TextView  = itemView.findViewById(R.id.rating)
-        val favorite : ImageView = itemView.findViewById(R.id.favoriteIcon)
+    class RecipeViewHolder(itemView: View)
+        : RecyclerView.ViewHolder(itemView) {
+        val country: TextView = itemView.findViewById(R.id.title)
+        val createdAt: TextView = itemView.findViewById(R.id.createdAt)
+        val tool: TextView = itemView.findViewById(R.id.tagFirst)
+        val roast: TextView = itemView.findViewById(R.id.tagSecond)
+        val rating: TextView = itemView.findViewById(R.id.rating)
+        val favorite: ImageView = itemView.findViewById(R.id.favoriteIcon)
     }
 
     class DiffRecipeCallBack

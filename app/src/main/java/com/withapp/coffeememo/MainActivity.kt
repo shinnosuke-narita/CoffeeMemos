@@ -1,6 +1,7 @@
 package com.withapp.coffeememo
 
 import android.os.Bundle
+import android.provider.Settings.Global
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +10,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.AdRequest
 import com.withapp.coffeememo.databinding.ActivityMainBinding
+import com.withapp.coffeememo.utilities.SampleData
 import com.withapp.coffeememo.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -30,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         setUpBottomNavigation()
 
         // 広告読み込み
-        loadAd()
+        // todo リリース時コメントアウトはずす
+        //loadAd()
 
         // timer画面のボトムナビゲーション 監視
         viewModel.newRecipeFragmentExists.observe(this) { exists ->
@@ -76,8 +81,9 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavBar.visibility = View.GONE
     }
 
-    private fun loadAd() {
-        val adRequest: AdRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
-    }
+    // todo リリース時コメントアウト外す
+//    private fun loadAd() {
+//        val adRequest: AdRequest = AdRequest.Builder().build()
+//        binding.adView.loadAd(adRequest)
+//    }
 }

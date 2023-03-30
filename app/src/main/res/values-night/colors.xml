@@ -12,4 +12,5 @@
     <color name="menu_background">#FF424242</color>
     <color name="bottom_sheet_background">#FF424242</color>
     <color name="list_dialog_background">#FF424242</color>
+    <color name="progress_bar_color">#FFFFFF</color>
 </resources>

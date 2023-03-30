@@ -17,15 +17,9 @@
         android:layout_height="wrap_content"
         android:padding="20dp">
 
-
         <TextView
-            android:id="@+id/tool"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/normal_text_color"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-medium"
+            android:id="@+id/title"
+            style="@style/homeCardTitleStyle"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="hario" />
@@ -36,43 +30,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textColor="#D8D3CE"
-            app:layout_constraintTop_toBottomOf="@+id/tool"
-            app:layout_constraintStart_toStartOf="@+id/tool"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintStart_toStartOf="@+id/title"
             tools:text="2022/10/10 20:20"/>
 
 
         <TextView
-            android:id="@+id/country"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tagFirst"
+            style="@style/homeCardTagStyle"
             android:layout_marginTop="20dp"
-            android:textColor="@color/brown_light"
-            android:textStyle="bold"
-            android:textSize="11sp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:background="@drawable/recipe_tag_background"
             app:layout_constraintTop_toBottomOf="@+id/createdAt"
-            app:layout_constraintStart_toStartOf="@+id/tool"
+            app:layout_constraintStart_toStartOf="@+id/title"
             tools:text="ブラジル"/>
 
         <TextView
-            android:id="@+id/roast"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tagSecond"
+            style="@style/homeCardTagStyle"
             android:layout_marginTop="10dp"
-            android:textColor="@color/brown_light"
-            android:textStyle="bold"
-            android:textSize="11sp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:background="@drawable/recipe_tag_background"
-            app:layout_constraintTop_toBottomOf="@+id/country"
-            app:layout_constraintStart_toStartOf="@+id/tool"
+            app:layout_constraintTop_toBottomOf="@+id/tagFirst"
+            app:layout_constraintStart_toStartOf="@+id/title"
             tools:text="フルシティロースト"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,14 +61,14 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:background="@drawable/rating_background"
-            app:layout_constraintTop_toBottomOf="@+id/roast"
+            app:layout_constraintTop_toBottomOf="@+id/tagSecond"
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/rateIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Review"
+                android:text="@string/home_review"
                 android:textStyle="bold"
                 android:textColor="@color/brown_light"
                 android:textSize="12sp"
@@ -117,6 +93,7 @@
             android:id="@+id/favoriteIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/home_favorite_icon_description"
             app:tint="@color/pink_light_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
