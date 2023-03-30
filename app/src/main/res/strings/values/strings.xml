@@ -36,7 +36,7 @@
     <string name="seconds">秒</string>
     <string name="pre_infusion_time">蒸らし時間(秒)</string>
     <string name="grind_size">豆の粒度</string>
-    <string name="amount_beans">コーヒーの粉量(g)</string>
+    <string name="amount_beans">粉量(g)</string>
     <string name="amount_extraction">抽出量(cc)</string>
     <string name="comment">コメント</string>
     <string name="temperature">湯温(℃)</string>
