@@ -29,15 +29,12 @@
         <TextView
             android:id="@+id/toolText"
             style="@style/recipeDetailRecipeItemValue"
-            android:layout_width="0dp"
-            android:gravity="end"
-            android:text="hello worldsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-            android:layout_marginStart="10dp"
             app:layout_constraintStart_toEndOf="@+id/preInfusionTimeTitle"
             app:layout_constraintTop_toTopOf="@+id/toolTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.withapp.coffeememo.view.DottedLineView
+            android:id="@+id/toolDottedLine"
             android:layout_width="0dp"
             android:layout_height="5dp"
             app:layout_constraintTop_toBottomOf="@+id/toolText"
@@ -48,20 +45,22 @@
             android:id="@+id/roastTitle"
             style="@style/recipeDetailRecipeItemTitle"
             android:text="@string/roast"
-            app:layout_constraintTop_toBottomOf="@+id/toolTitle"
+            app:layout_constraintTop_toBottomOf="@+id/toolDottedLine"
             app:layout_constraintStart_toStartOf="parent"/>
 
 
         <TextView
             android:id="@+id/roastText"
             style="@style/recipeDetailRecipeItemValue"
+            app:layout_constraintStart_toEndOf="@+id/preInfusionTimeTitle"
             app:layout_constraintTop_toTopOf="@+id/roastTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.withapp.coffeememo.view.DottedLineView
+            android:id="@+id/roastDottedLine"
             android:layout_width="0dp"
             android:layout_height="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/roastTitle"
+            app:layout_constraintTop_toBottomOf="@+id/roastText"
             app:layout_constraintStart_toStartOf="@+id/roastTitle"
             app:layout_constraintEnd_toEndOf="@+id/roastText"/>
 
@@ -69,20 +68,21 @@
             android:id="@+id/grindTitle"
             style="@style/recipeDetailRecipeItemTitle"
             android:text="@string/grind_size"
-            app:layout_constraintTop_toBottomOf="@+id/roastTitle"
-            app:layout_constraintStart_toStartOf="@id/roastTitle"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/roastDottedLine"
+            app:layout_constraintStart_toStartOf="@id/roastDottedLine"/>
 
         <TextView
             android:id="@+id/grindText"
             style="@style/recipeDetailRecipeItemValue"
+            app:layout_constraintStart_toEndOf="@+id/preInfusionTimeTitle"
             app:layout_constraintTop_toTopOf="@+id/grindTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.withapp.coffeememo.view.DottedLineView
+            android:id="@+id/grindDottedLine"
             android:layout_width="0dp"
             android:layout_height="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/grindTitle"
+            app:layout_constraintTop_toBottomOf="@+id/grindText"
             app:layout_constraintStart_toStartOf="@+id/grindTitle"
             app:layout_constraintEnd_toEndOf="@+id/grindText"/>
 
@@ -90,19 +90,21 @@
             android:id="@+id/amountBeanTitle"
             style="@style/recipeDetailRecipeItemTitle"
             android:text="@string/amount_beans"
-            app:layout_constraintTop_toBottomOf="@+id/grindTitle"
+            app:layout_constraintTop_toBottomOf="@+id/grindDottedLine"
             app:layout_constraintStart_toStartOf="@id/grindTitle"/>
 
         <TextView
             android:id="@+id/amountBeanText"
             style="@style/recipeDetailRecipeItemValue"
+            app:layout_constraintStart_toEndOf="@+id/preInfusionTimeTitle"
             app:layout_constraintTop_toTopOf="@+id/amountBeanTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.withapp.coffeememo.view.DottedLineView
+            android:id="@+id/amountBeanDottedLine"
             android:layout_width="0dp"
             android:layout_height="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/amountBeanTitle"
+            app:layout_constraintTop_toBottomOf="@+id/amountBeanText"
             app:layout_constraintStart_toStartOf="@+id/amountBeanTitle"
             app:layout_constraintEnd_toEndOf="@+id/amountBeanText"/>
 
@@ -110,19 +112,21 @@
             android:id="@+id/temperatureTitle"
             style="@style/recipeDetailRecipeItemTitle"
             android:text="@string/temperature"
-            app:layout_constraintTop_toBottomOf="@+id/amountBeanTitle"
+            app:layout_constraintTop_toBottomOf="@+id/amountBeanDottedLine"
             app:layout_constraintStart_toStartOf="@id/amountBeanTitle"/>
 
         <TextView
             android:id="@+id/temperatureText"
             style="@style/recipeDetailRecipeItemValue"
+            app:layout_constraintStart_toEndOf="@+id/preInfusionTimeTitle"
             app:layout_constraintTop_toTopOf="@+id/temperatureTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.withapp.coffeememo.view.DottedLineView
+            android:id="@+id/temperatureDottedLine"
             android:layout_width="0dp"
             android:layout_height="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/temperatureTitle"
+            app:layout_constraintTop_toBottomOf="@+id/temperatureText"
             app:layout_constraintStart_toStartOf="@+id/temperatureTitle"
             app:layout_constraintEnd_toEndOf="@+id/temperatureText"/>
 
@@ -130,16 +134,18 @@
             android:id="@+id/preInfusionTimeTitle"
             style="@style/recipeDetailRecipeItemTitle"
             android:text="@string/pre_infusion_time"
-            app:layout_constraintTop_toBottomOf="@+id/temperatureTitle"
+            app:layout_constraintTop_toBottomOf="@+id/temperatureDottedLine"
             app:layout_constraintStart_toStartOf="@id/temperatureTitle"/>
 
         <TextView
             android:id="@+id/preInfusionTimeText"
             style="@style/recipeDetailRecipeItemValue"
+            app:layout_constraintStart_toEndOf="@+id/preInfusionTimeTitle"
             app:layout_constraintTop_toTopOf="@+id/preInfusionTimeTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.withapp.coffeememo.view.DottedLineView
+            android:id="@+id/preInfusionTimeDottedLine"
             android:layout_width="0dp"
             android:layout_height="5dp"
             app:layout_constraintTop_toBottomOf="@+id/preInfusionTimeTitle"
@@ -150,16 +156,18 @@
             android:id="@+id/extractionTimeTitle"
             style="@style/recipeDetailRecipeItemTitle"
             android:text="@string/extraction_time_title"
-            app:layout_constraintTop_toBottomOf="@+id/preInfusionTimeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/preInfusionTimeText"
             app:layout_constraintStart_toStartOf="@id/temperatureTitle"/>
 
         <TextView
             android:id="@+id/extractionTimeText"
             style="@style/recipeDetailRecipeItemValue"
+            app:layout_constraintStart_toEndOf="@+id/preInfusionTimeTitle"
             app:layout_constraintTop_toTopOf="@+id/extractionTimeTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.withapp.coffeememo.view.DottedLineView
+            android:id="@+id/extractionTimeDottedLine"
             android:layout_width="0dp"
             android:layout_height="5dp"
             app:layout_constraintTop_toBottomOf="@+id/extractionTimeTitle"
@@ -170,16 +178,18 @@
             android:id="@+id/amountExtractionTitle"
             style="@style/recipeDetailRecipeItemTitle"
             android:text="@string/amount_extraction"
-            app:layout_constraintTop_toBottomOf="@+id/extractionTimeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/extractionTimeText"
             app:layout_constraintStart_toStartOf="@id/extractionTimeTitle"/>
 
         <TextView
             android:id="@+id/amountExtractionText"
             style="@style/recipeDetailRecipeItemValue"
+            app:layout_constraintStart_toEndOf="@+id/preInfusionTimeTitle"
             app:layout_constraintTop_toTopOf="@+id/amountExtractionTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.withapp.coffeememo.view.DottedLineView
+            android:id="@+id/amountExtractionDottedLine"
             android:layout_width="0dp"
             android:layout_height="5dp"
             app:layout_constraintTop_toBottomOf="@+id/amountExtractionTitle"
@@ -191,16 +201,18 @@
             android:id="@+id/createdDateTitle"
             style="@style/recipeDetailRecipeItemTitle"
             android:text="@string/created_date"
-            app:layout_constraintTop_toBottomOf="@+id/amountExtractionTitle"
+            app:layout_constraintTop_toBottomOf="@+id/amountExtractionText"
             app:layout_constraintStart_toStartOf="@id/amountExtractionTitle"/>
 
         <TextView
             android:id="@+id/createdDateText"
             style="@style/recipeDetailRecipeItemValue"
+            app:layout_constraintStart_toEndOf="@+id/preInfusionTimeTitle"
             app:layout_constraintTop_toTopOf="@+id/createdDateTitle"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.withapp.coffeememo.view.DottedLineView
+            android:id="@+id/createdAtDottedLine"
             android:layout_width="0dp"
             android:layout_height="5dp"
             app:layout_constraintTop_toBottomOf="@+id/createdDateTitle"

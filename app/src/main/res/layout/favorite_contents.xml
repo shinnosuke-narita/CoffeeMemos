@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_sort_24"
             android:contentDescription="@string/favorite_sort_icon_description"
+            app:tint="@color/normal_icon_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
