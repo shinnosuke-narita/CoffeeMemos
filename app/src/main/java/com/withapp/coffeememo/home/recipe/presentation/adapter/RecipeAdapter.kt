@@ -35,11 +35,11 @@ class RecipeAdapter(
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = getItem(position)
-        holder.country.text = recipe.country
+        holder.tool.text = recipe.tool
         holder.createdAt.text = recipe.createdAt
         holder.rating.text =
             context.getString(R.string.rate_decimal, recipe.rating)
-        ViewUtil.setCardTag(holder.tool, recipe.tool)
+        ViewUtil.setCardTag(holder.country, recipe.country)
         ViewUtil.setCardTag(holder.roast, recipe.roast)
 
         // お気に入りアイコンのセット
@@ -58,9 +58,9 @@ class RecipeAdapter(
 
     class RecipeViewHolder(itemView: View)
         : RecyclerView.ViewHolder(itemView) {
-        val country: TextView = itemView.findViewById(R.id.title)
+        val tool: TextView = itemView.findViewById(R.id.title)
         val createdAt: TextView = itemView.findViewById(R.id.createdAt)
-        val tool: TextView = itemView.findViewById(R.id.tagFirst)
+        val country: TextView = itemView.findViewById(R.id.tagFirst)
         val roast: TextView = itemView.findViewById(R.id.tagSecond)
         val rating: TextView = itemView.findViewById(R.id.rating)
         val favorite: ImageView = itemView.findViewById(R.id.favoriteIcon)
