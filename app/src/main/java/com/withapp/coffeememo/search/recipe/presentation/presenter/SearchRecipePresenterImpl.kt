@@ -38,45 +38,45 @@ class SearchRecipePresenterImpl @Inject constructor() : SearchRecipePresenter {
         val grindSizeValues: MutableList<Boolean> = MutableList(5) {false}
 
         convertInputData(
-            inputData.sour,
-            sourValues) { index, value ->
-            index == value - 1
-        }
+            inputData = inputData.sour,
+            outPutData = sourValues,
+            shouldConvertIndex = true,
+        )
         convertInputData(
-            inputData.bitter,
-            bitterValues) { index, value ->
-            index == value - 1
-        }
+            inputData = inputData.bitter,
+            outPutData = bitterValues,
+           shouldConvertIndex = true
+        )
         convertInputData(
-            inputData.sweet,
-            sweetValues) { index, value ->
-            index == value - 1
-        }
+            inputData = inputData.sweet,
+            outPutData = sweetValues,
+            shouldConvertIndex = true
+        )
         convertInputData(
-            inputData.flavor,
-            flavorValues) { index, value ->
-            index == value - 1
-        }
+            inputData = inputData.flavor,
+            outPutData = flavorValues,
+            shouldConvertIndex = true
+        )
         convertInputData(
-            inputData.rich,
-            richValues) { index, value ->
-            index == value - 1
-        }
+            inputData = inputData.rich,
+            outPutData = richValues,
+            shouldConvertIndex = true
+        )
         convertInputData(
-            inputData.rating,
-            ratingValues) { index, value ->
-            index == value - 1
-        }
+            inputData = inputData.rating,
+            outPutData = ratingValues,
+            shouldConvertIndex = true
+        )
         convertInputData(
-            inputData.grindSizes,
-            grindSizeValues) { index, value ->
-            index == value
-        }
+            inputData = inputData.grindSizes,
+            outPutData = grindSizeValues,
+            shouldConvertIndex = false
+        )
         convertInputData(
-            inputData.roasts,
-            roastValues) { index, value ->
-            index == value
-        }
+            inputData = inputData.roasts,
+            outPutData = roastValues,
+            shouldConvertIndex = false
+        )
 
         return FilterRecipeOutputData(
             sour = sourValues,
@@ -95,16 +95,17 @@ class SearchRecipePresenterImpl @Inject constructor() : SearchRecipePresenter {
     private fun convertInputData(
         inputData: List<Int>,
         outPutData: MutableList<Boolean>,
-        isMatch: (index: Int, value: Int) -> Boolean) {
+        shouldConvertIndex: Boolean
+    ) {
         if (inputData.isEmpty()) return
 
-        for ((i, _) in outPutData.withIndex()) {
-            for (inputValue in inputData) {
-                if (isMatch(i, inputValue)) {
-                    outPutData[i] = true
-                }
+        for(inputValue in inputData) {
+            var index: Int = inputValue
+            if (shouldConvertIndex) {
+                index--
             }
-        }
 
+            outPutData[index] = true
+        }
     }
 }

@@ -14,7 +14,8 @@ class FreeWordSearchIterator @Inject constructor()
     lateinit var freeWordSearchPresenter: SearchBeanPresenter
 
     override suspend fun handle(freeWord: String): List<SearchBeanModel> {
-        val originBeanList: List<SearchBeanModel> = freeWordSearchRepository.searchBeanByFreeWord(freeWord)
+        val originBeanList: List<SearchBeanModel> =
+            freeWordSearchRepository.searchBeanByFreeWord(freeWord)
 
         return freeWordSearchPresenter.presentFreeWordSearchRes(originBeanList)
     }

@@ -45,6 +45,13 @@ class SearchBeanViewModel @Inject constructor() : ViewModel() {
     // 現在の検索キーワード
     private var _currentKeyWord: String = ""
 
+    // 検索結果がアップデートすべきか
+    private var _shouldUpdate: Boolean = false
+
+    fun setShouldUpdate(shouldUpdate: Boolean) {
+        _shouldUpdate = shouldUpdate
+    }
+
     // BottomSheet 状態監視
     private val _isOpened: MutableLiveData<Boolean> = MutableLiveData(false)
     val isOpened: LiveData<Boolean> = _isOpened
@@ -105,6 +112,23 @@ class SearchBeanViewModel @Inject constructor() : ViewModel() {
         _currentSortType.value = BeanSortType.NEW
         initSearchResult()
     }
+
+    fun deleteInputData() {
+        controller.deleteBeanInputData("filterBeanInputData")
+    }
+
+    // 検索結果更新
+    fun updateSearchResult() {
+        if (!_shouldUpdate) return
+
+        viewModelScope.launch {
+            _searchResult.postValue(
+                controller.getAllBean()
+            )
+        }
+        _shouldUpdate = false
+    }
+
 
     // お気に入りアイコン 更新
     fun updateFavoriteData(bean: SearchBeanModel) {

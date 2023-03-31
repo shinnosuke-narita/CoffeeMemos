@@ -104,7 +104,9 @@ class SearchRecipeFragment : Fragment() {
                 .commit()
         }
 
-        childFragmentManager.setFragmentResultListener("sortResult", viewLifecycleOwner) { _, bundle ->
+        childFragmentManager.setFragmentResultListener(
+            "sortResult",
+            viewLifecycleOwner) { _, bundle ->
             viewModel.changeBottomSheetState()
 
             val selectedIndex: Int = bundle.getInt("selectedIndex", 0)
@@ -117,7 +119,12 @@ class SearchRecipeFragment : Fragment() {
             viewModel.changeBottomSheetState()
 
             childFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.enter_from_bottom,R.anim.go_down,R.anim.enter_from_bottom, R.anim.go_down)
+                .setCustomAnimations(
+                    R.anim.enter_from_bottom,
+                    R.anim.go_down,
+                    R.anim.enter_from_bottom,
+                    R.anim.go_down
+                )
                 .replace(R.id.bottomSheet, FilterRecipeFragment())
                 .addToBackStack(null)
                 .commit()
@@ -171,7 +178,7 @@ class SearchRecipeFragment : Fragment() {
                 override fun onItemClick(recipe: SearchRecipeModel) {
                     if (viewModel.isOpened.value!!) return
 
-                    // 更新フラグの更新
+                    // 戻ってきたときにデータ更新
                     viewModel.setShouldUpdate(true)
 
                     val showDetailAction =

@@ -66,6 +66,7 @@ class SearchBeanFragment : Fragment() {
             binding.sortBtn.text = type.getSortName()
         }
 
+        // 検索キーワード監視
         sharedViewModel.searchKeyWord.observe(viewLifecycleOwner) { keyWord ->
             viewModel.freeWordSearch(keyWord)
         }
@@ -125,6 +126,17 @@ class SearchBeanFragment : Fragment() {
        }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateSearchResult()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        viewModel.deleteInputData()
+    }
+
     private fun setUpRecyclerView(context: Context, rv: RecyclerView) {
         rv.layoutManager = LinearLayoutManager(context).apply {
             orientation = LinearLayoutManager.VERTICAL
@@ -151,8 +163,12 @@ class SearchBeanFragment : Fragment() {
                 override fun onItemClick(bean: SearchBeanModel) {
                     if (viewModel.isOpened.value!!) return
 
+                    // 戻ってきたときにデータ更新
+                    viewModel.setShouldUpdate(true)
+
                     val showDetailAction =
-                        SearchFragmentDirections.showBeanDetailAction().apply {
+                        SearchFragmentDirections
+                            .showBeanDetailAction().apply {
                             beanId = bean.id
                         }
 

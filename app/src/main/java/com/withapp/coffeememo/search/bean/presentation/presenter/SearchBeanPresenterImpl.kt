@@ -33,16 +33,16 @@ class SearchBeanPresenterImpl @Inject constructor()
         val processValues: MutableList<Boolean> = MutableList(5) {false}
 
         convertInputData(
-            inputData.process,
-            processValues) { index, value ->
-            index == value
-        }
+            inputData = inputData.process,
+            outPutData = processValues,
+            shouldConvertIndex = false
+        )
 
         convertInputData(
-            inputData.rating,
-            ratingValues) { index, value ->
-            index == value
-        }
+            inputData = inputData.rating,
+            outPutData = ratingValues,
+            shouldConvertIndex = true
+        )
 
         return FilterBeanOutputData(
             countries = inputData.countries,
@@ -58,16 +58,16 @@ class SearchBeanPresenterImpl @Inject constructor()
     private fun convertInputData(
         inputData: List<Int>,
         outPutData: MutableList<Boolean>,
-        isMatch: (index: Int, value: Int) -> Boolean) {
+        shouldConvertIndex: Boolean) {
         if (inputData.isEmpty()) return
 
-        for ((i, _) in outPutData.withIndex()) {
-            for (inputValue in inputData) {
-                if (isMatch(i, inputValue)) {
-                    outPutData[i] = true
-                }
+        for(inputValue in inputData) {
+            var index: Int = inputValue
+            if (shouldConvertIndex) {
+                index--
             }
-        }
 
+            outPutData[index] = true
+        }
     }
 }

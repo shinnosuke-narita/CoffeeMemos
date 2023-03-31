@@ -35,7 +35,7 @@ class SearchBeanControllerImpl @Inject constructor()
 
     override suspend fun freeWordSearch(freeWord: SearchKeyWord): List<SearchBeanModel>? {
         if (freeWord.keyWord.isEmpty()) return null
-        if (freeWord.type == SearchType.BEAN) return null
+        if (freeWord.type != SearchType.BEAN) return null
 
         return freeWordSearchUseCase.handle(freeWord.keyWord)
     }
