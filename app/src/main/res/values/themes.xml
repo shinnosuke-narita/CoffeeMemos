@@ -60,7 +60,7 @@
     <style name="recipeDetailRecipeItemTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginTop">20dp</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/normal_text_color</item>
     </style>
@@ -92,7 +92,7 @@
     <style name="tasteItemTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">35dp</item>
+        <item name="android:layout_marginTop">25dp</item>
         <item name="android:textColor">@color/normal_text_color</item>
         <item name="android:textSize">16sp</item>
     </style>

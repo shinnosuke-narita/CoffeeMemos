@@ -47,7 +47,9 @@ class ChartManager {
 
         // x軸（チャート外）のラベルの設定
         xAxis.valueFormatter = object : ValueFormatter() {
-            private val labels = arrayOf("Sour", "Bitter", "Sweet", "Rich", "Flavor")
+            private val labels =
+                context.resources
+                .getStringArray(R.array.taste_chart_labels)
 
             override fun getFormattedValue(value: Float): String {
                 return labels[value.toInt()]

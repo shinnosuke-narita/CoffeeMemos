@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recipe_detail_edit_taste_btn_description">テイスト編集</string>
+    <string name="recipe_detail_edit_recipe_btn_description">レシピ編集</string>
+    <string name="recipe_detail_edit_bean_btn_description">コーヒー豆編集</string>
+    <string name="recipe_detail_favorite_icon_description">お気に入りアイコン</string>
+    <string-array name="taste_chart_labels">
+        <item>sour</item>
+        <item>bitter</item>
+        <item>sweet</item>
+        <item>rich</item>
+        <item>flavor</item>
+    </string-array>
+</resources>

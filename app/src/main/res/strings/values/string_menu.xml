@@ -1,16 +1,15 @@
 <resources>
     <string name="menu_header_title">Menu</string>
-    <string name="version_title">バージョン</string>
     <string-array name="title_list">
-      <item>ライセンス</item>
-      <item>著作権</item>
-      <item>プライバシーポリシー</item>
-      <item>バージョン</item>
+      <item>Licence</item>
+      <item>Copy right</item>
+      <item>Privacy policy</item>
+      <item>Version</item>
     </string-array>
     <string-array name="desc_list">
-     <item>オープンソースライセンスについて</item>
-     <item>著作権について</item>
-     <item>アプリのプライバシーポリシーについて</item>
+     <item>you can confirm open source licence</item>
+     <item>you can confirm copy right</item>
+     <item>you can browse privacy policy page</item>
      <item></item>
     </string-array>
 </resources>

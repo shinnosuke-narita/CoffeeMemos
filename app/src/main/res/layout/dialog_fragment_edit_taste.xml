@@ -1,41 +1,29 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:padding="20dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/edit_taste_dialog_fragment_background">
 
     <TextView
         android:id="@+id/tasteTitle"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:text="@string/edit_taste"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textColor="@color/normal_text_color"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="15dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/sourWrapper"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tasteTitle">
 
         <TextView
             android:id="@+id/sourTitle"
             style="@style/tasteItemTitle"
             android:text="@string/sour"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/sourSeekBar"
+            android:layout_marginTop="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tasteTitle" />
 
         <SeekBar
             android:id="@+id/sourSeekBar"
@@ -46,38 +34,27 @@
             android:progress="2"
             android:thumbTint="@color/beige_light"
             android:progressTint="@color/beige_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/sourValues"
-            app:layout_constraintStart_toEndOf="@+id/sourTitle"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@id/sourTitle"
+            app:layout_constraintEnd_toEndOf="@+id/bitterSeekBar"
+            app:layout_constraintStart_toStartOf="@+id/bitterSeekBar"
+            app:layout_constraintTop_toTopOf="@id/sourTitle" />
 
         <TextView
             android:id="@+id/sourValues"
             style="@style/tasteValue"
-            android:text="3"
-            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="3"
+            app:layout_constraintBottom_toBottomOf="@id/sourTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/sourSeekBar"
-            app:layout_constraintTop_toTopOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bitterWrapper"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sourWrapper">
+            app:layout_constraintTop_toTopOf="@id/sourTitle"/>
 
         <TextView
             android:id="@+id/bitterTitle"
             style="@style/tasteItemTitle"
             android:text="@string/bitter"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="5dp"
             app:layout_constraintEnd_toStartOf="@+id/bitterSeekBar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/sourTitle" />
 
         <SeekBar
             android:id="@+id/bitterSeekBar"
@@ -88,39 +65,26 @@
             android:progress="2"
             android:thumbTint="@color/beige_light"
             android:progressTint="@color/beige_light"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/bitterTitle"
             app:layout_constraintEnd_toStartOf="@+id/bitterValues"
             app:layout_constraintStart_toEndOf="@+id/bitterTitle"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/bitterTitle" />
 
         <TextView
             android:id="@+id/bitterValues"
             style="@style/tasteValue"
-            android:text="3"
-            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="3"
+            app:layout_constraintBottom_toBottomOf="@id/bitterTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/bitterSeekBar"
-            app:layout_constraintTop_toTopOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/sweetWrapper"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bitterWrapper">
+            app:layout_constraintTop_toTopOf="@id/bitterTitle"/>
 
         <TextView
             android:id="@+id/sweetTitle"
             style="@style/tasteItemTitle"
             android:text="@string/sweet"
-            app:layout_goneMarginEnd="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/sweetSeekBar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/bitterTitle" />
 
         <SeekBar
             android:id="@+id/sweetSeekBar"
@@ -131,39 +95,26 @@
             android:progress="2"
             android:thumbTint="@color/beige_light"
             android:progressTint="@color/beige_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/sweetValues"
-            app:layout_constraintStart_toEndOf="@+id/sweetTitle"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@id/sweetTitle"
+            app:layout_constraintEnd_toEndOf="@+id/bitterSeekBar"
+            app:layout_constraintStart_toStartOf="@+id/bitterSeekBar"
+            app:layout_constraintTop_toTopOf="@+id/sweetTitle" />
 
         <TextView
             android:id="@+id/sweetValues"
             style="@style/tasteValue"
-            android:text="3"
-            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="3"
+            app:layout_constraintBottom_toBottomOf="@id/sweetTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/sweetSeekBar"
-            app:layout_constraintTop_toTopOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="@id/sweetTitle"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/richWrapper"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sweetWrapper">
 
         <TextView
             android:id="@+id/richTitle"
             style="@style/tasteItemTitle"
             android:text="@string/rich"
-            app:layout_goneMarginEnd="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/richSeekBar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/sweetTitle" />
 
         <SeekBar
             android:id="@+id/richSeekBar"
@@ -174,39 +125,27 @@
             android:progress="2"
             android:thumbTint="@color/beige_light"
             android:progressTint="@color/beige_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/richValues"
-            app:layout_constraintStart_toEndOf="@+id/richTitle"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@id/richTitle"
+            app:layout_constraintEnd_toEndOf="@+id/bitterSeekBar"
+            app:layout_constraintStart_toStartOf="@+id/bitterSeekBar"
+            app:layout_constraintTop_toTopOf="@id/richTitle" />
 
         <TextView
             android:id="@+id/richValues"
             style="@style/tasteValue"
-            android:text="3"
-            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="3"
+            app:layout_constraintBottom_toBottomOf="@id/richTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/richSeekBar"
-            app:layout_constraintTop_toTopOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="@id/richTitle"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/flavorWrapper"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/richWrapper">
 
         <TextView
             android:id="@+id/flavorTitle"
             style="@style/tasteItemTitle"
             android:text="@string/flavor"
-            app:layout_goneMarginEnd="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/flavorSeekBar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/richTitle" />
 
         <SeekBar
             android:id="@+id/flavorSeekBar"
@@ -217,27 +156,24 @@
             android:progress="2"
             android:thumbTint="@color/beige_light"
             android:progressTint="@color/beige_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/flavorValues"
-            app:layout_constraintStart_toEndOf="@+id/flavorTitle"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@id/flavorTitle"
+            app:layout_constraintEnd_toEndOf="@+id/bitterSeekBar"
+            app:layout_constraintStart_toStartOf="@+id/bitterSeekBar"
+            app:layout_constraintTop_toTopOf="@id/flavorTitle" />
 
         <TextView
             android:id="@+id/flavorValues"
             style="@style/tasteValue"
-            android:text="3"
-            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="3"
+            app:layout_constraintBottom_toBottomOf="@id/flavorTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/flavorSeekBar"
-            app:layout_constraintTop_toTopOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="@id/flavorTitle"/>
 
     <TextView
         android:id="@+id/updateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="15dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
@@ -249,13 +185,14 @@
         android:text="@string/update"
         android:background="@drawable/recipe_tag_background"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flavorWrapper"
+        app:layout_constraintTop_toBottomOf="@+id/flavorTitle"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/cancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:layout_marginEnd="15dp"
         android:textSize="14sp"
         android:textColor="@color/brown_light"
@@ -263,5 +200,4 @@
         app:layout_constraintBottom_toBottomOf="@+id/updateBtn"
         app:layout_constraintTop_toTopOf="@+id/updateBtn"
         app:layout_constraintEnd_toStartOf="@+id/updateBtn"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
