@@ -14,8 +14,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.withapp.coffeememo.CoffeeMemosApplication
-import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentRecipeDetailBinding
 import com.withapp.coffeememo.dialog.BasicDialogFragment
 import com.withapp.coffeememo.dialog.EditTasteDialogFragment
@@ -120,13 +120,18 @@ class RecipeDetailFragment : Fragment() {
         }
 
         viewModel.selectedRecipe.observe(viewLifecycleOwner) { recipe ->
+            val roastList: List<String> =
+                LocalizationManager.getRoastList()
+            val grindSizeList: List<String> =
+                LocalizationManager.getGrindSizeList()
+
             binding.recipeCardView.toolText.text = recipe.tool
             binding.recipeCardView.recipeCommentText.text = recipe.comment
             binding.recipeCardView.amountBeanText.text       = recipe.amountOfBeans.toString()
             binding.recipeCardView.temperatureText.text      = recipe.temperature.toString()
             binding.recipeCardView.amountExtractionText.text = recipe.amountExtraction.toString()
-            binding.recipeCardView.roastText.text            = Constants.roastList[recipe.roast]
-            binding.recipeCardView.grindText.text            = Constants.grindSizeList[recipe.grindSize]
+            binding.recipeCardView.roastText.text            = roastList[recipe.roast]
+            binding.recipeCardView.grindText.text            = grindSizeList[recipe.grindSize]
             binding.recipeCardView.preInfusionTimeText.text  = DateUtil.formatPreInfusionTime(recipe.preInfusionTime)
             binding.recipeCardView.extractionTimeText.text   = DateUtil.formatExtractionTime(recipe.extractionTime)
             binding.recipeCardView.createdDateText.text      = DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern)
@@ -137,13 +142,16 @@ class RecipeDetailFragment : Fragment() {
         }
 
         viewModel.selectedBean.observe(viewLifecycleOwner) { bean ->
+            val processList: List<String> =
+                LocalizationManager.getProcessList()
+
             binding.beanCardView.countryText.text     = bean.country
             binding.beanCardView.farmText.text        = bean.farm
             binding.beanCardView.districtText.text    = bean.district
             binding.beanCardView.speciesText.text     = bean.species
             binding.beanCardView.elevationText.text   = getString(R.string.elevation_from_to, bean.elevationFrom.toString(), bean.elevationTo.toString())
             binding.beanCardView.storeText.text       = bean.store
-            binding.beanCardView.processText.text     = Constants.processList[bean.process]
+            binding.beanCardView.processText.text     = processList[bean.process]
             binding.beanCardView.beanCommentText.text = bean.comment
             binding.beanCardView.createdAtText.text   = DateUtil.formatEpochTimeMills(bean.createdAt, DateUtil.pattern)
 

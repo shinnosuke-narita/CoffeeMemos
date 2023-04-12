@@ -342,7 +342,7 @@
                     android:id="@+id/ratingTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="評価"
+                    android:text="@string/review"
                     android:textColor="@color/normal_text_color"
                     android:textSize="14sp"
                     app:layout_constraintTop_toTopOf="parent"

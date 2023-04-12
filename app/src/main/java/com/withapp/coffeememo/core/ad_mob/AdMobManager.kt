@@ -9,8 +9,8 @@ import com.google.android.gms.ads.MobileAds
 import com.withapp.coffeememo.BuildConfig
 
 object AdMobManager {
-    private val proAdUnitId = "ca-app-pub-7093807169305333/9360848027"
-    private val devAdUnitId = "ca-app-pub-3940256099942544/6300978111"
+    private const val proAdUnitId = "ca-app-pub-7093807169305333/9360848027"
+    private const val devAdUnitId = "ca-app-pub-3940256099942544/6300978111"
 
     // AdMob 初期化
     fun init(context: Context) {

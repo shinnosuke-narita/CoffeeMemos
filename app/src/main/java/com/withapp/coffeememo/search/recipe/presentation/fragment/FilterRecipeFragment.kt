@@ -1,19 +1,15 @@
 package com.withapp.coffeememo.search.recipe.presentation.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
 import android.widget.ImageView
 import androidx.activity.addCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
-import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentFilterBinding
 import com.withapp.coffeememo.search.common.presentation.fragment.BaseFilterFragment
 import com.withapp.coffeememo.state.MenuState
@@ -102,10 +98,16 @@ class FilterRecipeFragment : BaseFilterFragment() {
             binding.richContainer.radioBtnFifth
         )
 
-        setUpRadioBtnContainer(Constants.roastList, binding.roastContainer, roastViewList) { index ->
+        setUpRadioBtnContainer(
+            LocalizationManager.getRoastList(),
+            binding.roastContainer,
+            roastViewList) { index ->
             viewModel.setRoastRadioBtnState(index)
         }
-        setUpRadioBtnContainer(Constants.grindSizeList, binding.grindSizeContainer, grindSizeViewList) { index ->
+        setUpRadioBtnContainer(
+            LocalizationManager.getGrindSizeList(),
+            binding.grindSizeContainer,
+            grindSizeViewList) { index ->
             viewModel.setGrindSizeRadioBtnState(index)
         }
 

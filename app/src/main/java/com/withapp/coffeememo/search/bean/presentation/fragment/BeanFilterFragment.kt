@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
-import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentBeanFilterBinding
 import com.withapp.coffeememo.search.common.presentation.fragment.BaseFilterFragment
 import com.withapp.coffeememo.state.MenuState
@@ -306,7 +306,12 @@ class BeanFilterFragment : BaseFilterFragment() {
         binding.processContainer.tag = getString(R.string.process)
 
         // コーヒー精製法コンテナ セットアップ
-        setUpRadioBtnContainer(Constants.processList, binding.processContainer, processViewList) { index ->
+        val processList: List<String> =
+            LocalizationManager.getProcessList()
+        setUpRadioBtnContainer(
+            processList,
+            binding.processContainer,
+            processViewList) { index ->
             viewModel.setProcessBtnState(index)
         }
 

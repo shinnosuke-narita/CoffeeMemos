@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.adapter.BeanViewHolder
-import com.withapp.coffeememo.listener.OnFavoriteIconClickListener
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
 import com.withapp.coffeememo.search.bean.presentation.adapter.listener.OnFavoriteClickListener
 import com.withapp.coffeememo.search.bean.presentation.adapter.listener.OnItemClickListener
@@ -42,10 +41,13 @@ class BeanAdapter(
     }
 
     override fun onBindViewHolder(holder: BeanViewHolder, position: Int) {
+        val processList: List<String> =
+            LocalizationManager.getProcessList()
+
         holder.country.text     = data[position].country
         holder.species.text     = data[position].species
         holder.storeName.text   = data[position].store
-        holder.processName.text = Constants.processList[data[position].process]
+        holder.processName.text = processList[data[position].process]
         holder.rate.text        = context.getString(R.string.rate_decimal, data[position].rating.toString())
         holder.createdAt.text   = DateUtil.formatEpochTimeMills(data[position].createdAt, DateUtil.pattern)
         ViewUtil.setCardTag(holder.farm, data[position].farm)

@@ -1,5 +1,6 @@
 package com.withapp.coffeememo.fragment
 
+import android.app.ProgressDialog.show
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -11,8 +12,8 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.withapp.coffeememo.CoffeeMemosApplication
-import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentNewBeanBinding
 import com.withapp.coffeememo.dialog.BasicDialogFragment
 import com.withapp.coffeememo.dialog.ListDialogFragment
@@ -92,7 +93,10 @@ class NewBeanFragment : BaseFragment(), View.OnClickListener {
         }
         // Process 関連処理
         viewModel.process.observe(viewLifecycleOwner) { process ->
-            binding.processEditText.text = Constants.processList[process]
+            val processList: List<String> =
+                LocalizationManager.getProcessList()
+
+            binding.processEditText.text = processList[process]
         }
         // country validation
         viewModel.countryValidation.observe(viewLifecycleOwner) { validationInfo ->
@@ -109,9 +113,19 @@ class NewBeanFragment : BaseFragment(), View.OnClickListener {
         }
         // processDialog 表示
         binding.selectProcessBtn.setOnClickListener {
+            val processList: List<String> =
+                LocalizationManager.getProcessList()
+
             ListDialogFragment
-                .create(viewModel.process.value!!, getString(R.string.edit_bean), "updateProcess", Constants.processList.toTypedArray())
-                .show(childFragmentManager, ListDialogFragment::class.simpleName)
+                .create(
+                    viewModel.process.value!!,
+                    getString(R.string.edit_bean),
+                    "updateProcess",
+                    processList.toTypedArray())
+                .show(
+                    childFragmentManager,
+                    ListDialogFragment::class.simpleName
+                )
         }
         // ★画像のクリックリスナーセット
         binding.starFirst.setOnClickListener(this)

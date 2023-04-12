@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.favorite.bean.presentation.mapper
 
-import com.withapp.coffeememo.Constants
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.entity.Bean
 import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
 import com.withapp.coffeememo.utilities.DateUtil
@@ -17,8 +17,10 @@ class FavoriteBeanModelMapperImpl @Inject constructor()
             )
 
         // process 変換
+        val processList: List<String> =
+            LocalizationManager.getProcessList()
         val process: String =
-            Constants.processList[bean.process]
+            processList[bean.process]
 
         // elevation 変換
         val elevationStr: String =

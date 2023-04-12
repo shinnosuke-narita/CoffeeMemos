@@ -14,8 +14,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.withapp.coffeememo.CoffeeMemosApplication
-import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentBeanDetailBinding
 import com.withapp.coffeememo.dialog.BasicDialogFragment
 import com.withapp.coffeememo.manager.RatingManager
@@ -97,11 +97,14 @@ class BeanDetailFragment : Fragment() {
         viewModel.selectedBean.observe(viewLifecycleOwner) { bean ->
             if (bean == null) return@observe
 
+            val processList: List<String> =
+                LocalizationManager.getProcessList()
+
             binding.beanCardView.countryText.text     = bean.country
             binding.beanCardView.farmText.text        = bean.farm
             binding.beanCardView.districtText.text    = bean.district
             binding.beanCardView.speciesText.text     = bean.species
-            binding.beanCardView.processText.text     = Constants.processList[bean.process]
+            binding.beanCardView.processText.text     = processList[bean.process]
             binding.beanCardView.elevationText.text   = getString(R.string.elevation_from_to, bean.elevationFrom.toString(), bean.elevationTo.toString())
             binding.beanCardView.storeText.text       = bean.store
             binding.beanCardView.beanCommentText.text = bean.comment

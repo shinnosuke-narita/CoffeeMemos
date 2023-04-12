@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 import com.withapp.coffeememo.search.recipe.presentation.adapter.`interface`.OnFavoriteClickListener
 import com.withapp.coffeememo.search.recipe.presentation.adapter.`interface`.OnItemClickListener
@@ -44,6 +44,10 @@ class RecipeDetailAdapter(val context: Context, val data: List<SearchRecipeModel
 
     override fun onBindViewHolder(holder: RecipeDetailViewHolder, position: Int) {
         val recipe: SearchRecipeModel = data[position]
+        val roastList: List<String> =
+            LocalizationManager.getRoastList()
+        val grindSizeList: List<String> =
+            LocalizationManager.getGrindSizeList()
 
         holder.tool.text       = recipe.tool
         holder.createdAt.text  = DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern)
@@ -54,8 +58,8 @@ class RecipeDetailAdapter(val context: Context, val data: List<SearchRecipeModel
         holder.rich.text       = recipe.rich.toString()
         holder.rating.text     = context.getString(R.string.rate_decimal, recipe.rating.toString())
         ViewUtil.setCardTag(holder.country, recipe.country)
-        ViewUtil.setCardTag(holder.roast, Constants.roastList[recipe.roast])
-        ViewUtil.setCardTag(holder.grindSize,  Constants.grindSizeList[recipe.grindSize])
+        ViewUtil.setCardTag(holder.roast, roastList[recipe.roast])
+        ViewUtil.setCardTag(holder.grindSize,  grindSizeList[recipe.grindSize])
 
         // お気に入りアイコンのセット
         setFavoriteIcon(holder.favorite, recipe.isFavorite)

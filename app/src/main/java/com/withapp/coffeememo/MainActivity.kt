@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.AdRequest
 import com.withapp.coffeememo.core.ad_mob.AdMobManager
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.ActivityMainBinding
 import com.withapp.coffeememo.utilities.SampleData
 import com.withapp.coffeememo.viewModel.MainViewModel
@@ -41,6 +42,12 @@ class MainActivity : AppCompatActivity() {
         viewModel.newRecipeFragmentExists.observe(this) { exists ->
             if (exists) hideBottomNav()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 言語設定の更新
+        LocalizationManager.updateLocale()
     }
 
     private fun setUpBottomNavigation() {

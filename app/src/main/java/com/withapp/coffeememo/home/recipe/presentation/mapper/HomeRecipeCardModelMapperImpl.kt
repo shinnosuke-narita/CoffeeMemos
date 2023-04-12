@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.home.recipe.presentation.mapper
 
-import com.withapp.coffeememo.Constants
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeModel
 import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeCardData
 import java.time.format.DateTimeFormatter
@@ -20,7 +20,9 @@ class HomeRecipeCardModelMapperImpl @Inject constructor()
             val formatter = DateTimeFormatter.ofPattern(pattern)
             val createdAtStr = recipe.createdAt.format(formatter)
             // roast 変換
-            val roastStr = Constants.roastList[recipe.roast]
+            val roastList: List<String> =
+                LocalizationManager.getRoastList()
+            val roastStr = roastList[recipe.roast]
 
             result.add(
                 HomeRecipeCardData(

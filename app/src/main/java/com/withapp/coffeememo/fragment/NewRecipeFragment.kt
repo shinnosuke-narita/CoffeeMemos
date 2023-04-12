@@ -13,8 +13,8 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentNewRecipeBinding
 import com.withapp.coffeememo.dialog.BasicDialogFragment
 import com.withapp.coffeememo.dialog.ListDialogFragment
@@ -131,22 +131,29 @@ class NewRecipeFragment :
         }
         // Roast
         viewModel.currentRoast.observe(viewLifecycleOwner) { roast ->
-            binding.roastTextView.text = Constants.roastList[roast]
+            val roastList: List<String> =
+                LocalizationManager.getRoastList()
+            binding.roastTextView.text = roastList[roast]
         }
         // Grind Size
         viewModel.currentGrind.observe(viewLifecycleOwner) { grind ->
-            binding.grindTextView.text = Constants.grindSizeList[grind]
+            val grindSizeList: List<String> =
+                LocalizationManager.getGrindSizeList()
+            binding.grindTextView.text = grindSizeList[grind]
         }
         // 選択されたコーヒー豆
         mainViewModel.selectedBean.observe(viewLifecycleOwner) { bean ->
             if (bean == null) return@observe
+
+            val processList: List<String> =
+                LocalizationManager.getProcessList()
 
             val beanContainer = binding.beanContainer
             beanContainer.country.text     = bean.country
             beanContainer.district.text    = bean.district
             beanContainer.createdAt.text   = DateUtil.formatEpochTimeMills(bean.createdAt, DateUtil.pattern)
             beanContainer.storeName.text   = bean.store
-            beanContainer.processName.text = Constants.processList[bean.process]
+            beanContainer.processName.text = processList[bean.process]
             beanContainer.speciesName.text = bean.species
             beanContainer.rating.text      = getString(R.string.rate_decimal, bean.rating.toString())
             beanContainer.ratingWrapper.visibility = View.VISIBLE
@@ -258,15 +265,31 @@ class NewRecipeFragment :
         }
         // ロースト選択ボタン
         binding.selectRoastBtn.setOnClickListener {
+            val roastList: List<String> =
+                LocalizationManager.getRoastList()
             ListDialogFragment
-                .create(viewModel.currentRoast.value!!, getString(R.string.edit_roast), "updateRoast", Constants.roastList.toTypedArray())
+                .create(
+                    viewModel.currentRoast.value!!,
+                    getString(R.string.edit_roast),
+                    "updateRoast",
+                    roastList.toTypedArray())
                 .show(childFragmentManager, ListDialogFragment::class.simpleName)
         }
         // グラインドサイズ選択ボタン
         binding.selectGrindBtn.setOnClickListener {
+            val grindSizeList: List<String> =
+                LocalizationManager.getGrindSizeList()
+
             ListDialogFragment
-                .create(viewModel.currentGrind.value!!, getString(R.string.edit_grind), "updateGrind", Constants.grindSizeList.toTypedArray())
-                .show(childFragmentManager, ListDialogFragment::class.simpleName)
+                .create(
+                    viewModel.currentGrind.value!!,
+                    getString(R.string.edit_grind),
+                    "updateGrind",
+                    grindSizeList.toTypedArray())
+                .show(
+                    childFragmentManager,
+                    ListDialogFragment::class.simpleName
+                )
         }
         // コーヒー豆選択ボタン クリックリスナ―
         binding.selectBeanBtn.setOnClickListener {

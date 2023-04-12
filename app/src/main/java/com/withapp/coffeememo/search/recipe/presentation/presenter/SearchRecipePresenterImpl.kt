@@ -6,7 +6,8 @@ import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 import com.withapp.coffeememo.search.recipe.domain.presenter.SearchRecipePresenter
 import javax.inject.Inject
 
-class SearchRecipePresenterImpl @Inject constructor() : SearchRecipePresenter {
+class SearchRecipePresenterImpl @Inject constructor()
+    : SearchRecipePresenter {
     override fun presentAllRecipes(recipes: List<SearchRecipeModel>): List<SearchRecipeModel> {
         return recipes
     }
@@ -34,7 +35,7 @@ class SearchRecipePresenterImpl @Inject constructor() : SearchRecipePresenter {
         val flavorValues: MutableList<Boolean> = MutableList(5) {false}
         val richValues: MutableList<Boolean> = MutableList(5) {false}
         val ratingValues: MutableList<Boolean> = MutableList(5) {false}
-        val roastValues: MutableList<Boolean> = MutableList(5) {false}
+        val roastValues: MutableList<Boolean> = MutableList(8) {false}
         val grindSizeValues: MutableList<Boolean> = MutableList(5) {false}
 
         convertInputData(

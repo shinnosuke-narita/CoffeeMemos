@@ -11,8 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.withapp.coffeememo.CoffeeMemosApplication
-import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentEditBeanBinding
 import com.withapp.coffeememo.dialog.BasicDialogFragment
 import com.withapp.coffeememo.dialog.ListDialogFragment
@@ -117,8 +117,11 @@ class EditBeanFragment : BaseFragment(), View.OnClickListener {
         }
         // Process
         viewModel.process.observe(viewLifecycleOwner) { process ->
+            val processList: List<String> =
+                LocalizationManager.getProcessList()
+
             binding.processEditText.text =
-                Constants.processList[process]
+                processList[process]
         }
         // progressBar
         viewModel.processState.observe(viewLifecycleOwner) { state ->
@@ -172,7 +175,7 @@ class EditBeanFragment : BaseFragment(), View.OnClickListener {
                         viewModel.process.value!!,
                         getString(R.string.edit_bean),
                         "updateProcess",
-                        Constants.processList.toTypedArray()
+                        LocalizationManager.getProcessList().toTypedArray()
                     )
                     .show(
                         childFragmentManager,

@@ -39,17 +39,13 @@
     <string name="save">保存</string>
     <string name="update">更新</string>
     <string name="delete">削除</string>
-    <string name="create_recipe_title">レシピの保存</string>
     <string name="create_recipe_message">レシピを保存しますか</string>
-    <string name="update_recipe_title">レシピの更新</string>
     <string name="update_message">更新をしてよろしいですか</string>
-    <string name="delete_recipe_title">レシピの削除</string>
     <string name="delete_recipe_message">レシピを削除しますか</string>
-    <string name="delete_bean_title">コーヒー豆の削除</string>
-    <string name="delete_bean_message">コーヒー豆を削除しますか</string>
-    <string name="create_bean_title">コーヒー豆の保存</string>
+    <string name="delete_bean_message">
+        コーヒー豆を削除しますか。\nこのコーヒー豆を削除すると、このコーヒー豆で作成したレシピも削除されます。
+    </string>
     <string name="create_bean_message">コーヒー豆を保存しますか</string>
-    <string name="update_bean_title">コーヒー豆の更新</string>
     <string name="bean_finish_update_message">コーヒー豆を更新しました</string>
     <string name="recipe_finish_save_message">レシピを保存しました</string>
     <string name="recipe_finish_update_message">レシピを更新しました</string>

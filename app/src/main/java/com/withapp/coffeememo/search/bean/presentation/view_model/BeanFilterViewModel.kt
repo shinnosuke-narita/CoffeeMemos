@@ -5,8 +5,8 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
-import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.search.bean.presentation.controller.SearchBeanController
 import com.withapp.coffeememo.state.MenuState
 import com.withapp.coffeememo.search.common.presentation.view_model.BaseFilterViewModel
@@ -131,7 +131,8 @@ class BeanFilterViewModel : BaseFilterViewModel() {
     private val _ratingRadioBtnState: MutableLiveData<List<Boolean>> = MutableLiveData(List(5) {false})
     val ratingRadioBtnState: LiveData<List<Boolean>> = _ratingRadioBtnState
 
-    private val _processRadioBtnState: MutableLiveData<List<Boolean>> = MutableLiveData(List(Constants.processList.size) { false })
+    private val _processRadioBtnState: MutableLiveData<List<Boolean>> = MutableLiveData(List(
+        LocalizationManager.processListSize) { false })
     val processBtnStateList: LiveData<List<Boolean>> = _processRadioBtnState
 
     fun setProcessBtnState(selectedIndex: Int) {
@@ -163,7 +164,9 @@ class BeanFilterViewModel : BaseFilterViewModel() {
         return@map list.joinToString(", ")
     }
     val selectedProcessText: LiveData<String> = _processRadioBtnState.map { list ->
-        buildSelectedText(list) { index -> "${Constants.processList[index]},  " }
+        val processList: List<String> =
+            LocalizationManager.getProcessList()
+        buildSelectedText(list) { index -> "${processList[index]},  " }
     }
     val inputSpeciesText: LiveData<String> = _speciesValues.map { list ->
         if (list.isEmpty())  return@map ""

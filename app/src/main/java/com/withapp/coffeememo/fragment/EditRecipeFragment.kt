@@ -11,8 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.withapp.coffeememo.CoffeeMemosApplication
-import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentEditRecipeBinding
 import com.withapp.coffeememo.dialog.BasicDialogFragment
 import com.withapp.coffeememo.dialog.ListDialogFragment
@@ -20,7 +20,6 @@ import com.withapp.coffeememo.listener.SimpleTextWatcher
 import com.withapp.coffeememo.manager.RatingManager
 import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.viewModel.EditRecipeViewModel
-import java.util.*
 
 
 class EditRecipeFragment : BaseFragment(), View.OnClickListener {
@@ -104,12 +103,16 @@ class EditRecipeFragment : BaseFragment(), View.OnClickListener {
         }
         // 編集ダイアログ
         // Roast
-        viewModel.currentRoast.observe(viewLifecycleOwner) { roast ->
-            binding.roastTextView.text = Constants.roastList[roast]
+        viewModel.currentRoast.observe(viewLifecycleOwner) { index ->
+            val roastList: List<String> =
+                LocalizationManager.getRoastList()
+            binding.roastTextView.text = roastList[index]
         }
         // Grind Size
-        viewModel.currentGrind.observe(viewLifecycleOwner) { grind ->
-            binding.grindTextView.text = Constants.grindSizeList[grind]
+        viewModel.currentGrind.observe(viewLifecycleOwner) { index ->
+            val grindSizeList: List<String> =
+                LocalizationManager.getGrindSizeList()
+            binding.grindTextView.text = grindSizeList[index]
         }
         ////////////////////////
         // validation message //
@@ -135,14 +138,31 @@ class EditRecipeFragment : BaseFragment(), View.OnClickListener {
         // 焙煎度選択アイコン
         binding.selectRoastBtn.setOnClickListener {
             ListDialogFragment
-                .create(viewModel.currentRoast.value!!, getString(R.string.edit_roast), "updateRoast", Constants.roastList.toTypedArray())
-                .show(childFragmentManager, ListDialogFragment::class.simpleName)
+                .create(
+                    viewModel.currentRoast.value!!,
+                    getString(R.string.edit_roast),
+                    "updateRoast",
+                    LocalizationManager.getRoastList().toTypedArray()
+                )
+                .show(
+                    childFragmentManager,
+                    ListDialogFragment::class.simpleName
+                )
         }
         // 編集アイコンクリックリスナ―
         binding.selectGrindBtn.setOnClickListener {
             ListDialogFragment
-                .create(viewModel.currentGrind.value!!, getString(R.string.edit_grind), "updateGrind", Constants.grindSizeList.toTypedArray())
-                .show(childFragmentManager, ListDialogFragment::class.simpleName)
+                .create(viewModel.currentGrind.value!!,
+                    getString(R.string.edit_grind),
+                    "updateGrind",
+                    LocalizationManager
+                        .getGrindSizeList()
+                        .toTypedArray()
+                )
+                .show(
+                    childFragmentManager,
+                    ListDialogFragment::class.simpleName
+                )
         }
         // ★画像のクリックリスナーセット
         binding.beanStarFirst.setOnClickListener(this)

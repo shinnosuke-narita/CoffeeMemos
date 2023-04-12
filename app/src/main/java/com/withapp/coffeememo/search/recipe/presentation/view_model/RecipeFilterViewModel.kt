@@ -5,8 +5,8 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
-import com.withapp.coffeememo.Constants
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.search.recipe.presentation.controller.SearchRecipeController
 import com.withapp.coffeememo.state.MenuState
 import com.withapp.coffeememo.search.common.presentation.view_model.BaseFilterViewModel
@@ -103,11 +103,11 @@ class RecipeFilterViewModel : BaseFilterViewModel() {
 
     // ラジオボタン状態管理
     private val  _roastRadioBtnState: MutableLiveData<List<Boolean>> =
-        MutableLiveData(List(Constants.roastList.size) {false})
+        MutableLiveData(List(LocalizationManager.roastListSize) {false})
     val roastBtnStateList: LiveData<List<Boolean>> = _roastRadioBtnState
 
     private val  _grindSizeRadioBtnState: MutableLiveData<List<Boolean>> =
-        MutableLiveData(List(Constants.grindSizeList.size) {false})
+        MutableLiveData(List(LocalizationManager.grindListSize) {false})
     val grindSizeBtnStateList: LiveData<List<Boolean>> = _grindSizeRadioBtnState
 
     private val _ratingRadioBtnState: MutableLiveData<List<Boolean>> = MutableLiveData(List(5) {false})
@@ -176,11 +176,15 @@ class RecipeFilterViewModel : BaseFilterViewModel() {
 
     // 絞り込み要素表示テキスト
     val selectedRoastText: LiveData<String> = _roastRadioBtnState.map { list ->
-        buildSelectedText(list) { index -> "${Constants.roastList[index]},  "}
+        val roastList: List<String> =
+            LocalizationManager.getRoastList()
+        buildSelectedText(list) { index -> "${roastList[index]},  "}
     }
     val selectedGrindSizeText: LiveData<String> = _grindSizeRadioBtnState.map { list ->
+        val grindSizeList: List<String> =
+            LocalizationManager.getGrindSizeList()
         buildSelectedText(list) { index ->
-            "${Constants.grindSizeList[index]},  "
+            "${grindSizeList[index]},  "
         }
     }
     val inputCountriesText: LiveData<String> = _countryValues.map { list ->
