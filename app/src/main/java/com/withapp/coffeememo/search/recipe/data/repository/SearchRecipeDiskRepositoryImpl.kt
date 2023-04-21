@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.search.recipe.data.repository
 
-import com.withapp.coffeememo.dao.RecipeDao
-import com.withapp.coffeememo.entity.RecipeWithTaste
+import com.withapp.coffeememo.core.data.dao.RecipeDao
+import com.withapp.coffeememo.core.data.entity.RecipeWithTaste
 import com.withapp.coffeememo.search.recipe.data.mapper.SearchRecipeModelMapper
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 import com.withapp.coffeememo.search.recipe.domain.repository.SearchRecipeDiskRepository

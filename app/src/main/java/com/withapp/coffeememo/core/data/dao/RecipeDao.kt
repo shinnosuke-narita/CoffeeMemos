@@ -1,8 +1,8 @@
-package com.withapp.coffeememo.dao
+package com.withapp.coffeememo.core.data.dao
 
 import androidx.room.*
-import com.withapp.coffeememo.entity.Recipe
-import com.withapp.coffeememo.entity.RecipeWithTaste
+import com.withapp.coffeememo.core.data.entity.Recipe
+import com.withapp.coffeememo.core.data.entity.RecipeWithTaste
 import kotlinx.coroutines.flow.Flow
 
 @Dao

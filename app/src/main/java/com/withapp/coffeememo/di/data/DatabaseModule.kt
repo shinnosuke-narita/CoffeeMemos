@@ -1,10 +1,10 @@
 package com.withapp.coffeememo.di.data
 
 import android.content.Context
-import com.withapp.coffeememo.CoffeeMemosDatabase
-import com.withapp.coffeememo.dao.BeanDao
-import com.withapp.coffeememo.dao.RecipeDao
-import com.withapp.coffeememo.dao.TasteDao
+import com.withapp.coffeememo.core.data.CoffeeMemosDatabase
+import com.withapp.coffeememo.core.data.dao.BeanDao
+import com.withapp.coffeememo.core.data.dao.RecipeDao
+import com.withapp.coffeememo.core.data.dao.TasteDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

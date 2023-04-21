@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.viewModel
 
 import androidx.lifecycle.*
-import com.withapp.coffeememo.dao.BeanDao
-import com.withapp.coffeememo.entity.CustomBean
+import com.withapp.coffeememo.core.data.dao.BeanDao
+import com.withapp.coffeememo.core.data.entity.CustomBean
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
 
 class SelectBeanViewModel(

@@ -3,8 +3,8 @@ package com.withapp.coffeememo.viewModel
 import android.content.Context
 import androidx.lifecycle.*
 import com.withapp.coffeememo.utilities.Util
-import com.withapp.coffeememo.dao.BeanDao
-import com.withapp.coffeememo.entity.Bean
+import com.withapp.coffeememo.core.data.dao.BeanDao
+import com.withapp.coffeememo.core.data.entity.Bean
 import com.withapp.coffeememo.manager.RatingManager
 import com.withapp.coffeememo.validate.BeanValidationLogic
 import com.withapp.coffeememo.validate.RecipeValidationLogic

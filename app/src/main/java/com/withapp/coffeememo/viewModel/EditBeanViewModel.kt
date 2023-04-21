@@ -2,9 +2,9 @@ package com.withapp.coffeememo.viewModel
 
 import android.content.Context
 import androidx.lifecycle.*
-import com.withapp.coffeememo.dao.BeanDao
-import com.withapp.coffeememo.dao.RecipeDao
-import com.withapp.coffeememo.entity.Bean
+import com.withapp.coffeememo.core.data.dao.BeanDao
+import com.withapp.coffeememo.core.data.dao.RecipeDao
+import com.withapp.coffeememo.core.data.entity.Bean
 import com.withapp.coffeememo.manager.RatingManager
 import com.withapp.coffeememo.state.ProcessState
 import com.withapp.coffeememo.utilities.Util

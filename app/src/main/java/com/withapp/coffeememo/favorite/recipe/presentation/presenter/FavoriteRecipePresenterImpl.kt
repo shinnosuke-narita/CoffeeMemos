@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.favorite.recipe.presentation.presenter
 
-import com.withapp.coffeememo.entity.Recipe
+import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.favorite.recipe.presentation.mapper.FavoriteRecipeModelMapper
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
 import javax.inject.Inject

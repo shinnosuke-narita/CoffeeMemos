@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.adapter
+package com.withapp.coffeememo.core.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,8 +10,11 @@ import android.widget.TextView
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.manager.DialogDataHolder
 
-class SortAdapter (private val context: Context, private val data: List<DialogDataHolder.DialogData>) : BaseAdapter() {
-    private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+class SortAdapter (context: Context, private val data: List<DialogDataHolder.DialogData>) : BaseAdapter() {
+    private val inflater: LayoutInflater =
+        context.getSystemService(
+            Context.LAYOUT_INFLATER_SERVICE
+        ) as LayoutInflater
 
     override fun getCount(): Int {
         return data.size

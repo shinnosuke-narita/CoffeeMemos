@@ -2,8 +2,8 @@ package com.withapp.coffeememo.viewModel
 
 import android.content.Context
 import androidx.lifecycle.*
-import com.withapp.coffeememo.dao.RecipeDao
-import com.withapp.coffeememo.entity.Recipe
+import com.withapp.coffeememo.core.data.dao.RecipeDao
+import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.manager.RatingManager
 import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.utilities.Util

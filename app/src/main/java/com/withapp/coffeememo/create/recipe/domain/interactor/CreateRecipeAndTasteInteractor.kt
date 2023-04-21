@@ -3,8 +3,8 @@ package com.withapp.coffeememo.create.recipe.domain.interactor
 import com.withapp.coffeememo.create.recipe.domain.model.InputData
 import com.withapp.coffeememo.create.recipe.domain.repository.StorageRepository
 import com.withapp.coffeememo.create.recipe.domain.use_case.CreateRecipeAndTasteUseCase
-import com.withapp.coffeememo.entity.Recipe
-import com.withapp.coffeememo.entity.Taste
+import com.withapp.coffeememo.core.data.entity.Recipe
+import com.withapp.coffeememo.core.data.entity.Taste
 import javax.inject.Inject
 
 class CreateRecipeAndTasteInteractor @Inject constructor()

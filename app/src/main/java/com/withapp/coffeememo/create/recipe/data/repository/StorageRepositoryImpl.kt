@@ -1,11 +1,11 @@
 package com.withapp.coffeememo.create.recipe.data.repository
 
 import com.withapp.coffeememo.create.recipe.domain.repository.StorageRepository
-import com.withapp.coffeememo.dao.BeanDao
-import com.withapp.coffeememo.dao.RecipeDao
-import com.withapp.coffeememo.dao.TasteDao
-import com.withapp.coffeememo.entity.Recipe
-import com.withapp.coffeememo.entity.Taste
+import com.withapp.coffeememo.core.data.dao.BeanDao
+import com.withapp.coffeememo.core.data.dao.RecipeDao
+import com.withapp.coffeememo.core.data.dao.TasteDao
+import com.withapp.coffeememo.core.data.entity.Recipe
+import com.withapp.coffeememo.core.data.entity.Taste
 import javax.inject.Inject
 
 class StorageRepositoryImpl @Inject constructor()

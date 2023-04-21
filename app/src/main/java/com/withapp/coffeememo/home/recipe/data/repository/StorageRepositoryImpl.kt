@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.home.recipe.data.repository
 
-import com.withapp.coffeememo.dao.BeanDao
-import com.withapp.coffeememo.dao.RecipeDao
+import com.withapp.coffeememo.core.data.dao.BeanDao
+import com.withapp.coffeememo.core.data.dao.RecipeDao
 import com.withapp.coffeememo.home.recipe.data.mapper.HomeRecipeModelMapper
 import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeModel
 import com.withapp.coffeememo.home.recipe.domain.repository.StorageRepository

@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.utilities
 
-import com.withapp.coffeememo.dao.BeanDao
-import com.withapp.coffeememo.entity.Bean
-import com.withapp.coffeememo.entity.Recipe
+import com.withapp.coffeememo.core.data.dao.BeanDao
+import com.withapp.coffeememo.core.data.entity.Bean
+import com.withapp.coffeememo.core.data.entity.Recipe
 
 class SampleData {
     companion object {

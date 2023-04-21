@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.entity
+package com.withapp.coffeememo.core.data.entity
 
 import androidx.annotation.Nullable
 import androidx.room.Embedded

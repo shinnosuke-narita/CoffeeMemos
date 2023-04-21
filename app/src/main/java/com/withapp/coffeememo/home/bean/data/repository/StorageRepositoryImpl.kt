@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.home.bean.data.repository
 
-import com.withapp.coffeememo.dao.BeanDao
+import com.withapp.coffeememo.core.data.dao.BeanDao
 import com.withapp.coffeememo.home.bean.data.mapper.HomeBeanModelMapper
 import com.withapp.coffeememo.home.bean.data.model.HomeBeanData
 import com.withapp.coffeememo.home.bean.domain.model.HomeBeanModel

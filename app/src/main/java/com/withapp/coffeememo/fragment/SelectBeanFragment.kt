@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.CoffeeMemosApplication
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.adapter.BeanAdapter
+import com.withapp.coffeememo.core.presentation.adapter.BeanAdapter
 import com.withapp.coffeememo.databinding.FragmentSelectBeanBinding
 import com.withapp.coffeememo.listener.OnItemClickListener
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel

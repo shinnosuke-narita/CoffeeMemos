@@ -6,7 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
-import com.withapp.coffeememo.adapter.DialogDataAdapter
+import com.withapp.coffeememo.core.presentation.adapter.DialogDataAdapter
 import com.withapp.coffeememo.databinding.DialogFragmentListBinding
 import com.withapp.coffeememo.manager.DialogDataHolder
 

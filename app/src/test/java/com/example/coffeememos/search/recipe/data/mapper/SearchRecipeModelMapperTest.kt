@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.search.recipe.data.mapper
 
-import com.withapp.coffeememo.entity.Recipe
-import com.withapp.coffeememo.entity.RecipeWithTaste
-import com.withapp.coffeememo.entity.Taste
+import com.withapp.coffeememo.core.data.entity.Recipe
+import com.withapp.coffeememo.core.data.entity.RecipeWithTaste
+import com.withapp.coffeememo.core.data.entity.Taste
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 import com.google.common.truth.Truth
 import org.junit.Before

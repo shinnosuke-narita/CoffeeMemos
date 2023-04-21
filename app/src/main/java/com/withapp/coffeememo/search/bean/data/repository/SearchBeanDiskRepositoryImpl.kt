@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.search.bean.data.repository
 
-import com.withapp.coffeememo.dao.BeanDao
+import com.withapp.coffeememo.core.data.dao.BeanDao
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
 import com.withapp.coffeememo.search.bean.domain.repository.SearchBeanDiskRepository
 import javax.inject.Inject

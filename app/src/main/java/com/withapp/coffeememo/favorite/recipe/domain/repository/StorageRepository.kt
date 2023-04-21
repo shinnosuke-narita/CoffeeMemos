@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.favorite.recipe.domain.repository
 
-import com.withapp.coffeememo.entity.Recipe
+import com.withapp.coffeememo.core.data.entity.Recipe
 
 interface StorageRepository {
     suspend fun getFavoriteRecipe(): List<Recipe>

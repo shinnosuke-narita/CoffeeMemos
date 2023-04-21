@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.favorite.recipe.presentation.mapper
 
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
-import com.withapp.coffeememo.entity.Recipe
+import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
 import com.withapp.coffeememo.utilities.DateUtil
 import javax.inject.Inject

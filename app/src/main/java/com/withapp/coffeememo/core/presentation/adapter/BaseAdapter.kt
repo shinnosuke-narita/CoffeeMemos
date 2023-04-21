@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.adapter
+package com.withapp.coffeememo.core.presentation.adapter
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView

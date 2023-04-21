@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.favorite.recipe.presentation.controller
 
-import com.withapp.coffeememo.entity.Recipe
+import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.favorite.recipe.domain.model.RecipeSortType
 import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
 import com.withapp.coffeememo.favorite.recipe.domain.use_case.*

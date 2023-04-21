@@ -2,7 +2,7 @@ package com.withapp.coffeememo.search.recipe.presentation.view_model
 
 import android.view.View
 import androidx.lifecycle.*
-import com.withapp.coffeememo.dao.RecipeDao
+import com.withapp.coffeememo.core.data.dao.RecipeDao
 import com.withapp.coffeememo.search.recipe.domain.model.RecipeSortType
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 import com.withapp.coffeememo.search.recipe.presentation.controller.SearchRecipeController

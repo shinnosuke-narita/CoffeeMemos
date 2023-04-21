@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.adapter.BeanViewHolder
+import com.withapp.coffeememo.core.presentation.adapter.BeanViewHolder
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
 import com.withapp.coffeememo.search.bean.presentation.adapter.listener.OnFavoriteClickListener

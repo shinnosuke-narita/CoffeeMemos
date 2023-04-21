@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.favorite.bean.data.repository
 
-import com.withapp.coffeememo.dao.BeanDao
-import com.withapp.coffeememo.entity.Bean
+import com.withapp.coffeememo.core.data.dao.BeanDao
+import com.withapp.coffeememo.core.data.entity.Bean
 import com.withapp.coffeememo.favorite.bean.domain.repository.StorageRepository
 import javax.inject.Inject
 
