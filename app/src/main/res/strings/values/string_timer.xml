@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="timer_pre_infusion_time">PreInfusion time</string>
+    <string name="timer_extraction_time">Extraction time</string>
+    <string name="timer_finish_pre_infusion">Finish preInfusion</string>
+</resources>
