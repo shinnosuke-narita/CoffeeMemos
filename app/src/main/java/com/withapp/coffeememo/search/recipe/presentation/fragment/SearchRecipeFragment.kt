@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ import com.withapp.coffeememo.search.recipe.presentation.adapter.`interface`.OnF
 import com.withapp.coffeememo.search.recipe.presentation.adapter.`interface`.OnItemClickListener
 import com.withapp.coffeememo.search.common.presentation.view_model.MainSearchViewModel
 import com.withapp.coffeememo.search.recipe.presentation.view_model.SearchRecipeViewModel
+import com.withapp.coffeememo.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -38,6 +40,9 @@ class SearchRecipeFragment : Fragment() {
 
     // 共有viewModel
     private val sharedViewModel: MainSearchViewModel by viewModels({ requireParentFragment() })
+
+    // MainViewModel
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +93,10 @@ class SearchRecipeFragment : Fragment() {
 
         // 並び替えボタン クリックリスナ―
         binding.sortBtn.setOnClickListener {
+            // シャドウ表示
             viewModel.changeBottomSheetState()
+            // 広告非表示
+            mainViewModel.hideAd()
 
             val originData: Array<String> =
                 requireContext()
@@ -116,6 +124,7 @@ class SearchRecipeFragment : Fragment() {
             "sortResult",
             viewLifecycleOwner) { _, bundle ->
             viewModel.changeBottomSheetState()
+            mainViewModel.showAd()
 
             viewModel.setCurrentSortType(
                 RecipeSortType.getSortTypeFromIndex(
@@ -127,6 +136,7 @@ class SearchRecipeFragment : Fragment() {
         // 絞り込みボタン クリックリスナ―
         binding.refineBtn.setOnClickListener {
             viewModel.changeBottomSheetState()
+            mainViewModel.hideAd()
 
             childFragmentManager.beginTransaction()
                 .setCustomAnimations(
@@ -144,6 +154,7 @@ class SearchRecipeFragment : Fragment() {
             "filterResult",
             viewLifecycleOwner) { _, _  ->
             viewModel.changeBottomSheetState()
+            mainViewModel.showAd()
         }
 
         binding.clearBtn.setOnClickListener {

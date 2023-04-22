@@ -59,4 +59,10 @@ class MainViewModel : ViewModel() {
     fun setNewRecipeExistsFlag(flag: Boolean) {
         _newRecipeFragmentExists.value = flag
     }
+
+    private val _shouldShowAd: MutableLiveData<Boolean> = MutableLiveData(true)
+    val shouldShowAd: LiveData<Boolean> = _shouldShowAd
+
+    fun showAd() { _shouldShowAd.value = true }
+    fun hideAd() { _shouldShowAd.value = false }
 }

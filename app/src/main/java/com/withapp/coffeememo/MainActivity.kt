@@ -1,22 +1,17 @@
 package com.withapp.coffeememo
 
 import android.os.Bundle
-import android.provider.Settings.Global
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.gms.ads.AdRequest
 import com.withapp.coffeememo.core.ad_mob.AdMobManager
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.ActivityMainBinding
-import com.withapp.coffeememo.utilities.SampleData
 import com.withapp.coffeememo.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -41,6 +36,15 @@ class MainActivity : AppCompatActivity() {
         // timer画面のボトムナビゲーション 監視
         viewModel.newRecipeFragmentExists.observe(this) { exists ->
             if (exists) hideBottomNav()
+        }
+
+        // 広告表示状態 監視
+        viewModel.shouldShowAd.observe(this) { shouldShow ->
+            if (shouldShow) {
+                binding.adMobPlace.visibility = View.VISIBLE
+            } else {
+                binding.adMobPlace.visibility = View.GONE
+            }
         }
     }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ import com.withapp.coffeememo.search.bean.presentation.adapter.listener.OnItemCl
 import com.withapp.coffeememo.search.common.presentation.view_model.MainSearchViewModel
 import com.withapp.coffeememo.search.bean.presentation.view_model.SearchBeanViewModel
 import com.withapp.coffeememo.search.common.presentation.fragment.SearchFragmentDirections
+import com.withapp.coffeememo.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,6 +38,8 @@ class SearchBeanFragment : Fragment() {
     private val viewModel: SearchBeanViewModel by viewModels()
     // 共有viewModel
     private val sharedViewModel: MainSearchViewModel by viewModels({ requireParentFragment() })
+    // MainViewModel
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +88,7 @@ class SearchBeanFragment : Fragment() {
 
         binding.sortBtn.setOnClickListener {
             viewModel.changeBottomSheetState()
-
+            mainViewModel.hideAd()
 
             childFragmentManager.beginTransaction()
                 .setCustomAnimations(
@@ -104,6 +108,7 @@ class SearchBeanFragment : Fragment() {
 
         childFragmentManager.setFragmentResultListener("sortResult", viewLifecycleOwner) { _, bundle ->
             viewModel.changeBottomSheetState()
+            mainViewModel.showAd()
 
             viewModel.setCurrentSortType(
                 BeanSortType.getSortTypeFormIndex(
@@ -114,6 +119,7 @@ class SearchBeanFragment : Fragment() {
 
         binding.refineBtn.setOnClickListener {
             viewModel.changeBottomSheetState()
+            mainViewModel.hideAd()
 
             childFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_bottom,R.anim.go_down,R.anim.enter_from_bottom, R.anim.go_down)
@@ -124,6 +130,7 @@ class SearchBeanFragment : Fragment() {
 
         childFragmentManager.setFragmentResultListener("filterResult", viewLifecycleOwner) { _, _ ->
             viewModel.changeBottomSheetState()
+            mainViewModel.showAd()
         }
 
        binding.clearBtn.setOnClickListener {
