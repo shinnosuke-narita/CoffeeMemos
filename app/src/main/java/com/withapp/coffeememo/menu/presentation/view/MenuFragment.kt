@@ -29,7 +29,11 @@ class MenuFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // メニューの説明文取得
+        val titleList: Array<out String> =
+            requireContext()
+                .resources
+                .getStringArray(R.array.title_list)
+
         val descList: Array<out String> =
             requireContext()
                 .resources
@@ -39,7 +43,7 @@ class MenuFragment : Fragment() {
         val versionName: String =
             getVersionName(requireActivity()) ?: ""
         // viewModel 初期化
-        viewModel.initialize(descList, versionName)
+        viewModel.initialize(titleList, descList, versionName)
     }
 
     override fun onCreateView(
@@ -80,10 +84,9 @@ class MenuFragment : Fragment() {
         binding.menuList.adapter =
             MenuAdapter(
                 viewModel.menuListItem
-            ) { item ->
-                // todo 各画面起動処理
-                when(item.title) {
-                    viewModel.titleList[0] -> {
+            ) { position ->
+                when(position) {
+                    0 -> {
                         // ライセンス
                         startActivity(
                             Intent(
@@ -92,13 +95,13 @@ class MenuFragment : Fragment() {
                             )
                         )
                     }
-                    viewModel.titleList[1] -> {
+                    1 -> {
                         // 著作権
                         findNavController()
                             .navigate(R.id.copyRightFragment)
 
                     }
-                    viewModel.titleList[2] -> {
+                    2 -> {
                         // プライバシーポリシー
                         findNavController()
                             .navigate(R.id.privacyPolicyFragment)

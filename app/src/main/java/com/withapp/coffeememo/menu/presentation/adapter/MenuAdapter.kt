@@ -10,7 +10,7 @@ import com.withapp.coffeememo.menu.presentation.model.MenuItem
 
 class MenuAdapter(
     private val data: List<MenuItem>,
-    private val onItemClick: (item: MenuItem) -> Unit
+    private val onItemClick: (position: Int) -> Unit
 ) : RecyclerView.Adapter<MenuAdapter.MenuItemViewHolder>() {
 
     override fun getItemCount(): Int = data.size
@@ -38,7 +38,7 @@ class MenuAdapter(
         holder.description.text = data[position].description
 
         holder.itemView.setOnClickListener {
-            onItemClick(data[position])
+            onItemClick(position)
         }
     }
 
