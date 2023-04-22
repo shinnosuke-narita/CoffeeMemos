@@ -1,6 +1,6 @@
 <resources>
  <string name="bean_title">Bean</string>
- <string name="select_bean_btn">Choose coffee bean</string>
+ <string name="select_bean_btn">CHOOSE COFFEE BEAN</string>
  <string name="taste_title">Taste</string>
  <string name="taste_announce">※you can enter a value between 1 and 5.</string>
  <string name="recipe_title">Recipe</string>
