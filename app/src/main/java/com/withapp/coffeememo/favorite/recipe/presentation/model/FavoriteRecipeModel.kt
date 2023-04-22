@@ -6,8 +6,8 @@ data class FavoriteRecipeModel(
     var country: String,
     val tool: String,
     val roast: String,
-    val extractionTime: String,
-    val preInfusionTime: String,
+    val extractionTime: Long,
+    val preInfusionTime: Long,
     val amountExtraction: String,
     val temperature: String,
     val grindSize: String,
@@ -15,5 +15,5 @@ data class FavoriteRecipeModel(
     val comment: String,
     val isFavorite: Boolean,
     val rating: Int,
-    val createdAt: String
+    val createdAt: Long
 )

@@ -10,16 +10,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.home.bean.presentation.model.HomeBeanCardData
+import com.withapp.coffeememo.home.bean.domain.model.HomeBeanModel
 import com.withapp.coffeememo.utilities.ViewUtil
 import com.withapp.coffeememo.utilities.ViewUtil.Companion.setFavoriteIcon
+import java.time.format.DateTimeFormatter
 
 class HomeBeanCardAdapter(
     private val context: Context,
-    private val onFavoriteClick: (bean: HomeBeanCardData) -> Unit,
-    private val onItemClick: (bean: HomeBeanCardData) -> Unit
+    private val onFavoriteClick: (bean: HomeBeanModel) -> Unit,
+    private val onItemClick: (bean: HomeBeanModel) -> Unit
 ) : ListAdapter<
-        HomeBeanCardData,
+        HomeBeanModel,
         HomeBeanCardAdapter.HomeBeanCardViewHolder
         >(DiffBeanCallBack()) {
 
@@ -39,9 +40,14 @@ class HomeBeanCardAdapter(
         val bean = getItem(position)
 
         holder.country.text = bean.country
-        holder.createdAt.text = bean.createdAt
+        holder.createdAt.text =
+            bean.createdAt?.format(
+                DateTimeFormatter.ofPattern(
+                    context.getString(R.string.date_pattern)
+                )
+            )
         holder.rating.text =
-            context.getString(R.string.rate_decimal, bean.rating)
+            context.getString(R.string.rate_decimal, bean.rating.toString())
 
         // cardタグ セット
         ViewUtil.setCardTag(holder.farm, bean.farm)
@@ -72,17 +78,17 @@ class HomeBeanCardAdapter(
     }
 
     class DiffBeanCallBack
-        : DiffUtil.ItemCallback<HomeBeanCardData>() {
+        : DiffUtil.ItemCallback<HomeBeanModel>() {
         override fun areItemsTheSame(
-            oldItem: HomeBeanCardData,
-            newItem: HomeBeanCardData
+            oldItem: HomeBeanModel,
+            newItem: HomeBeanModel
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: HomeBeanCardData,
-            newItem: HomeBeanCardData
+            oldItem: HomeBeanModel,
+            newItem: HomeBeanModel
         ): Boolean {
             return oldItem == newItem
         }

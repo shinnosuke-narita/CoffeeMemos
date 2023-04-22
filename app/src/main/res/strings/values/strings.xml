@@ -105,6 +105,7 @@
     <string name="temperature_degree">%1$d℃</string>
     <string name="preInfusionTime_seconds">%1$ds</string>
     <string name="extractionTime_unit">%1$dm%2$ds</string>
+    <string name="date_pattern">HH:mm dd/MM/yyyy</string>
     <string name="new_recipe_Header">New</string>
     <string name="favorite_recipe_header">Favorites</string>
     <string name="high_rating_header">High Rating</string>

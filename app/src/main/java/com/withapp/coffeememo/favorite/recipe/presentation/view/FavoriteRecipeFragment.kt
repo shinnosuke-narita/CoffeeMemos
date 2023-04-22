@@ -1,6 +1,5 @@
 package com.withapp.coffeememo.favorite.recipe.presentation.view
 
-import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +14,7 @@ import com.withapp.coffeememo.databinding.FragmentFavoriteRecipeBinding
 import com.withapp.coffeememo.dialog.ListDialogFragment
 import com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragmentDirections
 import com.withapp.coffeememo.favorite.common.presentation.view.DeleteFavoriteSnackBar
-import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
-import com.withapp.coffeememo.favorite.recipe.presentation.adapter.FavoriteBeanAdapter
+import com.withapp.coffeememo.favorite.recipe.presentation.adapter.FavoriteRecipeAdapter
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,7 +29,7 @@ class FavoriteRecipeFragment : Fragment() {
 
     private val viewModel: FavoriteRecipeViewModel by viewModels()
 
-    private lateinit var favoriteRecipeAdapter: FavoriteBeanAdapter
+    private lateinit var favoriteRecipeAdapter: FavoriteRecipeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -128,8 +126,9 @@ class FavoriteRecipeFragment : Fragment() {
             }
     }
 
-    private fun getFavoriteRecipeAdapter(): FavoriteBeanAdapter {
-        return FavoriteBeanAdapter(
+    private fun getFavoriteRecipeAdapter(): FavoriteRecipeAdapter {
+        return FavoriteRecipeAdapter(
+            requireContext(),
             onFavoriteClick = { recipe, view ->
                 // 連打防止
                 viewModel.disableFavoriteBtn(view)

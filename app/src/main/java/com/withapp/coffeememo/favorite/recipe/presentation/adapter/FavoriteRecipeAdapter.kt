@@ -1,5 +1,6 @@
 package com.withapp.coffeememo.favorite.recipe.presentation.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
+import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.utilities.ViewUtil
 
-class FavoriteBeanAdapter(
+class FavoriteRecipeAdapter(
+    private val context: Context,
     private val onFavoriteClick: (
         recipe: FavoriteRecipeModel,
         favoriteIcon: View
@@ -20,7 +23,7 @@ class FavoriteBeanAdapter(
     private val onItemClick: (recipe: FavoriteRecipeModel) -> Unit
 ) : ListAdapter<
         FavoriteRecipeModel,
-        FavoriteBeanAdapter.RecipeViewHolder>(DiffRecipeCallBack()) {
+        FavoriteRecipeAdapter.RecipeViewHolder>(DiffRecipeCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         return RecipeViewHolder(
@@ -36,15 +39,25 @@ class FavoriteBeanAdapter(
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = getItem(position)
+        val preInfusionTime: String =
+            DateUtil.formatPreInfusionTime(context, recipe.preInfusionTime)
+        val extractionTime: String =
+            DateUtil.formatExtractionTime(context, recipe.extractionTime)
+        val createdAt: String =
+            DateUtil.formatEpochTimeMills(
+                recipe.createdAt,
+                context.getString(R.string.date_pattern)
+            )
+
         holder.tool.text = recipe.tool
         holder.roast.text = recipe.roast
         holder.grindSize.text = recipe.grindSize
         holder.amountBean.text = recipe.amountOfBeans
         holder.temperature.text = recipe.temperature
-        holder.preInfusionTime.text = recipe.preInfusionTime
-        holder.extractionTime.text = recipe.extractionTime
+        holder.preInfusionTime.text = preInfusionTime
+        holder.extractionTime.text = extractionTime
         holder.amountExtraction.text = recipe.amountExtraction
-        holder.createdAt.text = recipe.createdAt
+        holder.createdAt.text = createdAt
         holder.comment.text = recipe.comment
         holder.rating.text = String.format("%d.0",recipe.rating)
 

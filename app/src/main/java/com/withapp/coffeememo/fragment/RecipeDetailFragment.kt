@@ -132,9 +132,12 @@ class RecipeDetailFragment : Fragment() {
             binding.recipeCardView.amountExtractionText.text = recipe.amountExtraction.toString()
             binding.recipeCardView.roastText.text            = roastList[recipe.roast]
             binding.recipeCardView.grindText.text            = grindSizeList[recipe.grindSize]
-            binding.recipeCardView.preInfusionTimeText.text  = DateUtil.formatPreInfusionTime(recipe.preInfusionTime)
-            binding.recipeCardView.extractionTimeText.text   = DateUtil.formatExtractionTime(recipe.extractionTime)
-            binding.recipeCardView.createdDateText.text      = DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern)
+            binding.recipeCardView.preInfusionTimeText.text  = DateUtil.formatPreInfusionTime(requireContext(), recipe.preInfusionTime)
+            binding.recipeCardView.extractionTimeText.text   = DateUtil.formatExtractionTime(requireContext(), recipe.extractionTime)
+            binding.recipeCardView.createdDateText.text =
+                DateUtil.formatEpochTimeMills(
+                    recipe.createdAt,
+                    requireContext().getString(R.string.date_pattern))
 
 
             if (recipe.isFavorite) binding.recipeCardView.recipeFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
@@ -153,7 +156,11 @@ class RecipeDetailFragment : Fragment() {
             binding.beanCardView.storeText.text       = bean.store
             binding.beanCardView.processText.text     = processList[bean.process]
             binding.beanCardView.beanCommentText.text = bean.comment
-            binding.beanCardView.createdAtText.text   = DateUtil.formatEpochTimeMills(bean.createdAt, DateUtil.pattern)
+            binding.beanCardView.createdAtText.text =
+                DateUtil.formatEpochTimeMills(
+                    bean.createdAt,
+                    getString(R.string.date_pattern)
+                )
 
             if (bean.isFavorite) binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
             else binding.beanCardView.beanFavoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)

@@ -49,7 +49,10 @@ class BeanAdapter(
         holder.storeName.text   = data[position].store
         holder.processName.text = processList[data[position].process]
         holder.rate.text        = context.getString(R.string.rate_decimal, data[position].rating.toString())
-        holder.createdAt.text   = DateUtil.formatEpochTimeMills(data[position].createdAt, DateUtil.pattern)
+        holder.createdAt.text   =
+            DateUtil.formatEpochTimeMills(
+                data[position].createdAt,
+                context.getString(R.string.date_pattern))
         ViewUtil.setCardTag(holder.farm, data[position].farm)
         ViewUtil.setCardTag(holder.district, data[position].district)
         ViewUtil.setFavoriteIcon(holder.favoriteIcon, data[position].isFavorite)

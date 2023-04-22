@@ -9,13 +9,6 @@ import javax.inject.Inject
 class FavoriteBeanModelMapperImpl @Inject constructor()
     : FavoriteBeanModelMapper{
     override fun execute(bean: Bean): FavoriteBeanModel {
-        // createdAt 変換
-        val createdAt: String =
-            DateUtil.formatEpochTimeMills(
-                bean.createdAt,
-                DateUtil.pattern
-            )
-
         // process 変換
         val processList: List<String> =
             LocalizationManager.getProcessList()
@@ -41,7 +34,7 @@ class FavoriteBeanModelMapperImpl @Inject constructor()
             comment = bean.comment,
             rating = bean.rating,
             isFavorite = bean.isFavorite,
-            createdAt = createdAt
+            createdAt = bean.createdAt
         )
     }
 

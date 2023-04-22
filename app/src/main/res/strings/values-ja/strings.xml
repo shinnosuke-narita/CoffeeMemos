@@ -65,6 +65,7 @@
     <string name="preInfusionTime_seconds">%1$d秒</string>
     <string name="extractionTime_unit">%1$d分%2$d秒</string>
     <string name="recipeCount">%1d件</string>
+    <string name="date_pattern">yyyy/MM/dd HH:mm</string>
 
     <string name="hint_country"><font size="15">原産地</font></string>
 </resources>

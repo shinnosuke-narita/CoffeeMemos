@@ -13,6 +13,7 @@ import com.withapp.coffeememo.R
 import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeCardData
 import com.withapp.coffeememo.utilities.ViewUtil
 import com.withapp.coffeememo.utilities.ViewUtil.Companion.setFavoriteIcon
+import java.time.format.DateTimeFormatter
 
 class RecipeAdapter(
     private val context: Context,
@@ -35,8 +36,16 @@ class RecipeAdapter(
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = getItem(position)
+
+        // createdAt変換
+        val createdAt: String =
+            recipe.createdAt.format(DateTimeFormatter.ofPattern(
+                    context.getString(R.string.date_pattern)
+                )
+            )
+
         holder.tool.text = recipe.tool
-        holder.createdAt.text = recipe.createdAt
+        holder.createdAt.text = createdAt
         holder.rating.text =
             context.getString(R.string.rate_decimal, recipe.rating)
         ViewUtil.setCardTag(holder.country, recipe.country)

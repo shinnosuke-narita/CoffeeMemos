@@ -1,9 +1,9 @@
 package com.withapp.coffeememo.home.bean.presentation.view_model
 
 import androidx.lifecycle.*
+import com.withapp.coffeememo.home.bean.domain.model.HomeBeanModel
+import com.withapp.coffeememo.home.bean.domain.model.HomeBeanSource
 import com.withapp.coffeememo.home.bean.presentation.controller.HomeBeanController
-import com.withapp.coffeememo.home.bean.presentation.model.HomeBeanCardData
-import com.withapp.coffeememo.home.bean.presentation.model.HomeBeanOutput
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,19 +15,19 @@ class HomeBeanViewModel @Inject constructor() : ViewModel() {
     lateinit var controller: HomeBeanController
 
     // 新しい順コーヒー豆
-    private val _newBeans: MutableLiveData<List<HomeBeanCardData>> =
+    private val _newBeans: MutableLiveData<List<HomeBeanModel>> =
         MutableLiveData(listOf())
-    val newBeans: LiveData<List<HomeBeanCardData>> = _newBeans
+    val newBeans: LiveData<List<HomeBeanModel>> = _newBeans
 
     // お気に入りコーヒー豆
-    private val _favoriteBeans: MutableLiveData<List<HomeBeanCardData>> =
+    private val _favoriteBeans: MutableLiveData<List<HomeBeanModel>> =
         MutableLiveData(listOf())
-    val favoriteBeans: LiveData<List<HomeBeanCardData>> = _favoriteBeans
+    val favoriteBeans: LiveData<List<HomeBeanModel>> = _favoriteBeans
 
     // 高評価順コーヒー豆
-    private val _highRatingBeans: MutableLiveData<List<HomeBeanCardData>> =
+    private val _highRatingBeans: MutableLiveData<List<HomeBeanModel>> =
         MutableLiveData(listOf())
-    val highRatingBeans: LiveData<List<HomeBeanCardData>> = _highRatingBeans
+    val highRatingBeans: LiveData<List<HomeBeanModel>> = _highRatingBeans
 
     // 今日のコーヒー豆数
     private val _todayBeanCount: MutableLiveData<String> = MutableLiveData("")
@@ -43,13 +43,14 @@ class HomeBeanViewModel @Inject constructor() : ViewModel() {
     }
 
     // コーヒー豆データがあるか
-    private val _beanExists: MutableLiveData<Boolean> = MutableLiveData(false)
-    val beanExists: LiveData<Boolean> = _beanExists
+    val beanExists: LiveData<Boolean> = _totalBeanCount.map { count ->
+        return@map count != "0"
+    }
 
     fun updateHomeBeanData(beanId: Long, isFavorite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             val updatedFavoriteFlag = !isFavorite
-            val homeBeanOutput: HomeBeanOutput =
+            val homeBeanOutput: HomeBeanSource =
                 controller.updateBeanData(beanId, updatedFavoriteFlag)
 
             setHomeBeanData(homeBeanOutput)
@@ -59,7 +60,7 @@ class HomeBeanViewModel @Inject constructor() : ViewModel() {
     // データ取得
     fun getHomeBeanData() {
         viewModelScope.launch {
-            val homeBeanOutput: HomeBeanOutput =
+            val homeBeanOutput: HomeBeanSource =
                 controller.getHomeBeanData()
 
             setHomeBeanData(homeBeanOutput)
@@ -67,13 +68,12 @@ class HomeBeanViewModel @Inject constructor() : ViewModel() {
     }
 
     // LiveDataにデータセット
-    private fun setHomeBeanData(output: HomeBeanOutput) {
+    private fun setHomeBeanData(output: HomeBeanSource) {
         _newBeans.postValue(output.newBeans)
         _favoriteBeans.postValue(output.favoriteBeans)
         _highRatingBeans.postValue(output.highRatingBeans)
-        _totalBeanCount.postValue(output.totalCount)
-        _todayBeanCount.postValue(output.todayCount)
-        _beanExists.postValue(output.beanExists)
+        _totalBeanCount.postValue(output.totalCount.toString())
+        _todayBeanCount.postValue(output.todayCount.toString())
     }
 }
 

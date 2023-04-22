@@ -50,13 +50,16 @@ class RecipeDetailAdapter(val context: Context, val data: List<SearchRecipeModel
             LocalizationManager.getGrindSizeList()
 
         holder.tool.text       = recipe.tool
-        holder.createdAt.text  = DateUtil.formatEpochTimeMills(recipe.createdAt, DateUtil.pattern)
         holder.sour.text       = recipe.sour.toString()
         holder.bitter.text     = recipe.bitter.toString()
         holder.sweet.text      = recipe.sweet.toString()
         holder.flavor.text     = recipe.flavor.toString()
         holder.rich.text       = recipe.rich.toString()
         holder.rating.text     = context.getString(R.string.rate_decimal, recipe.rating.toString())
+        holder.createdAt.text  =
+            DateUtil.formatEpochTimeMills(
+                recipe.createdAt,
+                context.getString(R.string.date_pattern))
         ViewUtil.setCardTag(holder.country, recipe.country)
         ViewUtil.setCardTag(holder.roast, roastList[recipe.roast])
         ViewUtil.setCardTag(holder.grindSize,  grindSizeList[recipe.grindSize])

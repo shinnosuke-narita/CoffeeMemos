@@ -12,5 +12,5 @@ data class FavoriteBeanModel(
     val comment: String,
     val rating: Int,
     val isFavorite: Boolean,
-    val createdAt: String
+    val createdAt: Long
 )

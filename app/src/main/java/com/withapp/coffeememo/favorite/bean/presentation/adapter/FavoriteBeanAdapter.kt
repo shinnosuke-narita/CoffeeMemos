@@ -1,5 +1,6 @@
 package com.withapp.coffeememo.favorite.bean.presentation.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
+import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.utilities.ViewUtil
 
 class FavoriteBeanAdapter(
+    private val context: Context,
     private val onFavoriteClick: (
         bean: FavoriteBeanModel,
         favoriteIcon: View
@@ -44,7 +47,11 @@ class FavoriteBeanAdapter(
         holder.process.text = bean.process
         holder.elevation.text = bean.elevation
         holder.store.text = bean.store
-        holder.createdAt.text = bean.createdAt
+        holder.createdAt.text =
+            DateUtil.formatEpochTimeMills(
+                bean.createdAt,
+                context.getString(R.string.date_pattern)
+            )
         holder.comment.text = bean.comment
         holder.rating.text = String.format("%d.0",bean.rating)
 

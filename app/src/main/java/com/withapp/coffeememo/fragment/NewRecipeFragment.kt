@@ -151,12 +151,16 @@ class NewRecipeFragment :
             val beanContainer = binding.beanContainer
             beanContainer.country.text     = bean.country
             beanContainer.district.text    = bean.district
-            beanContainer.createdAt.text   = DateUtil.formatEpochTimeMills(bean.createdAt, DateUtil.pattern)
             beanContainer.storeName.text   = bean.store
             beanContainer.processName.text = processList[bean.process]
             beanContainer.speciesName.text = bean.species
             beanContainer.ratingWrapper.rating.text      = getString(R.string.rate_decimal, bean.rating.toString())
             beanContainer.ratingWrapper.root.visibility = View.VISIBLE
+            beanContainer.createdAt.text   =
+                DateUtil.formatEpochTimeMills(
+                    bean.createdAt,
+                    requireContext().getString(R.string.date_pattern)
+                )
 
             ViewUtil.setCardTag(beanContainer.farm, bean.farm)
             ViewUtil.setCardTag(beanContainer.district, bean.district)

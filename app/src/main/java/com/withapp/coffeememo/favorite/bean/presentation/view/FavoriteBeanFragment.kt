@@ -114,6 +114,7 @@ class FavoriteBeanFragment : Fragment() {
 
     private fun getFavoriteBeanAdapter(): FavoriteBeanAdapter {
         return FavoriteBeanAdapter(
+            requireContext(),
             onFavoriteClick = { bean, view ->
                 // 連打防止
                 viewModel.disableFavoriteBtn(view)
