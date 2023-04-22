@@ -11,6 +11,5 @@ interface FavoriteRecipeController {
         sortType: RecipeSortType,
         list: List<FavoriteRecipeModel>
     ): List<FavoriteRecipeModel>
-    fun getSortDialogData(sortType: RecipeSortType): SortDialogOutput
     fun getSortType(index: Int): RecipeSortType
 }

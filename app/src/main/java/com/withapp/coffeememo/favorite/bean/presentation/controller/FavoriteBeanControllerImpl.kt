@@ -19,8 +19,6 @@ class FavoriteBeanControllerImpl @Inject constructor()
     @Inject
     lateinit var sortBeanUseCase: SortBeanUseCase
     @Inject
-    lateinit var getSortDialogDataUseCase: GetSortDialogDataUseCase
-    @Inject
     lateinit var getSortTypeUseCase: GetSortTypeUseCase
 
     override suspend fun getFavoriteBean(): List<FavoriteBeanModel> {
@@ -37,12 +35,6 @@ class FavoriteBeanControllerImpl @Inject constructor()
         list: List<FavoriteBeanModel>
     ): List<FavoriteBeanModel> {
        return sortBeanUseCase.handle(sortType, list)
-    }
-
-    override fun getSortDialogData(
-        sortType: BeanSortType
-    ): SortDialogOutput {
-       return getSortDialogDataUseCase.handle(sortType)
     }
 
     override fun getSortType(index: Int): BeanSortType {

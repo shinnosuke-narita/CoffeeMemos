@@ -3,7 +3,6 @@ package com.withapp.coffeememo.favorite.recipe.presentation.view
 import android.view.View
 import androidx.lifecycle.*
 import com.withapp.coffeememo.favorite.recipe.domain.model.RecipeSortType
-import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
 import com.withapp.coffeememo.favorite.recipe.presentation.controller.FavoriteRecipeController
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -74,10 +73,6 @@ class FavoriteRecipeViewModel @Inject constructor()
         viewModelScope.launch {
             controller.deleteFavorite(recipe.id)
         }
-    }
-
-    fun getSortDialogData(): SortDialogOutput {
-        return controller.getSortDialogData(_currentSort.value!!)
     }
 
     fun updateSortType(index: Int) {

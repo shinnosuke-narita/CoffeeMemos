@@ -6,7 +6,6 @@ import com.withapp.coffeememo.favorite.bean.domain.model.BeanSortType
 import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
 import com.withapp.coffeememo.favorite.bean.presentation.controller.FavoriteBeanController
 import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
-import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -75,11 +74,6 @@ class FavoriteBeanViewModel @Inject constructor()
         viewModelScope.launch {
             controller.deleteFavorite(bean.id)
         }
-    }
-
-    // ダイアログに必要なデータ取得
-    fun getSortDialogData(): SortDialogOutput {
-        return controller.getSortDialogData(_currentSort.value!!)
     }
 
     // sort更新

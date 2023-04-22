@@ -2,7 +2,6 @@ package com.withapp.coffeememo.favorite.recipe.presentation.controller
 
 import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.favorite.recipe.domain.model.RecipeSortType
-import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
 import com.withapp.coffeememo.favorite.recipe.domain.use_case.*
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
 import com.withapp.coffeememo.favorite.recipe.presentation.presenter.FavoriteRecipePresenter
@@ -18,8 +17,6 @@ class FavoriteRecipeControllerImpl @Inject constructor()
     lateinit var deleteFavoriteUseCase: DeleteFavoriteUseCase
     @Inject
     lateinit var sortRecipeUseCase: SortRecipeUseCase
-    @Inject
-    lateinit var getSortDialogDataUseCase: GetSortDialogDataUseCase
     @Inject
     lateinit var getSortTypeUseCase: GetSortTypeUseCase
 
@@ -41,12 +38,6 @@ class FavoriteRecipeControllerImpl @Inject constructor()
         return sortRecipeUseCase.handle(
            sortType, list
         )
-    }
-
-    override fun getSortDialogData(
-        sortType: RecipeSortType
-    ): SortDialogOutput {
-        return getSortDialogDataUseCase.handle(sortType)
     }
 
     override fun getSortType(index: Int): RecipeSortType {

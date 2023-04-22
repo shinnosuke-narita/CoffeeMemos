@@ -1,5 +1,6 @@
 package com.withapp.coffeememo.favorite.recipe.presentation.view
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,12 +32,6 @@ class FavoriteRecipeFragment : Fragment() {
     private val viewModel: FavoriteRecipeViewModel by viewModels()
 
     private lateinit var favoriteRecipeAdapter: FavoriteBeanAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel.initialize()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,20 +67,29 @@ class FavoriteRecipeFragment : Fragment() {
         // 現在のソート
         viewModel.currentSort.observe(
             viewLifecycleOwner) { sortType ->
-            binding.currentSort.text = sortType.getSortName()
+            val sortStrings: Array<String> =
+                requireContext()
+                    .resources
+                    .getStringArray(R.array.favorite_recipe_sort_types)
+
+            binding.currentSort.text = sortStrings[sortType.index]
         }
 
         // sortボタン
         binding.sortBtnWrapper.setOnClickListener {
             // dialogデータ取得
-            val data: SortDialogOutput = viewModel.getSortDialogData()
+            val currentIndex: Int = viewModel.currentSort.value!!.index
+            val sortTypes: Array<String> =
+                requireContext()
+                    .resources
+                    .getStringArray(R.array.favorite_recipe_sort_types)
 
             ListDialogFragment
                 .create(
-                    data.index,
+                    currentIndex,
                     getString(R.string.favorite_sort_dialog_title),
                     "changeSort",
-                    data.list.toTypedArray()
+                    sortTypes
                 )
                 .show(
                     childFragmentManager,
@@ -102,6 +106,11 @@ class FavoriteRecipeFragment : Fragment() {
                 bundle.getInt("newIndex", 0)
             )
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.initialize()
     }
 
     override fun onDestroyView() {

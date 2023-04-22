@@ -7,6 +7,6 @@ import javax.inject.Inject
 class GetSortTypeInteractor @Inject constructor()
     : GetSortTypeUseCase {
     override fun handle(index: Int): BeanSortType {
-        return BeanSortType.getSortTypeByIndex(index)
+        return BeanSortType.getFromIndex(index)
     }
 }

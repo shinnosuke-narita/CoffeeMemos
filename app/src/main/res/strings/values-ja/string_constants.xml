@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="favorite_recipe_sort_type">
+        <item>新しい順</item>
+        <item>古い順</item>
+        <item>評価順</item>
+        <item>焙煎順</item>
+        <item>挽き目順</item>
+    </string-array>
+
+    <string-array name="search_recipe_sort_type">
+        <item>新しい順</item>
+        <item>古い順</item>
+        <item>評価順</item>
+        <item>焙煎順</item>
+        <item>挽き目順</item>
+        <item>酸味順</item>
+        <item>苦味順</item>
+        <item>甘味順</item>
+        <item>香り順</item>
+        <item>コク順</item>
+    </string-array>
+
+    <string-array name="bean_sort_type">
+        <item>新しい順</item>
+        <item>古い順</item>
+        <item>評価順</item>
+    </string-array>
+</resources>

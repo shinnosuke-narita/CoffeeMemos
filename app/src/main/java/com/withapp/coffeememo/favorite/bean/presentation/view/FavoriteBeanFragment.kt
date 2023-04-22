@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FavoriteContentsBinding
 import com.withapp.coffeememo.databinding.FragmentFavoriteBeanBinding
@@ -20,7 +16,6 @@ import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
 import com.withapp.coffeememo.favorite.bean.presentation.adapter.FavoriteBeanAdapter
 import com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragmentDirections
 import com.withapp.coffeememo.favorite.common.presentation.view.DeleteFavoriteSnackBar
-import com.withapp.coffeememo.favorite.recipe.domain.model.SortDialogOutput
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -67,20 +62,17 @@ class FavoriteBeanFragment : Fragment() {
         // 現在のソート
         viewModel.currentSort.observe(
             viewLifecycleOwner) { sortType ->
-            binding.currentSort.text = sortType.getSortName()
+            binding.currentSort.text = getSortTypeStrings()[sortType.index]
         }
 
         // ソートボタン
         binding.sortBtnWrapper.setOnClickListener {
-            val dialogData: SortDialogOutput =
-                viewModel.getSortDialogData()
-
             ListDialogFragment
                 .create(
-                    dialogData.index,
+                    viewModel.currentSort.value!!.index,
                     getString(R.string.favorite_sort_dialog_title),
                     "changeSort",
-                    dialogData.list.toTypedArray()
+                    getSortTypeStrings()
                 )
                 .show(
                     childFragmentManager,
@@ -145,5 +137,11 @@ class FavoriteBeanFragment : Fragment() {
                 findNavController().navigate(showDetailAction)
             }
         )
+    }
+
+    private fun getSortTypeStrings(): Array<String> {
+        return requireContext()
+                .resources
+                .getStringArray(R.array.bean_sort_types)
     }
 }
