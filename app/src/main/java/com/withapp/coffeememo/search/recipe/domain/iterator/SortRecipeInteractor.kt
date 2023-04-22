@@ -18,10 +18,10 @@ class SortRecipeInteractor @Inject constructor() : SortRecipeUseCase {
                 list.sortedByDescending { recipe -> recipe.recipeId }
             }
             RecipeSortType.ROAST -> {
-              list.sortedByDescending { recipe -> recipe.roast}
+              list.sortedByDescending { recipe -> recipe.roast }
             }
             RecipeSortType.GRIND_SIZE ->  {
-                list.sortedByDescending { recipe -> recipe.grindSize }
+                list.sortedBy { recipe -> recipe.grindSize }
             }
             RecipeSortType.RATING ->  {
                 list.sortedByDescending { recipe -> recipe.rating }

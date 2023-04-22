@@ -68,7 +68,7 @@
                 android:id="@+id/rateIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home_review"
+                android:text="@string/rating"
                 android:textStyle="bold"
                 android:textColor="@color/brown_light"
                 android:textSize="12sp"

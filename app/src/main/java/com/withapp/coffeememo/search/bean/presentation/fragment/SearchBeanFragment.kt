@@ -63,7 +63,7 @@ class SearchBeanFragment : Fragment() {
 
         // 現在のソート 監視処理
         viewModel.currentSortType.observe(viewLifecycleOwner) { type ->
-            binding.sortBtn.text = type.getSortName()
+            binding.sortBtn.text = getSortTypeStrings()[type.index]
         }
 
         // 検索キーワード監視
@@ -85,14 +85,18 @@ class SearchBeanFragment : Fragment() {
         binding.sortBtn.setOnClickListener {
             viewModel.changeBottomSheetState()
 
-            val originData = BeanSortType.getNameList()
-            val currentSortTypeName = viewModel.currentSortType.value!!.getSortName()
-            val currentIndex = BeanSortType.getIndexByName(currentSortTypeName)
 
             childFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.enter_from_bottom,R.anim.go_down,R.anim.enter_from_bottom, R.anim.go_down)
+                .setCustomAnimations(
+                    R.anim.enter_from_bottom,
+                    R.anim.go_down,
+                    R.anim.enter_from_bottom,
+                    R.anim.go_down)
                 .replace(R.id.bottomSheet,
-                    SortFragment.create(currentIndex, originData.toTypedArray())
+                    SortFragment.create(
+                        viewModel.currentSortType.value!!.index,
+                        getSortTypeStrings(),
+                    )
                 )
                 .addToBackStack(null)
                 .commit()
@@ -101,10 +105,11 @@ class SearchBeanFragment : Fragment() {
         childFragmentManager.setFragmentResultListener("sortResult", viewLifecycleOwner) { _, bundle ->
             viewModel.changeBottomSheetState()
 
-            val selectedIndex: Int = bundle.getInt("selectedIndex", 0)
-            val selectedSortType: BeanSortType = BeanSortType.getSortTypeByIndex(selectedIndex)
-
-            viewModel.setCurrentSortType(selectedSortType)
+            viewModel.setCurrentSortType(
+                BeanSortType.getSortTypeFormIndex(
+                    bundle.getInt("selectedIndex", 0)
+                )
+            )
         }
 
         binding.refineBtn.setOnClickListener {
@@ -176,5 +181,11 @@ class SearchBeanFragment : Fragment() {
                 }
             })
         }
+    }
+
+    private fun getSortTypeStrings(): Array<String> {
+        return requireContext()
+            .resources
+            .getStringArray(R.array.bean_sort_types)
     }
 }

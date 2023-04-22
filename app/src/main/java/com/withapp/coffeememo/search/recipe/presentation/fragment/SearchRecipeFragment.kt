@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -73,7 +72,7 @@ class SearchRecipeFragment : Fragment() {
 
         // 現在のソート 監視処理
         viewModel.currentSortType.observe(viewLifecycleOwner) { sortType ->
-            binding.sortBtn.text = sortType.getSortName()
+            binding.sortBtn.text = getSortTypeStrings()[sortType.index]
         }
 
         sharedViewModel.searchKeyWord.observe(viewLifecycleOwner) { keyWord ->
@@ -91,14 +90,23 @@ class SearchRecipeFragment : Fragment() {
         binding.sortBtn.setOnClickListener {
             viewModel.changeBottomSheetState()
 
-            val originData = RecipeSortType.getNameList()
-            val currentSortTypeName = viewModel.currentSortType.value!!.getSortName()
-            val currentIndex = RecipeSortType.getIndexByName(currentSortTypeName)
+            val originData: Array<String> =
+                requireContext()
+                    .resources
+                    .getStringArray(R.array.search_recipe_sort_types)
 
             childFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.enter_from_bottom,R.anim.go_down,R.anim.enter_from_bottom, R.anim.go_down)
+                .setCustomAnimations(
+                    R.anim.enter_from_bottom,
+                    R.anim.go_down,
+                    R.anim.enter_from_bottom,
+                    R.anim.go_down
+                )
                 .replace(R.id.bottomSheet,
-                    SortFragment.create(currentIndex, originData.toTypedArray())
+                    SortFragment.create(
+                        viewModel.currentSortType.value!!.index,
+                        originData
+                    )
                 )
                 .addToBackStack(null)
                 .commit()
@@ -109,11 +117,13 @@ class SearchRecipeFragment : Fragment() {
             viewLifecycleOwner) { _, bundle ->
             viewModel.changeBottomSheetState()
 
-            val selectedIndex: Int = bundle.getInt("selectedIndex", 0)
-            val selectedSortType: RecipeSortType = RecipeSortType.getSortTypeByIndex(selectedIndex)
-
-            viewModel.setCurrentSortType(selectedSortType)
+            viewModel.setCurrentSortType(
+                RecipeSortType.getSortTypeFromIndex(
+                    bundle.getInt("selectedIndex")
+                )
+            )
         }
+
         // 絞り込みボタン クリックリスナ―
         binding.refineBtn.setOnClickListener {
             viewModel.changeBottomSheetState()
@@ -130,7 +140,9 @@ class SearchRecipeFragment : Fragment() {
                 .commit()
         }
         // 絞り込み画面 リスナー
-        childFragmentManager.setFragmentResultListener("filterResult", viewLifecycleOwner) { _, _  ->
+        childFragmentManager.setFragmentResultListener(
+            "filterResult",
+            viewLifecycleOwner) { _, _  ->
             viewModel.changeBottomSheetState()
         }
 
@@ -191,5 +203,12 @@ class SearchRecipeFragment : Fragment() {
                 }
             })
         }
+    }
+
+    private fun getSortTypeStrings(): Array<String> {
+        return requireContext()
+            .resources
+            .getStringArray(R.array.search_recipe_sort_types)
+
     }
 }

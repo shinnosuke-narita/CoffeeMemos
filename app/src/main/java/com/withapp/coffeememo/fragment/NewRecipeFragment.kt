@@ -155,8 +155,8 @@ class NewRecipeFragment :
             beanContainer.storeName.text   = bean.store
             beanContainer.processName.text = processList[bean.process]
             beanContainer.speciesName.text = bean.species
-            beanContainer.rating.text      = getString(R.string.rate_decimal, bean.rating.toString())
-            beanContainer.ratingWrapper.visibility = View.VISIBLE
+            beanContainer.ratingWrapper.rating.text      = getString(R.string.rate_decimal, bean.rating.toString())
+            beanContainer.ratingWrapper.root.visibility = View.VISIBLE
 
             ViewUtil.setCardTag(beanContainer.farm, bean.farm)
             ViewUtil.setCardTag(beanContainer.district, bean.district)

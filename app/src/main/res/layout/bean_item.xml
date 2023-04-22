@@ -127,43 +127,14 @@
             app:layout_constraintStart_toEndOf="@+id/speciesIcon"
             app:layout_constraintBottom_toBottomOf="@+id/speciesIcon"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
+            layout="@layout/search_rating_icon"
             android:id="@+id/ratingWrapper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:background="@drawable/rating_background"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            <TextView
-                android:id="@+id/rateIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Review"
-                android:textStyle="bold"
-                android:textColor="@color/brown_light"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/rating"
-                app:layout_constraintBottom_toBottomOf="@+id/rating"/>
-
-            <TextView
-                android:id="@+id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:textColor="@color/brown_light"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/rateIcon"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="3.0"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/favoriteIcon"
