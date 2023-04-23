@@ -15,6 +15,7 @@ import com.withapp.coffeememo.databinding.FragmentTimerBinding
 import com.withapp.coffeememo.state.InputType
 import com.withapp.coffeememo.state.TimerButtonState
 import com.withapp.coffeememo.state.TimerState
+import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.viewModel.MainViewModel
 import com.withapp.coffeememo.viewModel.TimerViewModel
 
@@ -60,14 +61,24 @@ class TimerFragment : Fragment() {
         }
 
         // 抽出時間 監視処理
-        mainViewModel.formattedExtractionTime.observe(viewLifecycleOwner) { extractionTime ->
-            binding.extractionTime.text = extractionTime
+        mainViewModel.extractionTime.observe(viewLifecycleOwner) { extractionTime ->
+            val extractionTimeStr: String =
+                DateUtil.formatExtractionTime(
+                    requireContext(),
+                    extractionTime
+                )
+            binding.extractionTime.text = extractionTimeStr
         }
 
 
         //蒸らし時間 監視処理
-        mainViewModel.formattedPreInfusionTime.observe(viewLifecycleOwner) { preInFusionTime ->
-            binding.preInfusionTime.text = preInFusionTime
+        mainViewModel.preInfusionTime.observe(viewLifecycleOwner) { preInFusionTime ->
+            val preInfusionTimeStr: String =
+                DateUtil.formatPreInfusionTime(
+                    requireContext(),
+                    preInFusionTime
+                )
+            binding.preInfusionTime.text = preInfusionTimeStr
         }
 
         // タイマーの状態 監視処理

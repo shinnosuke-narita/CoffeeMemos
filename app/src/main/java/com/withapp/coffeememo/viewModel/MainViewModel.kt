@@ -23,14 +23,6 @@ class MainViewModel : ViewModel() {
     private val _extractionTime: MutableLiveData<Long> = MutableLiveData(0L)
     val extractionTime: LiveData<Long> = _extractionTime
 
-    val formattedExtractionTime: LiveData<String> = _extractionTime.map { extractionTime ->
-        String.format(
-            "%02d分%02d秒",
-            DateUtil.getMinutes(extractionTime),
-            DateUtil.getSeconds(extractionTime)
-        )
-    }
-
     fun setExtractionTime(extractionTime: Long) {
         _extractionTime.value = extractionTime
     }
@@ -38,10 +30,6 @@ class MainViewModel : ViewModel() {
     // 蒸らし時間
     private val _preInfusionTime: MutableLiveData<Long> = MutableLiveData(0L)
     val preInfusionTime: LiveData<Long> = _preInfusionTime
-
-    val formattedPreInfusionTime: LiveData<String> = _preInfusionTime.map { preInfusionTime ->
-        String.format("%d秒", DateUtil.convertSeconds(preInfusionTime))
-    }
 
     fun setPreInfusionTime(preInfusionTime: Long) {
         _preInfusionTime.value = preInfusionTime

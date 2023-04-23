@@ -87,9 +87,15 @@ class NewRecipeFragment :
             changeVisibility(inputType, binding.preInfusionTimeEditText, binding.preInfusionTimeTextView)
         }
         // タイマーで計測した蒸らし時間
-        mainViewModel.formattedPreInfusionTime
+        mainViewModel.preInfusionTime
             .observe(viewLifecycleOwner) { preInfusionTime ->
-            binding.preInfusionTimeTextView.text = preInfusionTime
+                val preInfusionTimeStr: String =
+                     DateUtil.formatPreInfusionTime(
+                         requireContext(),
+                         preInfusionTime
+                     )
+
+                binding.preInfusionTimeTextView.text = preInfusionTimeStr
         }
         // 抽出時間
         viewModel.extractionTimeInputType
@@ -97,8 +103,14 @@ class NewRecipeFragment :
             changeVisibility(inputType, binding.extractionTimeWrapper, binding.extractionTimeTextView)
         }
         // タイマーで計測した抽出時間
-        mainViewModel.formattedExtractionTime.observe(viewLifecycleOwner) { extractionTime ->
-            binding.extractionTimeTextView.text = extractionTime
+        mainViewModel.extractionTime.observe(viewLifecycleOwner) { extractionTime ->
+            val extractionTimeStr: String =
+                DateUtil.formatExtractionTime(
+                    requireContext(),
+                    extractionTime
+                )
+
+            binding.extractionTimeTextView.text = extractionTimeStr
         }
         // selectBeanBtnAction
         viewModel.selectBeanBtnAction.observe(viewLifecycleOwner) { action ->
