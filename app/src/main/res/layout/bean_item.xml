@@ -18,44 +18,32 @@
 
         <TextView
             android:id="@+id/country"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="17sp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/normal_text_color"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@+id/favoriteIcon"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="コーヒー豆が選択されていません" />
 
         <TextView
             android:id="@+id/farm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/brown_light"
-            android:textStyle="bold"
-            android:textSize="11sp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:layout_marginTop="10dp"
+            style="@style/homeCardTagStyle"
             app:layout_constraintTop_toBottomOf="@+id/country"
             app:layout_constraintStart_toStartOf="@+id/country"
             tools:text="パブロベラスケス農園"/>
 
         <TextView
             android:id="@+id/district"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/homeCardTagStyle"
             android:layout_marginTop="5dp"
-            android:textColor="@color/brown_light"
-            android:textStyle="bold"
-            android:textSize="11sp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
             app:layout_constraintTop_toBottomOf="@+id/farm"
             app:layout_constraintStart_toStartOf="@+id/farm"
             tools:text="マドリス地区"/>
@@ -84,10 +72,13 @@
             android:id="@+id/storeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="150dp"
             tools:text="KALDI"
             android:textSize="12sp"
             android:layout_marginStart="5dp"
             android:textColor="@color/brown_light"
+            android:maxLines="1"
+            android:ellipsize="end"
             app:layout_constraintTop_toTopOf="@+id/storeIcon"
             app:layout_constraintStart_toEndOf="@+id/storeIcon"
             app:layout_constraintBottom_toBottomOf="@+id/storeIcon"/>
@@ -136,43 +127,14 @@
             app:layout_constraintStart_toEndOf="@+id/speciesIcon"
             app:layout_constraintBottom_toBottomOf="@+id/speciesIcon"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
+            layout="@layout/search_rating_icon"
             android:id="@+id/ratingWrapper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:background="@drawable/rating_background"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            <TextView
-                android:id="@+id/rateIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Review"
-                android:textStyle="bold"
-                android:textColor="@color/brown_light"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/rating"
-                app:layout_constraintBottom_toBottomOf="@+id/rating"/>
-
-            <TextView
-                android:id="@+id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:textColor="@color/brown_light"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/rateIcon"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="3.0"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/favoriteIcon"

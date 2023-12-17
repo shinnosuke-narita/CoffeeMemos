@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.coffeememos">
+    package="com.withapp.coffeememo">
+
+    <!-- パーミッション  -->
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".CoffeeMemosApplication"
@@ -13,10 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoffeeMemos"
-        tools:targetApi="31">
-        <activity
-            android:name=".NewRecipeActivity"
-            android:exported="false" />
+        tools:targetApi="33">
+
+        <!--  AdMobの設定      -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7093807169305333~6104449129"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -26,6 +32,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+         <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/licenseTheme" />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/licenseTheme" />
     </application>
 
 </manifest>

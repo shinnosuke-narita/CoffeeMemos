@@ -1,0 +1,15 @@
+<resources>
+ <string name="select_bean_btn">コーヒー豆を選択</string>
+ <string name="taste_announce">※1~5の5段階で入力できます。</string>
+ <string name="save_description">保存</string>
+ <string name="timer_description">タイマー</string>
+ <string name="menu_description">メニュー</string>
+ <string name="star_first_description">評価1</string>
+ <string name="star_second_description">評価2</string>
+ <string name="star_third_description">評価3</string>
+ <string name="star_fourth_description">評価4</string>
+ <string name="star_fifth_description">評価5</string>
+ <string name="select_grind_description">粒度の選択</string>
+ <string name="select_roast_description">焙煎度の選択</string>
+ <string name="change_input_description">入力切替</string>
+</resources>

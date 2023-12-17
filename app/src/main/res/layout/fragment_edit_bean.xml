@@ -9,7 +9,7 @@
 
 
     <include
-        layout="@layout/favorite_header"
+        layout="@layout/header_with_favorite_btn"
         android:id="@+id/header"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -46,8 +46,8 @@
                 android:id="@+id/processEditText"
                 style="@style/mEditTextStyle"
                 android:hint="@string/process"
-                android:textColor="@color/black"
-                android:gravity="center|left"
+                android:textColor="@color/normal_text_color"
+                android:gravity="center|start"
                 app:layout_constraintEnd_toStartOf="@+id/selectProcessBtn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/processTitle" />
@@ -100,7 +100,6 @@
                 android:id="@+id/farmEditText"
                 style="@style/mEditTextStyle"
                 android:hint="@string/farm"
-                android:maxLength="4"
                 android:elevation="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -305,6 +304,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveBtn"

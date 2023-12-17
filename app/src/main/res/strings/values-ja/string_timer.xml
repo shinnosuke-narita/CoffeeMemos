@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="timer_pre_infusion_time">蒸らし時間</string>
+    <string name="timer_extraction_time">抽出時間</string>
+    <string name="timer_finish_pre_infusion">蒸らし完了</string>
+</resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item>
         <shape
             android:shape="oval">
@@ -14,6 +15,7 @@
         android:bottom="35dp"
         android:right="35dp"
         android:drawable="@drawable/memo_icon"
+        app:tint="@color/normal_icon_color"
         >
     </item>
 </layer-list>

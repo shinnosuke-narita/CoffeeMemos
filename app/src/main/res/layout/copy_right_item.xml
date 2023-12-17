@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:tint="@color/normal_icon_color"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:src="@drawable/aroma"/>
+
+    <TextView
+        android:id="@+id/authorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/copy_right_author"
+        app:layout_constraintBottom_toTopOf="@+id/urlTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img"/>
+
+    <TextView
+        android:id="@+id/authorValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        tools:text="@string/copy_right_author"
+        app:layout_constraintTop_toTopOf="@+id/authorTitle"
+        app:layout_constraintStart_toEndOf="@+id/authorTitle"/>
+
+    <TextView
+        android:id="@+id/urlTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/copy_right_url"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/authorTitle"
+        app:layout_constraintStart_toEndOf="@+id/img"/>
+
+    <TextView
+        android:id="@+id/urlValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textColor="@color/link_color"
+        android:ellipsize="end"
+        tools:text="@string/copy_right_url"
+        app:layout_constraintTop_toTopOf="@+id/urlTitle"
+        app:layout_constraintStart_toEndOf="@+id/urlTitle"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

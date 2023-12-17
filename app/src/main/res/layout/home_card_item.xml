@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/homeCardTitleStyle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="hario" />
+
+        <TextView
+            android:id="@+id/createdAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="#D8D3CE"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            tools:text="2022/10/10 20:20"/>
+
+
+        <TextView
+            android:id="@+id/tagFirst"
+            style="@style/homeCardTagStyle"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/createdAt"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            tools:text="ブラジル"/>
+
+        <TextView
+            android:id="@+id/tagSecond"
+            style="@style/homeCardTagStyle"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/tagFirst"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            tools:text="フルシティロースト"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/starWrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:background="@drawable/rating_background"
+            app:layout_constraintTop_toBottomOf="@+id/tagSecond"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/rateIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rating"
+                android:textStyle="bold"
+                android:textColor="@color/brown_light"
+                android:textSize="12sp"
+                app:layout_constraintTop_toTopOf="@id/rating"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/rating"/>
+
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/brown_light"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/rateIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="3.0"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/favoriteIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/home_favorite_icon_description"
+            app:tint="@color/pink_light_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:src="@drawable/ic_baseline_favorite_border_24" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

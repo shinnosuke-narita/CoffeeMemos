@@ -5,7 +5,9 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="radar_chart_background">#FFFFFF</color>
+    <color name="normal_text_color">#FF000000</color>
+    <color name="normal_icon_color">#FF000000</color>
     <color name="dark_grey">#303030</color>
     <color name="light_grey">#E7E7E7</color>
     <color name="white">#FFFFFFFF</color>
@@ -17,6 +19,11 @@
     <color name="seek_bar_progress">#7E7974</color>
     <color name="normal_rating_progress">#7E7974</color>
     <color name="active_rating_progress">#6B7571</color>
+    <color name="free_word_search_background">#E7E7E7</color>
+    <color name="menu_background">#FFFFFF</color>
+    <color name="bottom_sheet_background">#FFFFFF</color>
+    <color name="list_dialog_background">#FFFFFF</color>
+    <color name="progress_bar_color">#686868</color>
 
     <color name="beige_light">#F9ECDE</color>
     <color name="beige_dark">#F6E1CB</color>
@@ -31,4 +38,5 @@
     <color name="validation_color">#FF5D5D</color>
     <color name="shadow_color">#A12C2C2C</color>
     <color name="flash_color">#36DFDFDF</color>
+    <color name="link_color">#808DDF</color>
 </resources>

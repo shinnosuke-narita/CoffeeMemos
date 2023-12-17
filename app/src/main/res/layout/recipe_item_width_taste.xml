@@ -18,60 +18,40 @@
 
         <TextView
             android:id="@+id/tool"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textColor="@color/normal_text_color"
+            android:textSize="15sp"
             android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@+id/favoriteIcon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Hario V60" />
 
         <TextView
             android:id="@+id/country"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:paddingStart="8dp"
-            android:paddingTop="2dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="2dp"
-            android:textColor="@color/brown_light"
-            android:textSize="11sp"
-            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/homeCardTagStyle"
             app:layout_constraintStart_toStartOf="@+id/tool"
             app:layout_constraintTop_toBottomOf="@+id/tool"
             tools:text="ブラジル" />
 
         <TextView
             android:id="@+id/roast"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/homeCardTagStyle"
             android:layout_marginTop="5dp"
-            android:paddingStart="8dp"
-            android:paddingTop="2dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="2dp"
-            android:textColor="@color/brown_light"
-            android:textSize="11sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/tool"
             app:layout_constraintTop_toBottomOf="@+id/country"
             tools:text="イタリアンロースト" />
 
         <TextView
             android:id="@+id/grindSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/homeCardTagStyle"
             android:layout_marginTop="5dp"
-            android:paddingStart="8dp"
-            android:paddingTop="2dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="2dp"
-            android:textColor="@color/brown_light"
-            android:textSize="11sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/roast"
             app:layout_constraintTop_toBottomOf="@+id/roast"
             tools:text="中挽き" />
@@ -93,9 +73,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Sour"
+            android:text="@string/sour"
             android:textSize="11sp"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             app:layout_constraintTop_toBottomOf="@+id/createdAt"
             app:layout_constraintStart_toStartOf="@+id/createdAt" />
 
@@ -104,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/sourTitle"
@@ -128,9 +108,9 @@
             android:id="@+id/bitterTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bitter"
+            android:text="@string/bitter"
             android:textSize="11sp"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             android:layout_marginStart="10dp"
             app:layout_constraintBottom_toTopOf="@+id/bitterValue"
             app:layout_constraintTop_toTopOf="@+id/sourTitle"
@@ -141,7 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/bitterTitle"
@@ -166,9 +146,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="Sweet"
+            android:text="@string/sweet"
             android:textSize="11sp"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             app:layout_constraintTop_toTopOf="@+id/sourTitle"
             app:layout_constraintStart_toEndOf="@+id/separateLineSecond" />
 
@@ -178,7 +158,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/sweetTitle"
@@ -203,9 +183,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="Flavor"
+            android:text="@string/flavor"
             android:textSize="11sp"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             app:layout_constraintTop_toTopOf="@+id/sourTitle"
             app:layout_constraintStart_toEndOf="@+id/separateLineThird" />
 
@@ -214,7 +194,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/flavorTitle"
@@ -238,9 +218,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="Rich"
+            android:text="@string/rich"
             android:textSize="11sp"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             app:layout_constraintTop_toTopOf="@+id/sourTitle"
             app:layout_constraintStart_toEndOf="@+id/separateLineFourth" />
 
@@ -249,7 +229,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/richTitle"
@@ -258,43 +238,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             tools:text="3" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
+            layout="@layout/search_rating_icon"
             android:id="@+id/ratingWrapper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/taste_tag_background"
-            android:paddingStart="8dp"
-            android:paddingTop="2dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="2dp"
+            app:layout_constraintTop_toTopOf="@+id/sourTitle"
             app:layout_constraintBottom_toBottomOf="@+id/sourValue"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <TextView
-                android:id="@+id/rateIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Review"
-                android:textColor="@color/grey_dark"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/rating"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/rating" />
-
-            <TextView
-                android:id="@+id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:textColor="@color/grey_dark"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/rateIcon"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="3.0" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
             android:id="@+id/favoriteIcon"

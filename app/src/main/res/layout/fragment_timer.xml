@@ -7,7 +7,7 @@
     tools:context=".fragment.TimerFragment">
 
     <include
-        layout="@layout/normal_header"
+        layout="@layout/header_with_favorite_btn"
         android:id="@+id/header"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -18,7 +18,8 @@
         android:layout_marginTop="15dp"
         android:layout_marginStart="15dp"
         app:cardElevation="5dp"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/timerCardView"
         app:layout_constraintTop_toBottomOf="@+id/header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/extractionTimeWrapper">
@@ -32,8 +33,8 @@
                 android:id="@+id/preInfusionTimeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="蒸らし時間"
-                android:textColor="@color/black"
+                android:text="@string/timer_pre_infusion_time"
+                android:textColor="@color/normal_text_color"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -42,17 +43,14 @@
                 android:id="@+id/preInfusionTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="30s"
-                android:textColor="@color/black"
-                android:textSize="25sp"
+                android:layout_marginTop="15dp"
+                tools:text="30s"
+                android:textColor="@color/normal_text_color"
+                android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@+id/preInfusionTimeTitle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -62,7 +60,8 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         app:cardElevation="5dp"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/preInfusionTimeWrapper"
         app:layout_constraintTop_toTopOf="@+id/preInfusionTimeWrapper"
         app:layout_constraintStart_toEndOf="@+id/preInfusionTimeWrapper"
         app:layout_constraintEnd_toEndOf="parent">
@@ -76,8 +75,8 @@
                 android:id="@+id/extractionTimeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="抽出時間"
-                android:textColor="@color/black"
+                android:text="@string/timer_extraction_time"
+                android:textColor="@color/normal_text_color"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -86,10 +85,10 @@
                 android:id="@+id/extractionTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="2m30s"
-                android:textColor="@color/black"
-                android:textSize="25sp"
+                android:layout_marginTop="15dp"
+                tools:text="2m30s"
+                android:textColor="@color/normal_text_color"
+                android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@+id/extractionTimeTitle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -97,38 +96,41 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/timerCardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
         app:cardElevation="5dp"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="30dp"
         app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/preInfusionTimeWrapper"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="20dp">
 
-            <com.example.coffeememos.view.CircleProgressBar
+            <com.withapp.coffeememo.view.CircleProgressBar
                 android:id="@+id/circleProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:progressbarColor="@color/progress_bar_color"
                 app:progress="0"
                 app:progressBarThickness="2dp"
+                app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintBottom_toTopOf="@+id/mainBtn"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-
             <TextView
                 android:id="@+id/timerView"
                 android:text="00:00"
-                android:textSize="70sp"
-                android:textColor="@color/black"
+                android:textSize="60sp"
+                android:textColor="@color/normal_text_color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@+id/circleProgressBar"
@@ -188,7 +190,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:padding="10dp"
-                android:text="蒸らし完了"
+                android:text="@string/timer_finish_pre_infusion"
                 android:textSize="12sp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
@@ -197,20 +199,4 @@
                 app:layout_constraintStart_toEndOf="@+id/mainBtn"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/showNewRecipeBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/home_create_button_background"
-        android:text="CREATE RECIPE"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textSize="17sp"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

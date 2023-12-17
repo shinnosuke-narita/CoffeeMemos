@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recipe_detail_recipe_title">Recipe</string>
+    <string name="recipe_detail_taste_title">Taste</string>
+    <string name="recipe_detail_bean_title">Bean</string>
+    <string name="recipe_detail_edit_taste_btn_description">edit taste value</string>
+    <string name="recipe_detail_edit_recipe_btn_description">edit recipe</string>
+    <string name="recipe_detail_edit_bean_btn_description">edit coffee bean</string>
+    <string name="recipe_detail_favorite_icon_description">favorite icon</string>
+    <string-array name="taste_chart_labels">
+        <item>Acidity</item>
+        <item>Bitterness</item>
+        <item>Sweetness</item>
+        <item>Body</item>
+        <item>Aroma</item>
+    </string-array>
+</resources>

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:textSize="17sp"
             tools:text="タイトル"
-            android:textColor="@color/black"
+            android:textColor="@color/normal_text_color"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

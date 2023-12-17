@@ -1,0 +1,19 @@
+<resources>
+ <string name="bean_title">Bean</string>
+ <string name="select_bean_btn">CHOOSE COFFEE BEAN</string>
+ <string name="taste_title">Taste</string>
+ <string name="taste_announce">※you can enter a value between 1 and 5.</string>
+ <string name="recipe_title">Recipe</string>
+ <string name="save_description">save button</string>
+ <string name="timer_description">timer button</string>
+ <string name="menu_description">menu button</string>
+ <string name="star_first_description">one star rating</string>
+ <string name="star_second_description">tow star rating</string>
+ <string name="star_third_description">three star rating</string>
+ <string name="star_fourth_description">four star rating4</string>
+ <string name="star_fifth_description">five star rating5</string>
+ <string name="select_grind_description">choose grind size</string>
+ <string name="select_roast_description">choose roast </string>
+ <string name="change_input_description">switch input method</string>
+ <string name="change_enabled_tag">change_enabled_tag</string>
+</resources>

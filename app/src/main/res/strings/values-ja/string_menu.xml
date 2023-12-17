@@ -1,0 +1,15 @@
+<resources>
+    <string name="menu_header_title">Menu</string>
+    <string-array name="title_list">
+      <item>ライセンス</item>
+      <item>著作権</item>
+      <item>プライバシーポリシー</item>
+      <item>バージョン</item>
+    </string-array>
+    <string-array name="desc_list">
+     <item>オープンソースライセンスについて</item>
+     <item>著作権について</item>
+     <item>アプリのプライバシーポリシーについて</item>
+     <item></item>
+    </string-array>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="copy_right_author">author:</string>
+    <string name="copy_right_url">URL:</string>
+    <string name="copy_right_header">Copyright</string>
+</resources>
