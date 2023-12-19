@@ -23,7 +23,7 @@ import com.withapp.coffeememo.search.recipe.presentation.adapter.`interface`.OnF
 import com.withapp.coffeememo.search.recipe.presentation.adapter.`interface`.OnItemClickListener
 import com.withapp.coffeememo.search.common.presentation.view_model.MainSearchViewModel
 import com.withapp.coffeememo.search.recipe.presentation.view_model.SearchRecipeViewModel
-import com.withapp.coffeememo.viewModel.MainViewModel
+import com.withapp.coffeememo.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.TimerFragment">
+    tools:context=".timer.presentation.view.TimerFragment">
 
     <include
         layout="@layout/header_with_favorite_btn"
@@ -113,7 +113,7 @@
             android:layout_height="match_parent"
             android:padding="20dp">
 
-            <com.withapp.coffeememo.view.CircleProgressBar
+            <com.withapp.coffeememo.base.custom_view.CircleProgressBar
                 android:id="@+id/circleProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
