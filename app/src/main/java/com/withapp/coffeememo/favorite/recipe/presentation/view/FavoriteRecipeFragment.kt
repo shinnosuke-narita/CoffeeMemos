@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FavoriteContentsBinding
 import com.withapp.coffeememo.databinding.FragmentFavoriteRecipeBinding
-import com.withapp.coffeememo.dialog.ListDialogFragment
+import com.withapp.coffeememo.base.dialog.ListDialogFragment
 import com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragmentDirections
 import com.withapp.coffeememo.favorite.common.presentation.view.DeleteFavoriteSnackBar
 import com.withapp.coffeememo.favorite.recipe.presentation.adapter.FavoriteRecipeAdapter

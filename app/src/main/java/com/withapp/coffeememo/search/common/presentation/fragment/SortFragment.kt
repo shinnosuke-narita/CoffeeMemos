@@ -8,9 +8,9 @@ import android.widget.BaseAdapter
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import com.withapp.coffeememo.core.presentation.adapter.SortAdapter
+import com.withapp.coffeememo.base.adapter.SortAdapter
 import com.withapp.coffeememo.databinding.FragmentSortBinding
-import com.withapp.coffeememo.manager.DialogDataHolder
+import com.withapp.coffeememo.base.dialog.model.DialogDataHolder
 
 class SortFragment : Fragment() {
     private var _binding: FragmentSortBinding? = null
