@@ -62,7 +62,7 @@ class HomeRecipeViewModel @Inject constructor()
 
     // レシピデータ取得
     fun getHomeRecipeData() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val homeRecipeData: HomeRecipeSource =
                 controller.getHomeRecipeData()
 

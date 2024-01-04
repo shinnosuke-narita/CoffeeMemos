@@ -7,6 +7,7 @@ import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeCardData
 import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeOutput
 import com.withapp.coffeememo.home.recipe.presentation.presenter.HomeRecipePresenter
 import com.withapp.coffeememo.home.recipe.presentation.view_model.HomeRecipeViewModel
+import io.mockk.MockKSettings.relaxed
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -47,6 +48,13 @@ class HomeRecipeViewModelTest {
     private lateinit var _viewModel: HomeRecipeViewModel
     private lateinit var _presenter: HomeRecipePresenter
     private lateinit var _controller: HomeRecipeController
+    private lateinit var  _newRecipesObserver: Observer<List<HomeRecipeCardData>>
+    private lateinit var  _highRatingRecipesObserver: Observer<List<HomeRecipeCardData>>
+    private lateinit var  _favoriteRecipesObserver: Observer<List<HomeRecipeCardData>>
+    private lateinit var  _favoriteRecipeCountObserver: Observer<String>
+    private lateinit var  _todayRecipeCountObserver: Observer<Int>
+    private lateinit var  _totalRecipeCountObserver: Observer<Int>
+
     @Rule
     @JvmField
     val rule: TestRule = InstantTaskExecutorRule()
@@ -63,6 +71,8 @@ class HomeRecipeViewModelTest {
 
         _viewModel.presenter = _presenter
         _viewModel.controller = _controller
+
+        setUpObserver()
     }
 
     @After
@@ -72,32 +82,49 @@ class HomeRecipeViewModelTest {
 
     @Test
     fun test_getHomeRecipeData() {
-        val newRecipesObserver = mockk<Observer<List<HomeRecipeCardData>>>(relaxed = true)
-        val highRatingRecipesObserver = mockk<Observer<List<HomeRecipeCardData>>>(relaxed = true)
-        val favoriteRecipesObserver = mockk<Observer<List<HomeRecipeCardData>>>(relaxed = true)
-        val favoriteRecipeCountObserver = mockk<Observer<String>>(relaxed = true)
-        val todayRecipeCountObserver = mockk<Observer<Int>>(relaxed = true)
-        val totalRecipeCountObserver = mockk<Observer<Int>>(relaxed = true)
-
-        _viewModel.newRecipes.observeForever(newRecipesObserver)
-        _viewModel.favoriteRecipes.observeForever(favoriteRecipesObserver)
-        _viewModel.highRatingRecipes.observeForever(highRatingRecipesObserver)
-        _viewModel.favoriteRecipeCount.observeForever(favoriteRecipeCountObserver)
-        _viewModel.todayRecipeCount.observeForever(todayRecipeCountObserver)
-        _viewModel.totalRecipeCount.observeForever(totalRecipeCountObserver)
-
         _viewModel.getHomeRecipeData()
 
-        /** observer check */
-        verify(exactly = 1) { newRecipesObserver.onChanged(sampleData.newRecipes) }
-        verify(exactly = 1) { favoriteRecipesObserver.onChanged(sampleData.favoriteRecipes) }
-        verify(exactly = 1) { highRatingRecipesObserver.onChanged(sampleData.highRatingRecipes) }
-        verify(exactly = 1) { favoriteRecipeCountObserver.onChanged(sampleData.favoriteRecipes.size.toString()) }
-        verify(exactly = 1) { todayRecipeCountObserver.onChanged(sampleData.todayCount) }
-        verify(exactly = 1) { totalRecipeCountObserver.onChanged(sampleData.totalCount) }
+        /** call function check */
+        coVerify(exactly = 1) { _controller.getHomeRecipeData() }
+        verify(exactly = 1) { _presenter.presentHomeRecipeData(any()) }
+        checkObserver()
+    }
+
+    @Test
+    fun test_updateHomeData() {
+        val recipeIdParam = 0L
+        val isFavoriteParam = false
+        _viewModel.updateHomeData(recipeIdParam, isFavoriteParam)
 
         /** call function check */
+        coVerify(exactly = 1) { _controller.updateRecipeData(recipeIdParam, !isFavoriteParam) }
         verify(exactly = 1) { _presenter.presentHomeRecipeData(any()) }
-        coVerify(exactly = 1) { _controller.getHomeRecipeData() }
+        checkObserver()
+    }
+
+    private fun setUpObserver() {
+        _newRecipesObserver = mockk<Observer<List<HomeRecipeCardData>>>(relaxed = true)
+        _highRatingRecipesObserver = mockk<Observer<List<HomeRecipeCardData>>>(relaxed = true)
+        _favoriteRecipesObserver = mockk<Observer<List<HomeRecipeCardData>>>(relaxed = true)
+        _favoriteRecipeCountObserver = mockk<Observer<String>>(relaxed = true)
+        _todayRecipeCountObserver = mockk<Observer<Int>>(relaxed = true)
+        _totalRecipeCountObserver = mockk<Observer<Int>>(relaxed = true)
+
+        _viewModel.newRecipes.observeForever(_newRecipesObserver)
+        _viewModel.favoriteRecipes.observeForever(_favoriteRecipesObserver)
+        _viewModel.highRatingRecipes.observeForever(_highRatingRecipesObserver)
+        _viewModel.favoriteRecipeCount.observeForever(_favoriteRecipeCountObserver)
+        _viewModel.todayRecipeCount.observeForever(_todayRecipeCountObserver)
+        _viewModel.totalRecipeCount.observeForever(_totalRecipeCountObserver)
+    }
+
+    private fun checkObserver() {
+        /** observer check */
+        verify(exactly = 1) { _newRecipesObserver.onChanged(sampleData.newRecipes) }
+        verify(exactly = 1) { _favoriteRecipesObserver.onChanged(sampleData.favoriteRecipes) }
+        verify(exactly = 1) { _highRatingRecipesObserver.onChanged(sampleData.highRatingRecipes) }
+        verify(exactly = 1) { _favoriteRecipeCountObserver.onChanged(sampleData.favoriteRecipes.size.toString()) }
+        verify(exactly = 1) { _todayRecipeCountObserver.onChanged(sampleData.todayCount) }
+        verify(exactly = 1) { _totalRecipeCountObserver.onChanged(sampleData.totalCount) }
     }
 }
