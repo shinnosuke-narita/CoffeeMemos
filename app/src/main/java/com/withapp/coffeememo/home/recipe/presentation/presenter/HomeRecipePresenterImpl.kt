@@ -25,8 +25,7 @@ class HomeRecipePresenterImpl @Inject constructor()
             highRatingRecipes,
             favoriteRecipes,
             homeRecipeData.totalCount,
-            homeRecipeData.todayCount,
-            favoriteRecipes.size
+            homeRecipeData.todayCount
         )
     }
 }
