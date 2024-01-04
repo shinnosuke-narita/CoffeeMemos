@@ -5,6 +5,5 @@ data class HomeRecipeOutput(
     val highRatingRecipes: List<HomeRecipeCardData>,
     val favoriteRecipes: List<HomeRecipeCardData>,
     val totalCount: Int,
-    val todayCount: Int,
-    val favoriteCount: Int,
+    val todayCount: Int
 )
