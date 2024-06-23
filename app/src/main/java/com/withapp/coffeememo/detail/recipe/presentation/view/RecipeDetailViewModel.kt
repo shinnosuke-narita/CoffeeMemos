@@ -1,17 +1,24 @@
 package com.withapp.coffeememo.detail.recipe.presentation.view
 
 import androidx.lifecycle.*
-import com.withapp.coffeememo.core.data.dao.BeanDao
-import com.withapp.coffeememo.core.data.dao.RecipeDao
-import com.withapp.coffeememo.core.data.dao.TasteDao
 import com.withapp.coffeememo.core.data.entity.Bean
 import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.core.data.entity.Taste
+import com.withapp.coffeememo.domain.repository.BeanRepository
+import com.withapp.coffeememo.domain.repository.RecipeRepository
+import com.withapp.coffeememo.domain.repository.TasteRepository
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.entity.Rating.Star
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao: RecipeDao, private val tasteDao: TasteDao) : ViewModel() {
+@HiltViewModel
+class RecipeDetailViewModel @Inject constructor(
+    private val beanDao: BeanRepository,
+    private val recipeDao: RecipeRepository,
+    private val tasteDao: TasteRepository
+) : ViewModel() {
     private lateinit var _recipeRatingManager: Rating
     private lateinit var _beanRatingManager: Rating
 
@@ -100,20 +107,5 @@ class RecipeDetailViewModel(private val beanDao: BeanDao, private val recipeDao:
         viewModelScope.launch {
             recipeDao.deleteById(_selectedRecipe.value!!.id)
         }
-    }
-}
-
-
-
-class RecipeDetailViewModelFactory(
-    private val beanDao  : BeanDao,
-    private val recipeDao: RecipeDao,
-    private val tasteDao : TasteDao
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(RecipeDetailViewModel::class.java)) {
-            return RecipeDetailViewModel(beanDao, recipeDao, tasteDao) as T
-        }
-        throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
     }
 }
