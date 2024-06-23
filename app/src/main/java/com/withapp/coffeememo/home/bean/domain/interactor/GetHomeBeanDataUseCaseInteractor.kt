@@ -1,23 +1,22 @@
 package com.withapp.coffeememo.home.bean.domain.interactor
 
+import com.withapp.coffeememo.domain.repository.BeanRepository
+import com.withapp.coffeememo.home.bean.data.mapper.HomeBeanModelMapper
 import com.withapp.coffeememo.home.bean.domain.model.HomeBeanModel
 import com.withapp.coffeememo.home.bean.domain.model.HomeBeanSource
 import com.withapp.coffeememo.home.bean.domain.use_case.GetHomeBeanDataUseCase
-import com.withapp.coffeememo.home.bean.domain.repository.StorageRepository
 import java.time.LocalDate
 import javax.inject.Inject
 
-class GetHomeBeanDataUseCaseInteractor @Inject constructor()
-    : GetHomeBeanDataUseCase {
+class GetHomeBeanDataUseCaseInteractor @Inject constructor(
+    private val beanRepo: BeanRepository,
+    private val mapper: HomeBeanModelMapper
+) : GetHomeBeanDataUseCase {
     private val maxDisplayNum = 15
 
-    @Inject
-    lateinit var repository: StorageRepository
-
     override suspend fun handle(): HomeBeanSource {
-        val beans = repository.getHomeBeanModel()
-        val sortedBeans =
-            beans.sortedByDescending { bean -> bean.id }
+        val beans = beanRepo.getHomeBeanData().map { mapper.execute(it) }
+        val sortedBeans = beans.sortedByDescending { bean -> bean.id }
 
         // 新しい順コーヒー豆
         val newBeans = sortedBeans.take(maxDisplayNum)
