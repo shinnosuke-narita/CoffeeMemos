@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.withapp.coffeememo.CoffeeMemosApplication
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentRecipeDetailBinding
@@ -24,7 +23,9 @@ import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.entity.Rating.StarState
 import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.utilities.SnackBarUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeDetailFragment : Fragment() {
     private var mContext: Context? = null
 
@@ -34,10 +35,7 @@ class RecipeDetailFragment : Fragment() {
         get() = _binding!!
 
     // viewModel 初期化
-    private val viewModel: RecipeDetailViewModel by viewModels {
-        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        RecipeDetailViewModelFactory(db.beanDao(), db.recipeDao(), db.tasteDao())
-    }
+    private val viewModel: RecipeDetailViewModel by viewModels()
 
     private val safeArgs: RecipeDetailFragmentArgs by navArgs()
 

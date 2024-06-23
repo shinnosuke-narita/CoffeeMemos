@@ -2,7 +2,6 @@ package com.withapp.coffeememo.search.recipe.presentation.view_model
 
 import android.view.View
 import androidx.lifecycle.*
-import com.withapp.coffeememo.core.data.dao.RecipeDao
 import com.withapp.coffeememo.search.recipe.domain.model.RecipeSortType
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 import com.withapp.coffeememo.search.recipe.presentation.controller.SearchRecipeController
@@ -15,10 +14,9 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchRecipeViewModel @Inject constructor(val recipeDao: RecipeDao) : ViewModel() {
-    @Inject
-    lateinit var searchRecipeController: SearchRecipeController
-
+class SearchRecipeViewModel @Inject constructor(
+    val searchRecipeController: SearchRecipeController
+) : ViewModel() {
     // 検索結果
     private val _searchResult: MutableLiveData<List<SearchRecipeModel>> = MutableLiveData(listOf())
 

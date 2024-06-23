@@ -1,17 +1,24 @@
 package com.withapp.coffeememo.create.bean.presentation.view
 
 import android.content.Context
-import androidx.lifecycle.*
-import com.withapp.coffeememo.utilities.Util
-import com.withapp.coffeememo.core.data.dao.BeanDao
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.withapp.coffeememo.base.viewmodel.BaseViewModel
 import com.withapp.coffeememo.core.data.entity.Bean
+import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.entity.Rating
+import com.withapp.coffeememo.utilities.Util
 import com.withapp.coffeememo.validate.BeanValidationLogic
 import com.withapp.coffeememo.validate.ValidationInfo
-import com.withapp.coffeememo.base.viewmodel.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewBeanViewModel(val beanDao: BeanDao) : BaseViewModel() {
+@HiltViewModel
+class NewBeanViewModel @Inject constructor (
+    private val beanRepository: BeanRepository
+) : BaseViewModel() {
     // Favorite
     private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
     val isFavorite: LiveData<Boolean> = _isFavorite
@@ -96,7 +103,7 @@ class NewBeanViewModel(val beanDao: BeanDao) : BaseViewModel() {
 
     fun createNewBean() {
         viewModelScope.launch {
-            beanDao.insert(
+            beanRepository.insert(
                 Bean(
                     id            = 0,
                     country       = _country,
@@ -117,15 +124,3 @@ class NewBeanViewModel(val beanDao: BeanDao) : BaseViewModel() {
 
     }
 }
-
-
-class NewBeanViewModelFactory(private val beanDao: BeanDao)
-    : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(NewBeanViewModel::class.java)) {
-            return NewBeanViewModel(beanDao) as T
-        }
-        throw IllegalArgumentException("CANNOT_GET_NEWBEANVIEWMODEL")
-    }
-}
-

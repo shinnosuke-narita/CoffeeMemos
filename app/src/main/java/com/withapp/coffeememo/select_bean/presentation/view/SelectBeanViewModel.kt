@@ -1,22 +1,14 @@
 package com.withapp.coffeememo.select_bean.presentation.view
 
 import androidx.lifecycle.*
-import com.withapp.coffeememo.core.data.dao.BeanDao
+import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SelectBeanViewModel(
-    val beanDao: BeanDao
+@HiltViewModel
+class SelectBeanViewModel @Inject constructor(
+    private val beanRepo: BeanRepository
 ) : ViewModel() {
-    val beanList: LiveData<List<SearchBeanModel>> = beanDao.getCustomBeanByFlow().asLiveData()
-
-}
-
-class SelectBeanViewModelFactory(private val beanDao: BeanDao)
-    : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SelectBeanViewModel::class.java)) {
-            return SelectBeanViewModel(beanDao) as T
-        }
-        throw IllegalArgumentException("CANNOT_GET_NEWRECIPEVIEWMODEL")
-    }
+    val beanList: LiveData<List<SearchBeanModel>> = beanRepo.getCustomBeanByFlow().asLiveData()
 }

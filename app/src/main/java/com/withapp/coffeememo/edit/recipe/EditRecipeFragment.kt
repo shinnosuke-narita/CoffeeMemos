@@ -10,28 +10,26 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.withapp.coffeememo.CoffeeMemosApplication
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
-import com.withapp.coffeememo.databinding.FragmentEditRecipeBinding
 import com.withapp.coffeememo.base.dialog.BasicDialogFragment
 import com.withapp.coffeememo.base.dialog.ListDialogFragment
 import com.withapp.coffeememo.base.fragment.BaseFragment
 import com.withapp.coffeememo.base.text_watcher.SimpleTextWatcher
+import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
+import com.withapp.coffeememo.databinding.FragmentEditRecipeBinding
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.utilities.DateUtil
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class EditRecipeFragment : BaseFragment(), View.OnClickListener {
     private var _binding: FragmentEditRecipeBinding? = null
     private val binding
         get() = _binding!!
 
     // viewModel 初期化
-    private val viewModel: EditRecipeViewModel by viewModels {
-        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        EditRecipeViewModel.EditRecipeViewModelFactory(db.recipeDao())
-    }
+    private val viewModel: EditRecipeViewModel by viewModels()
 
     private val safeArgs: EditRecipeFragmentArgs by navArgs()
 

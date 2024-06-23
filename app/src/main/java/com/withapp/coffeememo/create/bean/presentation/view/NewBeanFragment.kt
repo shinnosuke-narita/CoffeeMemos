@@ -10,7 +10,6 @@ import android.widget.ImageView
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.withapp.coffeememo.CoffeeMemosApplication
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentNewBeanBinding
@@ -19,8 +18,9 @@ import com.withapp.coffeememo.base.dialog.ListDialogFragment
 import com.withapp.coffeememo.base.fragment.BaseFragment
 import com.withapp.coffeememo.base.text_watcher.SimpleTextWatcher
 import com.withapp.coffeememo.entity.Rating
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class NewBeanFragment : BaseFragment(), View.OnClickListener {
     // viewBinding
     private var _binding: FragmentNewBeanBinding? = null
@@ -30,14 +30,10 @@ class NewBeanFragment : BaseFragment(), View.OnClickListener {
     // アクティビティのコンテキストを保持
     private var mContext: Context? = null
 
-    private val viewModel: NewBeanViewModel by viewModels {
-        // viewModelの初期化
-        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        NewBeanViewModelFactory(db.beanDao())
-    }
+    private val viewModel: NewBeanViewModel by viewModels()
 
     // Ratingの☆画像リスト
-    lateinit var beanStarViewList: List<ImageView>
+    private lateinit var beanStarViewList: List<ImageView>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

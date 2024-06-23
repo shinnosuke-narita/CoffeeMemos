@@ -2,7 +2,6 @@ package com.withapp.coffeememo.edit.recipe
 
 import android.content.Context
 import androidx.lifecycle.*
-import com.withapp.coffeememo.core.data.dao.RecipeDao
 import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.utilities.DateUtil
@@ -10,9 +9,15 @@ import com.withapp.coffeememo.utilities.Util
 import com.withapp.coffeememo.validate.RecipeValidationLogic
 import com.withapp.coffeememo.validate.ValidationInfo
 import com.withapp.coffeememo.base.viewmodel.BaseViewModel
+import com.withapp.coffeememo.domain.repository.RecipeRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
+@HiltViewModel
+class EditRecipeViewModel @Inject constructor(
+    private val recipeRepo: RecipeRepository
+) : BaseViewModel() {
     // 選択されたレシピ
     private val _selectedRecipe: MutableLiveData<Recipe> = MutableLiveData()
     val selectedRecipe: LiveData<Recipe> = _selectedRecipe
@@ -127,7 +132,7 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
         _ratingManager = ratingManager
 
         viewModelScope.launch {
-            val selectedRecipe: Recipe = recipeDao.getRecipeById(id)
+            val selectedRecipe: Recipe = recipeRepo.getRecipeById(id)
 
             updateRatingState(selectedRecipe.rating)
             _selectedRecipe.value  = selectedRecipe
@@ -142,7 +147,7 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
             val extractionTime = DateUtil.convertSecondsIntoMills(_extractionTimeMinutes, _extractionTimeSeconds)
             val preInfusionTime = DateUtil.convertSecondsIntoMills(_preInfusionTime)
 
-            recipeDao.update(
+            recipeRepo.update(
                 Recipe(
                     id                    = _selectedRecipe.value!!.id,
                     beanId                = _selectedRecipe.value!!.beanId,
@@ -161,17 +166,6 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
                     createdAt             = selectedRecipe.value!!.createdAt
                 )
             )
-        }
-    }
-
-    class EditRecipeViewModelFactory(
-        private val recipeDao  : RecipeDao
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(EditRecipeViewModel::class.java)) {
-                return EditRecipeViewModel(recipeDao) as T
-            }
-            throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
         }
     }
 }
