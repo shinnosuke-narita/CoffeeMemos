@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.core.data.entity.Taste
 import kotlinx.coroutines.flow.Flow
 
@@ -13,10 +12,10 @@ interface TasteDao {
     @Query("DELETE FROM taste")
     suspend fun clearTable()
 
-    @Insert()
+    @Insert
     suspend fun insert(taste: Taste)
 
-    @Update()
+    @Update
     suspend fun updateTaste(taste: Taste)
 
     @Query("SELECT * FROM taste")
