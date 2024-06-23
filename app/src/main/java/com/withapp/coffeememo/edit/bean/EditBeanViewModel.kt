@@ -1,21 +1,26 @@
 package com.withapp.coffeememo.edit.bean
 
 import android.content.Context
-import androidx.lifecycle.*
-import com.withapp.coffeememo.core.data.dao.BeanDao
-import com.withapp.coffeememo.core.data.dao.RecipeDao
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.withapp.coffeememo.base.viewmodel.BaseViewModel
 import com.withapp.coffeememo.core.data.entity.Bean
+import com.withapp.coffeememo.domain.repository.BeanRepository
+import com.withapp.coffeememo.domain.repository.RecipeRepository
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.state.ProcessState
 import com.withapp.coffeememo.utilities.Util
 import com.withapp.coffeememo.validate.BeanValidationLogic
 import com.withapp.coffeememo.validate.ValidationInfo
-import com.withapp.coffeememo.base.viewmodel.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditBeanViewModel(
-    private val beanDao: BeanDao,
-    private val recipeDao: RecipeDao
+@HiltViewModel
+class EditBeanViewModel @Inject constructor(
+    private val beanRepo: BeanRepository,
+    private val recipeRepo: RecipeRepository
 ) : BaseViewModel() {
     // 選択された豆
     private val _selectedBean: MutableLiveData<Bean> = MutableLiveData()
@@ -108,7 +113,7 @@ class EditBeanViewModel(
         _ratingManager = ratingManager
 
         viewModelScope.launch {
-            val selectedBean = beanDao.getBeanById(id)
+            val selectedBean = beanRepo.getBeanById(id)
 
             updateRatingState(selectedBean.rating)
             _selectedBean.value    = selectedBean
@@ -124,7 +129,7 @@ class EditBeanViewModel(
         _processState.value = ProcessState.PROCESSING
         viewModelScope.launch {
             val selectedBean = _selectedBean.value!!
-            beanDao.update(
+            beanRepo.update(
                 Bean(
                     id            = selectedBean.id,
                     country       = _country,
@@ -149,7 +154,7 @@ class EditBeanViewModel(
 
             // recipe テーブル更新処理
             val recipeIds: List<Long> =
-                recipeDao.getRecipeIdsByBeanId(selectedBean.id)
+                recipeRepo.getRecipeIdsByBeanId(selectedBean.id)
             if (recipeIds.isEmpty()) {
                 // 更新処理完了
                 _processState.postValue(ProcessState.FINISH_PROCESSING)
@@ -157,23 +162,11 @@ class EditBeanViewModel(
             }
 
             recipeIds.forEach { id ->
-                recipeDao.updateCountryById(id, _country)
+                recipeRepo.updateCountryById(id, _country)
             }
 
             // 更新処理完了
             _processState.postValue(ProcessState.FINISH_PROCESSING)
         }
-    }
-}
-
-class EditBeanViewModelFactory(
-    private val beanDao: BeanDao,
-    private val recipeDao: RecipeDao
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(EditBeanViewModel::class.java)) {
-            return EditBeanViewModel(beanDao, recipeDao) as T
-        }
-        throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
     }
 }

@@ -10,7 +10,6 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.withapp.coffeememo.CoffeeMemosApplication
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentEditBeanBinding
@@ -20,18 +19,16 @@ import com.withapp.coffeememo.base.fragment.BaseFragment
 import com.withapp.coffeememo.base.text_watcher.SimpleTextWatcher
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.state.ProcessState
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class EditBeanFragment : BaseFragment(), View.OnClickListener {
     private var _binding: FragmentEditBeanBinding? = null
     private val binding
         get() = _binding!!
 
     // viewModel 初期化
-    private val viewModel: EditBeanViewModel by viewModels {
-        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        EditBeanViewModelFactory(db.beanDao(), db.recipeDao())
-    }
+    private val viewModel: EditBeanViewModel by viewModels()
 
     private val safeArgs: EditBeanFragmentArgs by navArgs()
 
