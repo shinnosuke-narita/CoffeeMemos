@@ -10,9 +10,15 @@ import com.withapp.coffeememo.utilities.Util
 import com.withapp.coffeememo.validate.RecipeValidationLogic
 import com.withapp.coffeememo.validate.ValidationInfo
 import com.withapp.coffeememo.base.viewmodel.BaseViewModel
+import com.withapp.coffeememo.domain.repository.RecipeRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
+@HiltViewModel
+class EditRecipeViewModel @Inject constructor(
+    private val recipeRepo: RecipeRepository
+) : BaseViewModel() {
     // 選択されたレシピ
     private val _selectedRecipe: MutableLiveData<Recipe> = MutableLiveData()
     val selectedRecipe: LiveData<Recipe> = _selectedRecipe
@@ -127,7 +133,7 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
         _ratingManager = ratingManager
 
         viewModelScope.launch {
-            val selectedRecipe: Recipe = recipeDao.getRecipeById(id)
+            val selectedRecipe: Recipe = recipeRepo.getRecipeById(id)
 
             updateRatingState(selectedRecipe.rating)
             _selectedRecipe.value  = selectedRecipe
@@ -142,7 +148,7 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
             val extractionTime = DateUtil.convertSecondsIntoMills(_extractionTimeMinutes, _extractionTimeSeconds)
             val preInfusionTime = DateUtil.convertSecondsIntoMills(_preInfusionTime)
 
-            recipeDao.update(
+            recipeRepo.update(
                 Recipe(
                     id                    = _selectedRecipe.value!!.id,
                     beanId                = _selectedRecipe.value!!.beanId,
@@ -164,12 +170,12 @@ class EditRecipeViewModel(private val recipeDao: RecipeDao) : BaseViewModel() {
         }
     }
 
-    class EditRecipeViewModelFactory(
-        private val recipeDao  : RecipeDao
+    class EditRecipeViewModelFactory @Inject constructor(
+        private val recipeRepo : RecipeRepository
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(EditRecipeViewModel::class.java)) {
-                return EditRecipeViewModel(recipeDao) as T
+                return EditRecipeViewModel(recipeRepo) as T
             }
             throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
         }
