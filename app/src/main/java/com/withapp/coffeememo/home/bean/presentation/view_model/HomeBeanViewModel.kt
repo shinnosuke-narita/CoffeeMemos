@@ -3,30 +3,28 @@ package com.withapp.coffeememo.home.bean.presentation.view_model
 import androidx.lifecycle.*
 import com.withapp.coffeememo.home.bean.domain.model.HomeBeanModel
 import com.withapp.coffeememo.home.bean.domain.model.HomeBeanSource
-import com.withapp.coffeememo.home.bean.presentation.controller.HomeBeanController
+import com.withapp.coffeememo.home.bean.domain.use_case.GetHomeBeanDataUseCase
+import com.withapp.coffeememo.home.bean.domain.use_case.UpdateFavoriteBeanUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeBeanViewModel @Inject constructor() : ViewModel() {
-    @Inject
-    lateinit var controller: HomeBeanController
-
+class HomeBeanViewModel @Inject constructor(
+    private val getHomeBeanDataUseCase: GetHomeBeanDataUseCase,
+    private val updateFavoriteUseCase: UpdateFavoriteBeanUseCase
+) : ViewModel() {
     // 新しい順コーヒー豆
-    private val _newBeans: MutableLiveData<List<HomeBeanModel>> =
-        MutableLiveData(listOf())
+    private val _newBeans: MutableLiveData<List<HomeBeanModel>> = MutableLiveData(listOf())
     val newBeans: LiveData<List<HomeBeanModel>> = _newBeans
 
     // お気に入りコーヒー豆
-    private val _favoriteBeans: MutableLiveData<List<HomeBeanModel>> =
-        MutableLiveData(listOf())
+    private val _favoriteBeans: MutableLiveData<List<HomeBeanModel>> = MutableLiveData(listOf())
     val favoriteBeans: LiveData<List<HomeBeanModel>> = _favoriteBeans
 
     // 高評価順コーヒー豆
-    private val _highRatingBeans: MutableLiveData<List<HomeBeanModel>> =
-        MutableLiveData(listOf())
+    private val _highRatingBeans: MutableLiveData<List<HomeBeanModel>> = MutableLiveData(listOf())
     val highRatingBeans: LiveData<List<HomeBeanModel>> = _highRatingBeans
 
     // 今日のコーヒー豆数
@@ -50,20 +48,15 @@ class HomeBeanViewModel @Inject constructor() : ViewModel() {
     fun updateHomeBeanData(beanId: Long, isFavorite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             val updatedFavoriteFlag = !isFavorite
-            val homeBeanOutput: HomeBeanSource =
-                controller.updateBeanData(beanId, updatedFavoriteFlag)
-
-            setHomeBeanData(homeBeanOutput)
+            updateFavoriteUseCase.handle(beanId, updatedFavoriteFlag)
+            setHomeBeanData(getHomeBeanDataUseCase.handle())
         }
     }
 
     // データ取得
     fun getHomeBeanData() {
         viewModelScope.launch {
-            val homeBeanOutput: HomeBeanSource =
-                controller.getHomeBeanData()
-
-            setHomeBeanData(homeBeanOutput)
+            setHomeBeanData(getHomeBeanDataUseCase.handle())
         }
     }
 
