@@ -1,22 +1,22 @@
 package com.withapp.coffeememo.create.recipe.domain.interactor
 
-import com.withapp.coffeememo.create.recipe.domain.model.InputData
-import com.withapp.coffeememo.create.recipe.domain.repository.StorageRepository
-import com.withapp.coffeememo.create.recipe.domain.use_case.CreateRecipeAndTasteUseCase
 import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.core.data.entity.Taste
+import com.withapp.coffeememo.create.recipe.domain.model.InputData
+import com.withapp.coffeememo.create.recipe.domain.use_case.CreateRecipeAndTasteUseCase
+import com.withapp.coffeememo.domain.repository.RecipeRepository
+import com.withapp.coffeememo.domain.repository.TasteRepository
 import javax.inject.Inject
 
-class CreateRecipeAndTasteInteractor @Inject constructor()
-    : CreateRecipeAndTasteUseCase {
-    @Inject
-    lateinit var repository: StorageRepository
-
+class CreateRecipeAndTasteInteractor @Inject constructor(
+    private val recipeRepo: RecipeRepository,
+    private val tasteRepo: TasteRepository
+) : CreateRecipeAndTasteUseCase {
     override suspend fun handle(
         inputData: InputData
     ) {
         // レシピ保存処理
-        repository.createRecipe(
+        recipeRepo.insert(
             Recipe(
                 id = 0,
                 beanId = inputData.beanId,
@@ -37,10 +37,10 @@ class CreateRecipeAndTasteInteractor @Inject constructor()
         )
 
         // TasteのレシピID取得
-        val recipeId = repository.getNewestRecipeId()
+        val recipeId = recipeRepo.getNewestRecipeId()
 
         // Taste 保存処理
-        repository.createTaste(
+        tasteRepo.insert(
             Taste(
                 id = 0,
                 recipeId = recipeId,
