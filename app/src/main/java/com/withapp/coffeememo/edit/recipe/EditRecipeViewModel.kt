@@ -2,7 +2,6 @@ package com.withapp.coffeememo.edit.recipe
 
 import android.content.Context
 import androidx.lifecycle.*
-import com.withapp.coffeememo.core.data.dao.RecipeDao
 import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.utilities.DateUtil
@@ -167,17 +166,6 @@ class EditRecipeViewModel @Inject constructor(
                     createdAt             = selectedRecipe.value!!.createdAt
                 )
             )
-        }
-    }
-
-    class EditRecipeViewModelFactory @Inject constructor(
-        private val recipeRepo : RecipeRepository
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(EditRecipeViewModel::class.java)) {
-                return EditRecipeViewModel(recipeRepo) as T
-            }
-            throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
         }
     }
 }
