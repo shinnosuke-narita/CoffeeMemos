@@ -11,21 +11,19 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.withapp.coffeememo.CoffeeMemosApplication
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.base.adapter.BeanAdapter
 import com.withapp.coffeememo.databinding.FragmentSelectBeanBinding
 import com.withapp.coffeememo.base.adapter.listener.OnItemClickListener
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
 import com.withapp.coffeememo.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SelectBeanFragment : Fragment() {
     private var mContext: Context? = null
 
-    private val viewModel: SelectBeanViewModel by viewModels {
-        val db = ((context?.applicationContext) as CoffeeMemosApplication).database
-        SelectBeanViewModelFactory(db.beanDao())
-    }
+    private val viewModel: SelectBeanViewModel by viewModels()
 
     private val mainViewModel: MainViewModel by activityViewModels()
 
