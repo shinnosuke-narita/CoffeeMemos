@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
-import com.withapp.coffeememo.search.bean.presentation.controller.SearchBeanController
+import com.withapp.coffeememo.search.bean.domain.use_case.GetFilterBeanOutputDataUseCase
 import com.withapp.coffeememo.state.MenuState
 import com.withapp.coffeememo.search.common.presentation.view_model.BaseFilterViewModel
 
@@ -178,10 +178,8 @@ class BeanFilterViewModel : BaseFilterViewModel() {
     }
 
     // viewModel 初期化処理
-    fun initialize(controller: SearchBeanController) {
-        val inputData =
-            controller.getBeanOutPutData("filterBeanInputData")
-            ?: return
+    fun initialize(useCase: GetFilterBeanOutputDataUseCase) {
+        val inputData = useCase.execute("filterBeanInputData") ?: return
 
         _countryValues.value = inputData.countries
         _farmValues.value = inputData.farms

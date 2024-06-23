@@ -3,9 +3,18 @@ package com.withapp.coffeememo.search.bean.presentation.view_model
 import android.view.View
 import androidx.lifecycle.*
 import com.withapp.coffeememo.search.bean.domain.model.BeanSortType
+import com.withapp.coffeememo.search.bean.domain.model.FilterBeanInputData
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
-import com.withapp.coffeememo.search.bean.presentation.controller.SearchBeanController
+import com.withapp.coffeememo.search.bean.domain.use_case.DeleteFilterBeanInputDataUseCase
+import com.withapp.coffeememo.search.bean.domain.use_case.FilterBeanUseCase
+import com.withapp.coffeememo.search.bean.domain.use_case.FreeWordSearchUseCase
+import com.withapp.coffeememo.search.bean.domain.use_case.GetAllBeanUseCase
+import com.withapp.coffeememo.search.bean.domain.use_case.GetFilterBeanOutputDataUseCase
+import com.withapp.coffeememo.search.bean.domain.use_case.SetFilterBeanInputDataUseCase
+import com.withapp.coffeememo.search.bean.domain.use_case.SortBeanUseCase
+import com.withapp.coffeememo.search.bean.domain.use_case.UpdateFavoriteBeanUseCase
 import com.withapp.coffeememo.search.recipe.presentation.model.SearchKeyWord
+import com.withapp.coffeememo.search.recipe.presentation.model.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -14,10 +23,16 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchBeanViewModel @Inject constructor() : ViewModel() {
-    @Inject
-    lateinit var controller: SearchBeanController
-
+class SearchBeanViewModel @Inject constructor(
+    private val freeWordSearchUseCase: FreeWordSearchUseCase,
+    private val sortBeanUseCase: SortBeanUseCase,
+    private val filterBeanUseCase: FilterBeanUseCase,
+    private val setBeanInputDataUseCase: SetFilterBeanInputDataUseCase,
+    val getBeanOutputDataUseCase: GetFilterBeanOutputDataUseCase,
+    private val getAllBeanUseCase: GetAllBeanUseCase,
+    private val deleteFilterInputDataUseCase: DeleteFilterBeanInputDataUseCase,
+    private val updateFavoriteUseCase: UpdateFavoriteBeanUseCase
+) : ViewModel() {
     // Sort 状態
     private val _currentSortType: MutableLiveData<BeanSortType> = MutableLiveData(BeanSortType.NEW)
     val currentSortType: LiveData<BeanSortType> = _currentSortType
@@ -29,11 +44,11 @@ class SearchBeanViewModel @Inject constructor() : ViewModel() {
     val sortedSearchResult: LiveData<List<SearchBeanModel>> =
         MediatorLiveData<List<SearchBeanModel>>().apply {
         addSource(_searchResult) { searchResult ->
-            value = controller.sortBean(_currentSortType.value!!, searchResult)
+            value = sortBeanUseCase.sort(_currentSortType.value!!, searchResult)
         }
 
         addSource(_currentSortType) { sortType ->
-            value = controller.sortBean(sortType, _searchResult.value!!)
+            value = sortBeanUseCase.sort(sortType, _searchResult.value!!)
         }
     }
 
@@ -71,8 +86,10 @@ class SearchBeanViewModel @Inject constructor() : ViewModel() {
     // キーワード検索
     fun freeWordSearch(keyWord: SearchKeyWord) {
         viewModelScope.launch {
-            val result = controller.freeWordSearch(keyWord)
-                ?: return@launch
+            if (keyWord.keyWord.isEmpty()) return@launch
+            if (keyWord.type != SearchType.BEAN) return@launch
+
+            val result = freeWordSearchUseCase.handle(keyWord.keyWord)
 
             _currentKeyWord = keyWord.keyWord
             _searchResult.postValue(result)
@@ -87,34 +104,48 @@ class SearchBeanViewModel @Inject constructor() : ViewModel() {
         storeValues: List<String>,
         speciesValues: List<String>,
         ratingValues: List<Boolean>,
-        processValues: List<Boolean>) {
-
+        processValues: List<Boolean>
+    ) {
         viewModelScope.launch {
-            _searchResult.postValue(
-                controller.filter(
-                    _currentKeyWord,
-                    countryValues,
-                    farmValues,
-                    districtValues,
-                    storeValues,
-                    speciesValues,
-                    ratingValues,
-                    processValues
-                )
+            val ratingData = mutableListOf<Int>()
+            for ((i, isSelected) in ratingValues.withIndex()) {
+                if (isSelected) { ratingData.add(i + 1) }
+            }
+
+            val processData = mutableListOf<Int>()
+            for ((i, isSelected) in processValues.withIndex()) {
+                if (isSelected) { processData.add(i) }
+            }
+
+            val inputData = FilterBeanInputData(
+                keyWord = _currentKeyWord,
+                countries = countryValues,
+                farms = farmValues,
+                districts = districtValues,
+                stores = storeValues,
+                species = speciesValues,
+                rating = ratingData,
+                process = processData
             )
+
+            // 絞り込み要素を保存
+            setBeanInputDataUseCase.execute("filterBeanInputData", inputData)
+
+            // 絞り込み実行
+            _searchResult.postValue(filterBeanUseCase.filterBean(inputData))
         }
     }
 
     // 検索条件クリア
     fun resetResult() {
-        controller.deleteBeanInputData("filterBeanInputData")
+        deleteFilterInputDataUseCase.handle("filterBeanInputData")
         _currentKeyWord = ""
         _currentSortType.value = BeanSortType.NEW
         initSearchResult()
     }
 
     fun deleteInputData() {
-        controller.deleteBeanInputData("filterBeanInputData")
+        deleteFilterInputDataUseCase.handle("filterBeanInputData")
     }
 
     // 検索結果更新
@@ -123,7 +154,7 @@ class SearchBeanViewModel @Inject constructor() : ViewModel() {
 
         viewModelScope.launch {
             _searchResult.postValue(
-                controller.getAllBean()
+                getAllBeanUseCase.getAllBean()
             )
         }
         _shouldUpdate = false
@@ -134,9 +165,9 @@ class SearchBeanViewModel @Inject constructor() : ViewModel() {
     fun updateFavoriteData(bean: SearchBeanModel) {
         viewModelScope.launch(Dispatchers.IO) {
             if (bean.isFavorite) {
-                controller.updateFavorite(bean.id, false)
+                updateFavoriteUseCase.handle(bean.id, false)
             } else {
-                controller.updateFavorite(bean.id, true)
+                updateFavoriteUseCase.handle(bean.id, true)
             }
         }
     }
@@ -155,7 +186,7 @@ class SearchBeanViewModel @Inject constructor() : ViewModel() {
     fun initSearchResult() {
         viewModelScope.launch {
             _searchResult.postValue(
-                controller.getAllBean()
+                getAllBeanUseCase.getAllBean()
             )
         }
     }
