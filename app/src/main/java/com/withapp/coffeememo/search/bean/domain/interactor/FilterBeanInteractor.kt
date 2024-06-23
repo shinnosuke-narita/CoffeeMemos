@@ -3,13 +3,11 @@ package com.withapp.coffeememo.search.bean.domain.interactor
 import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.search.bean.domain.model.FilterBeanInputData
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
-import com.withapp.coffeememo.search.bean.domain.presenter.SearchBeanPresenter
 import com.withapp.coffeememo.search.bean.domain.use_case.FilterBeanUseCase
 import javax.inject.Inject
 
 class FilterBeanInteractor @Inject constructor(
-    private val beanRepo: BeanRepository,
-    private val searchBeanPresenter: SearchBeanPresenter
+    private val beanRepo: BeanRepository
 ) : FilterBeanUseCase {
     override suspend fun filterBean(inputData: FilterBeanInputData): List<SearchBeanModel> {
         val beans: List<SearchBeanModel> =
@@ -19,60 +17,48 @@ class FilterBeanInteractor @Inject constructor(
                  beanRepo.getSearchBeanModel()
             }
 
-        if (beans.isEmpty()) {
-            return searchBeanPresenter.presentFilterResult(beans)
-        }
+        if (beans.isEmpty()) return beans
 
         // 原産地
         var result = getMatchedBeans(beans, inputData.countries) {
                 bean, value -> bean.country.contains(value) }
-        if (result.isEmpty()) {
-            return searchBeanPresenter.presentFilterResult(result)
-        }
+        if (result.isEmpty())  return result
+
         // 農園
         result = getMatchedBeans(result, inputData.farms) {
             bean, data -> bean.farm.contains(data)
         }
-        if (result.isEmpty()) {
-            return searchBeanPresenter.presentFilterResult(result)
-        }
+        if (result.isEmpty()) return result
+
         // 地区
         result = getMatchedBeans(result, inputData.districts) {
             bean, data -> bean.district.contains(data)
         }
-        if (result.isEmpty()) {
-            return searchBeanPresenter.presentFilterResult(result)
-        }
+        if (result.isEmpty()) return result
         // お店
         result = getMatchedBeans(result, inputData.stores) {
             bean, data -> bean.store.contains(data)
         }
-        if (result.isEmpty()) {
-            return searchBeanPresenter.presentFilterResult(result)
-        }
+        if (result.isEmpty()) return result
+
         // 品種
         result = getMatchedBeans(result, inputData.species) {
             bean, data -> bean.species.contains(data)
         }
-        if (result.isEmpty()) {
-            return searchBeanPresenter.presentFilterResult(result)
-        }
+        if (result.isEmpty()) return result
+
         // 評価
         result = getMatchedBeans(result, inputData.rating) {
             bean, data -> bean.rating == data
         }
-        if (result.isEmpty()) {
-            return searchBeanPresenter.presentFilterResult(result)
-        }
+        if (result.isEmpty())  return result
+
         // 精製法
         result = getMatchedBeans(result, inputData.process) {
             bean, data -> bean.process == data
         }
-        if (result.isEmpty()) {
-            return searchBeanPresenter.presentFilterResult(result)
-        }
 
-        return searchBeanPresenter.presentFilterResult(result)
+        return result
     }
 
     private fun <T> getMatchedBeans(
