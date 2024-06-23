@@ -59,7 +59,7 @@ class RecipeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getRecipeWithTasteByKeyword(keyword: String): List<RecipeWithTaste> {
-        return dao.getRecipeWithTaste()
+        return dao.getRecipeWithTasteByKeyword(keyword)
     }
 
     override suspend fun getFavoriteRecipe(): List<Recipe> {
