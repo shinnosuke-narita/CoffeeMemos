@@ -55,19 +55,4 @@ class SearchBeanPresenterImpl @Inject constructor()
         )
     }
 
-    private fun convertInputData(
-        inputData: List<Int>,
-        outPutData: MutableList<Boolean>,
-        shouldConvertIndex: Boolean) {
-        if (inputData.isEmpty()) return
-
-        for(inputValue in inputData) {
-            var index: Int = inputValue
-            if (shouldConvertIndex) {
-                index--
-            }
-
-            outPutData[index] = true
-        }
-    }
 }
