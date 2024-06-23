@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.di.search.bean.use_case
 
-import com.withapp.coffeememo.search.bean.domain.interactor.GetAllBeanIterator
+import com.withapp.coffeememo.search.bean.domain.interactor.GetAllBeanInteractor
 import com.withapp.coffeememo.search.bean.domain.use_case.GetAllBeanUseCase
 import dagger.Binds
 import dagger.Module
@@ -13,6 +13,6 @@ abstract class GetAllBeanUseCaseModule {
 
     @Binds
     abstract fun bindGetAllBeanUseCase(
-        GetAllBeanUseCaseImpl: GetAllBeanIterator
+        GetAllBeanUseCaseImpl: GetAllBeanInteractor
     ): GetAllBeanUseCase
 }
