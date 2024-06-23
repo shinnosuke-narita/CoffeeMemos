@@ -1,23 +1,24 @@
 package com.withapp.coffeememo.home.recipe.domain.interactor
 
-import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeSource
+import com.withapp.coffeememo.domain.repository.BeanRepository
+import com.withapp.coffeememo.home.recipe.data.mapper.HomeRecipeModelMapper
 import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeModel
-import com.withapp.coffeememo.home.recipe.domain.repository.StorageRepository
+import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeSource
 import com.withapp.coffeememo.home.recipe.domain.use_case.GetHomeRecipeDataUseCase
 import java.time.LocalDate
 import javax.inject.Inject
 
-class GetHomeRecipeDataUseCaseInteractor @Inject constructor()
-    : GetHomeRecipeDataUseCase {
+class GetHomeRecipeDataUseCaseInteractor @Inject constructor(
+    private val beanRepo: BeanRepository,
+    private val mapper: HomeRecipeModelMapper
+) : GetHomeRecipeDataUseCase {
     private val maxDisplayNum = 15
 
-    @Inject
-    lateinit var repository: StorageRepository
-
     override suspend fun handle(): HomeRecipeSource {
-        val recipes = repository.getHomeRecipeModel()
-        val sortedRecipe =
-            recipes.sortedByDescending { recipe -> recipe.recipeId }
+        val recipes = beanRepo.getBeanWithRecipe().let {
+            mapper.execute(it)
+        }
+        val sortedRecipe = recipes.sortedByDescending { recipe -> recipe.recipeId }
 
         // 新しい順レシピ
         val newRecipes = sortedRecipe.take(maxDisplayNum)
