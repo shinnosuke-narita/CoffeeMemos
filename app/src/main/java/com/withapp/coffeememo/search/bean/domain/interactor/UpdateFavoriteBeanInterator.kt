@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.bean.domain.iterator
+package com.withapp.coffeememo.search.bean.domain.interactor
 
 
 

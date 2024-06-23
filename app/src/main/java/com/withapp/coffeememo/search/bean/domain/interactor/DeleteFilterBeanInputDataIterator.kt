@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.bean.domain.iterator
+package com.withapp.coffeememo.search.bean.domain.interactor
 
 import com.withapp.coffeememo.search.bean.domain.cache.BeanMemoryCache
 import com.withapp.coffeememo.search.bean.domain.use_case.DeleteFilterBeanInputDataUseCase

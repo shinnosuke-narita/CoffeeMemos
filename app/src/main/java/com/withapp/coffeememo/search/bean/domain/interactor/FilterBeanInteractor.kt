@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.bean.domain.iterator
+package com.withapp.coffeememo.search.bean.domain.interactor
 
 import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.search.bean.domain.model.FilterBeanInputData
@@ -7,7 +7,7 @@ import com.withapp.coffeememo.search.bean.domain.presenter.SearchBeanPresenter
 import com.withapp.coffeememo.search.bean.domain.use_case.FilterBeanUseCase
 import javax.inject.Inject
 
-class FilterBeanIterator @Inject constructor(
+class FilterBeanInteractor @Inject constructor(
     private val beanRepo: BeanRepository,
     private val searchBeanPresenter: SearchBeanPresenter
 ) : FilterBeanUseCase {
