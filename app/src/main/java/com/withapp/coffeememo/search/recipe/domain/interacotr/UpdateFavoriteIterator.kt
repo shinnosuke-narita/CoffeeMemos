@@ -1,15 +1,13 @@
 package com.withapp.coffeememo.search.recipe.domain.interacotr
 
-import com.withapp.coffeememo.search.recipe.domain.repository.SearchRecipeDiskRepository
+import com.withapp.coffeememo.domain.repository.RecipeRepository
 import com.withapp.coffeememo.search.recipe.domain.use_case.UpdateFavoriteUseCase
 import javax.inject.Inject
 
-class UpdateFavoriteIterator @Inject constructor()
-    : UpdateFavoriteUseCase {
-    @Inject
-    lateinit var repository: SearchRecipeDiskRepository
-
+class UpdateFavoriteIterator @Inject constructor(
+    private var recipeRepo: RecipeRepository
+) : UpdateFavoriteUseCase {
     override suspend fun handle(recipeId: Long, isFavorite: Boolean) {
-        repository.updateFavorite(recipeId, isFavorite)
+        recipeRepo.updateFavoriteByRecipeId(recipeId, isFavorite)
     }
 }
