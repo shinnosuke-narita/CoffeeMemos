@@ -2,10 +2,19 @@ package com.withapp.coffeememo.search.recipe.presentation.view_model
 
 import android.view.View
 import androidx.lifecycle.*
+import com.withapp.coffeememo.search.recipe.domain.model.FilterRecipeInputData
 import com.withapp.coffeememo.search.recipe.domain.model.RecipeSortType
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
-import com.withapp.coffeememo.search.recipe.presentation.controller.SearchRecipeController
+import com.withapp.coffeememo.search.recipe.domain.use_case.DeleteFilterRecipeInputDataUseCase
+import com.withapp.coffeememo.search.recipe.domain.use_case.FilterRecipeUseCase
+import com.withapp.coffeememo.search.recipe.domain.use_case.FreeWordSearchUseCase
+import com.withapp.coffeememo.search.recipe.domain.use_case.GetAllRecipeUseCase
+import com.withapp.coffeememo.search.recipe.domain.use_case.GetFilterRecipeOutputDataUseCase
+import com.withapp.coffeememo.search.recipe.domain.use_case.SetFilterRecipeInputDataUseCase
+import com.withapp.coffeememo.search.recipe.domain.use_case.SortRecipeUseCase
+import com.withapp.coffeememo.search.recipe.domain.use_case.UpdateFavoriteUseCase
 import com.withapp.coffeememo.search.recipe.presentation.model.SearchKeyWord
+import com.withapp.coffeememo.search.recipe.presentation.model.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -15,7 +24,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchRecipeViewModel @Inject constructor(
-    val searchRecipeController: SearchRecipeController
+    private val freeWordSearchUseCase: FreeWordSearchUseCase,
+    private val sortRecipeUseCase: SortRecipeUseCase,
+    private val filterRecipeUseCase: FilterRecipeUseCase,
+    private val setRecipeInputDataUseCase: SetFilterRecipeInputDataUseCase,
+    val getRecipeOutputDataUseCase: GetFilterRecipeOutputDataUseCase,
+    private val getAllRecipeUseCase: GetAllRecipeUseCase,
+    private val deleteFilterInputDataUseCase: DeleteFilterRecipeInputDataUseCase,
+    private val updateFavoriteUseCase: UpdateFavoriteUseCase
 ) : ViewModel() {
     // 検索結果
     private val _searchResult: MutableLiveData<List<SearchRecipeModel>> = MutableLiveData(listOf())
@@ -43,11 +59,11 @@ class SearchRecipeViewModel @Inject constructor(
     val sortedSearchResult: LiveData<List<SearchRecipeModel>> = MediatorLiveData<List<SearchRecipeModel>>().apply {
         // 検索結果が更新されたら、ソート
         addSource(_searchResult) { searchResult ->
-            value = searchRecipeController.sortRecipe(_currentSortType.value!!, searchResult)
+            value = sortRecipeUseCase.sort(_currentSortType.value!!, searchResult)
         }
         // 現在のソートが更新されたら、ソート
         addSource(_currentSortType) { sortType ->
-            value = searchRecipeController.sortRecipe(sortType, _searchResult.value!!)
+            value = sortRecipeUseCase.sort(sortType, _searchResult.value!!)
         }
     }
 
@@ -62,10 +78,10 @@ class SearchRecipeViewModel @Inject constructor(
     // キーワード検索
     fun freeWordSearch(keyWord: SearchKeyWord) {
         viewModelScope.launch {
-            val result: List<SearchRecipeModel> =
-                searchRecipeController.freeWordSearch(keyWord) ?:
-                return@launch
+            if (keyWord.keyWord.isEmpty()) return@launch
+            if (keyWord.type == SearchType.BEAN) return@launch
 
+            val result: List<SearchRecipeModel> = freeWordSearchUseCase.handle(keyWord.keyWord)
             _currentSearchWord = keyWord.keyWord
             _searchResult.postValue(result)
         }
@@ -81,10 +97,10 @@ class SearchRecipeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             if (isFavorite) {
                 // db更新
-                searchRecipeController.updateFavorite(recipeId, false)
+                updateFavoriteUseCase.handle(recipeId, false)
             } else {
                 // db更新
-                searchRecipeController.updateFavorite(recipeId, true)
+                updateFavoriteUseCase.handle(recipeId, true)
             }
         }
     }
@@ -103,7 +119,7 @@ class SearchRecipeViewModel @Inject constructor(
 
     // filter
     fun filterSearchResult(
-       roastValue: List<Boolean>,
+       roastValues: List<Boolean>,
        grindSizeValues: List<Boolean>,
        ratingValues: List<Boolean>,
        sourValues: List<Boolean>,
@@ -114,27 +130,70 @@ class SearchRecipeViewModel @Inject constructor(
        countryValues: List<String>,
        toolValues: List<String> ) {
         viewModelScope.launch {
-            val result = searchRecipeController.filter(
-                _currentSearchWord,
-                roastValue,
-                grindSizeValues,
-                ratingValues,
-                sourValues,
-                bitterValues,
-                sweetValues,
-                flavorValues,
-                richValues,
-                countryValues,
-                toolValues
+            val roastData = mutableListOf<Int>()
+            for ((i, isSelected) in roastValues.withIndex()) {
+                if (isSelected) { roastData.add(i) }
+            }
+
+            val grindSizeData = mutableListOf<Int>()
+            for ((i, isSelected) in grindSizeValues.withIndex()) {
+                if (isSelected) { grindSizeData.add(i) }
+            }
+
+            val ratingData = mutableListOf<Int>()
+            for ((i, isSelected) in ratingValues.withIndex()) {
+                if (isSelected) { ratingData.add(i + 1) }
+            }
+
+            val sourData = mutableListOf<Int>()
+            for ((i, isSelected) in sourValues.withIndex()) {
+                if (isSelected) { sourData.add(i + 1) }
+            }
+
+            val bitterData = mutableListOf<Int>()
+            for ((i, isSelected) in bitterValues.withIndex()) {
+                if (isSelected) { bitterData.add(i + 1) }
+            }
+
+            val sweetData = mutableListOf<Int>()
+            for ((i, isSelected) in sweetValues.withIndex()) {
+                if (isSelected) { sweetData.add(i + 1) }
+            }
+
+            val flavorData = mutableListOf<Int>()
+            for ((i, isSelected) in flavorValues.withIndex()) {
+                if (isSelected) { flavorData.add(i + 1) }
+            }
+
+            val richData = mutableListOf<Int>()
+            for ((i, isSelected) in richValues.withIndex()) {
+                if (isSelected) { richData.add(i + 1) }
+            }
+
+            val inputData = FilterRecipeInputData(
+                keyWord = _currentSearchWord,
+                countries = countryValues,
+                tools = toolValues,
+                roasts = roastData,
+                grindSizes = grindSizeData,
+                rating = ratingData,
+                sour = sourData,
+                bitter = bitterData,
+                sweet = sweetData,
+                flavor = flavorData,
+                rich = richData
             )
 
-            _searchResult.postValue(result)
+            // 絞り込み要素を保存
+            setRecipeInputDataUseCase.execute(inputData)
+
+            _searchResult.postValue(filterRecipeUseCase.filterRecipe(inputData))
         }
     }
 
     // 検索結果、条件の削除
     fun resetResult() {
-        searchRecipeController.deleteRecipeInputData("filterRecipeInputData")
+        deleteFilterInputDataUseCase.handle("filterRecipeInputData")
         _currentSearchWord = ""
         _currentSortType.value = RecipeSortType.NEW
         initSearchResult()
@@ -142,7 +201,7 @@ class SearchRecipeViewModel @Inject constructor(
 
     // フィルタリング要素の削除
     fun deleteFilteringInputData() {
-        searchRecipeController.deleteRecipeInputData("filterRecipeInputData")
+        deleteFilterInputDataUseCase.handle("filterRecipeInputData")
     }
 
 
@@ -151,7 +210,7 @@ class SearchRecipeViewModel @Inject constructor(
     fun initSearchResult() {
         viewModelScope.launch {
             _searchResult.postValue(
-                searchRecipeController.getAllRecipe()
+                getAllRecipeUseCase.getAllRecipe()
             )
         }
     }
@@ -162,7 +221,7 @@ class SearchRecipeViewModel @Inject constructor(
 
         viewModelScope.launch {
             _searchResult.postValue(
-                searchRecipeController.getAllRecipe()
+                getAllRecipeUseCase.getAllRecipe()
             )
         }
         _shouldUpdate = false
