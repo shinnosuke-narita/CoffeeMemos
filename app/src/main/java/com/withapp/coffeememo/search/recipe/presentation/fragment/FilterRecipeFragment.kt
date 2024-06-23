@@ -40,7 +40,7 @@ class FilterRecipeFragment : BaseFilterFragment() {
         super.onCreate(savedInstanceState)
 
         // viewModel 初期化
-        viewModel.initialize(parentViewModel.searchRecipeController)
+        viewModel.initialize(parentViewModel.getRecipeOutputDataUseCase)
     }
 
     override fun onCreateView(

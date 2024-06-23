@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.withapp.coffeememo.create.recipe.presentation.controller.CreateRecipeController
 import com.withapp.coffeememo.create.recipe.presentation.model.ExtractionTimeInfo
 import com.withapp.coffeememo.create.recipe.presentation.model.PreInfusionTimeInfo
 import com.withapp.coffeememo.entity.Rating
@@ -17,17 +16,21 @@ import com.withapp.coffeememo.utilities.Util
 import com.withapp.coffeememo.validate.RecipeValidationLogic
 import com.withapp.coffeememo.validate.ValidationInfo
 import com.withapp.coffeememo.base.viewmodel.BaseViewModel
+import com.withapp.coffeememo.create.recipe.domain.model.InputData
+import com.withapp.coffeememo.create.recipe.domain.use_case.CreateRecipeAndTasteUseCase
+import com.withapp.coffeememo.create.recipe.domain.use_case.GetBeanCountUseCase
+import com.withapp.coffeememo.create.recipe.presentation.converter.TimeConverter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewRecipeViewModel @Inject constructor()
-    : BaseViewModel() {
-    @Inject
-    lateinit var controller: CreateRecipeController
-
+class NewRecipeViewModel @Inject constructor(
+    private val createRecipeUseCase: CreateRecipeAndTasteUseCase,
+    private val converter: TimeConverter,
+    private val getBeanCountUseCase: GetBeanCountUseCase,
+) : BaseViewModel() {
     // お気に入り
     private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
     val isFavorite: LiveData<Boolean> = _isFavorite
@@ -255,26 +258,51 @@ class NewRecipeViewModel @Inject constructor()
                     autoTime = extractionTime
                 )
 
+            val createdAt = System.currentTimeMillis()
+
+            // 蒸らし時間
+            val preInfusionTimeRes: Long =
+                if (preInfusionTimeInfo.inputType ==  InputType.AUTO) {
+                    preInfusionTimeInfo.autoTime
+                } else {
+                    converter.convertPreInfusionTime(
+                        preInfusionTimeInfo.manualTime)
+                }
+
+            // 抽出時間
+            val extractionTimeRes: Long =
+                if (extractionTimeInfo.inputType == InputType.AUTO) {
+                    extractionTimeInfo.autoTime
+                } else {
+                    converter.convertExtractionTime(
+                        extractionTimeInfo.minutes,
+                        extractionTimeInfo.seconds
+                    )
+                }
+
             // 保存処理
-            controller.createRecipeAntTaste(
-                beanId = bean.id,
-                country = bean.country,
-                tool = _tool,
-                roast = _currentRoast.value!!,
-                extractionTimeInfo = extractionTimeInfo,
-                preInfusionTimeInfo = preInfusionTimeInfo,
-                amountExtraction = _amountExtraction,
-                temperature = _temperature,
-                grindSize = _currentGrind.value!!,
-                amountOfBean = _amountBeans,
-                comment = _comment,
-                isFavorite = isFavorite.value!!,
-                rating = _recipeCurrentRating.value!!,
-                sour = _sour,
-                bitter = _bitter,
-                sweet = _sweet,
-                flavor = _flavor,
-                rich = _rich
+            createRecipeUseCase.handle(
+                InputData(
+                    beanId = bean.id,
+                    country = bean.country,
+                    tool = _tool,
+                    roast = _currentRoast.value!!,
+                    extractionTime = extractionTimeRes,
+                    preInfusionTime = preInfusionTimeRes,
+                    amountExtraction = _amountExtraction,
+                    temperature = _temperature,
+                    grindSize = _currentGrind.value!!,
+                    amountOfBean = _amountBeans,
+                    comment = _comment,
+                    isFavorite = isFavorite.value!!,
+                    rating = _recipeCurrentRating.value!!,
+                    sour = _sour,
+                    bitter = _bitter,
+                    sweet = _sweet,
+                    flavor = _flavor,
+                    rich = _rich,
+                    createdAt = createdAt
+                )
             )
 
             // 保存処理完了
@@ -292,7 +320,7 @@ class NewRecipeViewModel @Inject constructor()
     // beanの登録チェック
     fun decideSelectBeanBtnAction() {
         viewModelScope.launch(Dispatchers.IO) {
-            val beanCount = controller.getBeanCount()
+            val beanCount = getBeanCountUseCase.handle()
 
             // コーヒー豆未登録
             if (beanCount == 0) {

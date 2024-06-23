@@ -7,9 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
-import com.withapp.coffeememo.search.recipe.presentation.controller.SearchRecipeController
 import com.withapp.coffeememo.state.MenuState
 import com.withapp.coffeememo.search.common.presentation.view_model.BaseFilterViewModel
+import com.withapp.coffeememo.search.recipe.domain.use_case.GetFilterRecipeOutputDataUseCase
 
 class RecipeFilterViewModel : BaseFilterViewModel() {
     // menu開閉状態 管理
@@ -217,10 +217,8 @@ class RecipeFilterViewModel : BaseFilterViewModel() {
     }
 
     // viewModel 初期化
-    fun initialize(controller: SearchRecipeController) {
-        val filterData =
-            controller.getRecipeOutPutData("filterRecipeInputData")
-            ?: return
+    fun initialize(useCase: GetFilterRecipeOutputDataUseCase) {
+        val filterData = useCase.execute("filterRecipeInputData") ?: return
 
         _countryValues.value = filterData.countries
         _toolValues.value = filterData.tools

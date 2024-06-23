@@ -1,10 +1,10 @@
 package com.withapp.coffeememo.home.recipe.presentation.view_model
 
 import androidx.lifecycle.*
-import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeSource
+import com.withapp.coffeememo.home.recipe.domain.use_case.GetHomeRecipeDataUseCase
+import com.withapp.coffeememo.home.recipe.domain.use_case.UpdateFavoriteUseCase
 import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeOutput
 import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeCardData
-import com.withapp.coffeememo.home.recipe.presentation.controller.HomeRecipeController
 import com.withapp.coffeememo.home.recipe.presentation.presenter.HomeRecipePresenter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -12,10 +12,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeRecipeViewModel @Inject constructor()
-    : ViewModel() {
-    @Inject
-    lateinit var controller: HomeRecipeController
+class HomeRecipeViewModel @Inject constructor(
+    private val getHomeRecipeDataUseCase: GetHomeRecipeDataUseCase,
+    private val updateFavoriteUseCase: UpdateFavoriteUseCase
+) : ViewModel() {
     @Inject
     lateinit var presenter: HomeRecipePresenter
 
@@ -50,12 +50,10 @@ class HomeRecipeViewModel @Inject constructor()
     fun updateHomeData(recipeId: Long, isFavorite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             val updatedFlag: Boolean = !isFavorite
-            val homeRecipeData: HomeRecipeSource =
-                controller.updateRecipeData(recipeId, updatedFlag)
+            updateFavoriteUseCase.handle(recipeId, updatedFlag)
 
             val homeRecipeInfo: HomeRecipeOutput =
-                presenter.presentHomeRecipeData(homeRecipeData)
-
+                presenter.presentHomeRecipeData(getHomeRecipeDataUseCase.handle())
             setRecipeData(homeRecipeInfo)
         }
     }
@@ -63,12 +61,10 @@ class HomeRecipeViewModel @Inject constructor()
     // レシピデータ取得
     fun getHomeRecipeData() {
         viewModelScope.launch(Dispatchers.IO) {
-            val homeRecipeData: HomeRecipeSource =
-                controller.getHomeRecipeData()
-
-           val homeRecipeInfo: HomeRecipeOutput =
-               presenter.presentHomeRecipeData(homeRecipeData)
-
+            val homeRecipeInfo: HomeRecipeOutput =
+                presenter.presentHomeRecipeData(
+                   getHomeRecipeDataUseCase.handle()
+                )
             setRecipeData(homeRecipeInfo)
         }
     }
