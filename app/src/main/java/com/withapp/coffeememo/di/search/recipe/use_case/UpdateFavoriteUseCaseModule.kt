@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.di.search.recipe.use_case
 
-import com.withapp.coffeememo.search.recipe.domain.iterator.UpdateFavoriteIterator
+import com.withapp.coffeememo.search.recipe.domain.interacotr.UpdateFavoriteIterator
 import com.withapp.coffeememo.search.recipe.domain.use_case.UpdateFavoriteUseCase
 import dagger.Binds
 import dagger.Module

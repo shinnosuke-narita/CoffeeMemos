@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.di.search.recipe.use_case
 
-import com.withapp.coffeememo.search.recipe.domain.iterator.DeleteFilterRecipeInputDataIterator
+import com.withapp.coffeememo.search.recipe.domain.interacotr.DeleteFilterRecipeInputDataIterator
 import com.withapp.coffeememo.search.recipe.domain.use_case.DeleteFilterRecipeInputDataUseCase
 import dagger.Binds
 import dagger.Module

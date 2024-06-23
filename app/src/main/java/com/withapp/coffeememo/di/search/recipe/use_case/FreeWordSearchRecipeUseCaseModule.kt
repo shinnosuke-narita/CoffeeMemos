@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.di.search.recipe.use_case
 
-import com.withapp.coffeememo.search.recipe.domain.iterator.FreeWordSearchIterator
+import com.withapp.coffeememo.search.recipe.domain.interacotr.FreeWordSearchIterator
 import com.withapp.coffeememo.search.recipe.domain.use_case.FreeWordSearchUseCase
 import dagger.Binds
 import dagger.Module
