@@ -1,13 +1,18 @@
 package com.withapp.coffeememo.detail.bean.presentation.view
 
 import androidx.lifecycle.*
-import com.withapp.coffeememo.core.data.dao.BeanDao
 import com.withapp.coffeememo.core.data.entity.Bean
+import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.entity.Rating.Star
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BeanDetailViewModel(private val beanDao: BeanDao) : ViewModel() {
+@HiltViewModel
+class BeanDetailViewModel @Inject constructor(
+    private val beanRepo: BeanRepository
+) : ViewModel() {
     private lateinit var _beanRatingManager: Rating
 
     private val _selectedBean: MutableLiveData<Bean> = MutableLiveData()
@@ -33,27 +38,13 @@ class BeanDetailViewModel(private val beanDao: BeanDao) : ViewModel() {
 
     fun updateBean(id: Long) {
         viewModelScope.launch {
-            _selectedBean.postValue(beanDao.getBeanById(id))
+            _selectedBean.postValue(beanRepo.getBeanById(id))
         }
     }
 
     fun deleteRecipe() {
         viewModelScope.launch {
-            beanDao.deleteBeanById(_selectedBean.value!!.id)
+            beanRepo.deleteBeanById(_selectedBean.value!!.id)
         }
-    }
-
-}
-
-
-
-class BeanDetailViewModelFactory(
-    private val beanDao  : BeanDao
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(BeanDetailViewModel::class.java)) {
-            return BeanDetailViewModel(beanDao) as T
-        }
-        throw IllegalArgumentException("CANNOT_GET_HOMEVIEWMODEL")
     }
 }
