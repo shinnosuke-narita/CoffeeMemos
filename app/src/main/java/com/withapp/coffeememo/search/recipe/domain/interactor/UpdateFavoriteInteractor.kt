@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.domain.interacotr
+package com.withapp.coffeememo.search.recipe.domain.interactor
 
 import com.withapp.coffeememo.domain.repository.RecipeRepository
 import com.withapp.coffeememo.search.recipe.domain.use_case.UpdateFavoriteUseCase
