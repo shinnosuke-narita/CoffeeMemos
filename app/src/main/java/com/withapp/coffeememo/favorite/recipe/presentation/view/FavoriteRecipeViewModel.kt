@@ -3,8 +3,12 @@ package com.withapp.coffeememo.favorite.recipe.presentation.view
 import android.view.View
 import androidx.lifecycle.*
 import com.withapp.coffeememo.favorite.recipe.domain.model.RecipeSortType
-import com.withapp.coffeememo.favorite.recipe.presentation.controller.FavoriteRecipeController
+import com.withapp.coffeememo.favorite.recipe.domain.use_case.DeleteFavoriteUseCase
+import com.withapp.coffeememo.favorite.recipe.domain.use_case.GetFavoriteRecipeUseCase
+import com.withapp.coffeememo.favorite.recipe.domain.use_case.GetSortTypeUseCase
+import com.withapp.coffeememo.favorite.recipe.domain.use_case.SortRecipeUseCase
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
+import com.withapp.coffeememo.favorite.recipe.presentation.presenter.FavoriteRecipePresenter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -13,11 +17,13 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteRecipeViewModel @Inject constructor()
-    : ViewModel() {
-    @Inject
-    lateinit var controller: FavoriteRecipeController
-
+class FavoriteRecipeViewModel @Inject constructor(
+    private val presenter: FavoriteRecipePresenter,
+    private val getFavoriteUseCase: GetFavoriteRecipeUseCase,
+    private val deleteFavoriteUseCase: DeleteFavoriteUseCase,
+    private val sortRecipeUseCase: SortRecipeUseCase,
+    private val getSortTypeUseCase: GetSortTypeUseCase
+) : ViewModel() {
     // お気に入りレシピリスト
     private val _favoriteRecipes: MutableLiveData<List<FavoriteRecipeModel>> =
         MutableLiveData(listOf())
@@ -38,14 +44,14 @@ class FavoriteRecipeViewModel @Inject constructor()
         MediatorLiveData<List<FavoriteRecipeModel>>().apply {
         // お気に入りリストが更新されたら、ソート
         addSource(_favoriteRecipes) { favoriteRecipes ->
-             value = controller.sortRecipe(
+             value = sortRecipeUseCase.handle(
                 _currentSort.value!!,
                 favoriteRecipes
             )
         }
         // 現在のソートが更新されたら、ソート
         addSource(_currentSort) { sortType ->
-            value = controller.sortRecipe(
+            value = sortRecipeUseCase.handle(
                 sortType,
                 _favoriteRecipes.value!!
             )
@@ -71,12 +77,12 @@ class FavoriteRecipeViewModel @Inject constructor()
             currentRecipe.filter { it.id != recipe.id  }
 
         viewModelScope.launch {
-            controller.deleteFavorite(recipe.id)
+            deleteFavoriteUseCase.handle(recipe.id)
         }
     }
 
     fun updateSortType(index: Int) {
-        val sortType: RecipeSortType = controller.getSortType(index)
+        val sortType: RecipeSortType = getSortTypeUseCase.handle(index)
 
         _currentSort.value = sortType
     }
@@ -85,7 +91,9 @@ class FavoriteRecipeViewModel @Inject constructor()
     fun initialize() {
         viewModelScope.launch {
             _favoriteRecipes.postValue(
-                controller.getFavoriteRecipe()
+                presenter.presentFavoriteRecipe(
+                    getFavoriteUseCase.handle()
+                )
             )
         }
     }
