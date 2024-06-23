@@ -1,24 +1,24 @@
 package com.withapp.coffeememo.search.recipe.domain.iterator
 
+import com.withapp.coffeememo.domain.repository.RecipeRepository
+import com.withapp.coffeememo.search.recipe.data.mapper.SearchRecipeModelMapper
 import com.withapp.coffeememo.search.recipe.domain.model.FilterRecipeInputData
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 import com.withapp.coffeememo.search.recipe.domain.presenter.SearchRecipePresenter
-import com.withapp.coffeememo.search.recipe.domain.repository.SearchRecipeDiskRepository
 import com.withapp.coffeememo.search.recipe.domain.use_case.FilterRecipeUseCase
 import javax.inject.Inject
 
-class FilterRecipeIterator @Inject constructor() : FilterRecipeUseCase {
-    @Inject
-    lateinit var searchRecipeDiskRepository: SearchRecipeDiskRepository
-    @Inject
-    lateinit var searchRecipePresenter: SearchRecipePresenter
-
+class FilterRecipeIterator @Inject constructor(
+    private val recipeRepo: RecipeRepository,
+    private val mapper: SearchRecipeModelMapper,
+    private val searchRecipePresenter: SearchRecipePresenter
+) : FilterRecipeUseCase {
     override suspend fun filterRecipe(inputData: FilterRecipeInputData): List<SearchRecipeModel> {
         val recipes: List<SearchRecipeModel> =
             if (inputData.keyWord.isNotEmpty()) {
-                 searchRecipeDiskRepository.searchRecipeByFreeWord(inputData.keyWord)
+                 recipeRepo.getRecipeWithTasteByKeyword(inputData.keyWord).map(mapper::execute)
             } else {
-                 searchRecipeDiskRepository.getAllRecipe()
+                 recipeRepo.getRecipeWithTaste().map(mapper::execute)
             }
 
         if (recipes.isEmpty()) {
