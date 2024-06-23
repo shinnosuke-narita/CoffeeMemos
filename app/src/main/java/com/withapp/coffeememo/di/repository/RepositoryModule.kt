@@ -1,6 +1,8 @@
 package com.withapp.coffeememo.di.repository
 
+import com.withapp.coffeememo.data.bean.BeanRepositoryImpl
 import com.withapp.coffeememo.data.recipe.RecipeRepositoryImpl
+import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.domain.repository.RecipeRepository
 import dagger.Binds
 import dagger.Module
@@ -15,4 +17,9 @@ abstract class RepositoryModule {
     abstract fun bindRecipeRepository(
         recipeRepositoryImpl: RecipeRepositoryImpl
     ): RecipeRepository
+
+    @Binds
+    abstract fun bindBeanRepository(
+        beanRepositoryImpl: BeanRepositoryImpl
+    ): BeanRepository
 }
