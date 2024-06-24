@@ -7,7 +7,7 @@ import com.withapp.coffeememo.search.recipe.domain.serialization.RecipeSerialize
 import com.withapp.coffeememo.search.recipe.domain.use_case.GetFilterRecipeOutputDataUseCase
 import javax.inject.Inject
 
-class GetFilterRecipeInputDataIterator @Inject constructor(
+class GetFilterRecipeInputDataInteractor @Inject constructor(
     private val deserializer: RecipeSerializer,
     private val memoryCache: RecipeMemoryCache
 ) : GetFilterRecipeOutputDataUseCase {

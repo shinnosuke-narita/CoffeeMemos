@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.di.search.recipe.use_case
 
-import com.withapp.coffeememo.search.recipe.domain.interactor.GetFilterRecipeInputDataIterator
+import com.withapp.coffeememo.search.recipe.domain.interactor.GetFilterRecipeInputDataInteractor
 import com.withapp.coffeememo.search.recipe.domain.use_case.GetFilterRecipeOutputDataUseCase
 import dagger.Binds
 import dagger.Module
@@ -13,6 +13,6 @@ abstract class GetFilterRecipeInputDataUseCaseModule {
 
     @Binds
     abstract fun bindGetFilterRecipeInputDataUseCase(
-        getFilterRecipeInputDataImpl: GetFilterRecipeInputDataIterator
+        getFilterRecipeInputDataImpl: GetFilterRecipeInputDataInteractor
     ): GetFilterRecipeOutputDataUseCase
 }
