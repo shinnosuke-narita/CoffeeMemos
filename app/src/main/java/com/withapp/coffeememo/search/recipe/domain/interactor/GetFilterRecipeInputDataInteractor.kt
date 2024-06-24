@@ -1,34 +1,24 @@
-package com.withapp.coffeememo.search.recipe.presentation.presenter
+package com.withapp.coffeememo.search.recipe.domain.interactor
 
+import com.withapp.coffeememo.search.recipe.domain.cache.RecipeMemoryCache
 import com.withapp.coffeememo.search.recipe.domain.model.FilterRecipeInputData
 import com.withapp.coffeememo.search.recipe.domain.model.FilterRecipeOutputData
-import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
-import com.withapp.coffeememo.search.recipe.domain.presenter.SearchRecipePresenter
+import com.withapp.coffeememo.search.recipe.domain.serialization.RecipeSerializer
+import com.withapp.coffeememo.search.recipe.domain.use_case.GetFilterRecipeOutputDataUseCase
 import javax.inject.Inject
 
-class SearchRecipePresenterImpl @Inject constructor()
-    : SearchRecipePresenter {
-    override fun presentAllRecipes(recipes: List<SearchRecipeModel>): List<SearchRecipeModel> {
-        return recipes
-    }
+class GetFilterRecipeInputDataInteractor @Inject constructor(
+    private val deserializer: RecipeSerializer,
+    private val memoryCache: RecipeMemoryCache
+) : GetFilterRecipeOutputDataUseCase {
+    override  fun execute(key: String): FilterRecipeOutputData? {
+        val jsonStr = memoryCache.getData(key)
+        if (jsonStr.isEmpty()) {
+            return null
+        }
 
-    override fun presentFreeWordSearchRes(
-        recipes: List<SearchRecipeModel>
-    ): List<SearchRecipeModel> {
-        if (recipes.isEmpty()) return listOf()
+        val inputData: FilterRecipeInputData = deserializer.deserialize(jsonStr) ?: return null
 
-        return recipes
-    }
-
-    override fun presentFilterResult(
-        recipes: List<SearchRecipeModel>
-    ): List<SearchRecipeModel> {
-        return recipes
-    }
-
-    override fun presentFilterOutputData(
-        inputData: FilterRecipeInputData
-    ): FilterRecipeOutputData {
         val sourValues: MutableList<Boolean> = MutableList(5) {false}
         val bitterValues: MutableList<Boolean> = MutableList(5) {false}
         val sweetValues: MutableList<Boolean> = MutableList(5) {false}
@@ -46,7 +36,7 @@ class SearchRecipePresenterImpl @Inject constructor()
         convertInputData(
             inputData = inputData.bitter,
             outPutData = bitterValues,
-           shouldConvertIndex = true
+            shouldConvertIndex = true
         )
         convertInputData(
             inputData = inputData.sweet,

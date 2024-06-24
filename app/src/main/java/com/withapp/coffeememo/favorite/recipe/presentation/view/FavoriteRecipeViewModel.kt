@@ -8,7 +8,6 @@ import com.withapp.coffeememo.favorite.recipe.domain.use_case.GetFavoriteRecipeU
 import com.withapp.coffeememo.favorite.recipe.domain.use_case.GetSortTypeUseCase
 import com.withapp.coffeememo.favorite.recipe.domain.use_case.SortRecipeUseCase
 import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
-import com.withapp.coffeememo.favorite.recipe.presentation.presenter.FavoriteRecipePresenter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -18,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteRecipeViewModel @Inject constructor(
-    private val presenter: FavoriteRecipePresenter,
     private val getFavoriteUseCase: GetFavoriteRecipeUseCase,
     private val deleteFavoriteUseCase: DeleteFavoriteUseCase,
     private val sortRecipeUseCase: SortRecipeUseCase,
@@ -90,11 +88,7 @@ class FavoriteRecipeViewModel @Inject constructor(
     // 初期化処理
     fun initialize() {
         viewModelScope.launch {
-            _favoriteRecipes.postValue(
-                presenter.presentFavoriteRecipe(
-                    getFavoriteUseCase.handle()
-                )
-            )
+            _favoriteRecipes.postValue(getFavoriteUseCase.handle())
         }
     }
 }

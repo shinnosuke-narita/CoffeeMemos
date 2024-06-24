@@ -1,11 +1,12 @@
 package com.withapp.coffeememo.home.recipe.presentation.view_model
 
 import androidx.lifecycle.*
+import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeSource
 import com.withapp.coffeememo.home.recipe.domain.use_case.GetHomeRecipeDataUseCase
 import com.withapp.coffeememo.home.recipe.domain.use_case.UpdateFavoriteUseCase
+import com.withapp.coffeememo.home.recipe.presentation.mapper.HomeRecipeCardModelMapper
 import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeOutput
 import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeCardData
-import com.withapp.coffeememo.home.recipe.presentation.presenter.HomeRecipePresenter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,11 +15,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeRecipeViewModel @Inject constructor(
     private val getHomeRecipeDataUseCase: GetHomeRecipeDataUseCase,
-    private val updateFavoriteUseCase: UpdateFavoriteUseCase
+    private val updateFavoriteUseCase: UpdateFavoriteUseCase,
+    private val mapper: HomeRecipeCardModelMapper
 ) : ViewModel() {
-    @Inject
-    lateinit var presenter: HomeRecipePresenter
-
     // 新しい順レシピ
     private val _newRecipes = MutableLiveData<List<HomeRecipeCardData>>(listOf())
     val newRecipes: LiveData<List<HomeRecipeCardData>> = _newRecipes
@@ -53,7 +52,7 @@ class HomeRecipeViewModel @Inject constructor(
             updateFavoriteUseCase.handle(recipeId, updatedFlag)
 
             val homeRecipeInfo: HomeRecipeOutput =
-                presenter.presentHomeRecipeData(getHomeRecipeDataUseCase.handle())
+                convertHomeRecipeData(getHomeRecipeDataUseCase.handle())
             setRecipeData(homeRecipeInfo)
         }
     }
@@ -62,9 +61,7 @@ class HomeRecipeViewModel @Inject constructor(
     fun getHomeRecipeData() {
         viewModelScope.launch(Dispatchers.IO) {
             val homeRecipeInfo: HomeRecipeOutput =
-                presenter.presentHomeRecipeData(
-                   getHomeRecipeDataUseCase.handle()
-                )
+                convertHomeRecipeData(getHomeRecipeDataUseCase.handle())
             setRecipeData(homeRecipeInfo)
         }
     }
@@ -76,5 +73,24 @@ class HomeRecipeViewModel @Inject constructor(
         _highRatingRecipes.postValue(homeRecipeData.highRatingRecipes)
         _totalRecipeCount.postValue(homeRecipeData.totalCount)
         _todayRecipeCount.postValue(homeRecipeData.todayCount)
+    }
+
+    private fun convertHomeRecipeData(
+        homeRecipeData: HomeRecipeSource
+    ): HomeRecipeOutput {
+        val newRecipes =
+            mapper.execute(homeRecipeData.newRecipes)
+        val highRatingRecipes =
+            mapper.execute(homeRecipeData.highRatingRecipes)
+        val favoriteRecipes =
+            mapper.execute(homeRecipeData.favoriteRecipes)
+
+        return HomeRecipeOutput(
+            newRecipes,
+            highRatingRecipes,
+            favoriteRecipes,
+            homeRecipeData.totalCount,
+            homeRecipeData.todayCount
+        )
     }
 }

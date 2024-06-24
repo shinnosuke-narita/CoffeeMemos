@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.domain.interacotr
+package com.withapp.coffeememo.search.recipe.domain.interactor
 
 import com.withapp.coffeememo.search.recipe.domain.model.RecipeSortType
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel

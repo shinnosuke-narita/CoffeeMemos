@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.di.search.recipe.use_case
 
-import com.withapp.coffeememo.search.recipe.domain.interacotr.SortRecipeInteractor
+import com.withapp.coffeememo.search.recipe.domain.interactor.SortRecipeInteractor
 import com.withapp.coffeememo.search.recipe.domain.use_case.SortRecipeUseCase
 import dagger.Binds
 import dagger.Module

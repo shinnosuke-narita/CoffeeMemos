@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.domain.interacotr
+package com.withapp.coffeememo.search.recipe.domain.interactor
 
 import com.withapp.coffeememo.search.recipe.domain.cache.RecipeMemoryCache
 import com.withapp.coffeememo.search.recipe.domain.model.FilterRecipeInputData

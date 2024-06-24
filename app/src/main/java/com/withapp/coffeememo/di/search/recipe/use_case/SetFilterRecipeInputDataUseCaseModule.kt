@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.di.search.recipe.use_case
 
-import com.withapp.coffeememo.search.recipe.domain.interacotr.SetFilterRecipeInputDataIterator
+import com.withapp.coffeememo.search.recipe.domain.interactor.SetFilterRecipeInputDataIterator
 import com.withapp.coffeememo.search.recipe.domain.use_case.SetFilterRecipeInputDataUseCase
 import dagger.Binds
 import dagger.Module

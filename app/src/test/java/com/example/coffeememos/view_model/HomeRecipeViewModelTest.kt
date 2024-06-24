@@ -2,21 +2,19 @@ package com.example.coffeememos.view_model
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeModel
+import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeSource
 import com.withapp.coffeememo.home.recipe.domain.use_case.GetHomeRecipeDataUseCase
 import com.withapp.coffeememo.home.recipe.domain.use_case.UpdateFavoriteUseCase
+import com.withapp.coffeememo.home.recipe.presentation.mapper.HomeRecipeCardModelMapperImpl
 import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeCardData
-import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeOutput
-import com.withapp.coffeememo.home.recipe.presentation.presenter.HomeRecipePresenter
 import com.withapp.coffeememo.home.recipe.presentation.view_model.HomeRecipeViewModel
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
@@ -28,17 +26,17 @@ import java.time.LocalDateTime
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeRecipeViewModelTest {
     companion object {
-        private val recipe = HomeRecipeCardData(
-            recipeId = 0,
-            beanId   = 0,
+        private val recipe = HomeRecipeModel(
+            recipeId = 0L,
+            beanId   = 0L,
             country = "",
             createdAt = LocalDateTime.now(),
             tool     = "",
-            roast    = "",
-            rating   = "",
+            roast    = 1,
+            rating   = 1,
             isFavorite = true
         )
-        val sampleData = HomeRecipeOutput(
+        val sampleData = HomeRecipeSource(
             newRecipes = listOf(recipe),
             highRatingRecipes = listOf(recipe),
             favoriteRecipes = listOf(recipe, recipe),
@@ -48,7 +46,6 @@ class HomeRecipeViewModelTest {
     }
 
     private lateinit var _viewModel: HomeRecipeViewModel
-    private lateinit var _presenter: HomeRecipePresenter
     private lateinit var  _newRecipesObserver: Observer<List<HomeRecipeCardData>>
     private lateinit var  _highRatingRecipesObserver: Observer<List<HomeRecipeCardData>>
     private lateinit var  _favoriteRecipesObserver: Observer<List<HomeRecipeCardData>>
@@ -66,10 +63,9 @@ class HomeRecipeViewModelTest {
 
         val getHomeRecipeDataUseCase = mockk<GetHomeRecipeDataUseCase>(relaxed = true)
         val updateFavoriteUseCase = mockk<UpdateFavoriteUseCase>(relaxed = true)
-        _viewModel = HomeRecipeViewModel(getHomeRecipeDataUseCase, updateFavoriteUseCase)
-        _presenter = mockk<HomeRecipePresenter>()
-        coEvery { _presenter.presentHomeRecipeData(any()) } returns sampleData
-        _viewModel.presenter = _presenter
+        coEvery { getHomeRecipeDataUseCase.handle() } returns sampleData
+        val mapper = HomeRecipeCardModelMapperImpl()
+        _viewModel = HomeRecipeViewModel(getHomeRecipeDataUseCase, updateFavoriteUseCase, mapper)
 
         setUpObserver()
     }
@@ -84,20 +80,16 @@ class HomeRecipeViewModelTest {
         _viewModel.getHomeRecipeData()
 
         /** call function check */
-        verify(exactly = 1) { _presenter.presentHomeRecipeData(any()) }
         checkObserver()
     }
 
     @Test
-    fun test_updateHomeData() = runTest {
+    fun test_updateHomeData() {
         val recipeIdParam = 0L
         val isFavoriteParam = false
         _viewModel.updateHomeData(recipeIdParam, isFavoriteParam)
-        advanceUntilIdle()
 
         /** call function check */
-        // todo fix this
-//        coVerify(exactly = 1) { _presenter.presentHomeRecipeData(any()) }
         checkObserver()
     }
 
@@ -119,9 +111,10 @@ class HomeRecipeViewModelTest {
 
     private fun checkObserver() {
         /** observer check */
-        verify(exactly = 1) { _newRecipesObserver.onChanged(sampleData.newRecipes) }
-        verify(exactly = 1) { _favoriteRecipesObserver.onChanged(sampleData.favoriteRecipes) }
-        verify(exactly = 1) { _highRatingRecipesObserver.onChanged(sampleData.highRatingRecipes) }
+        val mapper = HomeRecipeCardModelMapperImpl()
+        verify(exactly = 1) { _newRecipesObserver.onChanged(mapper.execute(sampleData.newRecipes)) }
+        verify(exactly = 1) { _favoriteRecipesObserver.onChanged(mapper.execute(sampleData.favoriteRecipes)) }
+        verify(exactly = 1) { _highRatingRecipesObserver.onChanged(mapper.execute(sampleData.highRatingRecipes)) }
         verify(exactly = 1) { _favoriteRecipeCountObserver.onChanged(sampleData.favoriteRecipes.size.toString()) }
         verify(exactly = 1) { _todayRecipeCountObserver.onChanged(sampleData.todayCount) }
         verify(exactly = 1) { _totalRecipeCountObserver.onChanged(sampleData.totalCount) }

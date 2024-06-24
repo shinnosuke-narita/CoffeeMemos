@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.di.search.recipe.use_case
 
-import com.withapp.coffeememo.search.recipe.domain.interacotr.FreeWordSearchIterator
+import com.withapp.coffeememo.search.recipe.domain.interactor.FreeWordSearchInteractor
 import com.withapp.coffeememo.search.recipe.domain.use_case.FreeWordSearchUseCase
 import dagger.Binds
 import dagger.Module
@@ -13,6 +13,6 @@ abstract class FreeWordSearchRecipeUseCaseModule {
 
     @Binds
     abstract fun bindFreeWordSearchRecipeUseCase(
-        freeWordSearchUseCaseImpl: FreeWordSearchIterator
+        freeWordSearchUseCaseImpl: FreeWordSearchInteractor
     ): FreeWordSearchUseCase
 }

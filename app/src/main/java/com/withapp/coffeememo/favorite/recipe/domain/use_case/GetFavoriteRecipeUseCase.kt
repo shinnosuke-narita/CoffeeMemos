@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.favorite.recipe.domain.use_case
 
-import com.withapp.coffeememo.core.data.entity.Recipe
+import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
 
 interface GetFavoriteRecipeUseCase {
-    suspend fun handle(): List<Recipe>
+    suspend fun handle(): List<FavoriteRecipeModel>
 }
