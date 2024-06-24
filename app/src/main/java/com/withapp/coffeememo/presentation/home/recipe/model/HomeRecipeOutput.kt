@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.home.recipe.presentation.model
+package com.withapp.coffeememo.presentation.home.recipe.model
 
 data class HomeRecipeOutput(
     val newRecipes: List<HomeRecipeCardData>,

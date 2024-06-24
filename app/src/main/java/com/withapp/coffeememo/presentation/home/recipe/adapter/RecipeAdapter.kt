@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.home.recipe.presentation.adapter
+package com.withapp.coffeememo.presentation.home.recipe.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeCardData
+import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData
 import com.withapp.coffeememo.utilities.ViewUtil
 import com.withapp.coffeememo.utilities.ViewUtil.Companion.setFavoriteIcon
 import java.time.format.DateTimeFormatter

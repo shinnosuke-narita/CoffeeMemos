@@ -1,8 +1,8 @@
-package com.withapp.coffeememo.home.recipe.presentation.mapper
+package com.withapp.coffeememo.presentation.home.recipe.mapper
 
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeModel
-import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeCardData
+import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 

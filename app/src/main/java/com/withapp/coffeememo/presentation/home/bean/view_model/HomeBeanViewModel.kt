@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.home.bean.presentation.view_model
+package com.withapp.coffeememo.presentation.home.bean.view_model
 
 import androidx.lifecycle.*
 import com.withapp.coffeememo.home.bean.domain.model.HomeBeanModel

@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.home.recipe.presentation.fragment
+package com.withapp.coffeememo.presentation.home.recipe.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentHomeRecipeBinding
-import com.withapp.coffeememo.home.recipe.presentation.adapter.RecipeAdapter
-import com.withapp.coffeememo.home.recipe.presentation.view_model.HomeRecipeViewModel
+import com.withapp.coffeememo.presentation.home.recipe.adapter.RecipeAdapter
+import com.withapp.coffeememo.presentation.home.recipe.view_model.HomeRecipeViewModel
 import com.withapp.coffeememo.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 

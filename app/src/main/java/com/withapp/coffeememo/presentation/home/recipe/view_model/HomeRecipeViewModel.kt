@@ -1,12 +1,12 @@
-package com.withapp.coffeememo.home.recipe.presentation.view_model
+package com.withapp.coffeememo.presentation.home.recipe.view_model
 
 import androidx.lifecycle.*
 import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeSource
 import com.withapp.coffeememo.home.recipe.domain.use_case.GetHomeRecipeDataUseCase
 import com.withapp.coffeememo.home.recipe.domain.use_case.UpdateFavoriteUseCase
-import com.withapp.coffeememo.home.recipe.presentation.mapper.HomeRecipeCardModelMapper
-import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeOutput
-import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeCardData
+import com.withapp.coffeememo.presentation.home.recipe.mapper.HomeRecipeCardModelMapper
+import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeOutput
+import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

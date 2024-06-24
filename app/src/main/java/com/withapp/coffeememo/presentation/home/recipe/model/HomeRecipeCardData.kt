@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.home.recipe.presentation.model
+package com.withapp.coffeememo.presentation.home.recipe.model
 
 import java.time.LocalDateTime
 

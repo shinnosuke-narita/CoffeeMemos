@@ -6,9 +6,9 @@ import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeModel
 import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeSource
 import com.withapp.coffeememo.home.recipe.domain.use_case.GetHomeRecipeDataUseCase
 import com.withapp.coffeememo.home.recipe.domain.use_case.UpdateFavoriteUseCase
-import com.withapp.coffeememo.home.recipe.presentation.mapper.HomeRecipeCardModelMapperImpl
-import com.withapp.coffeememo.home.recipe.presentation.model.HomeRecipeCardData
-import com.withapp.coffeememo.home.recipe.presentation.view_model.HomeRecipeViewModel
+import com.withapp.coffeememo.presentation.home.recipe.mapper.HomeRecipeCardModelMapperImpl
+import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData
+import com.withapp.coffeememo.presentation.home.recipe.view_model.HomeRecipeViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify

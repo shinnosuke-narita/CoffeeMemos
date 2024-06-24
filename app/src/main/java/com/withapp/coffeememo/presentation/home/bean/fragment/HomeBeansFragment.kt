@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.home.bean.presentation.fragment
+package com.withapp.coffeememo.presentation.home.bean.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.base.adapter.HomeBeanCardAdapter
 import com.withapp.coffeememo.databinding.FragmentHomeBeansBinding
-import com.withapp.coffeememo.home.bean.presentation.view_model.HomeBeanViewModel
+import com.withapp.coffeememo.presentation.home.bean.view_model.HomeBeanViewModel
 import com.withapp.coffeememo.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -159,8 +159,7 @@ class HomeBeansFragment : Fragment() {
             },
             onItemClick = { bean ->
                 val showDetailAction =
-                    HomeBeansFragmentDirections
-                        .showBeanDetailAction()
+                    com.withapp.coffeememo.home.bean.presentation.fragment.HomeBeansFragmentDirections.showBeanDetailAction()
                         .apply {
                             beanId  = bean.id
                         }

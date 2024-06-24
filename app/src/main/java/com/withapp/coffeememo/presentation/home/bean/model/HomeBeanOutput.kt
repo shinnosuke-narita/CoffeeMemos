@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.home.bean.presentation.model
+package com.withapp.coffeememo.presentation.home.bean.model
 
 data class HomeBeanOutput(
     val newBeans: List<HomeBeanCardData>,
