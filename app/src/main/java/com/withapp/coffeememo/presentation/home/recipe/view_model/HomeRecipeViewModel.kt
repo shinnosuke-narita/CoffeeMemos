@@ -1,9 +1,9 @@
 package com.withapp.coffeememo.presentation.home.recipe.view_model
 
 import androidx.lifecycle.*
-import com.withapp.coffeememo.home.recipe.domain.model.HomeRecipeSource
-import com.withapp.coffeememo.home.recipe.domain.use_case.GetHomeRecipeDataUseCase
-import com.withapp.coffeememo.home.recipe.domain.use_case.UpdateFavoriteUseCase
+import com.withapp.coffeememo.domain.model.recipe.HomeRecipeSource
+import com.withapp.coffeememo.domain.usecase.recipe.GetHomeRecipeDataUseCase
+import com.withapp.coffeememo.domain.usecase.recipe.UpdateFavoriteUseCase
 import com.withapp.coffeememo.presentation.home.recipe.mapper.HomeRecipeCardModelMapper
 import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeOutput
 import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData

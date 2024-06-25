@@ -1,7 +1,7 @@
-package com.withapp.coffeememo.home.bean.domain.interactor
+package com.withapp.coffeememo.domain.interactor.bean
 
 import com.withapp.coffeememo.domain.repository.BeanRepository
-import com.withapp.coffeememo.home.bean.domain.use_case.UpdateFavoriteBeanUseCase
+import com.withapp.coffeememo.domain.usecase.bean.UpdateFavoriteBeanUseCase
 import javax.inject.Inject
 
 class UpdateFavoriteBeanInteractor @Inject constructor(

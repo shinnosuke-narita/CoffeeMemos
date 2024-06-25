@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.home.bean.domain.model
+package com.withapp.coffeememo.domain.model.bean
 
 import java.time.LocalDateTime
 

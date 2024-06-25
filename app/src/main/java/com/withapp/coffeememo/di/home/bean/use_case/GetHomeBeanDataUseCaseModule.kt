@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.di.home.bean.use_case
 
-import com.withapp.coffeememo.home.bean.domain.interactor.GetHomeBeanDataUseCaseInteractor
-import com.withapp.coffeememo.home.bean.domain.use_case.GetHomeBeanDataUseCase
+import com.withapp.coffeememo.domain.interactor.bean.GetHomeBeanDataUseCaseInteractor
+import com.withapp.coffeememo.domain.usecase.bean.GetHomeBeanDataUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

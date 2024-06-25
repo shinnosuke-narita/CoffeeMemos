@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.home.bean.data.mapper
 
 import com.withapp.coffeememo.home.bean.data.model.HomeBeanData
-import com.withapp.coffeememo.home.bean.domain.model.HomeBeanModel
+import com.withapp.coffeememo.domain.model.bean.HomeBeanModel
 import java.time.DateTimeException
 import java.time.Instant
 import java.time.LocalDateTime

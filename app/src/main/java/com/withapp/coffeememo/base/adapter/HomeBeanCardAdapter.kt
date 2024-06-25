@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.home.bean.domain.model.HomeBeanModel
+import com.withapp.coffeememo.domain.model.bean.HomeBeanModel
 import com.withapp.coffeememo.utilities.ViewUtil
 import com.withapp.coffeememo.utilities.ViewUtil.Companion.setFavoriteIcon
 import java.time.format.DateTimeFormatter

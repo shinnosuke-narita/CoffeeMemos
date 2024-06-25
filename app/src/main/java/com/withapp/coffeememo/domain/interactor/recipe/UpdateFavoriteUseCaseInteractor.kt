@@ -1,7 +1,7 @@
-package com.withapp.coffeememo.home.recipe.domain.interactor
+package com.withapp.coffeememo.domain.interactor.recipe
 
 import com.withapp.coffeememo.domain.repository.RecipeRepository
-import com.withapp.coffeememo.home.recipe.domain.use_case.UpdateFavoriteUseCase
+import com.withapp.coffeememo.domain.usecase.recipe.UpdateFavoriteUseCase
 import javax.inject.Inject
 
 class UpdateFavoriteUseCaseInteractor @Inject constructor(

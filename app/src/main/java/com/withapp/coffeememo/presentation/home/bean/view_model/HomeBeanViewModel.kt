@@ -1,10 +1,10 @@
 package com.withapp.coffeememo.presentation.home.bean.view_model
 
 import androidx.lifecycle.*
-import com.withapp.coffeememo.home.bean.domain.model.HomeBeanModel
-import com.withapp.coffeememo.home.bean.domain.model.HomeBeanSource
-import com.withapp.coffeememo.home.bean.domain.use_case.GetHomeBeanDataUseCase
-import com.withapp.coffeememo.home.bean.domain.use_case.UpdateFavoriteBeanUseCase
+import com.withapp.coffeememo.domain.model.bean.HomeBeanModel
+import com.withapp.coffeememo.domain.model.bean.HomeBeanSource
+import com.withapp.coffeememo.domain.usecase.bean.GetHomeBeanDataUseCase
+import com.withapp.coffeememo.domain.usecase.bean.UpdateFavoriteBeanUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

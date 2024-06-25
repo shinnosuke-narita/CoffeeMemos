@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.home.bean.domain.model
+package com.withapp.coffeememo.domain.model.bean
 
 data class HomeBeanSource(
     val newBeans: List<HomeBeanModel>,
