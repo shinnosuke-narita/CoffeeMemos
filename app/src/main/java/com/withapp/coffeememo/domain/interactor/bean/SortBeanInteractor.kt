@@ -1,12 +1,12 @@
-package com.withapp.coffeememo.favorite.bean.domain.interactor
+package com.withapp.coffeememo.domain.interactor.bean
 
-import com.withapp.coffeememo.favorite.bean.domain.model.BeanSortType
-import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
-import com.withapp.coffeememo.favorite.bean.domain.use_case.SortBeanUseCase
+import com.withapp.coffeememo.domain.model.bean.BeanSortType
+import com.withapp.coffeememo.domain.model.bean.FavoriteBeanModel
+import com.withapp.coffeememo.domain.usecase.bean.SortBeanUseCase
 import javax.inject.Inject
 
 class SortBeanInteractor @Inject constructor()
-    : SortBeanUseCase{
+    : SortBeanUseCase {
     override fun handle(
         sortType: BeanSortType,
         list: List<FavoriteBeanModel>

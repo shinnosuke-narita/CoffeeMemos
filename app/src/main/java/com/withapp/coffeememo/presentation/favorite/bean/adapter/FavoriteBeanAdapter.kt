@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
+import com.withapp.coffeememo.domain.model.bean.FavoriteBeanModel
 import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.utilities.ViewUtil
 

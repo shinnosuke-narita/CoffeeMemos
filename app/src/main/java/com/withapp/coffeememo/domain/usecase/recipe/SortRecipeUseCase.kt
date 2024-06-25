@@ -1,6 +1,6 @@
-package com.withapp.coffeememo.favorite.recipe.domain.use_case
+package com.withapp.coffeememo.domain.usecase.recipe
 
-import com.withapp.coffeememo.favorite.recipe.domain.model.RecipeSortType
+import com.withapp.coffeememo.domain.model.recipe.RecipeSortType
 import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
 
 interface SortRecipeUseCase {

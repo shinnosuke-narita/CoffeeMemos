@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.di.favorite.recipe.use_case
 
-import com.withapp.coffeememo.favorite.recipe.domain.interactor.SortRecipeInteractor
-import com.withapp.coffeememo.favorite.recipe.domain.use_case.SortRecipeUseCase
+import com.withapp.coffeememo.domain.interactor.recipe.SortRecipeInteractor
+import com.withapp.coffeememo.domain.usecase.recipe.SortRecipeUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

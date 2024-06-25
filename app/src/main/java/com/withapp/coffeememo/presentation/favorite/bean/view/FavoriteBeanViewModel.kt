@@ -2,12 +2,12 @@ package com.withapp.coffeememo.presentation.favorite.bean.view
 
 import android.view.View
 import androidx.lifecycle.*
-import com.withapp.coffeememo.favorite.bean.domain.model.BeanSortType
-import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
-import com.withapp.coffeememo.favorite.bean.domain.use_case.DeleteFavoriteUseCase
-import com.withapp.coffeememo.favorite.bean.domain.use_case.GetFavoriteBeanUseCase
-import com.withapp.coffeememo.favorite.bean.domain.use_case.GetSortTypeUseCase
-import com.withapp.coffeememo.favorite.bean.domain.use_case.SortBeanUseCase
+import com.withapp.coffeememo.domain.model.bean.BeanSortType
+import com.withapp.coffeememo.domain.model.bean.FavoriteBeanModel
+import com.withapp.coffeememo.domain.usecase.bean.DeleteFavoriteUseCase
+import com.withapp.coffeememo.domain.usecase.bean.GetFavoriteBeanUseCase
+import com.withapp.coffeememo.domain.usecase.bean.GetSortTypeUseCase
+import com.withapp.coffeememo.domain.usecase.bean.SortBeanUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

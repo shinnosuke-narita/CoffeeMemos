@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.bean.domain.model
+package com.withapp.coffeememo.domain.model.bean
 
 data class FavoriteBeanModel(
     val id: Long,

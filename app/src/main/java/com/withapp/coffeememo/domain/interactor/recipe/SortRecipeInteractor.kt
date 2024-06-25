@@ -1,7 +1,7 @@
-package com.withapp.coffeememo.favorite.recipe.domain.interactor
+package com.withapp.coffeememo.domain.interactor.recipe
 
-import com.withapp.coffeememo.favorite.recipe.domain.model.RecipeSortType
-import com.withapp.coffeememo.favorite.recipe.domain.use_case.SortRecipeUseCase
+import com.withapp.coffeememo.domain.model.recipe.RecipeSortType
+import com.withapp.coffeememo.domain.usecase.recipe.SortRecipeUseCase
 import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
 import javax.inject.Inject
 

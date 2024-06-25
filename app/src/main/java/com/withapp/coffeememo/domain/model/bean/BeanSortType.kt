@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.bean.domain.model
+package com.withapp.coffeememo.domain.model.bean
 
 enum class BeanSortType(val index: Int) {
     NEW(0),

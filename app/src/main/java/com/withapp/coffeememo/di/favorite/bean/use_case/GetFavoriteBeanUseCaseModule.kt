@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.di.favorite.bean.use_case
 
 
-import com.withapp.coffeememo.favorite.bean.domain.interactor.GetFavoriteBeanInteractor
-import com.withapp.coffeememo.favorite.bean.domain.use_case.GetFavoriteBeanUseCase
+import com.withapp.coffeememo.domain.interactor.bean.GetFavoriteBeanInteractor
+import com.withapp.coffeememo.domain.usecase.bean.GetFavoriteBeanUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

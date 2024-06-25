@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.recipe.domain.use_case
+package com.withapp.coffeememo.domain.usecase.recipe
 
 import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
 

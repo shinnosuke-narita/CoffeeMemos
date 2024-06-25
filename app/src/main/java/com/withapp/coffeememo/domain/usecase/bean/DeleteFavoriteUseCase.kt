@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.bean.domain.use_case
+package com.withapp.coffeememo.domain.usecase.bean
 
 interface DeleteFavoriteUseCase {
     suspend fun handle(beanId: Long)

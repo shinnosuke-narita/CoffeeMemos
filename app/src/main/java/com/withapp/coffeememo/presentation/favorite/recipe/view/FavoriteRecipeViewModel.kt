@@ -2,11 +2,11 @@ package com.withapp.coffeememo.presentation.favorite.recipe.view
 
 import android.view.View
 import androidx.lifecycle.*
-import com.withapp.coffeememo.favorite.recipe.domain.model.RecipeSortType
-import com.withapp.coffeememo.favorite.recipe.domain.use_case.DeleteFavoriteUseCase
-import com.withapp.coffeememo.favorite.recipe.domain.use_case.GetFavoriteRecipeUseCase
-import com.withapp.coffeememo.favorite.recipe.domain.use_case.GetSortTypeUseCase
-import com.withapp.coffeememo.favorite.recipe.domain.use_case.SortRecipeUseCase
+import com.withapp.coffeememo.domain.model.recipe.RecipeSortType
+import com.withapp.coffeememo.domain.usecase.recipe.DeleteFavoriteUseCase
+import com.withapp.coffeememo.domain.usecase.recipe.GetFavoriteRecipeUseCase
+import com.withapp.coffeememo.domain.usecase.recipe.GetSortTypeUseCase
+import com.withapp.coffeememo.domain.usecase.recipe.SortRecipeUseCase
 import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
