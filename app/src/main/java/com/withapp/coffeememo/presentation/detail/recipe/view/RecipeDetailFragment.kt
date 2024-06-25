@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.detail.recipe.presentation.view
+package com.withapp.coffeememo.presentation.detail.recipe.view
 
 import android.content.Context
 import android.os.Bundle
@@ -18,7 +18,7 @@ import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentRecipeDetailBinding
 import com.withapp.coffeememo.base.dialog.BasicDialogFragment
 import com.withapp.coffeememo.base.dialog.EditTasteDialogFragment
-import com.withapp.coffeememo.detail.recipe.presentation.chart.ChartManager
+import com.withapp.coffeememo.presentation.detail.recipe.chart.ChartManager
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.entity.Rating.StarState
 import com.withapp.coffeememo.utilities.DateUtil
@@ -37,7 +37,7 @@ class RecipeDetailFragment : Fragment() {
     // viewModel 初期化
     private val viewModel: RecipeDetailViewModel by viewModels()
 
-    private val safeArgs: RecipeDetailFragmentArgs by navArgs()
+    private val safeArgs: com.withapp.coffeememo.detail.recipe.presentation.view.RecipeDetailFragmentArgs by navArgs()
 
     private lateinit var chartManager: ChartManager
 
@@ -227,7 +227,7 @@ class RecipeDetailFragment : Fragment() {
         // コーヒー豆編集画面へ遷移
         binding.beanEditIcon.setOnClickListener { v ->
             val showEditBeanAction =
-                RecipeDetailFragmentDirections.showEditBeanAction()
+                com.withapp.coffeememo.detail.recipe.presentation.view.RecipeDetailFragmentDirections.showEditBeanAction()
                     .apply {
                         beanId = viewModel.selectedBean.value!!.id
                 }
@@ -247,8 +247,7 @@ class RecipeDetailFragment : Fragment() {
 
         // レシピ編集画面へ遷移
         binding.recipeEditIcon.setOnClickListener { v ->
-            val showEditRecipeAction = RecipeDetailFragmentDirections
-                .showEditRecipeAction()
+            val showEditRecipeAction = com.withapp.coffeememo.detail.recipe.presentation.view.RecipeDetailFragmentDirections.showEditRecipeAction()
                 .apply {
                     recipeId = viewModel.selectedRecipe.value!!.id
                 }

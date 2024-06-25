@@ -113,7 +113,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
-        android:name="com.withapp.coffeememo.detail.recipe.presentation.view.RecipeDetailFragment"
+        android:name="com.withapp.coffeememo.presentation.detail.recipe.view.RecipeDetailFragment"
         android:label="Recipe Detail"
         tools:layout="@layout/fragment_recipe_detail" >
         <argument
@@ -138,7 +138,7 @@
     </fragment>
     <fragment
         android:id="@+id/beanDetailFragment"
-        android:name="com.withapp.coffeememo.detail.bean.presentation.view.BeanDetailFragment"
+        android:name="com.withapp.coffeememo.presentation.detail.bean.BeanDetailFragment"
         android:label="Bean Detail"
         tools:layout="@layout/fragment_bean_detail" >
         <argument

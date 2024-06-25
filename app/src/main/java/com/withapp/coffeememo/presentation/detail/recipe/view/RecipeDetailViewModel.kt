@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.detail.recipe.presentation.view
+package com.withapp.coffeememo.presentation.detail.recipe.view
 
 import androidx.lifecycle.*
 import com.withapp.coffeememo.core.data.entity.Bean

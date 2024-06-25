@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.detail.recipe.presentation.chart
+package com.withapp.coffeememo.presentation.detail.recipe.chart
 
 import android.content.Context
 import android.graphics.Color
