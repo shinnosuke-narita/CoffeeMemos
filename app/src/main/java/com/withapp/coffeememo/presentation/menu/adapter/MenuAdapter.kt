@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.menu.presentation.adapter
+package com.withapp.coffeememo.presentation.menu.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.menu.presentation.model.MenuItem
+import com.withapp.coffeememo.presentation.menu.model.MenuItem
 
 class MenuAdapter(
     private val data: List<MenuItem>,

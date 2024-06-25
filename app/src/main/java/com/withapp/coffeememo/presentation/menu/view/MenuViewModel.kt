@@ -1,7 +1,7 @@
-package com.withapp.coffeememo.menu.presentation.view
+package com.withapp.coffeememo.presentation.menu.view
 
 import androidx.lifecycle.ViewModel
-import com.withapp.coffeememo.menu.presentation.model.MenuItem
+import com.withapp.coffeememo.presentation.menu.model.MenuItem
 
 class MenuViewModel : ViewModel() {
     // リストデータ

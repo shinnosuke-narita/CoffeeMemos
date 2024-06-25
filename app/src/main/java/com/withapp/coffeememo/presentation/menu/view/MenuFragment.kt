@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.menu.presentation.view
+package com.withapp.coffeememo.presentation.menu.view
 
 import android.content.Context
 import android.content.Intent
@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentMenuBinding
-import com.withapp.coffeememo.menu.presentation.adapter.MenuAdapter
+import com.withapp.coffeememo.presentation.menu.adapter.MenuAdapter
 
 class MenuFragment : Fragment() {
     // viewBinding

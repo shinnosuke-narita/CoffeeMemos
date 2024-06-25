@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.menu.presentation.model
+package com.withapp.coffeememo.presentation.menu.model
 
 data class MenuItem(
     val title: String,
