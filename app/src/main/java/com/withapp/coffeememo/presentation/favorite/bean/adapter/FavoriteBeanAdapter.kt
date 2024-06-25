@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.bean.presentation.adapter
+package com.withapp.coffeememo.presentation.favorite.bean.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

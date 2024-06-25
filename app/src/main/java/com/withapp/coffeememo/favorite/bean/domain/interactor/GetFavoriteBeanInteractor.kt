@@ -3,7 +3,7 @@ package com.withapp.coffeememo.favorite.bean.domain.interactor
 import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
 import com.withapp.coffeememo.favorite.bean.domain.use_case.GetFavoriteBeanUseCase
-import com.withapp.coffeememo.favorite.bean.presentation.mapper.FavoriteBeanModelMapper
+import com.withapp.coffeememo.presentation.favorite.bean.mapper.FavoriteBeanModelMapper
 import javax.inject.Inject
 
 class GetFavoriteBeanInteractor @Inject constructor(

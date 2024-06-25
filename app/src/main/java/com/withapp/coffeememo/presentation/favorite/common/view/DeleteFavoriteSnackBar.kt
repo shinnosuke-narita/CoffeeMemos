@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.common.presentation.view
+package com.withapp.coffeememo.presentation.favorite.common.view
 
 import android.content.Context
 import android.view.View

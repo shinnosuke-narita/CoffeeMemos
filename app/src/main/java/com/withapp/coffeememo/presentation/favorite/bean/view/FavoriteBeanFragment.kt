@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.recipe.presentation.view
+package com.withapp.coffeememo.presentation.favorite.bean.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,32 +10,32 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FavoriteContentsBinding
-import com.withapp.coffeememo.databinding.FragmentFavoriteRecipeBinding
+import com.withapp.coffeememo.databinding.FragmentFavoriteBeanBinding
 import com.withapp.coffeememo.base.dialog.ListDialogFragment
+import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
+import com.withapp.coffeememo.presentation.favorite.bean.adapter.FavoriteBeanAdapter
 import com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragmentDirections
-import com.withapp.coffeememo.favorite.common.presentation.view.DeleteFavoriteSnackBar
-import com.withapp.coffeememo.favorite.recipe.presentation.adapter.FavoriteRecipeAdapter
-import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
+import com.withapp.coffeememo.presentation.favorite.common.view.DeleteFavoriteSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoriteRecipeFragment : Fragment() {
+class FavoriteBeanFragment : Fragment() {
     // viewBinding
-    private var _mainBinding: FragmentFavoriteRecipeBinding? = null
+    private var _mainBinding: FragmentFavoriteBeanBinding? = null
     private val mainBinding get() = _mainBinding!!
     // merge tag 使用
     private var _binding: FavoriteContentsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: FavoriteRecipeViewModel by viewModels()
+    private val viewModel: FavoriteBeanViewModel by viewModels()
 
-    private lateinit var favoriteRecipeAdapter: FavoriteRecipeAdapter
+    private lateinit var favoriteBeanAdapter: FavoriteBeanAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _mainBinding = FragmentFavoriteRecipeBinding
+        _mainBinding = FragmentFavoriteBeanBinding
             .inflate(inflater, container, false)
         _binding = FavoriteContentsBinding.bind(mainBinding.root)
         return mainBinding.root
@@ -49,15 +49,12 @@ class FavoriteRecipeFragment : Fragment() {
 
         setUpAdapter()
 
-        // お気に入りレシピ一覧
-        viewModel.sortedFavoriteRecipes.observe(
-            viewLifecycleOwner
-        ) { recipes ->
-           favoriteRecipeAdapter.submitList(recipes)
+        viewModel.sortedFavoriteBeans.observe(viewLifecycleOwner) { beans ->
+            favoriteBeanAdapter.submitList(beans)
         }
 
-        // お気に入りレシピ数
-        viewModel.favoriteRecipeCount.observe(
+        // お気に入りコーヒー豆数
+        viewModel.favoriteBeanCount.observe(
             viewLifecycleOwner) { countStr ->
             binding.itemCount.text = countStr
         }
@@ -65,29 +62,17 @@ class FavoriteRecipeFragment : Fragment() {
         // 現在のソート
         viewModel.currentSort.observe(
             viewLifecycleOwner) { sortType ->
-            val sortStrings: Array<String> =
-                requireContext()
-                    .resources
-                    .getStringArray(R.array.favorite_recipe_sort_types)
-
-            binding.currentSort.text = sortStrings[sortType.index]
+            binding.currentSort.text = getSortTypeStrings()[sortType.index]
         }
 
-        // sortボタン
+        // ソートボタン
         binding.sortBtnWrapper.setOnClickListener {
-            // dialogデータ取得
-            val currentIndex: Int = viewModel.currentSort.value!!.index
-            val sortTypes: Array<String> =
-                requireContext()
-                    .resources
-                    .getStringArray(R.array.favorite_recipe_sort_types)
-
             ListDialogFragment
                 .create(
-                    currentIndex,
+                    viewModel.currentSort.value!!.index,
                     getString(R.string.favorite_sort_dialog_title),
                     "changeSort",
-                    sortTypes
+                    getSortTypeStrings()
                 )
                 .show(
                     childFragmentManager,
@@ -100,10 +85,11 @@ class FavoriteRecipeFragment : Fragment() {
             "changeSort",
             viewLifecycleOwner
         ) {_, bundle ->
-            viewModel.updateSortType(
+            viewModel.updateCurrentSort(
                 bundle.getInt("newIndex", 0)
             )
         }
+
     }
 
     override fun onResume() {
@@ -117,41 +103,46 @@ class FavoriteRecipeFragment : Fragment() {
     }
 
     private fun setUpAdapter() {
-        favoriteRecipeAdapter = getFavoriteRecipeAdapter()
+        favoriteBeanAdapter = getFavoriteBeanAdapter()
 
-        binding.favoriteRV.adapter = favoriteRecipeAdapter
+        binding.favoriteRV.adapter = favoriteBeanAdapter
         binding.favoriteRV.layoutManager =
             LinearLayoutManager(requireContext()).apply {
                 orientation = LinearLayoutManager.VERTICAL
             }
     }
 
-    private fun getFavoriteRecipeAdapter(): FavoriteRecipeAdapter {
-        return FavoriteRecipeAdapter(
+    private fun getFavoriteBeanAdapter(): FavoriteBeanAdapter {
+        return FavoriteBeanAdapter(
             requireContext(),
-            onFavoriteClick = { recipe, view ->
+            onFavoriteClick = { bean, view ->
                 // 連打防止
                 viewModel.disableFavoriteBtn(view)
                 // snackbar 表示
-                DeleteFavoriteSnackBar<FavoriteRecipeModel>()
+                DeleteFavoriteSnackBar<FavoriteBeanModel>()
                     .show(
                         requireContext(),
                         binding.snackBarPlace,
-                        recipe
+                        bean
                     ) { model ->
-                        viewModel.deleteFavoriteRecipe(model)
+                        viewModel.deleteFavoriteBean(model)
                     }
             },
-            onItemClick = { recipe ->
+            onItemClick = { bean ->
                 val showDetailAction =
                     BaseFavoriteFragmentDirections
-                        .actionBaseFavoriteFragmentToRecipeDetailFragment()
+                        .actionBaseFavoriteFragmentToBeanDetailFragment()
                         .apply {
-                            recipeId = recipe.id
-                            beanId   = recipe.beanId
+                            beanId = bean.id
                         }
                 findNavController().navigate(showDetailAction)
             }
         )
+    }
+
+    private fun getSortTypeStrings(): Array<String> {
+        return requireContext()
+                .resources
+                .getStringArray(R.array.bean_sort_types)
     }
 }

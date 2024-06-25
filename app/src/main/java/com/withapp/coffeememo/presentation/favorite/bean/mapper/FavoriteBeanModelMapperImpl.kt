@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.bean.presentation.mapper
+package com.withapp.coffeememo.presentation.favorite.bean.mapper
 
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.core.data.entity.Bean
@@ -7,7 +7,7 @@ import com.withapp.coffeememo.utilities.DateUtil
 import javax.inject.Inject
 
 class FavoriteBeanModelMapperImpl @Inject constructor()
-    : FavoriteBeanModelMapper{
+    : FavoriteBeanModelMapper {
     override fun execute(bean: Bean): FavoriteBeanModel {
         // process 変換
         val processList: List<String> =

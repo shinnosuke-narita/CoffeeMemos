@@ -1,8 +1,8 @@
-package com.withapp.coffeememo.favorite.recipe.presentation.mapper
+package com.withapp.coffeememo.presentation.favorite.recipe.mapper
 
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.core.data.entity.Recipe
-import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
+import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
 import javax.inject.Inject
 
 class FavoriteRecipeModelMapperImpl @Inject constructor()

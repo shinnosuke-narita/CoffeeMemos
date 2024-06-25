@@ -2,7 +2,7 @@ package com.withapp.coffeememo.favorite.recipe.domain.interactor
 
 import com.withapp.coffeememo.favorite.recipe.domain.model.RecipeSortType
 import com.withapp.coffeememo.favorite.recipe.domain.use_case.SortRecipeUseCase
-import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
+import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
 import javax.inject.Inject
 
 class SortRecipeInteractor @Inject constructor()

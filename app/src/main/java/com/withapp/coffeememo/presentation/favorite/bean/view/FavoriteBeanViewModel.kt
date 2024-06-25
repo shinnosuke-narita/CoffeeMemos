@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.bean.presentation.view
+package com.withapp.coffeememo.presentation.favorite.bean.view
 
 import android.view.View
 import androidx.lifecycle.*

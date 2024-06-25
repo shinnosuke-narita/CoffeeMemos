@@ -2,8 +2,8 @@ package com.withapp.coffeememo.favorite.recipe.domain.interactor
 
 import com.withapp.coffeememo.domain.repository.RecipeRepository
 import com.withapp.coffeememo.favorite.recipe.domain.use_case.GetFavoriteRecipeUseCase
-import com.withapp.coffeememo.favorite.recipe.presentation.mapper.FavoriteRecipeModelMapper
-import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
+import com.withapp.coffeememo.presentation.favorite.recipe.mapper.FavoriteRecipeModelMapper
+import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
 import javax.inject.Inject
 
 class GetFavoriteRecipeInteractor @Inject constructor(

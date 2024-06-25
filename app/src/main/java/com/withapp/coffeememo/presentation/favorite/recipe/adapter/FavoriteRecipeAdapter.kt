@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.recipe.presentation.adapter
+package com.withapp.coffeememo.presentation.favorite.recipe.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
+import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
 import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.utilities.ViewUtil
 

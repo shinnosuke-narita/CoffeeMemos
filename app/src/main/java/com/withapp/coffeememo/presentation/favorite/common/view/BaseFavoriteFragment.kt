@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.common.presentation.view
+package com.withapp.coffeememo.presentation.favorite.common.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,9 +12,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentBaseFavoriteBinding
-import com.withapp.coffeememo.favorite.bean.presentation.view.FavoriteBeanFragment
-import com.withapp.coffeememo.favorite.common.presentation.adapter.FavoriteViewPagerAdapter
-import com.withapp.coffeememo.favorite.recipe.presentation.view.FavoriteRecipeFragment
+import com.withapp.coffeememo.presentation.favorite.bean.view.FavoriteBeanFragment
+import com.withapp.coffeememo.presentation.favorite.common.adapter.FavoriteViewPagerAdapter
+import com.withapp.coffeememo.presentation.favorite.recipe.view.FavoriteRecipeFragment
 import com.withapp.coffeememo.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 

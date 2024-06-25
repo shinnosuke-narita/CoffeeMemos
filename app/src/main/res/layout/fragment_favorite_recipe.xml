@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".favorite.recipe.presentation.view.FavoriteRecipeFragment">
+    tools:context=".presentation.favorite.recipe.view.FavoriteRecipeFragment">
 
     <include
         layout="@layout/favorite_contents"/>

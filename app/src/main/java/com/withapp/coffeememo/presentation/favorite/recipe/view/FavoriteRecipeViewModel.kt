@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.recipe.presentation.view
+package com.withapp.coffeememo.presentation.favorite.recipe.view
 
 import android.view.View
 import androidx.lifecycle.*
@@ -7,7 +7,7 @@ import com.withapp.coffeememo.favorite.recipe.domain.use_case.DeleteFavoriteUseC
 import com.withapp.coffeememo.favorite.recipe.domain.use_case.GetFavoriteRecipeUseCase
 import com.withapp.coffeememo.favorite.recipe.domain.use_case.GetSortTypeUseCase
 import com.withapp.coffeememo.favorite.recipe.domain.use_case.SortRecipeUseCase
-import com.withapp.coffeememo.favorite.recipe.presentation.model.FavoriteRecipeModel
+import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

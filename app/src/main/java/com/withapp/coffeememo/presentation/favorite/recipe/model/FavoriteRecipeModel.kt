@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.favorite.recipe.presentation.model
+package com.withapp.coffeememo.presentation.favorite.recipe.model
 
 data class FavoriteRecipeModel(
     val id: Long,
