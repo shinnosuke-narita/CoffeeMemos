@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.di.create.recipe.use_case
 
-import com.withapp.coffeememo.create.recipe.domain.interactor.CreateRecipeAndTasteInteractor
-import com.withapp.coffeememo.create.recipe.domain.use_case.CreateRecipeAndTasteUseCase
+import com.withapp.coffeememo.domain.interactor.recipe.CreateRecipeAndTasteInteractor
+import com.withapp.coffeememo.domain.usecase.recipe.CreateRecipeAndTasteUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

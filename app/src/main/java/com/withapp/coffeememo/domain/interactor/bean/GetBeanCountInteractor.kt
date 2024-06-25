@@ -1,6 +1,6 @@
-package com.withapp.coffeememo.create.recipe.domain.interactor
+package com.withapp.coffeememo.domain.interactor.bean
 
-import com.withapp.coffeememo.create.recipe.domain.use_case.GetBeanCountUseCase
+import com.withapp.coffeememo.domain.usecase.bean.GetBeanCountUseCase
 import com.withapp.coffeememo.domain.repository.BeanRepository
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.create.recipe.domain.model
+package com.withapp.coffeememo.entity
 
 data class InputData (
     val beanId: Long,

@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.create.recipe.domain.use_case
+package com.withapp.coffeememo.domain.usecase.bean
 
 interface GetBeanCountUseCase {
     suspend fun handle(): Int
