@@ -35,7 +35,7 @@ class BeanDetailFragment : Fragment() {
     // viewModel 初期化
     private val viewModel: BeanDetailViewModel by viewModels()
 
-    private val safeArgs: com.withapp.coffeememo.detail.bean.presentation.view.BeanDetailFragmentArgs by navArgs()
+    private val safeArgs: BeanDetailFragmentArgs by navArgs()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -117,7 +117,7 @@ class BeanDetailFragment : Fragment() {
 
         // コーヒー豆編集画面 遷移
         binding.beanEditIcon.setOnClickListener { v ->
-            val showEditBeanAction = com.withapp.coffeememo.detail.bean.presentation.view.BeanDetailFragmentDirections.showEditBeanAction()
+            val showEditBeanAction = BeanDetailFragmentDirections.showEditBeanAction()
                 .apply {
                 beanId = viewModel.selectedBean.value!!.id
             }

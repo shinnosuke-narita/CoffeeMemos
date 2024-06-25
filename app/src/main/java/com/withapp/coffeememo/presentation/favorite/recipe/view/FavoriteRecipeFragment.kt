@@ -12,7 +12,7 @@ import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FavoriteContentsBinding
 import com.withapp.coffeememo.databinding.FragmentFavoriteRecipeBinding
 import com.withapp.coffeememo.base.dialog.ListDialogFragment
-import com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragmentDirections
+import com.withapp.coffeememo.presentation.favorite.common.view.BaseFavoriteFragmentDirections
 import com.withapp.coffeememo.presentation.favorite.common.view.DeleteFavoriteSnackBar
 import com.withapp.coffeememo.presentation.favorite.recipe.adapter.FavoriteRecipeAdapter
 import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel

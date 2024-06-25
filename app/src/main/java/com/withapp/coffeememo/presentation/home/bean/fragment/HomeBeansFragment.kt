@@ -159,7 +159,7 @@ class HomeBeansFragment : Fragment() {
             },
             onItemClick = { bean ->
                 val showDetailAction =
-                    com.withapp.coffeememo.home.bean.presentation.fragment.HomeBeansFragmentDirections.showBeanDetailAction()
+                    HomeBeansFragmentDirections.showBeanDetailAction()
                         .apply {
                             beanId  = bean.id
                         }

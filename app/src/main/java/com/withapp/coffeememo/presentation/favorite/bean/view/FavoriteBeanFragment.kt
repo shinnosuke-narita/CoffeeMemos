@@ -14,7 +14,7 @@ import com.withapp.coffeememo.databinding.FragmentFavoriteBeanBinding
 import com.withapp.coffeememo.base.dialog.ListDialogFragment
 import com.withapp.coffeememo.favorite.bean.domain.model.FavoriteBeanModel
 import com.withapp.coffeememo.presentation.favorite.bean.adapter.FavoriteBeanAdapter
-import com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragmentDirections
+import com.withapp.coffeememo.presentation.favorite.common.view.BaseFavoriteFragmentDirections
 import com.withapp.coffeememo.presentation.favorite.common.view.DeleteFavoriteSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 

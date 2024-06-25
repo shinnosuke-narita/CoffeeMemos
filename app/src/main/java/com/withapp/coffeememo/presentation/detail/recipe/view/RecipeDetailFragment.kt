@@ -37,7 +37,7 @@ class RecipeDetailFragment : Fragment() {
     // viewModel 初期化
     private val viewModel: RecipeDetailViewModel by viewModels()
 
-    private val safeArgs: com.withapp.coffeememo.detail.recipe.presentation.view.RecipeDetailFragmentArgs by navArgs()
+    private val safeArgs: RecipeDetailFragmentArgs by navArgs()
 
     private lateinit var chartManager: ChartManager
 
@@ -227,7 +227,7 @@ class RecipeDetailFragment : Fragment() {
         // コーヒー豆編集画面へ遷移
         binding.beanEditIcon.setOnClickListener { v ->
             val showEditBeanAction =
-                com.withapp.coffeememo.detail.recipe.presentation.view.RecipeDetailFragmentDirections.showEditBeanAction()
+                RecipeDetailFragmentDirections.showEditBeanAction()
                     .apply {
                         beanId = viewModel.selectedBean.value!!.id
                 }
@@ -247,7 +247,7 @@ class RecipeDetailFragment : Fragment() {
 
         // レシピ編集画面へ遷移
         binding.recipeEditIcon.setOnClickListener { v ->
-            val showEditRecipeAction = com.withapp.coffeememo.detail.recipe.presentation.view.RecipeDetailFragmentDirections.showEditRecipeAction()
+            val showEditRecipeAction = RecipeDetailFragmentDirections.showEditRecipeAction()
                 .apply {
                     recipeId = viewModel.selectedRecipe.value!!.id
                 }

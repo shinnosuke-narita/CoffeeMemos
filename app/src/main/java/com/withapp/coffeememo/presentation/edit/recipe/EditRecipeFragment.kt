@@ -31,7 +31,7 @@ class EditRecipeFragment : BaseFragment(), View.OnClickListener {
     // viewModel 初期化
     private val viewModel: EditRecipeViewModel by viewModels()
 
-    private val safeArgs: com.withapp.coffeememo.edit.recipe.EditRecipeFragmentArgs by navArgs()
+    private val safeArgs: EditRecipeFragmentArgs by navArgs()
 
     // Rating ☆画像リスト
     private lateinit var recipeStarViewList: List<ImageView>

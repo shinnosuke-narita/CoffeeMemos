@@ -30,7 +30,7 @@ class EditBeanFragment : BaseFragment(), View.OnClickListener {
     // viewModel 初期化
     private val viewModel: EditBeanViewModel by viewModels()
 
-    private val safeArgs: com.withapp.coffeememo.edit.bean.EditBeanFragmentArgs by navArgs()
+    private val safeArgs: EditBeanFragmentArgs by navArgs()
 
     // ★画像のリスト
     private lateinit var beanStarViewList: List<ImageView>
