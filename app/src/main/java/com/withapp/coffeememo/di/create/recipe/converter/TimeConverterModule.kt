@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.di.create.recipe.converter
 
-import com.withapp.coffeememo.create.recipe.presentation.converter.TimeConverter
-import com.withapp.coffeememo.create.recipe.presentation.converter.TimeConverterImpl
+import com.withapp.coffeememo.presentation.create.recipe.converter.TimeConverter
+import com.withapp.coffeememo.presentation.create.recipe.converter.TimeConverterImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

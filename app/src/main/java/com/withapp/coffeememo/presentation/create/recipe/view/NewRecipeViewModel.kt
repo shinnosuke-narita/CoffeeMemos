@@ -1,11 +1,11 @@
-package com.withapp.coffeememo.create.recipe.presentation.view
+package com.withapp.coffeememo.presentation.create.recipe.view
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.withapp.coffeememo.create.recipe.presentation.model.ExtractionTimeInfo
-import com.withapp.coffeememo.create.recipe.presentation.model.PreInfusionTimeInfo
+import com.withapp.coffeememo.presentation.create.recipe.model.ExtractionTimeInfo
+import com.withapp.coffeememo.presentation.create.recipe.model.PreInfusionTimeInfo
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
 import com.withapp.coffeememo.state.InputType
@@ -19,7 +19,7 @@ import com.withapp.coffeememo.base.viewmodel.BaseViewModel
 import com.withapp.coffeememo.create.recipe.domain.model.InputData
 import com.withapp.coffeememo.create.recipe.domain.use_case.CreateRecipeAndTasteUseCase
 import com.withapp.coffeememo.create.recipe.domain.use_case.GetBeanCountUseCase
-import com.withapp.coffeememo.create.recipe.presentation.converter.TimeConverter
+import com.withapp.coffeememo.presentation.create.recipe.converter.TimeConverter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

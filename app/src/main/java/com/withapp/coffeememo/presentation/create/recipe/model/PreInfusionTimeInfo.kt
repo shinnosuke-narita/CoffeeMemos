@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.create.recipe.presentation.model
+package com.withapp.coffeememo.presentation.create.recipe.model
 
 import com.withapp.coffeememo.state.InputType
 

@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.create.bean.presentation.view
+package com.withapp.coffeememo.presentation.create.bean
 
 import android.content.Context
 import androidx.lifecycle.LiveData

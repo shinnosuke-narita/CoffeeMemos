@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.create.recipe.presentation.view
+package com.withapp.coffeememo.presentation.create.recipe.view
 
 import android.os.Bundle
 import android.text.Editable
@@ -46,7 +46,7 @@ class NewRecipeFragment :
     // 共有viewModel
     private val mainViewModel: MainViewModel by activityViewModels()
 
-    private val safeArgs: NewRecipeFragmentArgs by navArgs()
+    private val safeArgs: com.withapp.coffeememo.create.recipe.presentation.view.NewRecipeFragmentArgs by navArgs()
 
     // Ratingの☆画像リスト
     private lateinit var recipeStarViewList: List<ImageView>
@@ -330,7 +330,7 @@ class NewRecipeFragment :
             viewModel.setMenuOpenedFlag(MenuState.CLOSE)
 
             val showTimerAction =
-                NewRecipeFragmentDirections.showTimerAction()
+                com.withapp.coffeememo.create.recipe.presentation.view.NewRecipeFragmentDirections.showTimerAction()
                     .apply {
                         existsNewRecipeFragment = true
                 }

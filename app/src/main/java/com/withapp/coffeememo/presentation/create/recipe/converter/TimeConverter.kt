@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.create.recipe.presentation.converter
+package com.withapp.coffeememo.presentation.create.recipe.converter
 
 interface TimeConverter {
     fun convertPreInfusionTime(seconds: Int): Long
