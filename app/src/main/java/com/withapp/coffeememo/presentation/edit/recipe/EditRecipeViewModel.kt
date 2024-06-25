@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.edit.recipe
+package com.withapp.coffeememo.presentation.edit.recipe
 
 import android.content.Context
 import androidx.lifecycle.*

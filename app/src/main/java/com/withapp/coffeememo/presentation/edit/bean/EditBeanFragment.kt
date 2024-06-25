@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.edit.bean
+package com.withapp.coffeememo.presentation.edit.bean
 
 import android.os.Bundle
 import android.text.Editable
@@ -30,7 +30,7 @@ class EditBeanFragment : BaseFragment(), View.OnClickListener {
     // viewModel 初期化
     private val viewModel: EditBeanViewModel by viewModels()
 
-    private val safeArgs: EditBeanFragmentArgs by navArgs()
+    private val safeArgs: com.withapp.coffeememo.edit.bean.EditBeanFragmentArgs by navArgs()
 
     // ★画像のリスト
     private lateinit var beanStarViewList: List<ImageView>

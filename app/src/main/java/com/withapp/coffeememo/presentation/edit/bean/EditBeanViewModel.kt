@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.edit.bean
+package com.withapp.coffeememo.presentation.edit.bean
 
 import android.content.Context
 import androidx.lifecycle.LiveData

@@ -151,7 +151,7 @@
     </fragment>
     <fragment
         android:id="@+id/editBeanFragment"
-        android:name="com.withapp.coffeememo.edit.bean.EditBeanFragment"
+        android:name="com.withapp.coffeememo.presentation.edit.bean.EditBeanFragment"
         android:label="EditBeanFragment">
         <argument
             android:name="beanId"
@@ -160,7 +160,7 @@
     </fragment>
     <fragment
         android:id="@+id/editRecipeFragment"
-        android:name="com.withapp.coffeememo.edit.recipe.EditRecipeFragment"
+        android:name="com.withapp.coffeememo.presentation.edit.recipe.EditRecipeFragment"
         android:label="fragment_edit_recipe"
         tools:layout="@layout/fragment_edit_recipe" >
         <argument

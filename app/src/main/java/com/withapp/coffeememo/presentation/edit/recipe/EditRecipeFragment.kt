@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.edit.recipe
+package com.withapp.coffeememo.presentation.edit.recipe
 
 import android.os.Bundle
 import android.text.Editable
@@ -31,7 +31,7 @@ class EditRecipeFragment : BaseFragment(), View.OnClickListener {
     // viewModel 初期化
     private val viewModel: EditRecipeViewModel by viewModels()
 
-    private val safeArgs: EditRecipeFragmentArgs by navArgs()
+    private val safeArgs: com.withapp.coffeememo.edit.recipe.EditRecipeFragmentArgs by navArgs()
 
     // Rating ☆画像リスト
     private lateinit var recipeStarViewList: List<ImageView>
