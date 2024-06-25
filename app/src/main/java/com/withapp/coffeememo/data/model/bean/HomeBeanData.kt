@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.home.bean.data.model
+package com.withapp.coffeememo.data.model.bean
 
 import androidx.room.ColumnInfo
 

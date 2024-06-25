@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.domain.interactor.bean
 
 import com.withapp.coffeememo.domain.repository.BeanRepository
-import com.withapp.coffeememo.home.bean.data.mapper.HomeBeanModelMapper
+import com.withapp.coffeememo.data.mapper.bean.HomeBeanModelMapper
 import com.withapp.coffeememo.domain.model.bean.HomeBeanModel
 import com.withapp.coffeememo.domain.model.bean.HomeBeanSource
 import com.withapp.coffeememo.domain.usecase.bean.GetHomeBeanDataUseCase

@@ -1,6 +1,6 @@
-package com.withapp.coffeememo.home.bean.data.mapper
+package com.withapp.coffeememo.data.mapper.bean
 
-import com.withapp.coffeememo.home.bean.data.model.HomeBeanData
+import com.withapp.coffeememo.data.model.bean.HomeBeanData
 import com.withapp.coffeememo.domain.model.bean.HomeBeanModel
 
 interface HomeBeanModelMapper {

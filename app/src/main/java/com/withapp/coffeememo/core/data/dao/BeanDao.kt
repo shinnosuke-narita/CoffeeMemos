@@ -4,7 +4,7 @@ import androidx.room.*
 import com.withapp.coffeememo.core.data.entity.Bean
 import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.core.data.entity.RecipeWithBeans
-import com.withapp.coffeememo.home.bean.data.model.HomeBeanData
+import com.withapp.coffeememo.data.model.bean.HomeBeanData
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
 import kotlinx.coroutines.flow.Flow
 

@@ -1,11 +1,11 @@
-package com.withapp.coffeememo.data.bean
+package com.withapp.coffeememo.data.repository.bean
 
 import com.withapp.coffeememo.core.data.dao.BeanDao
 import com.withapp.coffeememo.core.data.entity.Bean
 import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.core.data.entity.RecipeWithBeans
 import com.withapp.coffeememo.domain.repository.BeanRepository
-import com.withapp.coffeememo.home.bean.data.model.HomeBeanData
+import com.withapp.coffeememo.data.model.bean.HomeBeanData
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

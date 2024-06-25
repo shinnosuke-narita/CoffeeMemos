@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.data.recipe
+package com.withapp.coffeememo.data.repository.recipe
 
 import com.withapp.coffeememo.core.data.dao.RecipeDao
 import com.withapp.coffeememo.core.data.entity.Recipe

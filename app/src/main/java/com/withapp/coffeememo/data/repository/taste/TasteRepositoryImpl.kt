@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.data.taste
+package com.withapp.coffeememo.data.repository.taste
 
 import com.withapp.coffeememo.core.data.dao.TasteDao
 import com.withapp.coffeememo.core.data.entity.Taste
