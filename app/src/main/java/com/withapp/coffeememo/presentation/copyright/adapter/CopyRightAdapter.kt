@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.copyright.presentation.adapter
+package com.withapp.coffeememo.presentation.copyright.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.copyright.presentation.model.CopyRightInfo
+import com.withapp.coffeememo.presentation.copyright.model.CopyRightInfo
 
 class CopyRightAdapter(
     private val data: List<CopyRightInfo>,

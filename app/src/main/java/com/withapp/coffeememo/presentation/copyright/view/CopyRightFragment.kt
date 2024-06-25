@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.copyright.presentation.view
+package com.withapp.coffeememo.presentation.copyright.view
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.copyright.presentation.adapter.CopyRightAdapter
+import com.withapp.coffeememo.presentation.copyright.adapter.CopyRightAdapter
 import com.withapp.coffeememo.databinding.FragmentCopyRightBinding
 
 class CopyRightFragment : Fragment() {

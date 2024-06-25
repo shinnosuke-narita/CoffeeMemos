@@ -1,8 +1,8 @@
-package com.withapp.coffeememo.copyright.presentation.view
+package com.withapp.coffeememo.presentation.copyright.view
 
 import androidx.lifecycle.ViewModel
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.copyright.presentation.model.CopyRightInfo
+import com.withapp.coffeememo.presentation.copyright.model.CopyRightInfo
 
 class CopyRightViewModel : ViewModel() {
     val copyRightInfoList: List<CopyRightInfo> =

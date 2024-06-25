@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.copyright.presentation.model
+package com.withapp.coffeememo.presentation.copyright.model
 
 data class CopyRightInfo(
     val author: String,

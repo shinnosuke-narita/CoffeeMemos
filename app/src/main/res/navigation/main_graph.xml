@@ -188,7 +188,7 @@
         tools:layout="@layout/fragment_privacy_policy" />
     <fragment
         android:id="@+id/copyRightFragment"
-        android:name="com.withapp.coffeememo.copyright.presentation.view.CopyRightFragment"
+        android:name="com.withapp.coffeememo.presentation.copyright.view.CopyRightFragment"
         android:label="fragment_copy_right"
         tools:layout="@layout/fragment_copy_right" />
     <fragment
