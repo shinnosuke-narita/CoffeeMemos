@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.withapp.coffeememo.presentation.base.viewmodel.BaseViewModel
-import com.withapp.coffeememo.core.data.entity.Bean
+import com.withapp.coffeememo.infra.data.entity.Bean
 import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.presentation.utilities.Util

@@ -1,10 +1,10 @@
-package com.withapp.coffeememo.core.data.dao
+package com.withapp.coffeememo.infra.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.withapp.coffeememo.core.data.entity.Taste
+import com.withapp.coffeememo.infra.data.entity.Taste
 import kotlinx.coroutines.flow.Flow
 
 @Dao

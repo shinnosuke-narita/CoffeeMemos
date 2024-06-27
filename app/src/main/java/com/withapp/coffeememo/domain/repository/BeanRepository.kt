@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.domain.repository
 
-import com.withapp.coffeememo.core.data.entity.Bean
-import com.withapp.coffeememo.core.data.entity.Recipe
-import com.withapp.coffeememo.core.data.entity.RecipeWithBeans
+import com.withapp.coffeememo.infra.data.entity.Bean
+import com.withapp.coffeememo.infra.data.entity.Recipe
+import com.withapp.coffeememo.infra.data.entity.RecipeWithBeans
 import com.withapp.coffeememo.data.model.bean.HomeBeanData
 import com.withapp.coffeememo.domain.model.bean.SearchBeanModel
 import kotlinx.coroutines.flow.Flow

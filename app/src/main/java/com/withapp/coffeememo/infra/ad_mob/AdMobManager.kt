@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.core.ad_mob
+package com.withapp.coffeememo.infra.ad_mob
 
 import android.content.Context
 import android.view.ViewGroup

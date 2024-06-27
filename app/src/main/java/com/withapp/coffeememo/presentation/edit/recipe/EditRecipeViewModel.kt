@@ -2,7 +2,7 @@ package com.withapp.coffeememo.presentation.edit.recipe
 
 import android.content.Context
 import androidx.lifecycle.*
-import com.withapp.coffeememo.core.data.entity.Recipe
+import com.withapp.coffeememo.infra.data.entity.Recipe
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.presentation.utilities.DateUtil
 import com.withapp.coffeememo.presentation.utilities.Util

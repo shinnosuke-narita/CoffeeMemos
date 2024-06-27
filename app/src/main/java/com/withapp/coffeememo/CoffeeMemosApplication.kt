@@ -1,8 +1,8 @@
 package com.withapp.coffeememo
 
 import android.app.Application
-import com.withapp.coffeememo.core.ad_mob.AdMobManager
-import com.withapp.coffeememo.core.data.CoffeeMemosDatabase
+import com.withapp.coffeememo.infra.ad_mob.AdMobManager
+import com.withapp.coffeememo.infra.data.CoffeeMemosDatabase
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

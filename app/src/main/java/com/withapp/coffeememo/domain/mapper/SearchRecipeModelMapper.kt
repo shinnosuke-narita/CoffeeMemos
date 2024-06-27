@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.domain.mapper
 
-import com.withapp.coffeememo.core.data.entity.RecipeWithTaste
+import com.withapp.coffeememo.infra.data.entity.RecipeWithTaste
 import com.withapp.coffeememo.domain.model.recipe.SearchRecipeModel
 import javax.inject.Inject
 

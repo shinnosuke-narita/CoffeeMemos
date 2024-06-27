@@ -8,8 +8,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.core.ad_mob.AdMobManager
-import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
+import com.withapp.coffeememo.infra.ad_mob.AdMobManager
+import com.withapp.coffeememo.infra.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

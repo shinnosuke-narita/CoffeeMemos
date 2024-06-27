@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.presentation.detail.bean
 
 import androidx.lifecycle.*
-import com.withapp.coffeememo.core.data.entity.Bean
+import com.withapp.coffeememo.infra.data.entity.Bean
 import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.entity.Rating.Star

@@ -1,15 +1,15 @@
-package com.withapp.coffeememo.core.data
+package com.withapp.coffeememo.infra.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.withapp.coffeememo.core.data.dao.BeanDao
-import com.withapp.coffeememo.core.data.dao.RecipeDao
-import com.withapp.coffeememo.core.data.dao.TasteDao
-import com.withapp.coffeememo.core.data.entity.Bean
-import com.withapp.coffeememo.core.data.entity.Recipe
-import com.withapp.coffeememo.core.data.entity.Taste
+import com.withapp.coffeememo.infra.data.dao.BeanDao
+import com.withapp.coffeememo.infra.data.dao.RecipeDao
+import com.withapp.coffeememo.infra.data.dao.TasteDao
+import com.withapp.coffeememo.infra.data.entity.Bean
+import com.withapp.coffeememo.infra.data.entity.Recipe
+import com.withapp.coffeememo.infra.data.entity.Taste
 
 @Database(entities = [Recipe::class, Bean::class, Taste::class], version = 12)
 abstract class CoffeeMemosDatabase : RoomDatabase() {

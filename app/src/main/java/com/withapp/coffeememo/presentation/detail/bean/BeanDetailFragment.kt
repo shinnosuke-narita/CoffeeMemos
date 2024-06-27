@@ -14,7 +14,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
+import com.withapp.coffeememo.infra.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentBeanDetailBinding
 import com.withapp.coffeememo.presentation.base.dialog.BasicDialogFragment
 import com.withapp.coffeememo.entity.Rating

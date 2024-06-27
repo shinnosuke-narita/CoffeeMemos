@@ -1,9 +1,9 @@
 package com.withapp.coffeememo.presentation.detail.recipe.view
 
 import androidx.lifecycle.*
-import com.withapp.coffeememo.core.data.entity.Bean
-import com.withapp.coffeememo.core.data.entity.Recipe
-import com.withapp.coffeememo.core.data.entity.Taste
+import com.withapp.coffeememo.infra.data.entity.Bean
+import com.withapp.coffeememo.infra.data.entity.Recipe
+import com.withapp.coffeememo.infra.data.entity.Taste
 import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.domain.repository.RecipeRepository
 import com.withapp.coffeememo.domain.repository.TasteRepository

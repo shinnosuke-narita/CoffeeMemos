@@ -1,8 +1,8 @@
-package com.withapp.coffeememo.core.ad_mob.locale
+package com.withapp.coffeememo.infra.ad_mob.locale
 
-import com.withapp.coffeememo.core.ad_mob.locale.constants.BaseConstantsHolder
-import com.withapp.coffeememo.core.ad_mob.locale.constants.ConstantsEn
-import com.withapp.coffeememo.core.ad_mob.locale.constants.ConstantsJa
+import com.withapp.coffeememo.infra.ad_mob.locale.constants.BaseConstantsHolder
+import com.withapp.coffeememo.infra.ad_mob.locale.constants.ConstantsEn
+import com.withapp.coffeememo.infra.ad_mob.locale.constants.ConstantsJa
 import java.util.*
 
 object LocalizationManager {

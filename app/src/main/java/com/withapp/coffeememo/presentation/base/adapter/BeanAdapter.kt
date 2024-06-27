@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
+import com.withapp.coffeememo.infra.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.domain.model.bean.SearchBeanModel
 import com.withapp.coffeememo.presentation.utilities.DateUtil
 import com.withapp.coffeememo.presentation.utilities.ViewUtil

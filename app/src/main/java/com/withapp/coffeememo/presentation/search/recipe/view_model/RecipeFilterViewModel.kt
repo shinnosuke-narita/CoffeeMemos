@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
+import com.withapp.coffeememo.infra.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.presentation.state.MenuState
 import com.withapp.coffeememo.presentation.search.common.view_model.BaseFilterViewModel
 import com.withapp.coffeememo.domain.usecase.recipe.getfilterelement.GetFilterRecipeOutputDataUseCase

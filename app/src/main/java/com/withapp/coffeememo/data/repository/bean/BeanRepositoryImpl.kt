@@ -1,9 +1,9 @@
 package com.withapp.coffeememo.data.repository.bean
 
-import com.withapp.coffeememo.core.data.dao.BeanDao
-import com.withapp.coffeememo.core.data.entity.Bean
-import com.withapp.coffeememo.core.data.entity.Recipe
-import com.withapp.coffeememo.core.data.entity.RecipeWithBeans
+import com.withapp.coffeememo.infra.data.dao.BeanDao
+import com.withapp.coffeememo.infra.data.entity.Bean
+import com.withapp.coffeememo.infra.data.entity.Recipe
+import com.withapp.coffeememo.infra.data.entity.RecipeWithBeans
 import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.data.model.bean.HomeBeanData
 import com.withapp.coffeememo.domain.model.bean.SearchBeanModel

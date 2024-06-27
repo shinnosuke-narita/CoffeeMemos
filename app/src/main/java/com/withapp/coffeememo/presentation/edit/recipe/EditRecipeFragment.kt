@@ -15,7 +15,7 @@ import com.withapp.coffeememo.presentation.base.dialog.BasicDialogFragment
 import com.withapp.coffeememo.presentation.base.dialog.ListDialogFragment
 import com.withapp.coffeememo.presentation.base.fragment.BaseFragment
 import com.withapp.coffeememo.presentation.base.text_watcher.SimpleTextWatcher
-import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
+import com.withapp.coffeememo.infra.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentEditRecipeBinding
 import com.withapp.coffeememo.entity.Rating
 import com.withapp.coffeememo.presentation.utilities.DateUtil

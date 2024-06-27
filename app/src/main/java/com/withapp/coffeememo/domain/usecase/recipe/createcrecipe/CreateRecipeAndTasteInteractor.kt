@@ -1,9 +1,8 @@
 package com.withapp.coffeememo.domain.usecase.recipe.createcrecipe
 
-import com.withapp.coffeememo.core.data.entity.Recipe
-import com.withapp.coffeememo.core.data.entity.Taste
+import com.withapp.coffeememo.infra.data.entity.Recipe
+import com.withapp.coffeememo.infra.data.entity.Taste
 import com.withapp.coffeememo.entity.InputData
-import com.withapp.coffeememo.domain.usecase.recipe.createcrecipe.CreateRecipeAndTasteUseCase
 import com.withapp.coffeememo.domain.repository.RecipeRepository
 import com.withapp.coffeememo.domain.repository.TasteRepository
 import javax.inject.Inject

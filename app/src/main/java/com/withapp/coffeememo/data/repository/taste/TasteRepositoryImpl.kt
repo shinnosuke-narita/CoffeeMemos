@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.data.repository.taste
 
-import com.withapp.coffeememo.core.data.dao.TasteDao
-import com.withapp.coffeememo.core.data.entity.Taste
+import com.withapp.coffeememo.infra.data.dao.TasteDao
+import com.withapp.coffeememo.infra.data.entity.Taste
 import com.withapp.coffeememo.domain.repository.TasteRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

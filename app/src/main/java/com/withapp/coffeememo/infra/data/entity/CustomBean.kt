@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.core.data.entity
+package com.withapp.coffeememo.infra.data.entity
 
 import androidx.room.ColumnInfo
 

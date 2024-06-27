@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.core.ad_mob.locale.constants
+package com.withapp.coffeememo.infra.ad_mob.locale.constants
 
 interface BaseConstantsHolder {
     fun getRoastList(): List<String>

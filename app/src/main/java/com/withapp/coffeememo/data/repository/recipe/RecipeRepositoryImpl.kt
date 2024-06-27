@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.data.repository.recipe
 
-import com.withapp.coffeememo.core.data.dao.RecipeDao
-import com.withapp.coffeememo.core.data.entity.Recipe
-import com.withapp.coffeememo.core.data.entity.RecipeWithTaste
+import com.withapp.coffeememo.infra.data.dao.RecipeDao
+import com.withapp.coffeememo.infra.data.entity.Recipe
+import com.withapp.coffeememo.infra.data.entity.RecipeWithTaste
 import com.withapp.coffeememo.domain.repository.RecipeRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

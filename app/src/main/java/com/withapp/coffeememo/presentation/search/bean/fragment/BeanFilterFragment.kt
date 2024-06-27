@@ -8,7 +8,7 @@ import android.widget.ImageView
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
+import com.withapp.coffeememo.infra.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentBeanFilterBinding
 import com.withapp.coffeememo.presentation.search.common.fragment.BaseFilterFragment
 import com.withapp.coffeememo.presentation.state.MenuState
