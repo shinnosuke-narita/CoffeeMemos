@@ -21,6 +21,7 @@ import com.withapp.coffeememo.presentation.search.recipe.adapter.RecipeDetailAda
 import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnFavoriteClickListener
 import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnItemClickListener
 import com.withapp.coffeememo.presentation.search.common.view_model.MainSearchViewModel
+import com.withapp.coffeememo.presentation.search.common.fragment.SearchFragmentDirections
 import com.withapp.coffeememo.presentation.search.recipe.view_model.SearchRecipeViewModel
 import com.withapp.coffeememo.presentation.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
