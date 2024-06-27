@@ -1,7 +1,6 @@
-package com.withapp.coffeememo.search.recipe.domain.interactor
+package com.withapp.coffeememo.domain.usecase.recipe.deletefilterrecipe
 
 import com.withapp.coffeememo.search.recipe.domain.cache.RecipeMemoryCache
-import com.withapp.coffeememo.search.recipe.domain.use_case.DeleteFilterRecipeInputDataUseCase
 import javax.inject.Inject
 
 /**

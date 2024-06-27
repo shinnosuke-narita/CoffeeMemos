@@ -1,9 +1,8 @@
-package com.withapp.coffeememo.search.recipe.domain.interactor
+package com.withapp.coffeememo.domain.usecase.recipe.getall
 
 import com.withapp.coffeememo.domain.repository.RecipeRepository
 import com.withapp.coffeememo.search.recipe.data.mapper.SearchRecipeModelMapper
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
-import com.withapp.coffeememo.search.recipe.domain.use_case.GetAllRecipeUseCase
 import javax.inject.Inject
 
 class GetAllRecipeInteractor @Inject constructor(

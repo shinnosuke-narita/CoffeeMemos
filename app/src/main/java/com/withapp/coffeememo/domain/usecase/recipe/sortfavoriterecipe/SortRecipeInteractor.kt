@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.domain.usecase.recipe.sortrecipe
+package com.withapp.coffeememo.domain.usecase.recipe.sortfavoriterecipe
 
 import com.withapp.coffeememo.domain.model.recipe.RecipeSortType
 import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel

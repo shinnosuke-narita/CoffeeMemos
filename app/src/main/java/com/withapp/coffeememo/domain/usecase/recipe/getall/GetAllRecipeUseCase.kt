@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.domain.use_case
+package com.withapp.coffeememo.domain.usecase.recipe.getall
 
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 

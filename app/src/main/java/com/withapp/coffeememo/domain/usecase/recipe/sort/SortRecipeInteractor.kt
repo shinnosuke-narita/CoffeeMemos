@@ -1,8 +1,7 @@
-package com.withapp.coffeememo.search.recipe.domain.interactor
+package com.withapp.coffeememo.domain.usecase.recipe.sort
 
 import com.withapp.coffeememo.search.recipe.domain.model.RecipeSortType
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
-import com.withapp.coffeememo.search.recipe.domain.use_case.SortRecipeUseCase
 import javax.inject.Inject
 
 class SortRecipeInteractor @Inject constructor() : SortRecipeUseCase {

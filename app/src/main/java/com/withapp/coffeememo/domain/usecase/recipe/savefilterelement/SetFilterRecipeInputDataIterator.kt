@@ -1,9 +1,8 @@
-package com.withapp.coffeememo.search.recipe.domain.interactor
+package com.withapp.coffeememo.domain.usecase.recipe.savefilterelement
 
 import com.withapp.coffeememo.search.recipe.domain.cache.RecipeMemoryCache
 import com.withapp.coffeememo.search.recipe.domain.model.FilterRecipeInputData
 import com.withapp.coffeememo.search.recipe.domain.serialization.RecipeSerializer
-import com.withapp.coffeememo.search.recipe.domain.use_case.SetFilterRecipeInputDataUseCase
 import javax.inject.Inject
 
 class SetFilterRecipeInputDataIterator @Inject constructor()
