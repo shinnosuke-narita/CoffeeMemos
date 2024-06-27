@@ -3,7 +3,7 @@ package com.withapp.coffeememo.search.common.presentation.view_model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.withapp.coffeememo.search.recipe.presentation.model.SearchKeyWord
+import com.withapp.coffeememo.presentation.search.recipe.model.SearchKeyWord
 
 class MainSearchViewModel : ViewModel() {
     // 検索キーワード

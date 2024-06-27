@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.withapp.coffeememo.search.recipe.presentation.model.SearchKeyWord
-import com.withapp.coffeememo.search.recipe.presentation.model.SearchType
+import com.withapp.coffeememo.presentation.search.recipe.model.SearchKeyWord
+import com.withapp.coffeememo.presentation.search.recipe.model.SearchType
 import com.withapp.coffeememo.search.common.presentation.adapter.SearchViewPagerAdapter
 import com.withapp.coffeememo.databinding.FragmentSearchBinding
-import com.withapp.coffeememo.search.recipe.presentation.fragment.SearchRecipeFragment
+import com.withapp.coffeememo.presentation.search.recipe.fragment.SearchRecipeFragment
 import com.withapp.coffeememo.search.bean.presentation.fragment.SearchBeanFragment
 import com.withapp.coffeememo.search.common.presentation.view_model.MainSearchViewModel
 import com.google.android.material.tabs.TabLayoutMediator

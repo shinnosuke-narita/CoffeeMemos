@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.presentation.adapter
+package com.withapp.coffeememo.presentation.search.recipe.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
-import com.withapp.coffeememo.search.recipe.presentation.adapter.`interface`.OnFavoriteClickListener
-import com.withapp.coffeememo.search.recipe.presentation.adapter.`interface`.OnItemClickListener
+import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnFavoriteClickListener
+import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnItemClickListener
 import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.utilities.ViewUtil
 import com.withapp.coffeememo.utilities.ViewUtil.Companion.setFavoriteIcon

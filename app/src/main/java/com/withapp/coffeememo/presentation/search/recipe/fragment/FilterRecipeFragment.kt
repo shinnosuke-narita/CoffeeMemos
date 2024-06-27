@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.presentation.fragment
+package com.withapp.coffeememo.presentation.search.recipe.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +13,8 @@ import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentFilterBinding
 import com.withapp.coffeememo.search.common.presentation.fragment.BaseFilterFragment
 import com.withapp.coffeememo.state.MenuState
-import com.withapp.coffeememo.search.recipe.presentation.view_model.RecipeFilterViewModel
-import com.withapp.coffeememo.search.recipe.presentation.view_model.SearchRecipeViewModel
+import com.withapp.coffeememo.presentation.search.recipe.view_model.RecipeFilterViewModel
+import com.withapp.coffeememo.presentation.search.recipe.view_model.SearchRecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

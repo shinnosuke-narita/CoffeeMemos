@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.presentation.fragment
+package com.withapp.coffeememo.presentation.search.recipe.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -18,11 +18,11 @@ import com.withapp.coffeememo.search.common.presentation.fragment.SortFragment
 import com.withapp.coffeememo.search.common.presentation.fragment.SearchFragmentDirections
 import com.withapp.coffeememo.search.recipe.domain.model.RecipeSortType
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
-import com.withapp.coffeememo.search.recipe.presentation.adapter.RecipeDetailAdapter
-import com.withapp.coffeememo.search.recipe.presentation.adapter.`interface`.OnFavoriteClickListener
-import com.withapp.coffeememo.search.recipe.presentation.adapter.`interface`.OnItemClickListener
+import com.withapp.coffeememo.presentation.search.recipe.adapter.RecipeDetailAdapter
+import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnFavoriteClickListener
+import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnItemClickListener
 import com.withapp.coffeememo.search.common.presentation.view_model.MainSearchViewModel
-import com.withapp.coffeememo.search.recipe.presentation.view_model.SearchRecipeViewModel
+import com.withapp.coffeememo.presentation.search.recipe.view_model.SearchRecipeViewModel
 import com.withapp.coffeememo.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.presentation.adapter.`interface`
+package com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`
 
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 

@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.presentation.view_model
+package com.withapp.coffeememo.presentation.search.recipe.view_model
 
 import android.view.View
 import androidx.lifecycle.*
@@ -13,8 +13,8 @@ import com.withapp.coffeememo.search.recipe.domain.use_case.GetFilterRecipeOutpu
 import com.withapp.coffeememo.search.recipe.domain.use_case.SetFilterRecipeInputDataUseCase
 import com.withapp.coffeememo.search.recipe.domain.use_case.SortRecipeUseCase
 import com.withapp.coffeememo.search.recipe.domain.use_case.UpdateFavoriteUseCase
-import com.withapp.coffeememo.search.recipe.presentation.model.SearchKeyWord
-import com.withapp.coffeememo.search.recipe.presentation.model.SearchType
+import com.withapp.coffeememo.presentation.search.recipe.model.SearchKeyWord
+import com.withapp.coffeememo.presentation.search.recipe.model.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

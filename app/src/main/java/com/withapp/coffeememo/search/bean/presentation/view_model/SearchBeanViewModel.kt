@@ -13,8 +13,8 @@ import com.withapp.coffeememo.search.bean.domain.use_case.GetFilterBeanOutputDat
 import com.withapp.coffeememo.search.bean.domain.use_case.SetFilterBeanInputDataUseCase
 import com.withapp.coffeememo.search.bean.domain.use_case.SortBeanUseCase
 import com.withapp.coffeememo.search.bean.domain.use_case.UpdateFavoriteBeanUseCase
-import com.withapp.coffeememo.search.recipe.presentation.model.SearchKeyWord
-import com.withapp.coffeememo.search.recipe.presentation.model.SearchType
+import com.withapp.coffeememo.presentation.search.recipe.model.SearchKeyWord
+import com.withapp.coffeememo.presentation.search.recipe.model.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

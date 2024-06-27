@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.presentation.view_model
+package com.withapp.coffeememo.presentation.search.recipe.view_model
 
 import android.app.Activity
 import android.view.View
