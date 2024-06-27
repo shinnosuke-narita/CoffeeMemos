@@ -12,10 +12,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.base.adapter.BeanAdapter
+import com.withapp.coffeememo.presentation.base.adapter.BeanAdapter
 import com.withapp.coffeememo.databinding.FragmentSelectBeanBinding
-import com.withapp.coffeememo.base.adapter.listener.OnItemClickListener
-import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
+import com.withapp.coffeememo.presentation.base.adapter.listener.OnItemClickListener
+import com.withapp.coffeememo.domain.model.bean.SearchBeanModel
 import com.withapp.coffeememo.presentation.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

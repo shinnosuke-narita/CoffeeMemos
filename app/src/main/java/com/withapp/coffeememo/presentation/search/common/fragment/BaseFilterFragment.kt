@@ -7,9 +7,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.state.MenuState
-import com.withapp.coffeememo.utilities.AnimUtil
-import com.withapp.coffeememo.utilities.SystemUtil
+import com.withapp.coffeememo.presentation.state.MenuState
+import com.withapp.coffeememo.presentation.utilities.AnimUtil
+import com.withapp.coffeememo.presentation.utilities.SystemUtil
 
 open class BaseFilterFragment : Fragment() {
 

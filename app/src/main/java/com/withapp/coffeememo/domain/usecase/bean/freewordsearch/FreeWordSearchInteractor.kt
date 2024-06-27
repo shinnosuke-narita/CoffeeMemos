@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.domain.usecase.bean.freewordsearch
 
 import com.withapp.coffeememo.domain.repository.BeanRepository
-import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
+import com.withapp.coffeememo.domain.model.bean.SearchBeanModel
 import javax.inject.Inject
 
 class FreeWordSearchInteractor @Inject constructor(

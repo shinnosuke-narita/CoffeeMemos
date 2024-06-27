@@ -11,10 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.base.adapter.HomeBeanCardAdapter
+import com.withapp.coffeememo.presentation.base.adapter.HomeBeanCardAdapter
 import com.withapp.coffeememo.databinding.FragmentHomeBeansBinding
 import com.withapp.coffeememo.presentation.home.bean.view_model.HomeBeanViewModel
-import com.withapp.coffeememo.utilities.SnackBarUtil
+import com.withapp.coffeememo.presentation.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 

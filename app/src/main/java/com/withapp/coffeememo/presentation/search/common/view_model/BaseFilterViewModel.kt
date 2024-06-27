@@ -2,7 +2,7 @@ package com.withapp.coffeememo.presentation.search.common.view_model
 
 import android.view.View
 import androidx.lifecycle.ViewModel
-import com.withapp.coffeememo.utilities.StringUtil
+import com.withapp.coffeememo.presentation.utilities.StringUtil
 
 open class BaseFilterViewModel : ViewModel() {
     // 現在開いているメニューのタグを保持する

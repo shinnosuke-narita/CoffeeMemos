@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.di.search.recipe.serializer
 
-import com.withapp.coffeememo.search.bean.domain.serialization.BeanSerializer
-import com.withapp.coffeememo.search.bean.domain.serialization.BeanSerializerImpl
+import com.withapp.coffeememo.domain.serialization.bean.BeanSerializer
+import com.withapp.coffeememo.domain.serialization.bean.BeanSerializerImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

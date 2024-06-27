@@ -12,9 +12,9 @@ import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.domain.model.recipe.SearchRecipeModel
 import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnFavoriteClickListener
 import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnItemClickListener
-import com.withapp.coffeememo.utilities.DateUtil
-import com.withapp.coffeememo.utilities.ViewUtil
-import com.withapp.coffeememo.utilities.ViewUtil.Companion.setFavoriteIcon
+import com.withapp.coffeememo.presentation.utilities.DateUtil
+import com.withapp.coffeememo.presentation.utilities.ViewUtil
+import com.withapp.coffeememo.presentation.utilities.ViewUtil.Companion.setFavoriteIcon
 
 class RecipeDetailAdapter(val context: Context, val data: List<SearchRecipeModel>)
     : RecyclerView.Adapter<RecipeDetailViewHolder>() {

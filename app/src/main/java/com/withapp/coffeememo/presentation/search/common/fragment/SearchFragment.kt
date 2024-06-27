@@ -17,7 +17,7 @@ import com.withapp.coffeememo.presentation.search.bean.fragment.SearchBeanFragme
 import com.withapp.coffeememo.presentation.search.common.view_model.MainSearchViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.utilities.SnackBarUtil
+import com.withapp.coffeememo.presentation.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

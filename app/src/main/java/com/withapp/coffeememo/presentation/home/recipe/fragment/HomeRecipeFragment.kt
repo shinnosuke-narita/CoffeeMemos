@@ -14,7 +14,7 @@ import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentHomeRecipeBinding
 import com.withapp.coffeememo.presentation.home.recipe.adapter.RecipeAdapter
 import com.withapp.coffeememo.presentation.home.recipe.view_model.HomeRecipeViewModel
-import com.withapp.coffeememo.utilities.SnackBarUtil
+import com.withapp.coffeememo.presentation.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

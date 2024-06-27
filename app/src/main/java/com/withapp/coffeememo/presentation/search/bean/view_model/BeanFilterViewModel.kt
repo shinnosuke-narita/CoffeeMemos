@@ -8,7 +8,7 @@ import androidx.lifecycle.map
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.domain.usecase.bean.getFilterElements.GetFilterBeanOutputDataUseCase
-import com.withapp.coffeememo.state.MenuState
+import com.withapp.coffeememo.presentation.state.MenuState
 import com.withapp.coffeememo.presentation.search.common.view_model.BaseFilterViewModel
 
 class BeanFilterViewModel : BaseFilterViewModel() {

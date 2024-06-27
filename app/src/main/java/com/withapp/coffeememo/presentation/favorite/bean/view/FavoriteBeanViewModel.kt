@@ -7,7 +7,7 @@ import com.withapp.coffeememo.domain.usecase.bean.deletefavorite.DeleteFavoriteU
 import com.withapp.coffeememo.domain.usecase.bean.getfavoritebean.GetFavoriteBeanUseCase
 import com.withapp.coffeememo.domain.usecase.bean.getsorttype.GetSortTypeUseCase
 import com.withapp.coffeememo.domain.usecase.bean.sortbean.SortBeanUseCase
-import com.withapp.coffeememo.search.bean.domain.model.BeanSortType
+import com.withapp.coffeememo.domain.model.bean.BeanSortType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

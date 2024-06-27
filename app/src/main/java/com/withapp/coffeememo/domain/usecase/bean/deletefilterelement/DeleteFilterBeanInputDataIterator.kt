@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.domain.usecase.bean.deletefilterelement
 
-import com.withapp.coffeememo.search.bean.domain.cache.BeanCacheRepository
+import com.withapp.coffeememo.domain.repository.BeanCacheRepository
 import javax.inject.Inject
 
 /**

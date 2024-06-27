@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.lifecycle.*
 import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.entity.Rating
-import com.withapp.coffeememo.utilities.DateUtil
-import com.withapp.coffeememo.utilities.Util
-import com.withapp.coffeememo.validate.RecipeValidationLogic
-import com.withapp.coffeememo.validate.ValidationInfo
-import com.withapp.coffeememo.base.viewmodel.BaseViewModel
+import com.withapp.coffeememo.presentation.utilities.DateUtil
+import com.withapp.coffeememo.presentation.utilities.Util
+import com.withapp.coffeememo.presentation.validation.RecipeValidationLogic
+import com.withapp.coffeememo.presentation.validation.ValidationInfo
+import com.withapp.coffeememo.presentation.base.viewmodel.BaseViewModel
 import com.withapp.coffeememo.domain.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

@@ -3,9 +3,7 @@ package com.withapp.coffeememo.presentation.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
-import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
-import com.withapp.coffeememo.utilities.DateUtil
+import com.withapp.coffeememo.domain.model.bean.SearchBeanModel
 
 class MainViewModel : ViewModel() {
     private val _selectedBean: MutableLiveData<SearchBeanModel?> = MutableLiveData(null)

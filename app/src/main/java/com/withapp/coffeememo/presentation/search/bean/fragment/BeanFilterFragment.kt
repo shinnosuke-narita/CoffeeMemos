@@ -11,7 +11,7 @@ import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentBeanFilterBinding
 import com.withapp.coffeememo.presentation.search.common.fragment.BaseFilterFragment
-import com.withapp.coffeememo.state.MenuState
+import com.withapp.coffeememo.presentation.state.MenuState
 import com.withapp.coffeememo.presentation.search.bean.view_model.BeanFilterViewModel
 import com.withapp.coffeememo.presentation.search.bean.view_model.SearchBeanViewModel
 

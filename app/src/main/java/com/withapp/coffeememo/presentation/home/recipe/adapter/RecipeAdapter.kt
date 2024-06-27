@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData
-import com.withapp.coffeememo.utilities.ViewUtil
-import com.withapp.coffeememo.utilities.ViewUtil.Companion.setFavoriteIcon
+import com.withapp.coffeememo.presentation.utilities.ViewUtil
+import com.withapp.coffeememo.presentation.utilities.ViewUtil.Companion.setFavoriteIcon
 import java.time.format.DateTimeFormatter
 
 class RecipeAdapter(

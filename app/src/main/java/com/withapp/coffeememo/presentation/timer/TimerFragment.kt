@@ -12,10 +12,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentTimerBinding
-import com.withapp.coffeememo.state.InputType
-import com.withapp.coffeememo.state.TimerButtonState
-import com.withapp.coffeememo.state.TimerState
-import com.withapp.coffeememo.utilities.DateUtil
+import com.withapp.coffeememo.presentation.state.InputType
+import com.withapp.coffeememo.presentation.state.TimerButtonState
+import com.withapp.coffeememo.presentation.state.TimerState
+import com.withapp.coffeememo.presentation.utilities.DateUtil
 import com.withapp.coffeememo.presentation.main.MainViewModel
 
 class TimerFragment : Fragment() {

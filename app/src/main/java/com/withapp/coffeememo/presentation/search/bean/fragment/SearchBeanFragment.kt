@@ -15,8 +15,8 @@ import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentSearchBeanBinding
 import com.withapp.coffeememo.databinding.SearchContentsBinding
 import com.withapp.coffeememo.presentation.search.common.fragment.SortFragment
-import com.withapp.coffeememo.search.bean.domain.model.BeanSortType
-import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
+import com.withapp.coffeememo.domain.model.bean.BeanSortType
+import com.withapp.coffeememo.domain.model.bean.SearchBeanModel
 import com.withapp.coffeememo.presentation.search.bean.adapter.BeanAdapter
 import com.withapp.coffeememo.presentation.search.bean.adapter.listener.OnFavoriteClickListener
 import com.withapp.coffeememo.presentation.search.bean.adapter.listener.OnItemClickListener
@@ -161,7 +161,8 @@ class SearchBeanFragment : Fragment() {
                 override fun onFavoriteClick(
                     view: View,
                     position: Int,
-                    bean: SearchBeanModel) {
+                    bean: SearchBeanModel
+                ) {
                     // 連打防止
                     viewModel.disableFavoriteIcon(view)
                     // view更新

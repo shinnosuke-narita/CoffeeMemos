@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.domain.usecase.bean.saveFilterElement
 
-import com.withapp.coffeememo.search.bean.domain.cache.BeanCacheRepository
-import com.withapp.coffeememo.search.bean.domain.model.FilterBeanInputData
-import com.withapp.coffeememo.search.bean.domain.serialization.BeanSerializer
+import com.withapp.coffeememo.domain.repository.BeanCacheRepository
+import com.withapp.coffeememo.domain.model.bean.FilterBeanInputData
+import com.withapp.coffeememo.domain.serialization.bean.BeanSerializer
 import javax.inject.Inject
 
 class SetFilterBeanInputDataIterator @Inject constructor()

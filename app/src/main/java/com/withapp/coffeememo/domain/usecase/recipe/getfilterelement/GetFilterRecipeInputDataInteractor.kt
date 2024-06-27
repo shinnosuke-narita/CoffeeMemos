@@ -3,7 +3,7 @@ package com.withapp.coffeememo.domain.usecase.recipe.getfilterelement
 import com.withapp.coffeememo.domain.repository.RecipeCacheRepository
 import com.withapp.coffeememo.domain.model.recipe.FilterRecipeInputData
 import com.withapp.coffeememo.domain.model.recipe.FilterRecipeOutputData
-import com.withapp.coffeememo.domain.serialization.RecipeSerializer
+import com.withapp.coffeememo.domain.serialization.recipe.RecipeSerializer
 import javax.inject.Inject
 
 class GetFilterRecipeInputDataInteractor @Inject constructor(

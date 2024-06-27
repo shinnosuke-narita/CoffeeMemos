@@ -16,20 +16,20 @@ import androidx.navigation.fragment.navArgs
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentNewRecipeBinding
-import com.withapp.coffeememo.base.dialog.BasicDialogFragment
-import com.withapp.coffeememo.base.dialog.ListDialogFragment
-import com.withapp.coffeememo.base.text_watcher.SimpleTextWatcher
+import com.withapp.coffeememo.presentation.base.dialog.BasicDialogFragment
+import com.withapp.coffeememo.presentation.base.dialog.ListDialogFragment
+import com.withapp.coffeememo.presentation.base.text_watcher.SimpleTextWatcher
 import com.withapp.coffeememo.entity.Rating
-import com.withapp.coffeememo.state.InputType
-import com.withapp.coffeememo.state.MenuState
-import com.withapp.coffeememo.state.ProcessState
-import com.withapp.coffeememo.state.SelectBeanBtnAction
-import com.withapp.coffeememo.utilities.AnimUtil
-import com.withapp.coffeememo.utilities.DateUtil
-import com.withapp.coffeememo.utilities.ViewUtil
+import com.withapp.coffeememo.presentation.state.InputType
+import com.withapp.coffeememo.presentation.state.MenuState
+import com.withapp.coffeememo.presentation.state.ProcessState
+import com.withapp.coffeememo.presentation.state.SelectBeanBtnAction
+import com.withapp.coffeememo.presentation.utilities.AnimUtil
+import com.withapp.coffeememo.presentation.utilities.DateUtil
+import com.withapp.coffeememo.presentation.utilities.ViewUtil
 import com.withapp.coffeememo.presentation.main.MainViewModel
-import com.withapp.coffeememo.base.fragment.BaseFragment
-import com.withapp.coffeememo.utilities.SnackBarUtil
+import com.withapp.coffeememo.presentation.base.fragment.BaseFragment
+import com.withapp.coffeememo.presentation.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

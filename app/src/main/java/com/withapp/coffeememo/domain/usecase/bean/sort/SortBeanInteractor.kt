@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.domain.usecase.bean.sort
 
-import com.withapp.coffeememo.search.bean.domain.model.BeanSortType
-import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
+import com.withapp.coffeememo.domain.model.bean.BeanSortType
+import com.withapp.coffeememo.domain.model.bean.SearchBeanModel
 import javax.inject.Inject
 
 class SortBeanInteractor @Inject constructor() : SortBeanUseCase {

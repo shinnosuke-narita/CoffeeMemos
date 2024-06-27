@@ -13,10 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentNewBeanBinding
-import com.withapp.coffeememo.base.dialog.BasicDialogFragment
-import com.withapp.coffeememo.base.dialog.ListDialogFragment
-import com.withapp.coffeememo.base.fragment.BaseFragment
-import com.withapp.coffeememo.base.text_watcher.SimpleTextWatcher
+import com.withapp.coffeememo.presentation.base.dialog.BasicDialogFragment
+import com.withapp.coffeememo.presentation.base.dialog.ListDialogFragment
+import com.withapp.coffeememo.presentation.base.fragment.BaseFragment
+import com.withapp.coffeememo.presentation.base.text_watcher.SimpleTextWatcher
 import com.withapp.coffeememo.entity.Rating
 import dagger.hilt.android.AndroidEntryPoint
 

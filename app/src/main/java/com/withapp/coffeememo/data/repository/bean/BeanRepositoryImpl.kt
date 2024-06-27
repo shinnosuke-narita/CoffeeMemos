@@ -6,7 +6,7 @@ import com.withapp.coffeememo.core.data.entity.Recipe
 import com.withapp.coffeememo.core.data.entity.RecipeWithBeans
 import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.data.model.bean.HomeBeanData
-import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
+import com.withapp.coffeememo.domain.model.bean.SearchBeanModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

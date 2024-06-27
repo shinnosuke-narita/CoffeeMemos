@@ -2,7 +2,7 @@ package com.withapp.coffeememo.domain.usecase.recipe.savefilterelement
 
 import com.withapp.coffeememo.domain.repository.RecipeCacheRepository
 import com.withapp.coffeememo.domain.model.recipe.FilterRecipeInputData
-import com.withapp.coffeememo.domain.serialization.RecipeSerializer
+import com.withapp.coffeememo.domain.serialization.recipe.RecipeSerializer
 import javax.inject.Inject
 
 class SetFilterRecipeInputDataIterator @Inject constructor()

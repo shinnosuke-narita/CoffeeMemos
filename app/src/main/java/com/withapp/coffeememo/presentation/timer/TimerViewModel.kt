@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.presentation.timer
 
 import androidx.lifecycle.*
-import com.withapp.coffeememo.state.TimerButtonState
-import com.withapp.coffeememo.state.TimerState
+import com.withapp.coffeememo.presentation.state.TimerButtonState
+import com.withapp.coffeememo.presentation.state.TimerState
 import kotlinx.coroutines.delay
 
 class TimerViewModel : ViewModel() {

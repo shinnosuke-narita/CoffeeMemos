@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
-import com.withapp.coffeememo.utilities.DateUtil
-import com.withapp.coffeememo.utilities.ViewUtil
+import com.withapp.coffeememo.presentation.utilities.DateUtil
+import com.withapp.coffeememo.presentation.utilities.ViewUtil
 
 class FavoriteRecipeAdapter(
     private val context: Context,

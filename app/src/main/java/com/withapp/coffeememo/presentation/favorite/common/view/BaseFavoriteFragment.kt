@@ -15,7 +15,7 @@ import com.withapp.coffeememo.databinding.FragmentBaseFavoriteBinding
 import com.withapp.coffeememo.presentation.favorite.bean.view.FavoriteBeanFragment
 import com.withapp.coffeememo.presentation.favorite.common.adapter.FavoriteViewPagerAdapter
 import com.withapp.coffeememo.presentation.favorite.recipe.view.FavoriteRecipeFragment
-import com.withapp.coffeememo.utilities.SnackBarUtil
+import com.withapp.coffeememo.presentation.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

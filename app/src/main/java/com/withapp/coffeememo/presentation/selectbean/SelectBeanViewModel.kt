@@ -2,7 +2,7 @@ package com.withapp.coffeememo.presentation.selectbean
 
 import androidx.lifecycle.*
 import com.withapp.coffeememo.domain.repository.BeanRepository
-import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
+import com.withapp.coffeememo.domain.model.bean.SearchBeanModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

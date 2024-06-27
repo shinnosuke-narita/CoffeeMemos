@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.domain.usecase.bean.filter
 
 import com.withapp.coffeememo.domain.repository.BeanRepository
-import com.withapp.coffeememo.search.bean.domain.model.FilterBeanInputData
-import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
+import com.withapp.coffeememo.domain.model.bean.FilterBeanInputData
+import com.withapp.coffeememo.domain.model.bean.SearchBeanModel
 import javax.inject.Inject
 
 class FilterBeanInteractor @Inject constructor(

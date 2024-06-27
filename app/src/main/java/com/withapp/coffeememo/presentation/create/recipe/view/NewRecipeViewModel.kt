@@ -7,15 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.withapp.coffeememo.presentation.create.recipe.model.ExtractionTimeInfo
 import com.withapp.coffeememo.presentation.create.recipe.model.PreInfusionTimeInfo
 import com.withapp.coffeememo.entity.Rating
-import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
-import com.withapp.coffeememo.state.InputType
-import com.withapp.coffeememo.state.MenuState
-import com.withapp.coffeememo.state.ProcessState
-import com.withapp.coffeememo.state.SelectBeanBtnAction
-import com.withapp.coffeememo.utilities.Util
-import com.withapp.coffeememo.validate.RecipeValidationLogic
-import com.withapp.coffeememo.validate.ValidationInfo
-import com.withapp.coffeememo.base.viewmodel.BaseViewModel
+import com.withapp.coffeememo.domain.model.bean.SearchBeanModel
+import com.withapp.coffeememo.presentation.state.InputType
+import com.withapp.coffeememo.presentation.state.MenuState
+import com.withapp.coffeememo.presentation.state.ProcessState
+import com.withapp.coffeememo.presentation.state.SelectBeanBtnAction
+import com.withapp.coffeememo.presentation.utilities.Util
+import com.withapp.coffeememo.presentation.validation.RecipeValidationLogic
+import com.withapp.coffeememo.presentation.validation.ValidationInfo
+import com.withapp.coffeememo.presentation.base.viewmodel.BaseViewModel
 import com.withapp.coffeememo.entity.InputData
 import com.withapp.coffeememo.domain.usecase.recipe.createcrecipe.CreateRecipeAndTasteUseCase
 import com.withapp.coffeememo.domain.usecase.bean.getbeancount.GetBeanCountUseCase
@@ -310,7 +310,8 @@ class NewRecipeViewModel @Inject constructor(
         }
     }
 
-    private val _selectBeanBtnAction: MutableLiveData<SelectBeanBtnAction> = MutableLiveData(SelectBeanBtnAction.NOTHING)
+    private val _selectBeanBtnAction: MutableLiveData<SelectBeanBtnAction> = MutableLiveData(
+        SelectBeanBtnAction.NOTHING)
     val selectBeanBtnAction: LiveData<SelectBeanBtnAction> = _selectBeanBtnAction
 
     fun setSelectBeanBtnAction(action: SelectBeanBtnAction) {
