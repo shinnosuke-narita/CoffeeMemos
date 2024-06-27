@@ -6,7 +6,7 @@ enum class BeanSortType(val index: Int) {
     RATING(2);
 
     companion object {
-        fun getSortTypeFormIndex(index: Int): BeanSortType {
+        fun from(index: Int): BeanSortType {
             return values().firstOrNull { it.index == index} ?: NEW
         }
     }

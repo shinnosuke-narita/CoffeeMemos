@@ -1,8 +1,8 @@
-package com.withapp.coffeememo.search.bean.domain.interactor
+package com.withapp.coffeememo.domain.usecase.bean.getall
 
 import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
-import com.withapp.coffeememo.search.bean.domain.use_case.GetAllBeanUseCase
+import com.withapp.coffeememo.domain.usecase.bean.getall.GetAllBeanUseCase
 import javax.inject.Inject
 
 class GetAllBeanInteractor @Inject constructor(

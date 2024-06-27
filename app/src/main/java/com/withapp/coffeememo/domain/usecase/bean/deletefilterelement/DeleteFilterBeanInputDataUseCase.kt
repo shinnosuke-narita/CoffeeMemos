@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.bean.domain.use_case
+package com.withapp.coffeememo.domain.usecase.bean.deletefilterelement
 
 interface DeleteFilterBeanInputDataUseCase {
     fun handle(key: String)

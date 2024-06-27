@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.bean.domain.use_case
+package com.withapp.coffeememo.domain.usecase.bean.saveFilterElement
 
 import com.withapp.coffeememo.search.bean.domain.model.FilterBeanInputData
 

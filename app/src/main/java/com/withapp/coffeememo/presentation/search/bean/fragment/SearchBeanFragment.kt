@@ -111,7 +111,7 @@ class SearchBeanFragment : Fragment() {
             mainViewModel.showAd()
 
             viewModel.setCurrentSortType(
-                BeanSortType.getSortTypeFormIndex(
+                BeanSortType.from(
                     bundle.getInt("selectedIndex", 0)
                 )
             )
