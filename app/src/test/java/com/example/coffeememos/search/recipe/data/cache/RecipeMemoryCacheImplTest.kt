@@ -5,13 +5,13 @@ import org.junit.Before
 import org.junit.Test
 
 internal class RecipeMemoryCacheImplTest {
-    lateinit var target: RecipeMemoryCacheImpl
+    lateinit var target: RecipeCacheRepositoryImpl
     private val initialDataKey: String = "initialKey"
     private val initialDataValue: String = "initialValue"
 
     @Before
     fun setup() {
-        target = RecipeMemoryCacheImpl
+        target = RecipeCacheRepositoryImpl
         target.setData(initialDataKey, initialDataValue)
     }
 

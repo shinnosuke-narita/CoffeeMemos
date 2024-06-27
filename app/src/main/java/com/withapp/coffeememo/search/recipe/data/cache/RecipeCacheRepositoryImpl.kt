@@ -1,12 +1,12 @@
 package com.withapp.coffeememo.search.recipe.data.cache
 
-import com.withapp.coffeememo.search.recipe.domain.cache.RecipeMemoryCache
+import com.withapp.coffeememo.domain.repository.RecipeCacheRepository
 
 /**
  * シングルトン
  * メモリキャッシュクラス
  */
-object RecipeMemoryCacheImpl : RecipeMemoryCache {
+object RecipeCacheRepositoryImpl : RecipeCacheRepository {
     private val mCache: MutableMap<String, String> = mutableMapOf()
     val cacheData: Map<String, String>
         get() = mCache
