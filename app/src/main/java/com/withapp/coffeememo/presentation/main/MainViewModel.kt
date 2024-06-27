@@ -1,4 +1,4 @@
-package com.withapp.coffeememo
+package com.withapp.coffeememo.presentation.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

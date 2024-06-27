@@ -16,7 +16,7 @@ import com.withapp.coffeememo.base.adapter.BeanAdapter
 import com.withapp.coffeememo.databinding.FragmentSelectBeanBinding
 import com.withapp.coffeememo.base.adapter.listener.OnItemClickListener
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
-import com.withapp.coffeememo.MainViewModel
+import com.withapp.coffeememo.presentation.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

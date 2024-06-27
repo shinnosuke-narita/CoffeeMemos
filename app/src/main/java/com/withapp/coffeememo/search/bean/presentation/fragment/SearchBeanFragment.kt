@@ -23,7 +23,7 @@ import com.withapp.coffeememo.search.bean.presentation.adapter.listener.OnItemCl
 import com.withapp.coffeememo.presentation.search.common.view_model.MainSearchViewModel
 import com.withapp.coffeememo.search.bean.presentation.view_model.SearchBeanViewModel
 import com.withapp.coffeememo.search.common.presentation.fragment.SearchFragmentDirections
-import com.withapp.coffeememo.MainViewModel
+import com.withapp.coffeememo.presentation.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -27,7 +27,7 @@ import com.withapp.coffeememo.state.SelectBeanBtnAction
 import com.withapp.coffeememo.utilities.AnimUtil
 import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.utilities.ViewUtil
-import com.withapp.coffeememo.MainViewModel
+import com.withapp.coffeememo.presentation.main.MainViewModel
 import com.withapp.coffeememo.base.fragment.BaseFragment
 import com.withapp.coffeememo.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint

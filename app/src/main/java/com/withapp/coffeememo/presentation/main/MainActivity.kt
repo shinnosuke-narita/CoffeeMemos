@@ -1,4 +1,4 @@
-package com.withapp.coffeememo
+package com.withapp.coffeememo.presentation.main
 
 import android.os.Bundle
 import android.view.View
@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.AdMobManager
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.ActivityMainBinding

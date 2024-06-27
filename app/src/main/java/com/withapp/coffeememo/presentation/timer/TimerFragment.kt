@@ -16,7 +16,7 @@ import com.withapp.coffeememo.state.InputType
 import com.withapp.coffeememo.state.TimerButtonState
 import com.withapp.coffeememo.state.TimerState
 import com.withapp.coffeememo.utilities.DateUtil
-import com.withapp.coffeememo.MainViewModel
+import com.withapp.coffeememo.presentation.main.MainViewModel
 
 class TimerFragment : Fragment() {
     private var _binding: FragmentTimerBinding? = null
