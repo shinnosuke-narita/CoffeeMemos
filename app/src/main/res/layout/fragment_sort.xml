@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bottom_sheet_background"
-    tools:context=".search.common.presentation.fragment.SortFragment">
+    tools:context=".presentation.search.common.fragment.SortFragment">
 
     <TextView
         android:id="@+id/title"

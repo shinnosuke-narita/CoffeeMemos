@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentBeanFilterBinding
-import com.withapp.coffeememo.search.common.presentation.fragment.BaseFilterFragment
+import com.withapp.coffeememo.presentation.search.common.fragment.BaseFilterFragment
 import com.withapp.coffeememo.state.MenuState
 import com.withapp.coffeememo.search.bean.presentation.view_model.BeanFilterViewModel
 import com.withapp.coffeememo.search.bean.presentation.view_model.SearchBeanViewModel

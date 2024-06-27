@@ -14,14 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentSearchRecipeBinding
 import com.withapp.coffeememo.databinding.SearchContentsBinding
-import com.withapp.coffeememo.search.common.presentation.fragment.SortFragment
+import com.withapp.coffeememo.presentation.search.common.fragment.SortFragment
 import com.withapp.coffeememo.search.common.presentation.fragment.SearchFragmentDirections
 import com.withapp.coffeememo.search.recipe.domain.model.RecipeSortType
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 import com.withapp.coffeememo.presentation.search.recipe.adapter.RecipeDetailAdapter
 import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnFavoriteClickListener
 import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnItemClickListener
-import com.withapp.coffeememo.search.common.presentation.view_model.MainSearchViewModel
+import com.withapp.coffeememo.presentation.search.common.view_model.MainSearchViewModel
 import com.withapp.coffeememo.presentation.search.recipe.view_model.SearchRecipeViewModel
 import com.withapp.coffeememo.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint

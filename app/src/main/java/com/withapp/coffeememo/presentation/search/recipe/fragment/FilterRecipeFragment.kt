@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentFilterBinding
-import com.withapp.coffeememo.search.common.presentation.fragment.BaseFilterFragment
+import com.withapp.coffeememo.presentation.search.common.fragment.BaseFilterFragment
 import com.withapp.coffeememo.state.MenuState
 import com.withapp.coffeememo.presentation.search.recipe.view_model.RecipeFilterViewModel
 import com.withapp.coffeememo.presentation.search.recipe.view_model.SearchRecipeViewModel

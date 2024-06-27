@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.common.presentation.fragment
+package com.withapp.coffeememo.presentation.search.common.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,11 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.withapp.coffeememo.presentation.search.recipe.model.SearchKeyWord
 import com.withapp.coffeememo.presentation.search.recipe.model.SearchType
-import com.withapp.coffeememo.search.common.presentation.adapter.SearchViewPagerAdapter
+import com.withapp.coffeememo.presentation.search.common.adapter.SearchViewPagerAdapter
 import com.withapp.coffeememo.databinding.FragmentSearchBinding
 import com.withapp.coffeememo.presentation.search.recipe.fragment.SearchRecipeFragment
 import com.withapp.coffeememo.search.bean.presentation.fragment.SearchBeanFragment
-import com.withapp.coffeememo.search.common.presentation.view_model.MainSearchViewModel
+import com.withapp.coffeememo.presentation.search.common.view_model.MainSearchViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.utilities.SnackBarUtil

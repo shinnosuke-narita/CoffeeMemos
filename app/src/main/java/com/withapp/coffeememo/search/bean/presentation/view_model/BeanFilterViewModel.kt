@@ -9,7 +9,7 @@ import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.search.bean.domain.use_case.GetFilterBeanOutputDataUseCase
 import com.withapp.coffeememo.state.MenuState
-import com.withapp.coffeememo.search.common.presentation.view_model.BaseFilterViewModel
+import com.withapp.coffeememo.presentation.search.common.view_model.BaseFilterViewModel
 
 class BeanFilterViewModel : BaseFilterViewModel() {
     // メニュー開閉状態管理

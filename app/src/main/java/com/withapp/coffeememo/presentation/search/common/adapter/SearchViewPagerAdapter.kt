@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.common.presentation.adapter
+package com.withapp.coffeememo.presentation.search.common.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter

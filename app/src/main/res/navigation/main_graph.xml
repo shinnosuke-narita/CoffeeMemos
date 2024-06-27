@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.withapp.coffeememo.search.common.presentation.fragment.SearchFragment"
+        android:name="com.withapp.coffeememo.presentation.search.common.fragment.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action

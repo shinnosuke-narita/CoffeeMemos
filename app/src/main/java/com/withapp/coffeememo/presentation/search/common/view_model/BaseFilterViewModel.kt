@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.common.presentation.view_model
+package com.withapp.coffeememo.presentation.search.common.view_model
 
 import android.view.View
 import androidx.lifecycle.ViewModel

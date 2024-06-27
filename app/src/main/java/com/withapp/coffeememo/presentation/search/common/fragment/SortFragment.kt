@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.common.presentation.fragment
+package com.withapp.coffeememo.presentation.search.common.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
