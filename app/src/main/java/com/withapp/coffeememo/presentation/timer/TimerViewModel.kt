@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.timer.presentation.view
+package com.withapp.coffeememo.presentation.timer
 
 import androidx.lifecycle.*
 import com.withapp.coffeememo.state.TimerButtonState
