@@ -34,11 +34,11 @@
             app:popUpTo="@+id/homeRecipeFragment" />
         <argument
             android:name="preInfusionTimeInputType"
-            app:argType=".state.InputType"
+            app:argType=".presentation.state.InputType"
             android:defaultValue="MANUAL" />
         <argument
             android:name="extractionTimeInputType"
-            app:argType=".state.InputType"
+            app:argType=".presentation.state.InputType"
             android:defaultValue="MANUAL" />
         <action
             android:id="@+id/action_newRecipeFragment_to_newBeanFragment"

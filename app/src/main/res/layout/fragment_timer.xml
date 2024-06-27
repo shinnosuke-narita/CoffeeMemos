@@ -113,7 +113,7 @@
             android:layout_height="match_parent"
             android:padding="20dp">
 
-            <com.withapp.coffeememo.base.custom_view.CircleProgressBar
+            <com.withapp.coffeememo.presentation.base.custom_view.CircleProgressBar
                 android:id="@+id/circleProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
