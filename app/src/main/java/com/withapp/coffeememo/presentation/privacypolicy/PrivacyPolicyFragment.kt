@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.privacy_policy.presentation.view
+package com.withapp.coffeememo.presentation.privacypolicy
 
 import android.content.ActivityNotFoundException
 import android.content.Intent

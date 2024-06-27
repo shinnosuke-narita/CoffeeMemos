@@ -183,7 +183,7 @@
     </fragment>
     <fragment
         android:id="@+id/privacyPolicyFragment"
-        android:name="com.withapp.coffeememo.privacy_policy.presentation.view.PrivacyPolicyFragment"
+        android:name="com.withapp.coffeememo.presentation.privacypolicy.PrivacyPolicyFragment"
         android:label="fragment_privacy_policy"
         tools:layout="@layout/fragment_privacy_policy" />
     <fragment
