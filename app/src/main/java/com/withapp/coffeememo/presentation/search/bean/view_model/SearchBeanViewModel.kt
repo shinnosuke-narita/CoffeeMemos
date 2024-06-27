@@ -12,7 +12,7 @@ import com.withapp.coffeememo.domain.usecase.bean.getall.GetAllBeanUseCase
 import com.withapp.coffeememo.domain.usecase.bean.getFilterElements.GetFilterBeanOutputDataUseCase
 import com.withapp.coffeememo.domain.usecase.bean.saveFilterElement.SetFilterBeanInputDataUseCase
 import com.withapp.coffeememo.domain.usecase.bean.sort.SortBeanUseCase
-import com.withapp.coffeememo.search.bean.domain.use_case.UpdateFavoriteBeanUseCase
+import com.withapp.coffeememo.domain.usecase.bean.updatefavorite.UpdateFavoriteBeanUseCase
 import com.withapp.coffeememo.presentation.search.recipe.model.SearchKeyWord
 import com.withapp.coffeememo.presentation.search.recipe.model.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
