@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.domain.usecase.bean
+package com.withapp.coffeememo.domain.usecase.bean.sortbean
 
 import com.withapp.coffeememo.domain.model.bean.BeanSortType
 import com.withapp.coffeememo.domain.model.bean.FavoriteBeanModel

@@ -1,10 +1,9 @@
-package com.withapp.coffeememo.domain.interactor.bean
+package com.withapp.coffeememo.domain.usecase.bean.gethomebean
 
 import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.data.mapper.bean.HomeBeanModelMapper
 import com.withapp.coffeememo.domain.model.bean.HomeBeanModel
 import com.withapp.coffeememo.domain.model.bean.HomeBeanSource
-import com.withapp.coffeememo.domain.usecase.bean.GetHomeBeanDataUseCase
 import java.time.LocalDate
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.domain.usecase.bean
+package com.withapp.coffeememo.domain.usecase.bean.gethomebean
 
 import com.withapp.coffeememo.domain.model.bean.HomeBeanSource
 

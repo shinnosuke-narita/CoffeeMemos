@@ -1,7 +1,7 @@
-package com.withapp.coffeememo.domain.interactor.bean
+package com.withapp.coffeememo.domain.usecase.bean.getsorttype
 
 import com.withapp.coffeememo.domain.model.bean.BeanSortType
-import com.withapp.coffeememo.domain.usecase.bean.GetSortTypeUseCase
+import com.withapp.coffeememo.domain.usecase.bean.getsorttype.GetSortTypeUseCase
 import javax.inject.Inject
 
 class GetSortTypeInteractor @Inject constructor()

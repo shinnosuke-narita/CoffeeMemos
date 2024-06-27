@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.di.create.recipe.use_case
 
-import com.withapp.coffeememo.domain.interactor.bean.GetBeanCountInteractor
-import com.withapp.coffeememo.domain.usecase.bean.GetBeanCountUseCase
+import com.withapp.coffeememo.domain.usecase.bean.getbeancount.GetBeanCountInteractor
+import com.withapp.coffeememo.domain.usecase.bean.getbeancount.GetBeanCountUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

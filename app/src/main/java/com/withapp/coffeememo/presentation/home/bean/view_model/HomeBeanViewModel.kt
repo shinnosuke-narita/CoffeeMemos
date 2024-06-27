@@ -3,8 +3,8 @@ package com.withapp.coffeememo.presentation.home.bean.view_model
 import androidx.lifecycle.*
 import com.withapp.coffeememo.domain.model.bean.HomeBeanModel
 import com.withapp.coffeememo.domain.model.bean.HomeBeanSource
-import com.withapp.coffeememo.domain.usecase.bean.GetHomeBeanDataUseCase
-import com.withapp.coffeememo.domain.usecase.bean.UpdateFavoriteBeanUseCase
+import com.withapp.coffeememo.domain.usecase.bean.gethomebean.GetHomeBeanDataUseCase
+import com.withapp.coffeememo.domain.usecase.bean.updatefavorite.UpdateFavoriteBeanUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -4,10 +4,10 @@ import android.view.View
 import androidx.lifecycle.*
 import com.withapp.coffeememo.domain.model.bean.BeanSortType
 import com.withapp.coffeememo.domain.model.bean.FavoriteBeanModel
-import com.withapp.coffeememo.domain.usecase.bean.DeleteFavoriteUseCase
-import com.withapp.coffeememo.domain.usecase.bean.GetFavoriteBeanUseCase
-import com.withapp.coffeememo.domain.usecase.bean.GetSortTypeUseCase
-import com.withapp.coffeememo.domain.usecase.bean.SortBeanUseCase
+import com.withapp.coffeememo.domain.usecase.bean.deletefavorite.DeleteFavoriteUseCase
+import com.withapp.coffeememo.domain.usecase.bean.getfavoritebean.GetFavoriteBeanUseCase
+import com.withapp.coffeememo.domain.usecase.bean.getsorttype.GetSortTypeUseCase
+import com.withapp.coffeememo.domain.usecase.bean.sortbean.SortBeanUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

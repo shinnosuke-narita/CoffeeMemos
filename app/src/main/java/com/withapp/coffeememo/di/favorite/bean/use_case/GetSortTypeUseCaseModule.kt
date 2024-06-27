@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.di.favorite.bean.use_case
 
 
-import com.withapp.coffeememo.domain.interactor.bean.GetSortTypeInteractor
-import com.withapp.coffeememo.domain.usecase.bean.GetSortTypeUseCase
+import com.withapp.coffeememo.domain.usecase.bean.getsorttype.GetSortTypeInteractor
+import com.withapp.coffeememo.domain.usecase.bean.getsorttype.GetSortTypeUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
