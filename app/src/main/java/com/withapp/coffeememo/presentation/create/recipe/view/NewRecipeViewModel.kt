@@ -17,7 +17,7 @@ import com.withapp.coffeememo.validate.RecipeValidationLogic
 import com.withapp.coffeememo.validate.ValidationInfo
 import com.withapp.coffeememo.base.viewmodel.BaseViewModel
 import com.withapp.coffeememo.entity.InputData
-import com.withapp.coffeememo.domain.usecase.recipe.CreateRecipeAndTasteUseCase
+import com.withapp.coffeememo.domain.usecase.recipe.createcrecipe.CreateRecipeAndTasteUseCase
 import com.withapp.coffeememo.domain.usecase.bean.GetBeanCountUseCase
 import com.withapp.coffeememo.presentation.create.recipe.converter.TimeConverter
 import dagger.hilt.android.lifecycle.HiltViewModel

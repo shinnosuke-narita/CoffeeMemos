@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.domain.usecase.recipe
+package com.withapp.coffeememo.domain.usecase.recipe.createcrecipe
 
 import com.withapp.coffeememo.entity.InputData
 

@@ -1,7 +1,6 @@
-package com.withapp.coffeememo.domain.interactor.recipe
+package com.withapp.coffeememo.domain.usecase.recipe.getfavoriterecipe
 
 import com.withapp.coffeememo.domain.repository.RecipeRepository
-import com.withapp.coffeememo.domain.usecase.recipe.GetFavoriteRecipeUseCase
 import com.withapp.coffeememo.presentation.favorite.recipe.mapper.FavoriteRecipeModelMapper
 import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
 import javax.inject.Inject

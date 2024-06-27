@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.withapp.coffeememo.domain.model.recipe.HomeRecipeModel
 import com.withapp.coffeememo.domain.model.recipe.HomeRecipeSource
-import com.withapp.coffeememo.domain.usecase.recipe.GetHomeRecipeDataUseCase
-import com.withapp.coffeememo.domain.usecase.recipe.UpdateFavoriteUseCase
+import com.withapp.coffeememo.domain.usecase.recipe.gethomerecipe.GetHomeRecipeDataUseCase
+import com.withapp.coffeememo.domain.usecase.recipe.updatefavorite.UpdateFavoriteUseCase
 import com.withapp.coffeememo.presentation.home.recipe.mapper.HomeRecipeCardModelMapperImpl
 import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData
 import com.withapp.coffeememo.presentation.home.recipe.view_model.HomeRecipeViewModel

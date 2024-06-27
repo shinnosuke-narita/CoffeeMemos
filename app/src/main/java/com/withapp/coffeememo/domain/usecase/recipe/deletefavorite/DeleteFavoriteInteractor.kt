@@ -1,7 +1,7 @@
-package com.withapp.coffeememo.domain.interactor.recipe
+package com.withapp.coffeememo.domain.usecase.recipe.deletefavorite
 
 import com.withapp.coffeememo.domain.repository.RecipeRepository
-import com.withapp.coffeememo.domain.usecase.recipe.DeleteFavoriteUseCase
+import com.withapp.coffeememo.domain.usecase.recipe.deletefavorite.DeleteFavoriteUseCase
 import javax.inject.Inject
 
 class DeleteFavoriteInteractor @Inject constructor(

@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.domain.usecase.recipe
+package com.withapp.coffeememo.domain.usecase.recipe.gethomerecipe
 
 import com.withapp.coffeememo.domain.model.recipe.HomeRecipeSource
 
