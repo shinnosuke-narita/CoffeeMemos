@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".search.bean.presentation.fragment.SearchBeanFragment">
+    tools:context=".presentation.search.bean.fragment.SearchBeanFragment">
 
     <include
         layout="@layout/search_contents" />

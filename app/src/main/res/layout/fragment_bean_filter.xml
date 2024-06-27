@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bottom_sheet_background"
-    tools:context=".search.bean.presentation.fragment.SearchBeanFragment">
+    tools:context=".presentation.search.bean.fragment.SearchBeanFragment">
 
     <TextView
         android:id="@+id/title"

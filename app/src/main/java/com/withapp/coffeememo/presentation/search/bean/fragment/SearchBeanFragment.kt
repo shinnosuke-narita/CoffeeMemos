@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.bean.presentation.fragment
+package com.withapp.coffeememo.presentation.search.bean.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -17,11 +17,11 @@ import com.withapp.coffeememo.databinding.SearchContentsBinding
 import com.withapp.coffeememo.presentation.search.common.fragment.SortFragment
 import com.withapp.coffeememo.search.bean.domain.model.BeanSortType
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
-import com.withapp.coffeememo.search.bean.presentation.adapter.BeanAdapter
-import com.withapp.coffeememo.search.bean.presentation.adapter.listener.OnFavoriteClickListener
-import com.withapp.coffeememo.search.bean.presentation.adapter.listener.OnItemClickListener
+import com.withapp.coffeememo.presentation.search.bean.adapter.BeanAdapter
+import com.withapp.coffeememo.presentation.search.bean.adapter.listener.OnFavoriteClickListener
+import com.withapp.coffeememo.presentation.search.bean.adapter.listener.OnItemClickListener
 import com.withapp.coffeememo.presentation.search.common.view_model.MainSearchViewModel
-import com.withapp.coffeememo.search.bean.presentation.view_model.SearchBeanViewModel
+import com.withapp.coffeememo.presentation.search.bean.view_model.SearchBeanViewModel
 import com.withapp.coffeememo.search.common.presentation.fragment.SearchFragmentDirections
 import com.withapp.coffeememo.presentation.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint

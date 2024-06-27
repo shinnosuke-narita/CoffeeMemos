@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.bean.presentation.adapter.listener
+package com.withapp.coffeememo.presentation.search.bean.adapter.listener
 
 import android.view.View
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel

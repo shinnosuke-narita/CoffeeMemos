@@ -15,7 +15,6 @@ import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentSearchRecipeBinding
 import com.withapp.coffeememo.databinding.SearchContentsBinding
 import com.withapp.coffeememo.presentation.search.common.fragment.SortFragment
-import com.withapp.coffeememo.search.common.presentation.fragment.SearchFragmentDirections
 import com.withapp.coffeememo.search.recipe.domain.model.RecipeSortType
 import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
 import com.withapp.coffeememo.presentation.search.recipe.adapter.RecipeDetailAdapter

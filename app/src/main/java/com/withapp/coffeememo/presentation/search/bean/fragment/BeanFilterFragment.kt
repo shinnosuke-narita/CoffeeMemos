@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.bean.presentation.fragment
+package com.withapp.coffeememo.presentation.search.bean.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +12,8 @@ import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.databinding.FragmentBeanFilterBinding
 import com.withapp.coffeememo.presentation.search.common.fragment.BaseFilterFragment
 import com.withapp.coffeememo.state.MenuState
-import com.withapp.coffeememo.search.bean.presentation.view_model.BeanFilterViewModel
-import com.withapp.coffeememo.search.bean.presentation.view_model.SearchBeanViewModel
+import com.withapp.coffeememo.presentation.search.bean.view_model.BeanFilterViewModel
+import com.withapp.coffeememo.presentation.search.bean.view_model.SearchBeanViewModel
 
 class BeanFilterFragment : BaseFilterFragment() {
     private var _binding: FragmentBeanFilterBinding? = null

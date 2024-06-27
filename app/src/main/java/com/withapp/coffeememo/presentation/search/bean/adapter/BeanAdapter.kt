@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.bean.presentation.adapter
+package com.withapp.coffeememo.presentation.search.bean.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import com.withapp.coffeememo.R
 import com.withapp.coffeememo.base.adapter.BeanViewHolder
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
 import com.withapp.coffeememo.search.bean.domain.model.SearchBeanModel
-import com.withapp.coffeememo.search.bean.presentation.adapter.listener.OnFavoriteClickListener
-import com.withapp.coffeememo.search.bean.presentation.adapter.listener.OnItemClickListener
+import com.withapp.coffeememo.presentation.search.bean.adapter.listener.OnFavoriteClickListener
+import com.withapp.coffeememo.presentation.search.bean.adapter.listener.OnItemClickListener
 import com.withapp.coffeememo.utilities.DateUtil
 import com.withapp.coffeememo.utilities.ViewUtil
 
