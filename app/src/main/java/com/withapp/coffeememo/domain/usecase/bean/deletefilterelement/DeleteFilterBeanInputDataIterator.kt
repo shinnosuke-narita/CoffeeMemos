@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.domain.usecase.bean.deletefilterelement
 
-import com.withapp.coffeememo.search.bean.domain.cache.BeanMemoryCache
+import com.withapp.coffeememo.search.bean.domain.cache.BeanCacheRepository
 import javax.inject.Inject
 
 /**
@@ -9,7 +9,7 @@ import javax.inject.Inject
 class DeleteFilterBeanInputDataIterator @Inject constructor()
     : DeleteFilterBeanInputDataUseCase {
     @Inject
-    lateinit var memoryCache: BeanMemoryCache
+    lateinit var memoryCache: BeanCacheRepository
 
     override fun handle(key: String) {
         if(key.isEmpty()) return

@@ -1,12 +1,12 @@
 package com.withapp.coffeememo.search.bean.data.cache
 
-import com.withapp.coffeememo.search.bean.domain.cache.BeanMemoryCache
+import com.withapp.coffeememo.search.bean.domain.cache.BeanCacheRepository
 
 /**
  * シングルトン
  * メモリキャッシュクラス
  */
-object BeanMemoryCacheImpl : BeanMemoryCache {
+object BeanCacheRepositoryImpl : BeanCacheRepository {
     private val cacheData: MutableMap<String, String> = mutableMapOf()
 
     override fun setData(key: String, value: String) {

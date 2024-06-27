@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.domain.usecase.bean.getFilterElements
 
-import com.withapp.coffeememo.search.bean.domain.cache.BeanMemoryCache
+import com.withapp.coffeememo.search.bean.domain.cache.BeanCacheRepository
 import com.withapp.coffeememo.search.bean.domain.model.FilterBeanInputData
 import com.withapp.coffeememo.search.bean.domain.model.FilterBeanOutputData
 import com.withapp.coffeememo.search.bean.domain.serialization.BeanSerializer
@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class GetFilterBeanInputDataIterator @Inject constructor(
     private val deserializer: BeanSerializer,
-    private val memoryCache: BeanMemoryCache
+    private val memoryCache: BeanCacheRepository
 ) : GetFilterBeanOutputDataUseCase {
     override  fun execute(key: String): FilterBeanOutputData? {
         val jsonStr = memoryCache.getData(key)
