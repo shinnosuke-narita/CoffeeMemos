@@ -51,7 +51,7 @@
         tools:layout="@layout/fragment_new_bean" />
     <fragment
         android:id="@+id/selectBeanFragment"
-        android:name="com.withapp.coffeememo.select_bean.presentation.view.SelectBeanFragment"
+        android:name="com.withapp.coffeememo.presentation.selectbean.SelectBeanFragment"
         android:label="コーヒー豆を選択してください"
         tools:layout="@layout/fragment_select_bean" >
         <action

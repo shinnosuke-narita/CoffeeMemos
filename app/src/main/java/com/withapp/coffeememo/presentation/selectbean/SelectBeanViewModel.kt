@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.select_bean.presentation.view
+package com.withapp.coffeememo.presentation.selectbean
 
 import androidx.lifecycle.*
 import com.withapp.coffeememo.domain.repository.BeanRepository
