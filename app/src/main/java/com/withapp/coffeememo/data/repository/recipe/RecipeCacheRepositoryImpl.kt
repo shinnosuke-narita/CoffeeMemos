@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.data.cache
+package com.withapp.coffeememo.data.repository.recipe
 
 import com.withapp.coffeememo.domain.repository.RecipeCacheRepository
 

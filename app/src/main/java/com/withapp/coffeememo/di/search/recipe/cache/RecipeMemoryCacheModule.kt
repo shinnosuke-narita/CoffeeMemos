@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.di.search.recipe.cache
 
-import com.withapp.coffeememo.search.recipe.data.cache.RecipeCacheRepositoryImpl
+import com.withapp.coffeememo.data.repository.recipe.RecipeCacheRepositoryImpl
 import com.withapp.coffeememo.domain.repository.RecipeCacheRepository
 import dagger.Module
 import dagger.Provides

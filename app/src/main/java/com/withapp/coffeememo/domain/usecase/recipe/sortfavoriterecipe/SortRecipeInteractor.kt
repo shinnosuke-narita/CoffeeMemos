@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.domain.usecase.recipe.sortfavoriterecipe
 
-import com.withapp.coffeememo.domain.model.recipe.RecipeSortType
 import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
+import com.withapp.coffeememo.search.recipe.domain.model.RecipeSortType
 import javax.inject.Inject
 
 class SortRecipeInteractor @Inject constructor()
@@ -26,6 +26,7 @@ class SortRecipeInteractor @Inject constructor()
             RecipeSortType.RATING ->  {
                 list.sortedByDescending { recipe -> recipe.rating }
             }
+            else -> listOf()
         }
 
         return result

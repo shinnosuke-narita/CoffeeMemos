@@ -13,7 +13,7 @@ enum class RecipeSortType(val index: Int) {
     RICH(9);
 
     companion object {
-        fun getSortTypeFromIndex(index: Int): RecipeSortType {
+        fun from(index: Int): RecipeSortType {
             return values().firstOrNull { it.index == index } ?: NEW
         }
     }

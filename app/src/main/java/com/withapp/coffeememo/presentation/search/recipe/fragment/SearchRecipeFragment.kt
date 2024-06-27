@@ -127,7 +127,7 @@ class SearchRecipeFragment : Fragment() {
             mainViewModel.showAd()
 
             viewModel.setCurrentSortType(
-                RecipeSortType.getSortTypeFromIndex(
+                RecipeSortType.from(
                     bundle.getInt("selectedIndex")
                 )
             )

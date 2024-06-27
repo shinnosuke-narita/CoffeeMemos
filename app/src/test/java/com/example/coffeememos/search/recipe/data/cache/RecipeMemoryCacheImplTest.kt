@@ -1,6 +1,7 @@
 package com.withapp.coffeememo.search.recipe.data.cache
 
 import com.google.common.truth.Truth
+import com.withapp.coffeememo.data.repository.recipe.RecipeCacheRepositoryImpl
 import org.junit.Before
 import org.junit.Test
 

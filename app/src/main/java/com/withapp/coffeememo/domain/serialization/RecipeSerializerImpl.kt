@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.domain.serialization
+package com.withapp.coffeememo.domain.serialization
 
 import android.util.Log
 import com.withapp.coffeememo.search.recipe.domain.model.FilterRecipeInputData
