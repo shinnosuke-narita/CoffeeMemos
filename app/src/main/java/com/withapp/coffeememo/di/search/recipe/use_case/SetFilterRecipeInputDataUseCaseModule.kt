@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.di.search.recipe.use_case
 
-import com.withapp.coffeememo.search.recipe.domain.interactor.SetFilterRecipeInputDataIterator
-import com.withapp.coffeememo.search.recipe.domain.use_case.SetFilterRecipeInputDataUseCase
+import com.withapp.coffeememo.domain.usecase.recipe.savefilterelement.SetFilterRecipeInputDataIterator
+import com.withapp.coffeememo.domain.usecase.recipe.savefilterelement.SetFilterRecipeInputDataUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/timerFragment"
-        android:name="com.withapp.coffeememo.timer.presentation.view.TimerFragment"
+        android:name="com.withapp.coffeememo.presentation.timer.TimerFragment"
         android:label="Timer"
         tools:layout="@layout/fragment_timer" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/newRecipeFragment"
-        android:name="com.withapp.coffeememo.create.recipe.presentation.view.NewRecipeFragment"
+        android:name="com.withapp.coffeememo.presentation.create.recipe.view.NewRecipeFragment"
         android:label="New Recipe"
         tools:layout="@layout/fragment_new_recipe" >
         <action
@@ -34,11 +34,11 @@
             app:popUpTo="@+id/homeRecipeFragment" />
         <argument
             android:name="preInfusionTimeInputType"
-            app:argType=".state.InputType"
+            app:argType=".presentation.state.InputType"
             android:defaultValue="MANUAL" />
         <argument
             android:name="extractionTimeInputType"
-            app:argType=".state.InputType"
+            app:argType=".presentation.state.InputType"
             android:defaultValue="MANUAL" />
         <action
             android:id="@+id/action_newRecipeFragment_to_newBeanFragment"
@@ -46,12 +46,12 @@
     </fragment>
     <fragment
         android:id="@+id/newBeanFragment"
-        android:name="com.withapp.coffeememo.create.bean.presentation.view.NewBeanFragment"
+        android:name="com.withapp.coffeememo.presentation.create.bean.NewBeanFragment"
         android:label="fragment_new_bean"
         tools:layout="@layout/fragment_new_bean" />
     <fragment
         android:id="@+id/selectBeanFragment"
-        android:name="com.withapp.coffeememo.select_bean.presentation.view.SelectBeanFragment"
+        android:name="com.withapp.coffeememo.presentation.selectbean.SelectBeanFragment"
         android:label="コーヒー豆を選択してください"
         tools:layout="@layout/fragment_select_bean" >
         <action
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.withapp.coffeememo.search.common.presentation.fragment.SearchFragment"
+        android:name="com.withapp.coffeememo.presentation.search.common.fragment.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -72,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeRecipeFragment"
-        android:name="com.withapp.coffeememo.home.recipe.presentation.fragment.HomeRecipeFragment"
+        android:name="com.withapp.coffeememo.presentation.home.recipe.fragment.HomeRecipeFragment"
         android:label="Recipe" >
         <action
             android:id="@+id/action_homeRecipeFragment_to_newRecipeFragment"
@@ -94,7 +94,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeBeansFragment"
-        android:name="com.withapp.coffeememo.home.bean.presentation.fragment.HomeBeansFragment"
+        android:name="com.withapp.coffeememo.presentation.home.bean.fragment.HomeBeansFragment"
         android:label="Bean"
         tools:layout="@layout/fragment_home_beans" >
         <action
@@ -113,7 +113,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
-        android:name="com.withapp.coffeememo.detail.recipe.presentation.view.RecipeDetailFragment"
+        android:name="com.withapp.coffeememo.presentation.detail.recipe.view.RecipeDetailFragment"
         android:label="Recipe Detail"
         tools:layout="@layout/fragment_recipe_detail" >
         <argument
@@ -138,7 +138,7 @@
     </fragment>
     <fragment
         android:id="@+id/beanDetailFragment"
-        android:name="com.withapp.coffeememo.detail.bean.presentation.view.BeanDetailFragment"
+        android:name="com.withapp.coffeememo.presentation.detail.bean.BeanDetailFragment"
         android:label="Bean Detail"
         tools:layout="@layout/fragment_bean_detail" >
         <argument
@@ -151,7 +151,7 @@
     </fragment>
     <fragment
         android:id="@+id/editBeanFragment"
-        android:name="com.withapp.coffeememo.edit.bean.EditBeanFragment"
+        android:name="com.withapp.coffeememo.presentation.edit.bean.EditBeanFragment"
         android:label="EditBeanFragment">
         <argument
             android:name="beanId"
@@ -160,7 +160,7 @@
     </fragment>
     <fragment
         android:id="@+id/editRecipeFragment"
-        android:name="com.withapp.coffeememo.edit.recipe.EditRecipeFragment"
+        android:name="com.withapp.coffeememo.presentation.edit.recipe.EditRecipeFragment"
         android:label="fragment_edit_recipe"
         tools:layout="@layout/fragment_edit_recipe" >
         <argument
@@ -171,7 +171,7 @@
     </fragment>
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.withapp.coffeememo.menu.presentation.view.MenuFragment"
+        android:name="com.withapp.coffeememo.presentation.menu.view.MenuFragment"
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" >
         <action
@@ -183,17 +183,17 @@
     </fragment>
     <fragment
         android:id="@+id/privacyPolicyFragment"
-        android:name="com.withapp.coffeememo.privacy_policy.presentation.view.PrivacyPolicyFragment"
+        android:name="com.withapp.coffeememo.presentation.privacypolicy.PrivacyPolicyFragment"
         android:label="fragment_privacy_policy"
         tools:layout="@layout/fragment_privacy_policy" />
     <fragment
         android:id="@+id/copyRightFragment"
-        android:name="com.withapp.coffeememo.copyright.presentation.view.CopyRightFragment"
+        android:name="com.withapp.coffeememo.presentation.copyright.view.CopyRightFragment"
         android:label="fragment_copy_right"
         tools:layout="@layout/fragment_copy_right" />
     <fragment
         android:id="@+id/baseFavoriteFragment"
-        android:name="com.withapp.coffeememo.favorite.common.presentation.view.BaseFavoriteFragment"
+        android:name="com.withapp.coffeememo.presentation.favorite.common.view.BaseFavoriteFragment"
         android:label="fragment_base_favorite"
         tools:layout="@layout/fragment_base_favorite" >
         <action

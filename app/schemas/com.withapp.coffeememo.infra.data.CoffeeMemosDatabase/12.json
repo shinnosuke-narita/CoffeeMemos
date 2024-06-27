@@ -1,0 +1,310 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 12,
+    "identityHash": "af6b4730ba85f6063cfe0d6f15fe8346",
+    "entities": [
+      {
+        "tableName": "recipe",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recipe_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recipe_bean_id` INTEGER NOT NULL, `country` TEXT NOT NULL, `tool` TEXT NOT NULL, `roast` INTEGER NOT NULL, `extractionTime` INTEGER NOT NULL, `preInfusionTime` INTEGER NOT NULL, `amountExtraction` INTEGER NOT NULL, `temperature` INTEGER NOT NULL, `grindSize` INTEGER NOT NULL, `amountOfBeans` INTEGER NOT NULL, `comment` TEXT NOT NULL, `isFavorite` INTEGER NOT NULL, `rating` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, FOREIGN KEY(`recipe_bean_id`) REFERENCES `bean`(`bean_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "recipe_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "beanId",
+            "columnName": "recipe_bean_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tool",
+            "columnName": "tool",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "roast",
+            "columnName": "roast",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "extractionTime",
+            "columnName": "extractionTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "preInfusionTime",
+            "columnName": "preInfusionTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountExtraction",
+            "columnName": "amountExtraction",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "temperature",
+            "columnName": "temperature",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "grindSize",
+            "columnName": "grindSize",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountOfBeans",
+            "columnName": "amountOfBeans",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "comment",
+            "columnName": "comment",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isFavorite",
+            "columnName": "isFavorite",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rating",
+            "columnName": "rating",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "recipe_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_recipe_recipe_bean_id",
+            "unique": false,
+            "columnNames": [
+              "recipe_bean_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_recipe_recipe_bean_id` ON `${TABLE_NAME}` (`recipe_bean_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "bean",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "recipe_bean_id"
+            ],
+            "referencedColumns": [
+              "bean_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "bean",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bean_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `country` TEXT NOT NULL, `farm` TEXT NOT NULL, `district` TEXT NOT NULL, `species` TEXT NOT NULL, `elevationFrom` INTEGER NOT NULL, `elevationTo` INTEGER NOT NULL, `process` INTEGER NOT NULL, `store` TEXT NOT NULL, `comment` TEXT NOT NULL, `rating` INTEGER NOT NULL, `isFavorite` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "bean_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "farm",
+            "columnName": "farm",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "district",
+            "columnName": "district",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "species",
+            "columnName": "species",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "elevationFrom",
+            "columnName": "elevationFrom",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "elevationTo",
+            "columnName": "elevationTo",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "process",
+            "columnName": "process",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "store",
+            "columnName": "store",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "comment",
+            "columnName": "comment",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rating",
+            "columnName": "rating",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isFavorite",
+            "columnName": "isFavorite",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "bean_id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "taste",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `taste_recipe_id` INTEGER NOT NULL, `sour` INTEGER NOT NULL, `bitter` INTEGER NOT NULL, `sweet` INTEGER NOT NULL, `rich` INTEGER NOT NULL, `flavor` INTEGER NOT NULL, FOREIGN KEY(`taste_recipe_id`) REFERENCES `recipe`(`recipe_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recipeId",
+            "columnName": "taste_recipe_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sour",
+            "columnName": "sour",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bitter",
+            "columnName": "bitter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sweet",
+            "columnName": "sweet",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rich",
+            "columnName": "rich",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "flavor",
+            "columnName": "flavor",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_taste_taste_recipe_id",
+            "unique": false,
+            "columnNames": [
+              "taste_recipe_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_taste_taste_recipe_id` ON `${TABLE_NAME}` (`taste_recipe_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "recipe",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "taste_recipe_id"
+            ],
+            "referencedColumns": [
+              "recipe_id"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'af6b4730ba85f6063cfe0d6f15fe8346')"
+    ]
+  }
+}

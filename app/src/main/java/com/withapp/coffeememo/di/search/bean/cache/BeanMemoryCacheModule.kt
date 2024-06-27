@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.di.search.recipe.cache
 
-import com.withapp.coffeememo.search.bean.data.cache.BeanMemoryCacheImpl
-import com.withapp.coffeememo.search.bean.domain.cache.BeanMemoryCache
+import com.withapp.coffeememo.data.repository.bean.BeanCacheRepositoryImpl
+import com.withapp.coffeememo.domain.repository.BeanCacheRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ object BeanMemoryCacheModule {
 
     @Provides
     @Singleton
-    fun provideBeanMemoryCache(): BeanMemoryCache {
-        return BeanMemoryCacheImpl
+    fun provideBeanMemoryCache(): BeanCacheRepository {
+        return BeanCacheRepositoryImpl
     }
 }

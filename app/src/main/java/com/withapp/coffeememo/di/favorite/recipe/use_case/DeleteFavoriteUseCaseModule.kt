@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.di.favorite.recipe.use_case
 
-import com.withapp.coffeememo.favorite.recipe.domain.interactor.DeleteFavoriteInteractor
-import com.withapp.coffeememo.favorite.recipe.domain.use_case.DeleteFavoriteUseCase
+import com.withapp.coffeememo.domain.usecase.recipe.deletefavorite.DeleteFavoriteInteractor
+import com.withapp.coffeememo.domain.usecase.recipe.deletefavorite.DeleteFavoriteUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

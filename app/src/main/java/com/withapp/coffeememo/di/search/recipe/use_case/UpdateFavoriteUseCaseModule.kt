@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.di.search.recipe.use_case
 
-import com.withapp.coffeememo.search.recipe.domain.interactor.UpdateFavoriteInteractor
-import com.withapp.coffeememo.search.recipe.domain.use_case.UpdateFavoriteUseCase
+import com.withapp.coffeememo.domain.usecase.recipe.updatefavorite.UpdateFavoriteInteractor
+import com.withapp.coffeememo.domain.usecase.recipe.updatefavorite.UpdateFavoriteUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -24,7 +24,7 @@
             android:value="ca-app-pub-7093807169305333~6104449129"/>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

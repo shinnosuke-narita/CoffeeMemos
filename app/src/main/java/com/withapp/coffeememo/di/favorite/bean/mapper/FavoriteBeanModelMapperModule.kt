@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.di.favorite.bean.mapper
 
 
-import com.withapp.coffeememo.favorite.bean.presentation.mapper.FavoriteBeanModelMapper
-import com.withapp.coffeememo.favorite.bean.presentation.mapper.FavoriteBeanModelMapperImpl
+import com.withapp.coffeememo.presentation.favorite.bean.mapper.FavoriteBeanModelMapper
+import com.withapp.coffeememo.presentation.favorite.bean.mapper.FavoriteBeanModelMapperImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

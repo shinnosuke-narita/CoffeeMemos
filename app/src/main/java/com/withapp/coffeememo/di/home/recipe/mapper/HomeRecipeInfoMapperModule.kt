@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.di.home.recipe.mapper
 
-import com.withapp.coffeememo.home.recipe.presentation.mapper.HomeRecipeCardModelMapper
-import com.withapp.coffeememo.home.recipe.presentation.mapper.HomeRecipeCardModelMapperImpl
+import com.withapp.coffeememo.presentation.home.recipe.mapper.HomeRecipeCardModelMapper
+import com.withapp.coffeememo.presentation.home.recipe.mapper.HomeRecipeCardModelMapperImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

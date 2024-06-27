@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".select_bean.presentation.view.SelectBeanFragment">
+    tools:context=".presentation.selectbean.SelectBeanFragment">
 
     <include
         layout="@layout/header_with_back_key"

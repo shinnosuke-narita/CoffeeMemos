@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.di.repository
 
-import com.withapp.coffeememo.data.bean.BeanRepositoryImpl
-import com.withapp.coffeememo.data.recipe.RecipeRepositoryImpl
-import com.withapp.coffeememo.data.taste.TasteRepositoryImpl
+import com.withapp.coffeememo.data.repository.bean.BeanRepositoryImpl
+import com.withapp.coffeememo.data.repository.recipe.RecipeRepositoryImpl
+import com.withapp.coffeememo.data.repository.taste.TasteRepositoryImpl
 import com.withapp.coffeememo.domain.repository.BeanRepository
 import com.withapp.coffeememo.domain.repository.RecipeRepository
 import com.withapp.coffeememo.domain.repository.TasteRepository

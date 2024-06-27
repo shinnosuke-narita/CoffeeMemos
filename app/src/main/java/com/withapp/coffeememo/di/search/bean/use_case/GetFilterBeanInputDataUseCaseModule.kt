@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.di.search.bean.use_case
 
-import com.withapp.coffeememo.search.bean.domain.interactor.GetFilterBeanInputDataIterator
-import com.withapp.coffeememo.search.bean.domain.use_case.GetFilterBeanOutputDataUseCase
+import com.withapp.coffeememo.domain.usecase.bean.getFilterElements.GetFilterBeanInputDataIterator
+import com.withapp.coffeememo.domain.usecase.bean.getFilterElements.GetFilterBeanOutputDataUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

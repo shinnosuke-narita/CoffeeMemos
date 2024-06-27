@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
-    tools:context=".favorite.recipe.presentation.view.FavoriteRecipeFragment">
+    tools:context=".presentation.favorite.recipe.view.FavoriteRecipeFragment">
 
     <TextView
         android:id="@+id/itemCount"

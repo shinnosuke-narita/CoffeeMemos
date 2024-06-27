@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.domain.repository
 
-import com.withapp.coffeememo.core.data.entity.Taste
+import com.withapp.coffeememo.infra.data.entity.Taste
 import kotlinx.coroutines.flow.Flow
 
 interface TasteRepository {

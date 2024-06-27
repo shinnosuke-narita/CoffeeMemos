@@ -1,17 +1,18 @@
 package com.withapp.coffeememo.search.recipe.data.cache
 
 import com.google.common.truth.Truth
+import com.withapp.coffeememo.data.repository.recipe.RecipeCacheRepositoryImpl
 import org.junit.Before
 import org.junit.Test
 
 internal class RecipeMemoryCacheImplTest {
-    lateinit var target: RecipeMemoryCacheImpl
+    lateinit var target: RecipeCacheRepositoryImpl
     private val initialDataKey: String = "initialKey"
     private val initialDataValue: String = "initialValue"
 
     @Before
     fun setup() {
-        target = RecipeMemoryCacheImpl
+        target = RecipeCacheRepositoryImpl
         target.setData(initialDataKey, initialDataValue)
     }
 
