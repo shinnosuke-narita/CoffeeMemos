@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.core.ad_mob.locale.LocalizationManager
-import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
+import com.withapp.coffeememo.domain.model.recipe.SearchRecipeModel
 import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnFavoriteClickListener
 import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnItemClickListener
 import com.withapp.coffeememo.utilities.DateUtil

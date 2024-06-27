@@ -2,9 +2,9 @@ package com.withapp.coffeememo.presentation.search.recipe.view_model
 
 import android.view.View
 import androidx.lifecycle.*
-import com.withapp.coffeememo.search.recipe.domain.model.FilterRecipeInputData
-import com.withapp.coffeememo.search.recipe.domain.model.RecipeSortType
-import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
+import com.withapp.coffeememo.domain.model.recipe.FilterRecipeInputData
+import com.withapp.coffeememo.domain.model.recipe.RecipeSortType
+import com.withapp.coffeememo.domain.model.recipe.SearchRecipeModel
 import com.withapp.coffeememo.domain.usecase.recipe.deletefilterrecipe.DeleteFilterRecipeInputDataUseCase
 import com.withapp.coffeememo.domain.usecase.recipe.filter.FilterRecipeUseCase
 import com.withapp.coffeememo.domain.usecase.recipe.freewordsearch.FreeWordSearchUseCase

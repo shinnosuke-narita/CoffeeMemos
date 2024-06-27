@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.domain.model
+package com.withapp.coffeememo.domain.model.recipe
 
 data class FilterRecipeOutputData(
     val countries: List<String>,

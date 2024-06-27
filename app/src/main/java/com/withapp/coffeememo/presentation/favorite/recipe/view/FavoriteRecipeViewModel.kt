@@ -7,7 +7,7 @@ import com.withapp.coffeememo.domain.usecase.recipe.getfavoriterecipe.GetFavorit
 import com.withapp.coffeememo.domain.usecase.recipe.getsorttype.GetSortTypeUseCase
 import com.withapp.coffeememo.domain.usecase.recipe.sortfavoriterecipe.SortRecipeUseCase
 import com.withapp.coffeememo.presentation.favorite.recipe.model.FavoriteRecipeModel
-import com.withapp.coffeememo.search.recipe.domain.model.RecipeSortType
+import com.withapp.coffeememo.domain.model.recipe.RecipeSortType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

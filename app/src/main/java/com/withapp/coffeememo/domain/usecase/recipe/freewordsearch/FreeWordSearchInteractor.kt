@@ -1,8 +1,8 @@
 package com.withapp.coffeememo.domain.usecase.recipe.freewordsearch
 
 import com.withapp.coffeememo.domain.repository.RecipeRepository
-import com.withapp.coffeememo.search.recipe.data.mapper.SearchRecipeModelMapper
-import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
+import com.withapp.coffeememo.domain.mapper.SearchRecipeModelMapper
+import com.withapp.coffeememo.domain.model.recipe.SearchRecipeModel
 import javax.inject.Inject
 
 class FreeWordSearchInteractor @Inject constructor(

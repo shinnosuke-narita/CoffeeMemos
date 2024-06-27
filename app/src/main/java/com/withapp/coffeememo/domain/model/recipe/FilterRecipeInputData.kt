@@ -1,4 +1,4 @@
-package com.withapp.coffeememo.search.recipe.domain.model
+package com.withapp.coffeememo.domain.model.recipe
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

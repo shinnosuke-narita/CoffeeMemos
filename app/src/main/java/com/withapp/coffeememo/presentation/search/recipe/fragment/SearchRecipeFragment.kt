@@ -15,8 +15,8 @@ import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentSearchRecipeBinding
 import com.withapp.coffeememo.databinding.SearchContentsBinding
 import com.withapp.coffeememo.presentation.search.common.fragment.SortFragment
-import com.withapp.coffeememo.search.recipe.domain.model.RecipeSortType
-import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
+import com.withapp.coffeememo.domain.model.recipe.RecipeSortType
+import com.withapp.coffeememo.domain.model.recipe.SearchRecipeModel
 import com.withapp.coffeememo.presentation.search.recipe.adapter.RecipeDetailAdapter
 import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnFavoriteClickListener
 import com.withapp.coffeememo.presentation.search.recipe.adapter.`interface`.OnItemClickListener
@@ -185,7 +185,8 @@ class SearchRecipeFragment : Fragment() {
                 override fun onFavoriteClick(
                     view: View,
                     position: Int,
-                    recipe: SearchRecipeModel) {
+                    recipe: SearchRecipeModel
+                ) {
                     // 連打防止
                     viewModel.disableFavoriteIcon(view)
 

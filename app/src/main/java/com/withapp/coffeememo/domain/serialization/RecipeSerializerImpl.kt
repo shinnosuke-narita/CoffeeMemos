@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.domain.serialization
 
 import android.util.Log
-import com.withapp.coffeememo.search.recipe.domain.model.FilterRecipeInputData
+import com.withapp.coffeememo.domain.model.recipe.FilterRecipeInputData
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.decodeFromString

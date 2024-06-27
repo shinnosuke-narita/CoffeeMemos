@@ -1,7 +1,7 @@
 package com.withapp.coffeememo.domain.usecase.recipe.filter
 
-import com.withapp.coffeememo.search.recipe.domain.model.FilterRecipeInputData
-import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
+import com.withapp.coffeememo.domain.model.recipe.FilterRecipeInputData
+import com.withapp.coffeememo.domain.model.recipe.SearchRecipeModel
 
 interface FilterRecipeUseCase {
     suspend fun filterRecipe(inputData: FilterRecipeInputData): List<SearchRecipeModel>

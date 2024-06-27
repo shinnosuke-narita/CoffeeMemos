@@ -1,7 +1,7 @@
-package com.withapp.coffeememo.search.recipe.data.mapper
+package com.withapp.coffeememo.domain.mapper
 
 import com.withapp.coffeememo.core.data.entity.RecipeWithTaste
-import com.withapp.coffeememo.search.recipe.domain.model.SearchRecipeModel
+import com.withapp.coffeememo.domain.model.recipe.SearchRecipeModel
 import javax.inject.Inject
 
 class SearchRecipeModelMapper @Inject constructor() {
