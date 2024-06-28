@@ -14,7 +14,7 @@ class DottedLineView(context: Context, attrs:AttributeSet) : View(context, attrs
         style=Paint.Style.FILL_AND_STROKE
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val w = width
 
@@ -26,8 +26,7 @@ class DottedLineView(context: Context, attrs:AttributeSet) : View(context, attrs
             pointList.add(yPoint)
             xPoint += 15f
         }
-        canvas?.drawPoints( pointList.toFloatArray(), p)
-
+        canvas.drawPoints( pointList.toFloatArray(), p)
     }
 
 }
