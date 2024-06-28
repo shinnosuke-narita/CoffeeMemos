@@ -12,12 +12,12 @@ apply plugin: "kotlin-kapt"
 apply plugin: "com.google.android.gms.oss-licenses-plugin"
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.withapp.coffeememo"
         minSdk 26
-        targetSdk 33
+        targetSdk 34
         versionCode 4
         versionName "1.1.0"
 
