@@ -46,6 +46,9 @@ class HomeRecipeFragment : Fragment() {
                         HomeRecipeScreen(
                             onCreateButton = {
                                 findNavController().navigate(R.id.newRecipeFragment)
+                            },
+                            onClickHomeBeanFAB = {
+                                findNavController().navigate(R.id.homeBeansFragment)
                             }
                         )
                     }
@@ -111,10 +114,9 @@ class HomeRecipeFragment : Fragment() {
 //            findNavController().navigate(R.id.newRecipeFragment)
 //        }
 
-        // 豆ホーム画面へ遷移
-        binding.goToBeanBtn.setOnClickListener {
-            findNavController().navigate(R.id.homeBeansFragment)
-        }
+//        // 豆ホーム画面へ遷移
+//        binding.goToBeanBtn.setOnClickListener {
+//        }
 
         // メニュー画面へ遷移
         binding.menuBtn.setOnClickListener {

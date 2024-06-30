@@ -282,17 +282,17 @@
 <!--                app:layout_constraintTop_toBottomOf="@+id/highRatingRecipeHeader"/>-->
 <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 <!--    </ScrollView>-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/goToBeanBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/coffee_bag_icon"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="15dp"
-        android:focusable="true"
-        app:tint="@color/white"
-        app:backgroundTint="@color/pink_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="レシピ新規作成" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/goToBeanBtn"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/coffee_bag_icon"-->
+<!--        android:layout_marginBottom="15dp"-->
+<!--        android:layout_marginEnd="15dp"-->
+<!--        android:focusable="true"-->
+<!--        app:tint="@color/white"-->
+<!--        app:backgroundTint="@color/pink_dark"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:contentDescription="レシピ新規作成" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
