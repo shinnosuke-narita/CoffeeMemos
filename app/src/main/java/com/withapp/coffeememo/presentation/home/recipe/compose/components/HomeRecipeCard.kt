@@ -34,6 +34,7 @@ import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+
 @Composable
 fun HomeRecipeCard(
     recipe: HomeRecipeCardData,
@@ -41,12 +42,13 @@ fun HomeRecipeCard(
 ) {
     val density = LocalDensity.current
     var width by remember { mutableStateOf(0.dp) }
+    val widthRatio = 1.15f
 
     Column(
         modifier = Modifier
             .onGloballyPositioned {
                 with(density) {
-                    width = (it.size.height * 1.2f)
+                    width = (it.size.height * widthRatio)
                         .toInt()
                         .toDp()
                 }
