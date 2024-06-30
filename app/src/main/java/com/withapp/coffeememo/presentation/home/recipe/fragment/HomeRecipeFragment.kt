@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.databinding.FragmentHomeRecipeBinding
+import com.withapp.coffeememo.presentation.components.ThemeComposable
 import com.withapp.coffeememo.presentation.home.recipe.adapter.RecipeAdapter
+import com.withapp.coffeememo.presentation.home.recipe.compose.HomeRecipeScreen
 import com.withapp.coffeememo.presentation.home.recipe.view_model.HomeRecipeViewModel
 import com.withapp.coffeememo.presentation.utilities.SnackBarUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,64 +40,76 @@ class HomeRecipeFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentHomeRecipeBinding
             .inflate(inflater, container, false)
+            .apply {
+                composeView.setContent {
+                    ThemeComposable {
+                        HomeRecipeScreen(
+                            onCreateButton = {
+                                findNavController().navigate(R.id.newRecipeFragment)
+                            }
+                        )
+                    }
+                }
+            }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // RecyclerView セットアップ
-        setUpRecyclerView()
-
-        // 今日作成レシピ数
-        viewModel.todayRecipeCount.observe(
-            viewLifecycleOwner) { todayRecipeNum ->
-            binding.todayRecipeNum.text = todayRecipeNum.toString()
-        }
-
-        // お気に入りレシピ数
-        viewModel.favoriteRecipeCount.observe(
-            viewLifecycleOwner) { favoriteRecipeNum ->
-            binding.favoriteRecipeNum.text = favoriteRecipeNum
-        }
-
-        // 監視処理
-        viewModel.newRecipes.observe(
-            viewLifecycleOwner) { list ->
-            _newRecipeAdapter.submitList(list)
-        }
-
-        viewModel.favoriteRecipes.observe(
-            viewLifecycleOwner) { favoriteList ->
-            _favoriteRecipeAdapter.submitList(favoriteList)
-        }
-
-        viewModel.highRatingRecipes.observe(
-            viewLifecycleOwner) { highRatingList ->
-            _highRatingAdapter.submitList(highRatingList)
-        }
-
-
-        // レシピの登録数 監視処理
-        viewModel.totalRecipeCount.observe(
-            viewLifecycleOwner) { recipeNum ->
-            binding.recipeTotalNum.text = recipeNum.toString()
-
-            if (recipeNum == 0) {
-                binding.newRecipeHeader.visibility = View.GONE
-                binding.highRatingRecipeHeader.visibility = View.GONE
-                binding.favoriteRecipeHeader.visibility = View.GONE
-            } else {
-                binding.newRecipeHeader.visibility = View.VISIBLE
-                binding.highRatingRecipeHeader.visibility = View.VISIBLE
-                binding.favoriteRecipeHeader.visibility = View.VISIBLE
-            }
-        }
-
-        // レシピ新規作成画面へ遷移
-        binding.createRecipeBtn.setOnClickListener {
-            findNavController().navigate(R.id.newRecipeFragment)
-        }
+//        // RecyclerView セットアップ
+//        setUpRecyclerView()
+//
+//        // 今日作成レシピ数
+//        viewModel.todayRecipeCount.observe(
+//            viewLifecycleOwner) { todayRecipeNum ->
+//            binding.todayRecipeNum.text = todayRecipeNum.toString()
+//        }
+//
+//        // お気に入りレシピ数
+//        viewModel.favoriteRecipeCount.observe(
+//            viewLifecycleOwner) { favoriteRecipeNum ->
+//            binding.favoriteRecipeNum.text = favoriteRecipeNum
+//        }
+//
+//        // 監視処理
+//        viewModel.newRecipes.observe(
+//            viewLifecycleOwner) { list ->
+//            _newRecipeAdapter.submitList(list)
+//        }
+//
+//        viewModel.favoriteRecipes.observe(
+//            viewLifecycleOwner) { favoriteList ->
+//            _favoriteRecipeAdapter.submitList(favoriteList)
+//        }
+//
+//        viewModel.highRatingRecipes.observe(
+//            viewLifecycleOwner) { highRatingList ->
+//            _highRatingAdapter.submitList(highRatingList)
+//        }
+//
+//
+//        // レシピの登録数 監視処理
+//        viewModel.totalRecipeCount.observe(
+//            viewLifecycleOwner) { recipeNum ->
+//            binding.recipeTotalNum.text = recipeNum.toString()
+//
+//            if (recipeNum == 0) {
+//                binding.newRecipeHeader.visibility = View.GONE
+//                binding.highRatingRecipeHeader.visibility = View.GONE
+//                binding.favoriteRecipeHeader.visibility = View.GONE
+//            } else {
+//                binding.newRecipeHeader.visibility = View.VISIBLE
+//                binding.highRatingRecipeHeader.visibility = View.VISIBLE
+//                binding.favoriteRecipeHeader.visibility = View.VISIBLE
+//            }
+//        }
+//
+//        // レシピ新規作成画面へ遷移
+//        binding.createRecipeBtn.setOnClickListener {
+//            findNavController().navigate(R.id.newRecipeFragment)
+//        }
 
         // 豆ホーム画面へ遷移
         binding.goToBeanBtn.setOnClickListener {
@@ -136,44 +150,44 @@ class HomeRecipeFragment : Fragment() {
         _binding = null
     }
 
-    private fun setUpRecyclerView() {
-        _newRecipeAdapter = getHomeRecipeAdapter()
-        _favoriteRecipeAdapter = getHomeRecipeAdapter()
-        _highRatingAdapter = getHomeRecipeAdapter()
+//    private fun setUpRecyclerView() {
+//        _newRecipeAdapter = getHomeRecipeAdapter()
+//        _favoriteRecipeAdapter = getHomeRecipeAdapter()
+//        _highRatingAdapter = getHomeRecipeAdapter()
+//
+//        binding.newRecipeList.apply {
+//            adapter = _newRecipeAdapter
+//            layoutManager = getLinerLayoutManger()
+//        }
+//        binding.favoriteRecipeList.apply {
+//            adapter = _favoriteRecipeAdapter
+//            layoutManager = getLinerLayoutManger()
+//        }
+//        binding.highRatingRecipeList.apply {
+//            adapter = _highRatingAdapter
+//            layoutManager = getLinerLayoutManger()
+//        }
+//    }
 
-        binding.newRecipeList.apply {
-            adapter = _newRecipeAdapter
-            layoutManager = getLinerLayoutManger()
-        }
-        binding.favoriteRecipeList.apply {
-            adapter = _favoriteRecipeAdapter
-            layoutManager = getLinerLayoutManger()
-        }
-        binding.highRatingRecipeList.apply {
-            adapter = _highRatingAdapter
-            layoutManager = getLinerLayoutManger()
-        }
-    }
-
-    private fun getHomeRecipeAdapter(): RecipeAdapter {
-       return RecipeAdapter(
-           context = requireContext(),
-           onFavoriteClick = { recipe ->
-               viewModel.updateHomeData(
-                   recipe.recipeId,
-                   recipe.isFavorite)
-           },
-           onItemClick = { recipe ->
-               val showDetailAction =
-                   HomeRecipeFragmentDirections.showRecipeDetailAction()
-                       .apply {
-                           recipeId = recipe.recipeId
-                           beanId   = recipe.beanId
-                       }
-               findNavController().navigate(showDetailAction)
-           }
-       )
-    }
+//    private fun getHomeRecipeAdapter(): RecipeAdapter {
+//       return RecipeAdapter(
+//           context = requireContext(),
+//           onFavoriteClick = { recipe ->
+//               viewModel.updateHomeData(
+//                   recipe.recipeId,
+//                   recipe.isFavorite)
+//           },
+//           onItemClick = { recipe ->
+//               val showDetailAction =
+//                   HomeRecipeFragmentDirections.showRecipeDetailAction()
+//                       .apply {
+//                           recipeId = recipe.recipeId
+//                           beanId   = recipe.beanId
+//                       }
+//               findNavController().navigate(showDetailAction)
+//           }
+//       )
+//    }
 
     private fun getLinerLayoutManger(): LinearLayoutManager {
        return LinearLayoutManager(
