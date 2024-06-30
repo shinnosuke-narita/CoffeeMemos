@@ -38,7 +38,7 @@ fun HomeRecipeStatusCard(
         modifier = Modifier
             .background(
                 color = MaterialTheme.colorScheme.secondaryContainer,
-                shape = RoundedCornerShape(size = 30.dp)
+                shape = MaterialTheme.shapes.extraLarge
             )
             .padding(20.dp)
     ) {
