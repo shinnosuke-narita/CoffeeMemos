@@ -10,8 +10,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -21,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.presentation.home.common.components.HomeHeader
 import com.withapp.coffeememo.presentation.home.recipe.compose.components.HomeRecipeCard
 import com.withapp.coffeememo.presentation.home.recipe.compose.components.HomeRecipeStatusCard
 import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData
@@ -52,31 +51,31 @@ fun HomeRecipeScreen(
             onCreateButton = onCreateButton
         )
         Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
-        Text(
-            text = stringResource(id = R.string.new_recipe_Header),
-            style = MaterialTheme.typography.headlineSmall
+        HomeRow(
+            title = stringResource(id = R.string.new_recipe_Header),
+            recipes = newRecipes
         )
-        Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_small)))
-        CardList(recipes = newRecipes)
         Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
-        Text(
-            text = stringResource(id = R.string.favorite_recipe_header),
-            style = MaterialTheme.typography.headlineSmall
+        HomeRow(
+            title = stringResource(id = R.string.favorite_recipe_header),
+            recipes = favoriteRecipes
         )
-        Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_small)))
-        CardList(recipes = favoriteRecipes)
         Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
-        Text(
-            text = stringResource(id = R.string.high_rating_header),
-            style = MaterialTheme.typography.headlineSmall
+        HomeRow(
+            title = stringResource(id = R.string.high_rating_header),
+            recipes = highRatingRecipes
         )
-        Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_small)))
-        CardList(recipes = highRatingRecipes)
     }
 }
 
+
 @Composable
-fun CardList(recipes: List<HomeRecipeCardData>?) {
+fun HomeRow(
+    title: String,
+    recipes: List<HomeRecipeCardData>?
+) {
+    HomeHeader(text = title)
+    Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_small)))
     recipes?.let {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(
