@@ -2,6 +2,7 @@ package com.withapp.coffeememo.presentation.home.common.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -9,7 +10,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.presentation.ui.theme.AppTypography
-import com.withapp.coffeememo.presentation.ui.theme.SmallLabelGray
 
 @Composable
 fun CountStatus(title: String, counts: String) {
@@ -23,7 +23,8 @@ fun CountStatus(title: String, counts: String) {
         )
         Text(
             text = title,
-            style = SmallLabelGray
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.secondary
         )
     }
 }
