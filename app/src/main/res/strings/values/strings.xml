@@ -22,6 +22,9 @@
     <string name="timer">Timer</string>
     <string name="select_bean">Select Bean</string>
     <string name="privacy_policy_header">Privacy Policy</string>
+    <string name="label_all" translatable="false">All</string>
+    <string name="label_favorite">Favorites</string>
+    <string name="label_today">Today</string>
 
 
     <!-- レシピ関連  -->
@@ -39,6 +42,7 @@
     <string name="temperature">Temperature</string>
     <string name="roast">Roast</string>
     <string name="created_date">Date</string>
+    <string name="create_recipe">Create Recipe</string>
 
     <!-- テイスト  -->
     <string name="sour">Acidity</string>

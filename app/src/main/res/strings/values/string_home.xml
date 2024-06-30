@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="home_review">Review</string>
+    <string name="home_review" translatable="false">Review</string>
     <string name="home_favorite_icon_description">favorite icon</string>
+    <string name="recipe_status" translatable="false">Recipe Status</string>
 </resources>
