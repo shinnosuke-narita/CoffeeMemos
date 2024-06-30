@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
@@ -57,9 +58,12 @@ fun HomeRecipeCard(
                 color = MaterialTheme.colorScheme.surfaceContainer,
                 shape = MaterialTheme.shapes.extraLarge
             )
+            .clip(MaterialTheme.shapes.extraLarge)
+            .clickable(
+                onClick = { onClick(recipe.recipeId) }
+            )
             .widthIn(width)
             .padding(dimensionResource(id = R.dimen.padding_large))
-            .clickable { onClick(recipe.recipeId) }
     ) {
         Text(
             text = recipe.tool,
