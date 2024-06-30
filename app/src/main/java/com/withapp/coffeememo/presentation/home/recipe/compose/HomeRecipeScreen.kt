@@ -38,7 +38,9 @@ import com.withapp.coffeememo.presentation.ui.theme.CoffeeMemoAppDefaults
 fun HomeRecipeScreen(
     viewModel: HomeRecipeViewModel = viewModel(),
     onCreateButton: () -> Unit,
-    onClickHomeBeanFAB: () -> Unit
+    onClickHomeBeanFAB: () -> Unit,
+    onCardClick: (HomeRecipeCardData) -> Unit,
+    onFavoriteClick: (HomeRecipeCardData) -> Unit,
 ) {
     val newRecipes by viewModel.newRecipes.observeAsState()
     val favoriteRecipes by viewModel.favoriteRecipes.observeAsState()
@@ -67,17 +69,23 @@ fun HomeRecipeScreen(
             Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
             HomeRow(
                 title = stringResource(id = R.string.new_recipe_Header),
-                recipes = newRecipes
+                recipes = newRecipes,
+                onCardClick = onCardClick,
+                onFavoriteClick = onFavoriteClick
             )
             Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
             HomeRow(
                 title = stringResource(id = R.string.favorite_recipe_header),
-                recipes = favoriteRecipes
+                recipes = favoriteRecipes,
+                onCardClick = onCardClick,
+                onFavoriteClick = onFavoriteClick
             )
             Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
             HomeRow(
                 title = stringResource(id = R.string.high_rating_header),
-                recipes = highRatingRecipes
+                recipes = highRatingRecipes,
+                onCardClick = onCardClick,
+                onFavoriteClick = onFavoriteClick
             )
             Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_extra_large)))
             Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_extra_large)))
@@ -112,7 +120,9 @@ fun HomeRecipeScreen(
 @Composable
 fun HomeRow(
     title: String,
-    recipes: List<HomeRecipeCardData>?
+    recipes: List<HomeRecipeCardData>?,
+    onCardClick: (HomeRecipeCardData) -> Unit,
+    onFavoriteClick: (HomeRecipeCardData) -> Unit
 ) {
     HomeHeader(text = title)
     Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_small)))
@@ -125,7 +135,8 @@ fun HomeRow(
             items(it) { recipe ->
                 HomeRecipeCard(
                     recipe = recipe,
-                    onClick = {}
+                    onCardClick = onCardClick,
+                    onFavoriteClick = onFavoriteClick
                 )
             }
         }
@@ -137,6 +148,8 @@ fun HomeRow(
 private fun HomeRecipeScreenPreview() {
     HomeRecipeScreen(
         onCreateButton = {},
-        onClickHomeBeanFAB = {}
+        onClickHomeBeanFAB = {},
+        onFavoriteClick = {},
+        onCardClick = {}
     )
 }

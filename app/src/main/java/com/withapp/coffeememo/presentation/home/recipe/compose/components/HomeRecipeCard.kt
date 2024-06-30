@@ -2,8 +2,10 @@ package com.withapp.coffeememo.presentation.home.recipe.compose.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -39,7 +41,8 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun HomeRecipeCard(
     recipe: HomeRecipeCardData,
-    onClick: (Long) -> Unit
+    onCardClick: (HomeRecipeCardData) -> Unit,
+    onFavoriteClick: (HomeRecipeCardData) -> Unit
 ) {
     val density = LocalDensity.current
     var width by remember { mutableStateOf(0.dp) }
@@ -60,7 +63,7 @@ fun HomeRecipeCard(
             )
             .clip(MaterialTheme.shapes.extraLarge)
             .clickable(
-                onClick = { onClick(recipe.recipeId) }
+                onClick = { onCardClick(recipe) }
             )
             .widthIn(width)
             .padding(dimensionResource(id = R.dimen.padding_large))
@@ -96,7 +99,14 @@ fun HomeRecipeCard(
             Icon(
                 painter = painterResource(id = iconRes),
                 tint = MaterialTheme.colorScheme.primary,
-                contentDescription = ""
+                contentDescription = "",
+                modifier = Modifier
+                    .padding(PaddingValues(dimensionResource(id = R.dimen.padding_small)))
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() },
+                        onClick = { onFavoriteClick(recipe) }
+                    )
             )
         }
     }
@@ -118,7 +128,8 @@ private fun HomeRecipeCardPreview() {
                 isFavorite = true
 
             ),
-            onClick = {}
+            onCardClick = {},
+            onFavoriteClick = {}
         )
     }
 }

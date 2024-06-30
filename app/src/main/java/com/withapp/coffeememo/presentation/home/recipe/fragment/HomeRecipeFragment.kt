@@ -41,6 +41,18 @@ class HomeRecipeFragment : Fragment() {
                             },
                             onClickHomeBeanFAB = {
                                 findNavController().navigate(R.id.homeBeansFragment)
+                            },
+                            onCardClick = { recipe ->
+                                val showDetailAction =
+                                    HomeRecipeFragmentDirections.showRecipeDetailAction()
+                                        .apply {
+                                            recipeId = recipe.recipeId
+                                            beanId   = recipe.beanId
+                                        }
+                                findNavController().navigate(showDetailAction)
+                            },
+                            onFavoriteClick = { recipe ->
+                                viewModel.updateHomeData( recipe.recipeId, recipe.isFavorite)
                             }
                         )
                     }
