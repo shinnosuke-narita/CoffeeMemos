@@ -77,7 +77,10 @@ fun HomeRecipeStatusCard(
         Button(
             onClick = onCreateButton,
             content = {
-                Text(text = stringResource(id = R.string.create_recipe))
+                Text(
+                    text = stringResource(id = R.string.create_recipe),
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
         )
     }
