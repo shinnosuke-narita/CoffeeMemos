@@ -27,6 +27,7 @@ fun RatingText(rating: String) {
     ) {
         Text(
             text = rating.formatRating(),
+            style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.inversePrimary
         )
     }
@@ -35,13 +36,13 @@ fun RatingText(rating: String) {
 @Composable
 private fun  String.formatRating(): String {
     val rating = stringResource(id = R.string.rating)
-    return String.format("%s %s", rating, this)
+    return String.format("%s %s.0", rating, this)
 }
 
 @Preview
 @Composable
 private fun RatingTextPreview() {
     ThemeComposable {
-        RatingText("3.0")
+        RatingText("3")
     }
 }
