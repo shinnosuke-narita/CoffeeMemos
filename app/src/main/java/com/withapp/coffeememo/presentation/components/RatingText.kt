@@ -8,10 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.presentation.ui.theme.CoffeeMemoAppDefaults
 
 @Composable
 fun RatingText(rating: String) {
@@ -19,11 +19,11 @@ fun RatingText(rating: String) {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .border(
-                width = dimensionResource(id = R.dimen.border_width_small),
+                width = CoffeeMemoAppDefaults.BorderWidth.default,
                 color = MaterialTheme.colorScheme.inversePrimary,
                 shape = MaterialTheme.shapes.extraLarge
             )
-            .padding(dimensionResource(id = R.dimen.padding_small))
+            .padding(CoffeeMemoAppDefaults.Padding.small)
     ) {
         Text(
             text = rating.formatRating(),
