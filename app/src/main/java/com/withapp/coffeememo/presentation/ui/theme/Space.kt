@@ -20,7 +20,8 @@ internal data class Margin(
     val small: Dp = 8.dp,
     val medium: Dp = 14.dp,
     val large: Dp  = 20.dp,
-    val extraLarge: Dp = 32.dp
+    val extraLarge: Dp = 32.dp,
+    val extraLargeX: Dp = 64.dp
 )
 
 internal data class Padding(

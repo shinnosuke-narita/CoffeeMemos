@@ -20,7 +20,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,39 +55,38 @@ fun HomeRecipeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(dimensionResource(id = R.dimen.padding_medium))
+                .padding(CoffeeMemoAppDefaults.Padding.medium)
                 .verticalScroll(rememberScrollState())
         ) {
-            Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_small)))
+            Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.small))
             HomeRecipeStatusCard(
                 allCounts = (totalCounts ?: 0).toString(),
                 favoriteCounts = (favoriteCounts ?: 0).toString(),
                 todayCounts = (todayRecipeCounts ?: 0).toString(),
                 onCreateButton = onCreateButton
             )
-            Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
+            Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.medium))
             HomeRow(
                 title = stringResource(id = R.string.new_recipe_Header),
                 recipes = newRecipes,
                 onCardClick = onCardClick,
                 onFavoriteClick = onFavoriteClick
             )
-            Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
+            Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.medium))
             HomeRow(
                 title = stringResource(id = R.string.favorite_recipe_header),
                 recipes = favoriteRecipes,
                 onCardClick = onCardClick,
                 onFavoriteClick = onFavoriteClick
             )
-            Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
+            Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.medium))
             HomeRow(
                 title = stringResource(id = R.string.high_rating_header),
                 recipes = highRatingRecipes,
                 onCardClick = onCardClick,
                 onFavoriteClick = onFavoriteClick
             )
-            Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_extra_large)))
-            Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_extra_large)))
+            Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.extraLargeX))
         }
         FloatingActionButton(
             modifier = Modifier
@@ -97,8 +95,8 @@ fun HomeRecipeScreen(
                     PaddingValues(
                         top = 0.dp,
                         start = 0.dp,
-                        end = dimensionResource(id = R.dimen.margin_medium),
-                        bottom = dimensionResource(id = R.dimen.margin_medium),
+                        end = CoffeeMemoAppDefaults.Margin.medium,
+                        bottom = CoffeeMemoAppDefaults.Margin.medium,
                     )
                 )
             ,
@@ -125,12 +123,10 @@ fun HomeRow(
     onFavoriteClick: (HomeRecipeCardData) -> Unit
 ) {
     HomeHeader(text = title)
-    Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_small)))
+    Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.small))
     recipes?.let {
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(
-                dimensionResource(id = R.dimen.margin_small)
-            )
+            horizontalArrangement = Arrangement.spacedBy(CoffeeMemoAppDefaults.Margin.small)
         ) {
             items(it) { recipe ->
                 HomeRecipeCard(
