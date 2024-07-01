@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +33,7 @@ import com.withapp.coffeememo.presentation.components.RatingText
 import com.withapp.coffeememo.presentation.components.TagText
 import com.withapp.coffeememo.presentation.components.ThemeComposable
 import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData
+import com.withapp.coffeememo.presentation.ui.theme.CoffeeMemoAppDefaults
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -66,13 +66,13 @@ fun HomeRecipeCard(
                 onClick = { onCardClick(recipe) }
             )
             .widthIn(width)
-            .padding(dimensionResource(id = R.dimen.padding_large))
+            .padding(CoffeeMemoAppDefaults.Padding.large)
     ) {
         Text(
             text = recipe.tool,
             style = MaterialTheme.typography.titleMedium
         )
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.margin_small)))
+        Spacer(modifier = Modifier.size(CoffeeMemoAppDefaults.Margin.small))
         Text(
             text = recipe.createdAt.format(
                 DateTimeFormatter.ofPattern(stringResource(id = R.string.date_pattern)),
@@ -80,11 +80,11 @@ fun HomeRecipeCard(
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.secondary
         )
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
+        Spacer(modifier = Modifier.size(CoffeeMemoAppDefaults.Margin.medium))
         TagText(text = recipe.country)
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.margin_small)))
+        Spacer(modifier = Modifier.size(CoffeeMemoAppDefaults.Margin.small))
         TagText(text = recipe.roast)
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
+        Spacer(modifier = Modifier.size(CoffeeMemoAppDefaults.Margin.medium))
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
@@ -101,7 +101,7 @@ fun HomeRecipeCard(
                 tint = MaterialTheme.colorScheme.primary,
                 contentDescription = "",
                 modifier = Modifier
-                    .padding(PaddingValues(dimensionResource(id = R.dimen.padding_small)))
+                    .padding(PaddingValues(CoffeeMemoAppDefaults.Padding.small))
                     .clickable(
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() },
