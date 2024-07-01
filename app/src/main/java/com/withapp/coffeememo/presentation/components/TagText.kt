@@ -8,9 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.withapp.coffeememo.R
+import com.withapp.coffeememo.presentation.ui.theme.CoffeeMemoAppDefaults
 
 @Composable
 fun TagText(text: String) {
@@ -21,7 +20,7 @@ fun TagText(text: String) {
                 color = MaterialTheme.colorScheme.inversePrimary,
                 shape = MaterialTheme.shapes.large
             )
-            .padding(dimensionResource(R.dimen.padding_small))
+            .padding(CoffeeMemoAppDefaults.Margin.small)
     ) {
         Text(
             text = text,
