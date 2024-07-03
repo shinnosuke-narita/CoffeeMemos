@@ -60,6 +60,7 @@ fun HomeRecipeScreen(
         ) {
             Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.small))
             HomeStatusCard(
+                title = stringResource(id = R.string.recipe_status),
                 allCounts = (totalCounts ?: 0).toString(),
                 favoriteCounts = (favoriteCounts ?: 0).toString(),
                 todayCounts = (todayRecipeCounts ?: 0).toString(),

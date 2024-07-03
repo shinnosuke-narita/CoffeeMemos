@@ -124,7 +124,7 @@ private fun HomeRecipeCardPreview() {
                 createdAt = LocalDateTime.now(),
                 country = "ブラジル",
                 roast = "フルシティロースト",
-                rating = "3.0",
+                rating = "3",
                 isFavorite = true
 
             ),
