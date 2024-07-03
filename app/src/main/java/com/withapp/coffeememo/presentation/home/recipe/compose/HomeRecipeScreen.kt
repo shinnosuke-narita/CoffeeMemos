@@ -28,7 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.withapp.coffeememo.R
 import com.withapp.coffeememo.presentation.home.common.components.HomeHeader
 import com.withapp.coffeememo.presentation.home.recipe.compose.components.HomeRecipeCard
-import com.withapp.coffeememo.presentation.home.recipe.compose.components.HomeRecipeStatusCard
+import com.withapp.coffeememo.presentation.home.recipe.compose.components.HomeStatusCard
 import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData
 import com.withapp.coffeememo.presentation.home.recipe.view_model.HomeRecipeViewModel
 import com.withapp.coffeememo.presentation.ui.theme.CoffeeMemoAppDefaults
@@ -59,7 +59,7 @@ fun HomeRecipeScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.small))
-            HomeRecipeStatusCard(
+            HomeStatusCard(
                 allCounts = (totalCounts ?: 0).toString(),
                 favoriteCounts = (favoriteCounts ?: 0).toString(),
                 todayCounts = (todayRecipeCounts ?: 0).toString(),

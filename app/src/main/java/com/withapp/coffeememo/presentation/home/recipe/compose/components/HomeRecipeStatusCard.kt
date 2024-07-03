@@ -26,7 +26,7 @@ import com.withapp.coffeememo.presentation.ui.theme.AppTypography
 import com.withapp.coffeememo.presentation.ui.theme.CoffeeMemoAppDefaults
 
 @Composable
-fun HomeRecipeStatusCard(
+fun HomeStatusCard(
     favoriteCounts: String,
     allCounts: String,
     todayCounts: String,
@@ -92,7 +92,7 @@ fun HomeRecipeStatusCard(
 fun HomeRecipeStatusCardPreview() {
     AppTheme {
         Surface {
-            HomeRecipeStatusCard(
+            HomeStatusCard(
                 allCounts = "30",
                 favoriteCounts = "20",
                 todayCounts = "10",
