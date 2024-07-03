@@ -27,6 +27,7 @@ import com.withapp.coffeememo.presentation.ui.theme.CoffeeMemoAppDefaults
 
 @Composable
 fun HomeStatusCard(
+    title: String,
     favoriteCounts: String,
     allCounts: String,
     todayCounts: String,
@@ -42,7 +43,7 @@ fun HomeStatusCard(
             .padding(20.dp)
     ) {
         Text(
-            text = stringResource(id = R.string.recipe_status),
+            text = title,
             modifier = Modifier.align(Alignment.Start),
             style = AppTypography.headlineSmall
         )
@@ -93,6 +94,7 @@ fun HomeRecipeStatusCardPreview() {
     AppTheme {
         Surface {
             HomeStatusCard(
+                title = stringResource(id = R.string.recipe_status),
                 allCounts = "30",
                 favoriteCounts = "20",
                 todayCounts = "10",
