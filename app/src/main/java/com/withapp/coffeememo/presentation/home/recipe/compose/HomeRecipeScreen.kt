@@ -1,6 +1,5 @@
 package com.withapp.coffeememo.presentation.home.recipe.compose
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,8 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FloatingActionButton
@@ -26,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.presentation.home.common.components.HomeHeader
+import com.withapp.coffeememo.presentation.home.common.components.HomeRow
 import com.withapp.coffeememo.presentation.home.recipe.compose.components.HomeRecipeCard
 import com.withapp.coffeememo.presentation.home.recipe.compose.components.HomeStatusCard
 import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData
@@ -118,24 +115,6 @@ fun HomeRecipeScreen(
     }
 }
 
-@Composable
-fun <T> HomeRow(
-    title: String,
-    data: List<T>?,
-    cardComposable: @Composable (T) -> Unit,
-) {
-    HomeHeader(text = title)
-    Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.small))
-    data?.let {
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(CoffeeMemoAppDefaults.Margin.small)
-        ) {
-            items(it) { item ->
-                cardComposable(item)
-            }
-        }
-    }
-}
 @Preview(showBackground = true)
 @Composable
 private fun HomeRecipeScreenPreview() {
