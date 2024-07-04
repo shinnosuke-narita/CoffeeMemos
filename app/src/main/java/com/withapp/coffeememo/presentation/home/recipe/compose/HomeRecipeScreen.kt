@@ -69,23 +69,26 @@ fun HomeRecipeScreen(
             Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.medium))
             HomeRow(
                 title = stringResource(id = R.string.new_recipe_Header),
-                recipes = newRecipes,
-                onCardClick = onCardClick,
-                onFavoriteClick = onFavoriteClick
+                data = newRecipes,
+                cardComposable = { recipe ->
+                    HomeRecipeCard(recipe, onCardClick, onFavoriteClick)
+                },
             )
             Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.medium))
             HomeRow(
                 title = stringResource(id = R.string.favorite_recipe_header),
-                recipes = favoriteRecipes,
-                onCardClick = onCardClick,
-                onFavoriteClick = onFavoriteClick
+                data = favoriteRecipes,
+                cardComposable = { recipe ->
+                    HomeRecipeCard(recipe, onCardClick, onFavoriteClick)
+                },
             )
             Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.medium))
             HomeRow(
                 title = stringResource(id = R.string.high_rating_header),
-                recipes = highRatingRecipes,
-                onCardClick = onCardClick,
-                onFavoriteClick = onFavoriteClick
+                data = highRatingRecipes,
+                cardComposable = { recipe ->
+                    HomeRecipeCard(recipe, onCardClick, onFavoriteClick)
+                },
             )
             Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.extraLargeX))
         }
@@ -115,31 +118,24 @@ fun HomeRecipeScreen(
     }
 }
 
-
 @Composable
-fun HomeRow(
+fun <T> HomeRow(
     title: String,
-    recipes: List<HomeRecipeCardData>?,
-    onCardClick: (HomeRecipeCardData) -> Unit,
-    onFavoriteClick: (HomeRecipeCardData) -> Unit
+    data: List<T>?,
+    cardComposable: @Composable (T) -> Unit,
 ) {
     HomeHeader(text = title)
     Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.small))
-    recipes?.let {
+    data?.let {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(CoffeeMemoAppDefaults.Margin.small)
         ) {
-            items(it) { recipe ->
-                HomeRecipeCard(
-                    recipe = recipe,
-                    onCardClick = onCardClick,
-                    onFavoriteClick = onFavoriteClick
-                )
+            items(it) { item ->
+                cardComposable(item)
             }
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 private fun HomeRecipeScreenPreview() {
