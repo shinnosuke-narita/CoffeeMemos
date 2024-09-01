@@ -6,7 +6,7 @@ import com.withapp.coffeememo.domain.model.recipe.FilterRecipeInputData
 import com.withapp.coffeememo.domain.model.recipe.SearchRecipeModel
 import javax.inject.Inject
 
-class FilterRecipeIterator @Inject constructor(
+class FilterRecipeInteractor @Inject constructor(
     private val recipeRepo: RecipeRepository,
     private val mapper: SearchRecipeModelMapper
 ) : FilterRecipeUseCase {
