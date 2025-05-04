@@ -1,6 +1,5 @@
 package com.withapp.coffeememo.presentation.home.recipe.compose
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,8 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FloatingActionButton
@@ -20,16 +17,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.withapp.coffeememo.R
-import com.withapp.coffeememo.presentation.home.common.components.HomeHeader
+import com.withapp.coffeememo.presentation.home.common.components.HomeRow
 import com.withapp.coffeememo.presentation.home.recipe.compose.components.HomeRecipeCard
-import com.withapp.coffeememo.presentation.home.recipe.compose.components.HomeRecipeStatusCard
+import com.withapp.coffeememo.presentation.home.recipe.compose.components.HomeStatusCard
 import com.withapp.coffeememo.presentation.home.recipe.model.HomeRecipeCardData
 import com.withapp.coffeememo.presentation.home.recipe.view_model.HomeRecipeViewModel
 import com.withapp.coffeememo.presentation.ui.theme.CoffeeMemoAppDefaults
@@ -56,39 +52,42 @@ fun HomeRecipeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(dimensionResource(id = R.dimen.padding_medium))
+                .padding(CoffeeMemoAppDefaults.Padding.medium)
                 .verticalScroll(rememberScrollState())
         ) {
-            Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_small)))
-            HomeRecipeStatusCard(
+            Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.small))
+            HomeStatusCard(
+                title = stringResource(id = R.string.recipe_status),
                 allCounts = (totalCounts ?: 0).toString(),
                 favoriteCounts = (favoriteCounts ?: 0).toString(),
                 todayCounts = (todayRecipeCounts ?: 0).toString(),
                 onCreateButton = onCreateButton
             )
-            Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
+            Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.medium))
             HomeRow(
                 title = stringResource(id = R.string.new_recipe_Header),
-                recipes = newRecipes,
-                onCardClick = onCardClick,
-                onFavoriteClick = onFavoriteClick
+                data = newRecipes,
+                cardComposable = { recipe ->
+                    HomeRecipeCard(recipe, onCardClick, onFavoriteClick)
+                },
             )
-            Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
+            Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.medium))
             HomeRow(
                 title = stringResource(id = R.string.favorite_recipe_header),
-                recipes = favoriteRecipes,
-                onCardClick = onCardClick,
-                onFavoriteClick = onFavoriteClick
+                data = favoriteRecipes,
+                cardComposable = { recipe ->
+                    HomeRecipeCard(recipe, onCardClick, onFavoriteClick)
+                },
             )
-            Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_medium)))
+            Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.medium))
             HomeRow(
                 title = stringResource(id = R.string.high_rating_header),
-                recipes = highRatingRecipes,
-                onCardClick = onCardClick,
-                onFavoriteClick = onFavoriteClick
+                data = highRatingRecipes,
+                cardComposable = { recipe ->
+                    HomeRecipeCard(recipe, onCardClick, onFavoriteClick)
+                },
             )
-            Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_extra_large)))
-            Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_extra_large)))
+            Spacer(Modifier.size(CoffeeMemoAppDefaults.Margin.extraLargeX))
         }
         FloatingActionButton(
             modifier = Modifier
@@ -97,8 +96,8 @@ fun HomeRecipeScreen(
                     PaddingValues(
                         top = 0.dp,
                         start = 0.dp,
-                        end = dimensionResource(id = R.dimen.margin_medium),
-                        bottom = dimensionResource(id = R.dimen.margin_medium),
+                        end = CoffeeMemoAppDefaults.Margin.medium,
+                        bottom = CoffeeMemoAppDefaults.Margin.medium,
                     )
                 )
             ,
@@ -113,33 +112,6 @@ fun HomeRecipeScreen(
             }
         )
 
-    }
-}
-
-
-@Composable
-fun HomeRow(
-    title: String,
-    recipes: List<HomeRecipeCardData>?,
-    onCardClick: (HomeRecipeCardData) -> Unit,
-    onFavoriteClick: (HomeRecipeCardData) -> Unit
-) {
-    HomeHeader(text = title)
-    Spacer(Modifier.size(dimensionResource(id = R.dimen.margin_small)))
-    recipes?.let {
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(
-                dimensionResource(id = R.dimen.margin_small)
-            )
-        ) {
-            items(it) { recipe ->
-                HomeRecipeCard(
-                    recipe = recipe,
-                    onCardClick = onCardClick,
-                    onFavoriteClick = onFavoriteClick
-                )
-            }
-        }
     }
 }
 

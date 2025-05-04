@@ -16,7 +16,6 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,9 +23,11 @@ import com.withapp.coffeememo.R
 import com.withapp.coffeememo.presentation.home.common.components.CountStatus
 import com.withapp.coffeememo.presentation.ui.theme.AppTheme
 import com.withapp.coffeememo.presentation.ui.theme.AppTypography
+import com.withapp.coffeememo.presentation.ui.theme.CoffeeMemoAppDefaults
 
 @Composable
-fun HomeRecipeStatusCard(
+fun HomeStatusCard(
+    title: String,
     favoriteCounts: String,
     allCounts: String,
     todayCounts: String,
@@ -42,11 +43,11 @@ fun HomeRecipeStatusCard(
             .padding(20.dp)
     ) {
         Text(
-            text = stringResource(id = R.string.recipe_status),
+            text = title,
             modifier = Modifier.align(Alignment.Start),
             style = AppTypography.headlineSmall
         )
-        Spacer(modifier = Modifier.size(size = dimensionResource(R.dimen.margin_medium)))
+        Spacer(modifier = Modifier.size(size = CoffeeMemoAppDefaults.Margin.medium))
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
@@ -72,7 +73,7 @@ fun HomeRecipeStatusCard(
             )
         }
 
-        Spacer(modifier = Modifier.size( dimensionResource(id = R.dimen.margin_medium))
+        Spacer(modifier = Modifier.size(CoffeeMemoAppDefaults.Margin.medium)
         )
         Button(
             onClick = onCreateButton,
@@ -92,7 +93,8 @@ fun HomeRecipeStatusCard(
 fun HomeRecipeStatusCardPreview() {
     AppTheme {
         Surface {
-            HomeRecipeStatusCard(
+            HomeStatusCard(
+                title = stringResource(id = R.string.recipe_status),
                 allCounts = "30",
                 favoriteCounts = "20",
                 todayCounts = "10",
