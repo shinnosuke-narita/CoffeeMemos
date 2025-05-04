@@ -1,6 +1,6 @@
 package com.withapp.coffeememo.di.search.recipe.use_case
 
-import com.withapp.coffeememo.domain.usecase.recipe.filter.FilterRecipeIterator
+import com.withapp.coffeememo.domain.usecase.recipe.filter.FilterRecipeInteractor
 import com.withapp.coffeememo.domain.usecase.recipe.filter.FilterRecipeUseCase
 import dagger.Binds
 import dagger.Module
@@ -13,6 +13,6 @@ abstract class FilterSearchRecipeUseCaseModule {
 
     @Binds
     abstract fun bindFilterSearchRecipeUseCase(
-        filterSearchUseCaseImpl: FilterRecipeIterator
+        filterSearchUseCaseImpl: FilterRecipeInteractor
     ): FilterRecipeUseCase
 }
