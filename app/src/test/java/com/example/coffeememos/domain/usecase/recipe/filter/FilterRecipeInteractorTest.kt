@@ -1,5 +1,11 @@
 package com.example.coffeememos.domain.usecase.recipe.filter
 
+import com.example.coffeememos.fixture.StubData.Country.Brazil
+import com.example.coffeememos.fixture.StubData.Country.Columbia
+import com.example.coffeememos.fixture.StubData.Country.Ethiopia
+import com.example.coffeememos.fixture.StubData.Tool.Hario
+import com.example.coffeememos.fixture.StubData.Tool.Karita
+import com.example.coffeememos.fixture.StubData.Tool.Merita
 import com.example.coffeememos.fixture.recipeFixture
 import com.example.coffeememos.fixture.tasteFixture
 import com.google.common.truth.Truth
@@ -66,12 +72,12 @@ class FilterRecipeInteractorTest {
             createRecipeByGrindSize(3),
             createRecipeByGrindSize(4),
             createRecipeByGrindSize(5),
-            createRecipeByCountry(BRAZIL),
-            createRecipeByCountry(COLUMBIA),
-            createRecipeByCountry(COLUMBIA),
-            createRecipeByTool(HARIO),
-            createRecipeByTool(KARITA),
-            createRecipeByTool(MERITA),
+            createRecipeByCountry(Brazil.toString()),
+            createRecipeByCountry(Ethiopia.toString()),
+            createRecipeByCountry(Columbia.toString()),
+            createRecipeByTool(Hario.toString()),
+            createRecipeByTool(Karita.toString()),
+            createRecipeByTool(Merita.toString()),
         )
 
     @Before
@@ -308,60 +314,62 @@ class FilterRecipeInteractorTest {
     fun `when recipe is filtered by single country, expect correct result`() =
         runTest {
             // Given
-            val filteringCountry = BRAZIL
-            val filteringData = filterRecipeInputDataFixture.copy(countries = listOf(filteringCountry))
+            val filteringData = filterRecipeInputDataFixture.copy(countries = listOf(Brazil.toString()))
 
             // When
             val result = filterRecipeInteractor.filterRecipe(filteringData)
 
             // Then
             verifyNotEmpty(result)
-            result.forEach { Truth.assertThat(it.country).isEqualTo(filteringCountry) }
+            result.forEach { Truth.assertThat(it.country).isIn(filteringData.countries) }
         }
 
     @Test
     fun `when recipe is filtered by some country, expect correct result`() =
         runTest {
             // Given
-            val filteringCountryValues = listOf(COLUMBIA, ETHIOPIA)
-            val filteringData = filterRecipeInputDataFixture.copy(countries = filteringCountryValues)
+            val filteringData =
+                filterRecipeInputDataFixture.copy(
+                    countries = listOf(Columbia.toString(), Ethiopia.toString())
+                )
 
             // When
             val result = filterRecipeInteractor.filterRecipe(filteringData)
 
             // Then
             verifyNotEmpty(result)
-            result.forEach { Truth.assertThat(it.country).isIn(filteringCountryValues) }
+            result.forEach { Truth.assertThat(it.country).isIn(filteringData.countries) }
         }
 
     @Test
     fun `when recipe is filtered by single tool, expect correct result`() =
         runTest {
             // Given
-            val filteringTool = HARIO
-            val filteringData = filterRecipeInputDataFixture.copy(tools = listOf(filteringTool))
+            val filteringData = filterRecipeInputDataFixture.copy(tools = listOf(Hario.toString()))
 
             // When
             val result = filterRecipeInteractor.filterRecipe(filteringData)
 
             // Then
             verifyNotEmpty(result)
-            result.forEach { Truth.assertThat(it.tool).isEqualTo(filteringTool) }
+            result.forEach { Truth.assertThat(it.tool).isIn(filteringData.tools) }
         }
 
     @Test
     fun `when recipe is filtered by some tool, expect correct result`() =
         runTest {
             // Given
-            val filteringTools = listOf(HARIO, KARITA)
-            val filteringData = filterRecipeInputDataFixture.copy(tools = filteringTools)
+            val filteringData =
+                filterRecipeInputDataFixture.copy(
+                    tools = listOf(Hario.toString(), Karita.toString())
+                )
 
             // When
             val result = filterRecipeInteractor.filterRecipe(filteringData)
 
             // Then
             verifyNotEmpty(result)
-            result.forEach { Truth.assertThat(it.tool).isIn(filteringTools) }
+            result.forEach { Truth.assertThat(it.tool).isIn(filteringData.tools) }
         }
 
     @Test
@@ -371,8 +379,8 @@ class FilterRecipeInteractorTest {
             val (sour, bitter, sweet, flavor, rich) = listOf(1, 2, 3, 4, 5)
             val rating = 3
             val grindSize = 4
-            val country = BRAZIL
-            val tool =  HARIO
+            val country = Brazil.toString()
+            val tool =  Hario.toString()
             val filteringData =
                 filterRecipeInputDataFixture.copy(
                     sour = listOf(sour),
@@ -464,14 +472,5 @@ class FilterRecipeInteractorTest {
 
     private fun verifyNotEmpty(result: List<SearchRecipeModel>) {
         Truth.assertThat(result.isEmpty()).isFalse()
-    }
-
-    companion object {
-        private const val BRAZIL = "Brazil"
-        private const val ETHIOPIA = "Ethiopia"
-        private const val COLUMBIA = "Columbia"
-        private const val HARIO = "Hario"
-        private const val KARITA = "Karita"
-        private const val MERITA = "Merita"
     }
 }
