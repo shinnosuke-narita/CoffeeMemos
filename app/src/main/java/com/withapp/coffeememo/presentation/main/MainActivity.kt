@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.withapp.coffeememo.R
+import com.withapp.coffeememo.databinding.ActivityMainBinding
 import com.withapp.coffeememo.infra.ad_mob.AdMobManager
 import com.withapp.coffeememo.infra.ad_mob.locale.LocalizationManager
-import com.withapp.coffeememo.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         // viewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setupWindowEdge()
 
         // BottomNavigation セットアップ
         setUpBottomNavigation()
@@ -63,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         // bottomNavigationとNavControllerの関連付け
         binding.bottomNavBar.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener {_, destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
                 R.id.homeRecipeFragment -> {
                     showBottomNav()
@@ -90,5 +95,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideBottomNav() {
         binding.bottomNavBar.visibility = View.GONE
+    }
+
+    private fun setupWindowEdge() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.navHost) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            v.updatePadding(
+                top = insets.top,
+                left = v.paddingLeft,
+                right = v.paddingRight,
+                bottom = v.paddingBottom,
+            )
+
+            windowInsets
+        }
     }
 }
